@@ -1,0 +1,49 @@
+plugins {
+    id 'org.springframework.boot' version '2.0.0.RELEASE'
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+group = 'uk.gov.cshr'
+version = '0.0.1'
+
+bootJar {
+    archiveName = 'report-service.jar'
+    mainClassName = 'uk.gov.cshr.report.Application'
+}
+
+dependencies {
+    compile 'com.sun.xml.bind:jaxb-impl:2.1.2'
+    compile 'javax.activation:activation:1.1'
+
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    compile 'org.springframework.boot:spring-boot-starter-jetty'
+    compile 'org.springframework.boot:spring-boot-starter-jersey'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.boot:spring-boot-configuration-processor'
+    compile 'org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE'
+
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.google.guava:guava:23.5-jre'
+    compile 'gov.adlnet:jxapi:2.0.1'
+    compile 'org.apache.commons:commons-lang3:3.7'
+    compile 'org.codehaus.janino:janino:3.0.8'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+compileJava.dependsOn(processResources)
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.3'
+}
