@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.client.token.DefaultAccessTokenReques
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -24,6 +25,11 @@ public class SecurityConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().anyRequest().permitAll();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     @Bean
