@@ -1,6 +1,8 @@
 package uk.gov.cshr.report.service;
 
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import uk.gov.cshr.report.domain.LearnerRecordEvents;
 import uk.gov.cshr.report.domain.LearnerRecordSummary;
 
 import java.net.URI;
@@ -24,21 +27,29 @@ import static java.util.Collections.emptyList;
 @Service
 public class LearnerRecordService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LearnerRecordService.class);
+
     private RestTemplate restTemplate;
 
     private URI learnerRecordSummariesUrl;
 
+    private URI learnerRecordEventsUrl;
+
     @Autowired
     public LearnerRecordService(RestTemplate restTemplate,
-                                @Value("${learnerRecord.summariesUrl}") URI learnerRecordSummariesUrl) {
+                                @Value("${learnerRecord.summariesUrl}") URI learnerRecordSummariesUrl,
+                                @Value("${learnerRecord.eventsUrl}") URI learnerRecordEventsUrl) {
         checkArgument(restTemplate != null);
         checkArgument(learnerRecordSummariesUrl != null);
+        checkArgument(learnerRecordEventsUrl != null);
         this.restTemplate = restTemplate;
         this.learnerRecordSummariesUrl = learnerRecordSummariesUrl;
+        this.learnerRecordEventsUrl = learnerRecordEventsUrl;
     }
 
     @PreAuthorize("hasAnyAuthority('ORGANISATION_REPORTER', 'PROFESSION_REPORTER', 'CSHR_REPORTER')")
     public List<LearnerRecordSummary> listRecords() {
+        LOGGER.info("Listing records 2");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
@@ -49,6 +60,25 @@ public class LearnerRecordService {
         RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, learnerRecordSummariesUrl);
 
         ResponseEntity<LearnerRecordSummary[]> response = restTemplate.exchange(requestEntity, LearnerRecordSummary[].class);
+        if (response.hasBody()) {
+            return Lists.newArrayList(response.getBody());
+        }
+        return emptyList();
+    }
+
+    @PreAuthorize("hasAnyAuthority('ORGANISATION_REPORTER', 'PROFESSION_REPORTER', 'CSHR_REPORTER')")
+    public List<LearnerRecordEvents> listEvents() {
+        LOGGER.info("Listing events 2");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + details.getTokenValue());
+
+        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, learnerRecordEventsUrl);
+
+        ResponseEntity<LearnerRecordEvents[]> response = restTemplate.exchange(requestEntity, LearnerRecordEvents[].class);
         if (response.hasBody()) {
             return Lists.newArrayList(response.getBody());
         }
