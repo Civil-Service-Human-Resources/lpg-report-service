@@ -66,7 +66,7 @@ public class LearnerRecordService {
         return emptyList();
     }
 
-    @PreAuthorize("hasAnyAuthority('ORGANISATION_REPORTER', 'PROFESSION_REPORTER', 'CSHR_REPORTER')")
+    @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")
     public List<LearnerRecordEvents> listEvents() {
         LOGGER.info("Listing events 2");
 
