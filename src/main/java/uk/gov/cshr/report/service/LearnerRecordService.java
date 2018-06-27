@@ -49,7 +49,7 @@ public class LearnerRecordService {
 
     @PreAuthorize("hasAnyAuthority('ORGANISATION_REPORTER', 'PROFESSION_REPORTER', 'CSHR_REPORTER')")
     public List<LearnerRecordSummary> listRecords() {
-        LOGGER.info("Listing records 2");
+        LOGGER.debug("Listing records");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
@@ -68,7 +68,7 @@ public class LearnerRecordService {
 
     @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")
     public List<LearnerRecordEvents> listEvents() {
-        LOGGER.info("Listing events 2");
+        LOGGER.debug("Listing events");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
