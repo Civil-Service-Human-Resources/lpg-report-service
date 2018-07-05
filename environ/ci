@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-SERVICE_NAME=report-service
+SERVICE_NAME=lpg-report-service
 
 BRANCH_TAG=`echo ${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}} | sed 's/\//-/g'`
 COMMIT_TAG="${TRAVIS_COMMIT}"

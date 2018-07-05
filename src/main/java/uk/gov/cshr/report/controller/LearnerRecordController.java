@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.gov.cshr.report.domain.LearnerRecordEvents;
 import uk.gov.cshr.report.domain.LearnerRecordSummary;
 import uk.gov.cshr.report.service.LearnerRecordService;
 
@@ -36,7 +37,8 @@ public class LearnerRecordController {
     }
 
     @GetMapping(produces = "text/csv")
-    public void getLearnerRecordCSVReport(HttpServletResponse response)
+    @RequestMapping("/summaries")
+    public void getLearnerRecordSummaryCSVReport(HttpServletResponse response)
             throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 
         LOGGER.debug("Getting learner record CSV report");
@@ -51,6 +53,26 @@ public class LearnerRecordController {
                     .build();
 
             beanToCsv.write(summaries);
+        }
+    }
+
+    @GetMapping(produces = "text/csv")
+    @RequestMapping("/events")
+    public void getLearnerRecordEventsCSVReport(HttpServletResponse response)
+            throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+
+        LOGGER.debug("Getting learner record events CSV report");
+
+        List<LearnerRecordEvents> events = learnerRecordService.listEvents();
+
+        try (
+                Writer writer = response.getWriter()
+        ) {
+            StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
+                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                    .build();
+
+            beanToCsv.write(events);
         }
     }
 }

@@ -24,15 +24,11 @@ dependencies {
     compile 'com.sun.xml.bind:jaxb-impl:2.1.2'
     compile 'javax.activation:activation:1.1'
 
-    compile('org.springframework.boot:spring-boot-starter-web') {
-        exclude module: 'spring-boot-starter-tomcat'
-    }
-    compile 'org.springframework.boot:spring-boot-starter-jetty'
+    compile('org.springframework.boot:spring-boot-starter-web')
     compile 'org.springframework.boot:spring-boot-starter-jersey'
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-configuration-processor'
     compile 'org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE'
-
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.google.guava:guava:23.5-jre'
     compile 'com.opencsv:opencsv:4.1'
@@ -41,6 +37,8 @@ dependencies {
     compile 'org.codehaus.janino:janino:3.0.8'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework.security:spring-security-test'
+    testCompile 'com.google.code.gson:gson:2.8.2'
 }
 
 compileJava.dependsOn(processResources)
