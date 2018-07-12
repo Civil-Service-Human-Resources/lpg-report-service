@@ -53,6 +53,7 @@ public class LearnerRecordController {
                     .build();
 
             beanToCsv.write(summaries);
+            response.flushBuffer();
         }
     }
 
@@ -69,10 +70,11 @@ public class LearnerRecordController {
                 Writer writer = response.getWriter()
         ) {
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
-                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                    .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
                     .build();
 
             beanToCsv.write(events);
+            response.flushBuffer();
         }
     }
 }
