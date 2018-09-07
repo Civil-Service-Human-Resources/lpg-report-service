@@ -9,20 +9,6 @@ pipeline {
                 stash 'workspace'
             }
         }
-        stage('Test') {
-            agent { label 'master' }
-            steps {
-                unstash 'workspace'
-                publishHTML([allowMissing: false,
-                             alwaysLinkToLastBuild: true,
-                             keepAll: true,
-                             reportDir: 'build/reports/tests/test',
-                             reportFiles: 'index.html',
-                             reportName: 'HTML Report',
-                             reportTitles: ''])
-                stash 'workspace'
-            }
-        }
         stage('Build Container & Push to ACR') {
             agent { label 'master' }
             steps {
@@ -33,7 +19,6 @@ pipeline {
                         customImage.push()
                     }
                 }
-                stash 'workspace'
             }
         }
         stage('Deploy to Integration?')  {
@@ -140,16 +125,5 @@ pipeline {
             }
         }
         disabled */
-        stage('Post') {
-            agent { label 'master' }
-            steps {
-                unstash 'workspace'
-            }
-            post {
-                always {
-                    junit 'build/test-results/**/TEST-*.xml'
-                }
-            }
-        }
     }
 }
