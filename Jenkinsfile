@@ -21,6 +21,7 @@ pipeline {
                 }
             }
         }
+        /* disabled
         stage('Deploy to Integration?')  {
             agent none
             steps {
@@ -29,6 +30,7 @@ pipeline {
                 }
             }
         }
+        disabled */
         stage('Deploy to Integration') {
             agent { label 'master' }
             steps {
