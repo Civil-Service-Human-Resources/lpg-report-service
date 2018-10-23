@@ -127,6 +127,9 @@ pipeline {
         disabled */
         stage('Post') {
             agent { label 'master' }
+            steps {
+                echo "cleaning"
+            }
             post {
                 cleanup {
                     deleteDir()
