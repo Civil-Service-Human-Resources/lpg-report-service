@@ -55,7 +55,6 @@ pipeline {
                 }
             }
         }
-        /* disabled
         stage('Deploy to Staging?')  {
             agent none
             steps {
