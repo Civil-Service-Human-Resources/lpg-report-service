@@ -1,12 +1,8 @@
 package uk.gov.cshr.report.service;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,25 +16,30 @@ public class HttpService {
     private final HttpHeadersFactory httpHeadersFactory;
     private final RequestEntityFactory requestEntityFactory;
     private final AccessTokenService accessTokenService;
+    private final ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory;
 
-    public HttpService(RestTemplate restTemplate, HttpHeadersFactory httpHeadersFactory, RequestEntityFactory requestEntityFactory, AccessTokenService accessTokenService) {
+    public HttpService(RestTemplate restTemplate, HttpHeadersFactory httpHeadersFactory, RequestEntityFactory requestEntityFactory, AccessTokenService accessTokenService, ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory) {
         this.restTemplate = restTemplate;
         this.httpHeadersFactory = httpHeadersFactory;
         this.requestEntityFactory = requestEntityFactory;
         this.accessTokenService = accessTokenService;
+        this.parameterizedTypeReferenceFactory = parameterizedTypeReferenceFactory;
     }
 
-    <T> List<T> getList(URI uri, Class<T[]> type) {
+    <T> List<T> getList(URI uri, Class<T> type) {
         RequestEntity requestEntity = buildRequest(uri);
-        ResponseEntity<T[]> response = restTemplate.exchange(requestEntity, type);
+        ResponseEntity<List<T>> response = restTemplate.exchange(requestEntity,
+                parameterizedTypeReferenceFactory.createListReference(type)
+        );
 
-        return Arrays.asList(response.getBody());
+        return response.getBody();
     }
 
-
-    <K,V> Map<K,V> getMap(URI uri) {
+    <K,V> Map<K,V> getMap(URI uri, Class<K> keyType, Class<V> valueType) {
         RequestEntity requestEntity = buildRequest(uri);
-        ResponseEntity<Map> response = restTemplate.exchange(requestEntity, Map.class);
+        ResponseEntity<Map<K, V>> response = restTemplate.exchange(requestEntity,
+                parameterizedTypeReferenceFactory.createMapReference(keyType, valueType)
+        );
 
         return response.getBody();
     }

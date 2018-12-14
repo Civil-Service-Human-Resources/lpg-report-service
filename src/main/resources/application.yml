@@ -30,6 +30,13 @@ learnerRecord:
   eventsUrl: "${learnerRecord.serviceUrl}/events"
   bookingsUrl: "${learnerRecord.serviceUrl}/booking"
 
+registryService:
+  serviceUrl: ${REGISTRY_SERVICE_URL:http://localhost:9002}
+  civilServantUri: "${regsitryService.serviceUrl}/report/civilServants"
+
+learningCatalogue:
+  serviceUrl: ${LEARNING_CATALOGUE_SERVICE_URL:http://localhost:9001}
+  eventUri: "${serviceUrl}/reporting/events"
 ---
 
 spring:
