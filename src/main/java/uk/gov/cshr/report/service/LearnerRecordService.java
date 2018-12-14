@@ -17,9 +17,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.cshr.report.domain.LearnerRecordEvents;
 import uk.gov.cshr.report.domain.LearnerRecordSummary;
+import uk.gov.cshr.report.domain.learnerrecord.Booking;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Collections.emptyList;
@@ -29,59 +33,35 @@ public class LearnerRecordService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LearnerRecordService.class);
 
-    private RestTemplate restTemplate;
+    private final URI learnerRecordSummariesUrl;
+    private final URI learnerRecordEventsUrl;
+    private final URI bookingUri;
+    private final HttpService httpService;
 
-    private URI learnerRecordSummariesUrl;
-
-    private URI learnerRecordEventsUrl;
-
-    @Autowired
-    public LearnerRecordService(RestTemplate restTemplate,
+    public LearnerRecordService(HttpService httpService,
                                 @Value("${learnerRecord.summariesUrl}") URI learnerRecordSummariesUrl,
-                                @Value("${learnerRecord.eventsUrl}") URI learnerRecordEventsUrl) {
-        checkArgument(restTemplate != null);
-        checkArgument(learnerRecordSummariesUrl != null);
-        checkArgument(learnerRecordEventsUrl != null);
-        this.restTemplate = restTemplate;
+                                @Value("${learnerRecord.eventsUrl}") URI learnerRecordEventsUrl,
+                                @Value("${learnerRecord.bookingUri}") URI bookingUri) {
+        this.httpService = httpService;
         this.learnerRecordSummariesUrl = learnerRecordSummariesUrl;
         this.learnerRecordEventsUrl = learnerRecordEventsUrl;
+        this.bookingUri = bookingUri;
     }
 
     @PreAuthorize("hasAnyAuthority('ORGANISATION_REPORTER', 'PROFESSION_REPORTER', 'CSHR_REPORTER')")
     public List<LearnerRecordSummary> listRecords() {
         LOGGER.debug("Listing records");
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + details.getTokenValue());
-
-        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, learnerRecordSummariesUrl);
-
-        ResponseEntity<LearnerRecordSummary[]> response = restTemplate.exchange(requestEntity, LearnerRecordSummary[].class);
-        if (response.hasBody()) {
-            return Lists.newArrayList(response.getBody());
-        }
-        return emptyList();
+        return httpService.getList(learnerRecordSummariesUrl, LearnerRecordSummary[].class);
     }
 
     @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")
     public List<LearnerRecordEvents> listEvents() {
         LOGGER.debug("Listing events");
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
+        return httpService.getList(learnerRecordEventsUrl, LearnerRecordEvents[].class);
+    }
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + details.getTokenValue());
-
-        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, learnerRecordEventsUrl);
-
-        ResponseEntity<LearnerRecordEvents[]> response = restTemplate.exchange(requestEntity, LearnerRecordEvents[].class);
-        if (response.hasBody()) {
-            return Lists.newArrayList(response.getBody());
-        }
-        return emptyList();
+    public List<Booking> getBookings() {
+        return httpService.getList(bookingUri, Booking[].class);
     }
 }
