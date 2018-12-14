@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,12 @@ import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,6 +45,9 @@ public class HttpServiceTest {
 
     @Mock
     private AccessTokenService accessTokenService;
+
+    @Mock
+    private ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory;
 
     @InjectMocks
     private HttpService httpService;
@@ -60,11 +67,18 @@ public class HttpServiceTest {
         when(requestEntityFactory.createGetRequest(headers, uri)).thenReturn(requestEntity);
 
         Booking booking = new Booking();
-        ResponseEntity<Booking[]> responseEntity = ResponseEntity.ok(new Booking[] {booking});
+        ResponseEntity<List<Booking>> responseEntity = ResponseEntity.ok(Collections.singletonList(booking));
 
-        when(restTemplate.exchange(requestEntity, Booking[].class)).thenReturn(responseEntity);
 
-        assertEquals(Collections.singletonList(booking), httpService.getList(uri, Booking[].class));
+        ParameterizedTypeReference<List<Booking>> parameterizedTypeReference =
+                new ParameterizedTypeReference<List<Booking>>() { };
+
+        when(parameterizedTypeReferenceFactory.createListReference(Booking.class))
+                .thenReturn(parameterizedTypeReference);
+
+        when(restTemplate.exchange(requestEntity, parameterizedTypeReference)).thenReturn(responseEntity);
+
+        assertEquals(Collections.singletonList(booking), httpService.getList(uri, Booking.class));
     }
 
     @Test
@@ -82,10 +96,17 @@ public class HttpServiceTest {
         when(requestEntityFactory.createGetRequest(headers, uri)).thenReturn(requestEntity);
 
         Booking booking = new Booking();
-        ResponseEntity<Map> responseEntity = ResponseEntity.ok(ImmutableMap.of("booking-id", booking));
+        ResponseEntity<Map<String, Booking>> responseEntity =
+                ResponseEntity.ok(ImmutableMap.of("booking-id", booking));
 
-        when(restTemplate.exchange(requestEntity, Map.class)).thenReturn(responseEntity);
+        ParameterizedTypeReference<Map<String, Booking>> parameterizedTypeReference =
+                new ParameterizedTypeReference<Map<String, Booking>>() { };
 
-        assertEquals(ImmutableMap.of("booking-id", booking), httpService.getMap(uri));
+        when(parameterizedTypeReferenceFactory.createMapReference(String.class, Booking.class))
+                .thenReturn(parameterizedTypeReference);
+
+        when(restTemplate.exchange(requestEntity, parameterizedTypeReference)).thenReturn(responseEntity);
+
+        assertEquals(ImmutableMap.of("booking-id", booking), httpService.getMap(uri, String.class, Booking.class));
     }
 }

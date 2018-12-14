@@ -51,17 +51,17 @@ public class LearnerRecordService {
     @PreAuthorize("hasAnyAuthority('ORGANISATION_REPORTER', 'PROFESSION_REPORTER', 'CSHR_REPORTER')")
     public List<LearnerRecordSummary> listRecords() {
         LOGGER.debug("Listing records");
-        return httpService.getList(learnerRecordSummariesUrl, LearnerRecordSummary[].class);
+        return httpService.getList(learnerRecordSummariesUrl, LearnerRecordSummary.class);
     }
 
     @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")
     public List<LearnerRecordEvents> listEvents() {
         LOGGER.debug("Listing events");
 
-        return httpService.getList(learnerRecordEventsUrl, LearnerRecordEvents[].class);
+        return httpService.getList(learnerRecordEventsUrl, LearnerRecordEvents.class);
     }
 
     public List<Booking> getBookings() {
-        return httpService.getList(bookingUri, Booking[].class);
+        return httpService.getList(bookingUri, Booking.class);
     }
 }
