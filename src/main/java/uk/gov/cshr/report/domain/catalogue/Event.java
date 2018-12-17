@@ -8,5 +8,4 @@ public class Event {
     private Module module;
     private Course course;
     private LearningProvider learningProvider;
-
 }

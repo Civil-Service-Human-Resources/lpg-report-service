@@ -3,7 +3,7 @@ package uk.gov.cshr.report.service;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class HttpHeadersFactoryTest {
     private HttpHeadersFactory httpHeadersFactory = new HttpHeadersFactory();

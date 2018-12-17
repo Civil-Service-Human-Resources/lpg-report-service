@@ -1,0 +1,91 @@
+package uk.gov.cshr.report.factory;
+
+import org.junit.Test;
+import uk.gov.cshr.report.domain.catalogue.Course;
+import uk.gov.cshr.report.domain.catalogue.Event;
+import uk.gov.cshr.report.domain.catalogue.LearningProvider;
+import uk.gov.cshr.report.domain.catalogue.Module;
+import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.BookingStatus;
+import uk.gov.cshr.report.domain.registry.CivilServant;
+import uk.gov.cshr.report.reports.BookingReportRow;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
+public class ReportRowFactoryTest {
+
+    private ReportRowFactory reportRowFactory = new ReportRowFactory();
+
+    @Test
+    public void shouldReturnBookingReportRow() {
+        BookingStatus status = BookingStatus.CONFIRMED;
+        String learnerUid = "learner-uid";
+        String eventUid = "event-uid";
+        String name = "learner name";
+        String profession = "profession1";
+        List<String> otherAreasOfWork = Arrays.asList("profession2", "profession3");
+        String department = "_department";
+        String grade = "_grade";
+        String email = "user@example.org";
+        String courseId = "course-id";
+        String courseTitle = "course-title";
+        String moduleId = "module-id";
+        String moduleTitle = "module-title";
+        String learningProviderId = "learning-provider-id";
+        String learningProviderName = "learning-provider-name";
+
+        Booking booking = new Booking();
+        booking.setStatus(status);
+        booking.setLearnerUid(learnerUid);
+        booking.setEventUid(eventUid);
+
+        CivilServant civilServant = new CivilServant();
+        civilServant.setUid(learnerUid);
+        civilServant.setName(name);
+        civilServant.setProfession(profession);
+        civilServant.setOtherAreasOfWork(otherAreasOfWork);
+        civilServant.setDepartment(department);
+        civilServant.setGrade(grade);
+        civilServant.setEmail(email);
+
+        Course course = new Course();
+        course.setId(courseId);
+        course.setTitle(courseTitle);
+
+        Module module = new Module();
+        module.setId(moduleId);
+        module.setTitle(moduleTitle);
+        module.setRequired(true);
+
+        LearningProvider learningProvider = new LearningProvider();
+        learningProvider.setId(learningProviderId);
+        learningProvider.setName(learningProviderName);
+
+        Event event = new Event();
+        event.setId(eventUid);
+        event.setCourse(course);
+        event.setModule(module);
+        event.setLearningProvider(learningProvider);
+
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(civilServant, event, booking);
+
+        assertEquals(learnerUid, reportRow.getLearnerid());
+        assertEquals(name, reportRow.getName());
+        assertEquals(profession, reportRow.getProfession());
+        assertEquals(String.join(", ", otherAreasOfWork), reportRow.getOtherAreasOfWork());
+        assertEquals(department, reportRow.getDepartment());
+        assertEquals(grade, reportRow.getGrade());
+        assertEquals(email, reportRow.getEmail());
+        assertEquals(courseId, reportRow.getCourseId());
+        assertEquals(courseTitle, reportRow.getCourseTitle());
+        assertEquals(moduleId, reportRow.getModuleId());
+        assertEquals(moduleTitle, reportRow.getModuleTitle());
+        assertEquals(learningProviderName, reportRow.getLearningProvider());
+    }
+
+
+
+}
