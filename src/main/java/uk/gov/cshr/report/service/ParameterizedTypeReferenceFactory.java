@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.registry.CivilServant;
+import uk.gov.cshr.report.exception.IllegalTypeException;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class ParameterizedTypeReferenceFactory {
             return mapParameterizedTypeReferenceMap.get(type.getName());
         }
 
-        throw new RuntimeException(String.format("Unknown type: %s", type.getName()));
+        throw new IllegalTypeException(type);
     }
 
     <T> ParameterizedTypeReference<List<T>> createListReference(Class<T> type) {
@@ -41,6 +42,6 @@ public class ParameterizedTypeReferenceFactory {
             return listParameterizedTypeReferenceMap.get(type.getName());
         }
 
-        throw new RuntimeException(String.format("Unknown type: %s", type.getName()));
+        throw new IllegalTypeException(type);
     }
 }

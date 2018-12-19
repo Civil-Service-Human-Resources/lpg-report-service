@@ -9,11 +9,11 @@ import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.AbstractHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.HttpMessageNotWritableException;
+import uk.gov.cshr.report.exception.CsvUnmarshallingException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -24,7 +24,7 @@ class CsvConverter<T> extends AbstractHttpMessageConverter<T> {
         private final ObjectMapper objectMapper;
 
         CsvConverter(ObjectMapper objectMapper) {
-            super(new MediaType("application", "csv"));
+            super(new MediaType("application", "csv", Charset.forName("UTF-8")));
             this.objectMapper = objectMapper;
         }
 
@@ -34,24 +34,24 @@ class CsvConverter<T> extends AbstractHttpMessageConverter<T> {
         }
 
         @Override
-        protected T readInternal(Class<? extends T> clazz, HttpInputMessage inputMessage)
-                throws HttpMessageNotReadableException {
+        protected T readInternal(Class<? extends T> clazz, HttpInputMessage inputMessage) {
             return null;
         }
 
         @Override
-        protected void writeInternal(T object, HttpOutputMessage outputMessage) throws HttpMessageNotWritableException {
+        protected void writeInternal(T object, HttpOutputMessage outputMessage) {
             try {
                 ObjectWriter objectWriter = getCsvWriter(object);
                 try (PrintWriter outputWriter = new PrintWriter(outputMessage.getBody())) {
-                    outputWriter.write(objectWriter.writeValueAsString(object));
+                        outputWriter.write(objectWriter.writeValueAsString(object));
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new CsvUnmarshallingException("Unable to write CSV output", e);
             }
+
         }
 
-        ObjectWriter getCsvWriter(T object) {
+        private ObjectWriter getCsvWriter(T object) {
             Set<String> fields = getUniqueFieldNames(object);
             CsvSchema.Builder schemaBuilder = CsvSchema.builder().setUseHeader(true);
 
@@ -61,7 +61,7 @@ class CsvConverter<T> extends AbstractHttpMessageConverter<T> {
             return new CsvMapper().writerFor(List.class).with(schemaBuilder.build());
         }
 
-        Set<String> getUniqueFieldNames(T object) {
+        private Set<String> getUniqueFieldNames(T object) {
             try {
                 JsonNode root = objectMapper.readTree(objectMapper.writeValueAsString(object));
                 Set<String> uniqueFieldNames = new LinkedHashSet<>();
@@ -74,8 +74,8 @@ class CsvConverter<T> extends AbstractHttpMessageConverter<T> {
                     }
                 });
                 return uniqueFieldNames;
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            } catch (IOException e) {
+                throw new CsvUnmarshallingException("Error reading object fields", e);
             }
         }
     }
