@@ -1,19 +1,46 @@
 package uk.gov.cshr.report.service;
 
+import com.google.common.collect.ImmutableMap;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
+import uk.gov.cshr.report.domain.catalogue.Event;
+import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.registry.CivilServant;
 
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class ParameterizedTypeReferenceFactory {
+    /**
+     * The maps below are a nasty hack. Unfortunately it's necessary because of the way ParameterizedTypeReference is implemented.
+     * See https://stackoverflow.com/questions/21987295/using-spring-resttemplate-in-generic-method-with-generic-parameter
+     */
 
-    <K, V>  ParameterizedTypeReference<Map<K,V>> createMapReference(Class<K> keyType, Class<V> valueType) {
-        return new ParameterizedTypeReference<Map<K, V>>() { };
+    private final Map<String, ParameterizedTypeReference> listParameterizedTypeReferenceMap = ImmutableMap.of(
+        "uk.gov.cshr.report.domain.learnerrecord.Booking", new ParameterizedTypeReference<List<Booking>>() {}
+    );
+
+    private final Map<String, ParameterizedTypeReference> mapParameterizedTypeReferenceMap = ImmutableMap.of(
+            "uk.gov.cshr.report.domain.catalogue.Event", new ParameterizedTypeReference<Map<String, Event>>() {},
+            "uk.gov.cshr.report.domain.registry.CivilServant",
+                new ParameterizedTypeReference<Map<String, CivilServant>>() {}
+    );
+
+
+    <T>  ParameterizedTypeReference<Map<String, T>> createMapReference(Class<T> type) {
+        if (mapParameterizedTypeReferenceMap.containsKey(type.getName())) {
+            return mapParameterizedTypeReferenceMap.get(type.getName());
+        }
+
+        throw new RuntimeException(String.format("Unknown type: %s", type.getName()));
     }
 
     <T> ParameterizedTypeReference<List<T>> createListReference(Class<T> type) {
-        return new ParameterizedTypeReference<List<T>>() { };
+        if (listParameterizedTypeReferenceMap.containsKey(type.getName())) {
+            return listParameterizedTypeReferenceMap.get(type.getName());
+        }
+
+        throw new RuntimeException(String.format("Unknown type: %s", type.getName()));
     }
 }

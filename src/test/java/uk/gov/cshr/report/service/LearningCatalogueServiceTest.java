@@ -27,7 +27,7 @@ public class LearningCatalogueServiceTest {
     @Test
     public void shouldReturnMapOfEvents() {
         Map<String, Event> eventMap = ImmutableMap.of("event-id", new Event());
-        when(httpService.getMap(eventUri, String.class, Event.class)).thenReturn(eventMap);
+        when(httpService.getMap(eventUri, Event.class)).thenReturn(eventMap);
         assertEquals(eventMap, learningCatalogueService.getEventMap());
     }
 }

@@ -14,12 +14,12 @@ public class CivilServantRegistryService {
     private final URI civilServantUri;
 
     public CivilServantRegistryService(HttpService httpService,
-                                       @Value("${registryService.civilServantUri}") URI civilServantUri) {
+                                       @Value("${registryService.civilServantsUrl}") URI civilServantUri) {
         this.httpService = httpService;
         this.civilServantUri = civilServantUri;
     }
 
     public Map<String, CivilServant> getCivilServantMap() {
-        return httpService.getMap(civilServantUri, String.class, CivilServant.class);
+        return httpService.getMap(civilServantUri, CivilServant.class);
     }
 }

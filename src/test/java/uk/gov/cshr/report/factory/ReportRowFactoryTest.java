@@ -14,20 +14,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class ReportRowFactoryTest {
 
     private ReportRowFactory reportRowFactory = new ReportRowFactory();
 
     @Test
-    public void shouldReturnBookingReportRow() {
+    public void shouldReturnBookingReportRowWithLearningProvider() {
         BookingStatus status = BookingStatus.CONFIRMED;
         String learnerUid = "learner-uid";
         String eventUid = "event-uid";
         String name = "learner name";
         String profession = "profession1";
         List<String> otherAreasOfWork = Arrays.asList("profession2", "profession3");
-        String department = "_department";
+        String organisation = "_department";
         String grade = "_grade";
         String email = "user@example.org";
         String courseId = "course-id";
@@ -39,15 +40,15 @@ public class ReportRowFactoryTest {
 
         Booking booking = new Booking();
         booking.setStatus(status);
-        booking.setLearnerUid(learnerUid);
-        booking.setEventUid(eventUid);
+        booking.setLearner(learnerUid);
+        booking.setEvent(eventUid);
 
         CivilServant civilServant = new CivilServant();
-        civilServant.setUid(learnerUid);
+        civilServant.setId(learnerUid);
         civilServant.setName(name);
         civilServant.setProfession(profession);
         civilServant.setOtherAreasOfWork(otherAreasOfWork);
-        civilServant.setDepartment(department);
+        civilServant.setOrganisation(organisation);
         civilServant.setGrade(grade);
         civilServant.setEmail(email);
 
@@ -76,7 +77,7 @@ public class ReportRowFactoryTest {
         assertEquals(name, reportRow.getName());
         assertEquals(profession, reportRow.getProfession());
         assertEquals(String.join(", ", otherAreasOfWork), reportRow.getOtherAreasOfWork());
-        assertEquals(department, reportRow.getDepartment());
+        assertEquals(organisation, reportRow.getDepartment());
         assertEquals(grade, reportRow.getGrade());
         assertEquals(email, reportRow.getEmail());
         assertEquals(courseId, reportRow.getCourseId());
@@ -86,6 +87,63 @@ public class ReportRowFactoryTest {
         assertEquals(learningProviderName, reportRow.getLearningProvider());
     }
 
+    @Test
+    public void shouldReturnBookingReportRowWithoutLearningProvider() {
+        BookingStatus status = BookingStatus.CONFIRMED;
+        String learnerUid = "learner-uid";
+        String eventUid = "event-uid";
+        String name = "learner name";
+        String profession = "profession1";
+        List<String> otherAreasOfWork = Arrays.asList("profession2", "profession3");
+        String organisation = "_department";
+        String grade = "_grade";
+        String email = "user@example.org";
+        String courseId = "course-id";
+        String courseTitle = "course-title";
+        String moduleId = "module-id";
+        String moduleTitle = "module-title";
 
+        Booking booking = new Booking();
+        booking.setStatus(status);
+        booking.setLearner(learnerUid);
+        booking.setEvent(eventUid);
 
+        CivilServant civilServant = new CivilServant();
+        civilServant.setId(learnerUid);
+        civilServant.setName(name);
+        civilServant.setProfession(profession);
+        civilServant.setOtherAreasOfWork(otherAreasOfWork);
+        civilServant.setOrganisation(organisation);
+        civilServant.setGrade(grade);
+        civilServant.setEmail(email);
+
+        Course course = new Course();
+        course.setId(courseId);
+        course.setTitle(courseTitle);
+
+        Module module = new Module();
+        module.setId(moduleId);
+        module.setTitle(moduleTitle);
+        module.setRequired(true);
+
+        Event event = new Event();
+        event.setId(eventUid);
+        event.setCourse(course);
+        event.setModule(module);
+
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(civilServant, event, booking);
+
+        assertEquals(learnerUid, reportRow.getLearnerid());
+        assertEquals(name, reportRow.getName());
+        assertEquals(profession, reportRow.getProfession());
+        assertEquals(String.join(", ", otherAreasOfWork), reportRow.getOtherAreasOfWork());
+        assertEquals(organisation, reportRow.getDepartment());
+        assertEquals(grade, reportRow.getGrade());
+        assertEquals(email, reportRow.getEmail());
+        assertEquals(courseId, reportRow.getCourseId());
+        assertEquals(courseTitle, reportRow.getCourseTitle());
+        assertEquals(moduleId, reportRow.getModuleId());
+        assertEquals(moduleTitle, reportRow.getModuleTitle());
+        assertNull(reportRow.getLearningProvider());
+    }
 }

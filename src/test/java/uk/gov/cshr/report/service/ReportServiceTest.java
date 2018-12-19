@@ -39,24 +39,23 @@ public class ReportServiceTest {
     @Test
     public void shouldReturnBookingReport() {
         Booking booking1 = new Booking();
-        booking1.setEventUid("event1");
-        booking1.setLearnerUid("learner1");
+        booking1.setEvent("event1");
+        booking1.setLearner("learner1");
 
         Booking booking2 = new Booking();
-        booking2.setEventUid("event2");
-        booking2.setLearnerUid("learner2");
+        booking2.setEvent("event2");
+        booking2.setLearner("learner2");
 
         CivilServant civilServant1 = new CivilServant();
-        civilServant1.setUid("learner1");
+        civilServant1.setId("learner1");
 
         CivilServant civilServant2 = new CivilServant();
-        civilServant2.setUid("learner2");
+        civilServant2.setId("learner2");
 
         CivilServant civilServant3 = new CivilServant();
-        civilServant3.setUid("learner3");
+        civilServant3.setId("learner3");
 
         Event event = new Event();
-
 
         when(learnerRecordService.getBookings()).thenReturn(Arrays.asList(booking1, booking2));
         when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
