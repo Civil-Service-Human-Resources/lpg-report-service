@@ -28,7 +28,7 @@ learnerRecord:
   serviceUrl: ${LEARNER_RECORD_URL:http://localhost:9000}
   summariesUrl: "${learnerRecord.serviceUrl}/summaries"
   eventsUrl: "${learnerRecord.serviceUrl}/events"
-  bookingsUrl: "${learnerRecord.serviceUrl}/booking"
+  bookingsUrl: "${learnerRecord.serviceUrl}/reporting/bookings"
 
 registryService:
   serviceUrl: ${REGISTRY_SERVICE_URL:http://localhost:9002}
