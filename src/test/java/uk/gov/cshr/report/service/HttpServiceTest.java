@@ -94,11 +94,11 @@ public class HttpServiceTest {
         ParameterizedTypeReference<Map<String, Booking>> parameterizedTypeReference =
                 new ParameterizedTypeReference<Map<String, Booking>>() { };
 
-        when(parameterizedTypeReferenceFactory.createMapReference(String.class, Booking.class))
+        when(parameterizedTypeReferenceFactory.createMapReference(Booking.class))
                 .thenReturn(parameterizedTypeReference);
 
         when(restTemplate.exchange(requestEntity, parameterizedTypeReference)).thenReturn(responseEntity);
 
-        assertEquals(ImmutableMap.of("booking-id", booking), httpService.getMap(uri, String.class, Booking.class));
+        assertEquals(ImmutableMap.of("booking-id", booking), httpService.getMap(uri, Booking.class));
     }
 }

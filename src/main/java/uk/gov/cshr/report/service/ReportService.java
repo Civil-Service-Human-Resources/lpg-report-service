@@ -7,6 +7,7 @@ import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +35,11 @@ public class ReportService {
         Map<String, Event> eventMap = learningCatalogueService.getEventMap();
 
         for (Booking booking : bookings) {
-            if (civilServantMap.containsKey(booking.getLearnerUid())) {
-                CivilServant civilServant = civilServantMap.get(booking.getLearnerUid());
-                Event event = eventMap.get(booking.getEventUid());
+            if (civilServantMap.containsKey(booking.getLearner())) {
+                String eventUid = Paths.get(booking.getEvent()).getFileName().toString();
+
+                CivilServant civilServant = civilServantMap.get(booking.getLearner());
+                Event event = eventMap.get(eventUid);
                 report.add(reportRowFactory.createBookingReportRow(civilServant, event, booking));
             }
         }

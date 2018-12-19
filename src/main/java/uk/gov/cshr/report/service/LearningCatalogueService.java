@@ -15,12 +15,12 @@ public class LearningCatalogueService {
     private final URI eventUri;
 
     public LearningCatalogueService(HttpService httpService,
-                        @Value("${learningCatalogue.eventUri}") URI eventUri) {
+                        @Value("${learningCatalogue.eventsUrl}") URI eventUri) {
         this.httpService = httpService;
         this.eventUri = eventUri;
     }
 
     public Map<String, Event> getEventMap() {
-        return httpService.getMap(eventUri, String.class, Event.class);
+        return httpService.getMap(eventUri, Event.class);
     }
 }

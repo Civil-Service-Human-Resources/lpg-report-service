@@ -29,7 +29,7 @@ public class CivilServantRegistryServiceTest {
 
         Map<String, CivilServant> civilServantMap = ImmutableMap.of("civil-servant-uid", new CivilServant());
 
-        when(httpService.getMap(civilServantUri, String.class, CivilServant.class)).thenReturn(civilServantMap);
+        when(httpService.getMap(civilServantUri, CivilServant.class)).thenReturn(civilServantMap);
 
         assertEquals(civilServantMap, civilServantRegistryService.getCivilServantMap());
     }

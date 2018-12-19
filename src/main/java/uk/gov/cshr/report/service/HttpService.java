@@ -35,10 +35,10 @@ public class HttpService {
         return response.getBody();
     }
 
-    <K,V> Map<K,V> getMap(URI uri, Class<K> keyType, Class<V> valueType) {
+    <T> Map<String, T> getMap(URI uri, Class<T> type) {
         RequestEntity requestEntity = buildRequest(uri);
-        ResponseEntity<Map<K, V>> response = restTemplate.exchange(requestEntity,
-                parameterizedTypeReferenceFactory.createMapReference(keyType, valueType)
+        ResponseEntity<Map<String, T>> response = restTemplate.exchange(requestEntity,
+                parameterizedTypeReferenceFactory.createMapReference(type)
         );
 
         return response.getBody();
