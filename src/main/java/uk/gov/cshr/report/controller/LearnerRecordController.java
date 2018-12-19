@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.gov.cshr.report.domain.LearnerRecordEvents;
 import uk.gov.cshr.report.domain.LearnerRecordSummary;
 import uk.gov.cshr.report.service.LearnerRecordService;
-import uk.gov.cshr.report.service.ReportService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -24,14 +23,12 @@ import java.util.List;
 @RequestMapping("/learner-record")
 public class LearnerRecordController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LearnerRecordController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LearnerRecordController.class);
 
     private final LearnerRecordService learnerRecordService;
-    private final ReportService reportService;
 
-    public LearnerRecordController(LearnerRecordService learnerRecordService, ReportService reportService) {
+    public LearnerRecordController(LearnerRecordService learnerRecordService) {
         this.learnerRecordService = learnerRecordService;
-        this.reportService = reportService;
     }
 
     @GetMapping(produces = "text/csv")
@@ -39,7 +36,7 @@ public class LearnerRecordController {
     public void getLearnerRecordSummaryCSVReport(HttpServletResponse response)
             throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 
-        LOGGER.debug("Getting learner record CSV report");
+        LOG.debug("Getting learner record CSV report");
 
         List<LearnerRecordSummary> summaries = learnerRecordService.listRecords();
 
@@ -60,7 +57,7 @@ public class LearnerRecordController {
     public void getLearnerRecordEventsCSVReport(HttpServletResponse response)
             throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 
-        LOGGER.debug("Getting learner record events CSV report");
+        LOG.debug("Getting learner record events CSV report");
 
         List<LearnerRecordEvents> events = learnerRecordService.listEvents();
 
