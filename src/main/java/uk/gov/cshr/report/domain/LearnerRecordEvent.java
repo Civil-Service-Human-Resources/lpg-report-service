@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-public class LearnerRecordEvents {
+public class LearnerRecordEvent {
     private String bookingReference;
     private String courseId;
     private String courseName;

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.gov.cshr.report.domain.LearnerRecordEvents;
+import uk.gov.cshr.report.domain.LearnerRecordEvent;
 import uk.gov.cshr.report.domain.LearnerRecordSummary;
 import uk.gov.cshr.report.service.LearnerRecordService;
 
@@ -59,7 +59,7 @@ public class LearnerRecordController {
 
         LOG.debug("Getting learner record events CSV report");
 
-        List<LearnerRecordEvents> events = learnerRecordService.listEvents();
+        List<LearnerRecordEvent> events = learnerRecordService.listEvents();
 
         try (Writer writer = response.getWriter()) {
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)

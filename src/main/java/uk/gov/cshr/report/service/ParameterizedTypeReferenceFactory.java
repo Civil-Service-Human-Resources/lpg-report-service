@@ -5,6 +5,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.exception.IllegalTypeException;
 
@@ -19,7 +20,8 @@ public class ParameterizedTypeReferenceFactory {
      */
 
     private final Map<String, ParameterizedTypeReference> listParameterizedTypeReferenceMap = ImmutableMap.of(
-        "uk.gov.cshr.report.domain.learnerrecord.Booking", new ParameterizedTypeReference<List<Booking>>() {}
+            "uk.gov.cshr.report.domain.learnerrecord.Booking", new ParameterizedTypeReference<List<Booking>>() {},
+            "uk.gov.cshr.report.domain.learnerrecord.ModuleRecord", new ParameterizedTypeReference<List<ModuleRecord>>() {}
     );
 
     private final Map<String, ParameterizedTypeReference> mapParameterizedTypeReferenceMap = ImmutableMap.of(

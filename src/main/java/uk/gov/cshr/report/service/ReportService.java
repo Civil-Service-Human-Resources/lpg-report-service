@@ -1,13 +1,18 @@
 package uk.gov.cshr.report.service;
 
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.domain.LearnerRecordEvent;
 import uk.gov.cshr.report.domain.catalogue.Event;
+import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
+import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +46,24 @@ public class ReportService {
                 CivilServant civilServant = civilServantMap.get(booking.getLearner());
                 Event event = eventMap.get(eventUid);
                 report.add(reportRowFactory.createBookingReportRow(civilServant, event, booking));
+            }
+        }
+        return report;
+    }
+
+    public List<ModuleReportRow> buildModuleReport(LocalDateTime from, LocalDateTime to) {
+        List<ModuleReportRow> report = new ArrayList<>();
+
+        List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
+        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+        Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
+
+        for (ModuleRecord moduleRecord : moduleRecords) {
+            if (civilServantMap.containsKey(moduleRecord.getLearner())) {
+
+                CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+                Module module = moduleMap.get(moduleRecord.getModuleId());
+                report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord));
             }
         }
         return report;

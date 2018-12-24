@@ -7,11 +7,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.cshr.report.domain.catalogue.Event;
+import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
+import uk.gov.cshr.report.reports.ModuleReportRow;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -72,6 +76,48 @@ public class ReportServiceTest {
         assertEquals(Collections.singletonList(reportRow), result);
 
         verify(reportRowFactory).createBookingReportRow(civilServant1, event, booking1);
+        verifyNoMoreInteractions(reportRowFactory);
+    }
+
+    @Test
+    public void shouldReturnModuleReport() {
+        ModuleRecord moduleRecord1 = new ModuleRecord();
+        moduleRecord1.setModuleId("module1");
+        moduleRecord1.setLearner("learner1");
+
+        ModuleRecord moduleRecord2 = new ModuleRecord();
+        moduleRecord2.setModuleId("module2");
+        moduleRecord2.setLearner("learner2");
+
+        CivilServant civilServant1 = new CivilServant();
+        civilServant1.setId("learner1");
+
+        CivilServant civilServant2 = new CivilServant();
+        civilServant2.setId("learner2");
+
+        CivilServant civilServant3 = new CivilServant();
+        civilServant3.setId("learner3");
+
+        Module module = new Module();
+
+        LocalDateTime from = LocalDateTime.of(2018, 1, 1, 0, 0, 0);
+        LocalDateTime to = LocalDateTime.of(2018, 1, 1, 0, 0, 0);
+
+        when(learnerRecordService.getModules(from ,to)).thenReturn(Arrays.asList(moduleRecord1, moduleRecord2));
+        when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
+                "learner1", civilServant1,
+                "learner3", civilServant3
+        ));
+        when(learningCatalogueService.getModuleMap()).thenReturn(ImmutableMap.of("module1", module));
+
+        ModuleReportRow reportRow = new ModuleReportRow();
+        when(reportRowFactory.createModuleReportRow(civilServant1, module, moduleRecord1)).thenReturn(reportRow);
+
+        List<ModuleReportRow> result = reportService.buildModuleReport(from, to);
+
+        assertEquals(Collections.singletonList(reportRow), result);
+
+        verify(reportRowFactory).createModuleReportRow(civilServant1, module, moduleRecord1);
         verifyNoMoreInteractions(reportRowFactory);
     }
 }
