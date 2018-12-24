@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.domain.catalogue.Event;
+import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
@@ -26,6 +27,7 @@ public class ParameterizedTypeReferenceFactory {
 
     private final Map<String, ParameterizedTypeReference> mapParameterizedTypeReferenceMap = ImmutableMap.of(
             "uk.gov.cshr.report.domain.catalogue.Event", new ParameterizedTypeReference<Map<String, Event>>() {},
+            "uk.gov.cshr.report.domain.catalogue.Module", new ParameterizedTypeReference<Map<String, Module>>() {},
             "uk.gov.cshr.report.domain.registry.CivilServant",
                 new ParameterizedTypeReference<Map<String, CivilServant>>() {}
     );
