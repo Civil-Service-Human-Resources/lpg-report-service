@@ -7,4 +7,5 @@ public class Module {
     private String id;
     private String title;
     private Boolean required;
+    private Course course;
 }

@@ -9,12 +9,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import uk.gov.cshr.report.reports.BookingReportRow;
+import uk.gov.cshr.report.reports.ModuleReportRow;
 import uk.gov.cshr.report.service.ReportService;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,11 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(BookingController.class)
+@WebMvcTest(ModuleController.class)
 @RunWith(SpringRunner.class)
 @WithMockUser(username = "user")
-public class BookingControllerTest {
-
+public class ModuleControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -35,7 +38,7 @@ public class BookingControllerTest {
 
     @Test
     public void shouldReturnBookingReport() throws Exception {
-        BookingReportRow reportRow = new BookingReportRow();
+        ModuleReportRow reportRow = new ModuleReportRow();
         reportRow.setStatus("Confirmed");
         reportRow.setLearnerId("learner-uid");
         reportRow.setName("test name");
@@ -49,19 +52,25 @@ public class BookingControllerTest {
         reportRow.setModuleId("module-id");
         reportRow.setModuleTitle("module title");
         reportRow.setRequired(true);
-        reportRow.setLearningProvider("learning-provider");
+        reportRow.setStatus("COMPLETED");
+        reportRow.setDate("2018-01-01T00:00:00");
 
-        List<BookingReportRow> report = Lists.newArrayList(reportRow);
+        List<ModuleReportRow> report = Lists.newArrayList(reportRow);
 
-        when(reportService.buildBookingReport()).thenReturn(report);
+        LocalDate from = LocalDate.now().minusDays(7);
+        LocalDate to = LocalDate.now();
+
+        when(reportService.buildModuleReport(any(), any())).thenReturn(report);
 
         mockMvc.perform(
-                get("/bookings").with(csrf())
+                get("/modules")
+                        .param("from", from.format(DateTimeFormatter.ISO_DATE))
+                        .param("to", to.format(DateTimeFormatter.ISO_DATE))
+                        .with(csrf())
                         .accept("application/csv"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("learnerId,name,email,department,profession,otherAreasOfWork,grade,courseId,courseTitle,moduleId,moduleTitle,learningProvider,required,status")))
-                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",learning-provider,true,Confirmed")));
+                .andExpect(content().string(containsString("learnerId,name,email,department,profession,otherAreasOfWork,grade,courseId,courseTitle,moduleId,moduleTitle,required,status,date")))
+                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",true,COMPLETED,2018-01-01T00:00:00")));
     }
-
 }

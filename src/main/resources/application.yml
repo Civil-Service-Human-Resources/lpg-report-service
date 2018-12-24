@@ -29,6 +29,7 @@ learnerRecord:
   summariesUrl: "${learnerRecord.serviceUrl}/summaries"
   eventsUrl: "${learnerRecord.serviceUrl}/events"
   bookingsUrl: "${learnerRecord.serviceUrl}/reporting/bookings"
+  moduleRecordsUrl: "${learnerRecord.serviceUrl}/reporting/modules"
 
 registryService:
   serviceUrl: ${REGISTRY_SERVICE_URL:http://localhost:9002}
@@ -37,6 +38,7 @@ registryService:
 learningCatalogue:
   serviceUrl: ${LEARNING_CATALOGUE_SERVICE_URL:http://localhost:9001}
   eventsUrl: "${learningCatalogue.serviceUrl}/reporting/events"
+  modulesUrl: "${learningCatalogue.serviceUrl}/reporting/modules"
 ---
 
 spring:
