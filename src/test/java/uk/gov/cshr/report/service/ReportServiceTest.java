@@ -15,6 +15,7 @@ import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -100,8 +101,8 @@ public class ReportServiceTest {
 
         Module module = new Module();
 
-        LocalDateTime from = LocalDateTime.of(2018, 1, 1, 0, 0, 0);
-        LocalDateTime to = LocalDateTime.of(2018, 1, 1, 0, 0, 0);
+        LocalDate from = LocalDate.of(2018, 1, 1);
+        LocalDate to = LocalDate.of(2018, 1, 1);
 
         when(learnerRecordService.getModules(from ,to)).thenReturn(Arrays.asList(moduleRecord1, moduleRecord2));
         when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
