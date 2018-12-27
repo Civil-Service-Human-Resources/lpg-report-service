@@ -6,6 +6,7 @@ import lombok.Data;
 public class Module {
     private String id;
     private String title;
+    private String type;
     private Boolean required;
     private Course course;
 }
