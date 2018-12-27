@@ -29,8 +29,7 @@ public class ModuleController {
             @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
     ) {
 
-        List<ModuleReportRow> report = reportService.buildModuleReport(from.atStartOfDay(),
-                to.plusDays(1).atStartOfDay());
+        List<ModuleReportRow> report = reportService.buildModuleReport(from, to);
 
         return ResponseEntity.ok(report);
     }

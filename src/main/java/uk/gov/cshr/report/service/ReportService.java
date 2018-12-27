@@ -12,6 +12,7 @@ import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class ReportService {
         return report;
     }
 
-    public List<ModuleReportRow> buildModuleReport(LocalDateTime from, LocalDateTime to) {
+    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to) {
         List<ModuleReportRow> report = new ArrayList<>();
 
         List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
