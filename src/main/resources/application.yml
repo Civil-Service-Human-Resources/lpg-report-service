@@ -29,7 +29,7 @@ learnerRecord:
   summariesUrl: "${learnerRecord.serviceUrl}/summaries"
   eventsUrl: "${learnerRecord.serviceUrl}/events"
   bookingsUrl: "${learnerRecord.serviceUrl}/reporting/bookings"
-  moduleRecordsUrl: "${learnerRecord.serviceUrl}/reporting/modules"
+  moduleRecordsUrl: "${learnerRecord.serviceUrl}/reporting/module-records"
 
 registryService:
   serviceUrl: ${REGISTRY_SERVICE_URL:http://localhost:9002}
