@@ -11,6 +11,7 @@ import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -51,8 +52,8 @@ public class LearnerRecordServiceTest {
 
     @Test
     public void shouldReturnListOfModuleRecords() {
-        LocalDateTime from = LocalDateTime.of(2018, 1, 1, 0, 0);
-        LocalDateTime to = LocalDateTime.of(2018, 1, 2, 0, 0);
+        LocalDate from = LocalDate.of(2018, 1, 1);
+        LocalDate to = LocalDate.of(2018, 1, 2);
 
         UriBuilder uriBuilder = mock(UriBuilder.class);
         URI uri = URI.create("http://locahost");
