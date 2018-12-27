@@ -12,6 +12,7 @@ import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +61,7 @@ public class LearnerRecordService {
         return httpService.getList(bookingUri, Booking.class);
     }
 
-    public List<ModuleRecord> getModules(LocalDateTime from, LocalDateTime to) {
+    public List<ModuleRecord> getModules(LocalDate from, LocalDate to) {
         URI uri = uriBuilderFactory.builder(moduleRecordUri)
                 .queryParam("from", from)
                 .queryParam("to", to)
