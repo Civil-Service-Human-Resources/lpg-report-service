@@ -166,6 +166,7 @@ public class ReportRowFactoryTest {
         String courseTitle = "course-title";
         String moduleId = "module-id";
         String moduleTitle = "module-title";
+        String moduleType = "module-type";
 
         ModuleRecord moduleRecord = new ModuleRecord();
         moduleRecord.setLearner(learnerUid);
@@ -189,6 +190,7 @@ public class ReportRowFactoryTest {
         Module module = new Module();
         module.setId(moduleId);
         module.setTitle(moduleTitle);
+        module.setType(moduleType);
         module.setRequired(true);
         module.setCourse(course);
 
@@ -205,6 +207,7 @@ public class ReportRowFactoryTest {
         assertEquals(courseTitle, reportRow.getCourseTitle());
         assertEquals(moduleId, reportRow.getModuleId());
         assertEquals(moduleTitle, reportRow.getModuleTitle());
+        assertEquals(moduleType, reportRow.getModuleType());
 
         assertEquals(moduleState, reportRow.getStatus());
         assertEquals(stateChangeDate, reportRow.getDate());
