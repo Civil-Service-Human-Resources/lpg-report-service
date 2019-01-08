@@ -62,7 +62,10 @@ public class ReportServiceTest {
 
         Event event = new Event();
 
-        when(learnerRecordService.getBookings()).thenReturn(Arrays.asList(booking1, booking2));
+        LocalDate from = LocalDate.parse("2018-01-01");
+        LocalDate to = LocalDate.parse("2018-01-31");
+
+        when(learnerRecordService.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
         when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
                 "learner1", civilServant1,
                 "learner3", civilServant3
@@ -72,7 +75,7 @@ public class ReportServiceTest {
         BookingReportRow reportRow = new BookingReportRow();
         when(reportRowFactory.createBookingReportRow(civilServant1, event, booking1)).thenReturn(reportRow);
 
-        List<BookingReportRow> result = reportService.buildBookingReport();
+        List<BookingReportRow> result = reportService.buildBookingReport(from, to);
 
         assertEquals(Collections.singletonList(reportRow), result);
 

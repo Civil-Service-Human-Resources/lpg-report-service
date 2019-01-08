@@ -26,14 +26,14 @@ public class LearnerRecordService {
     private final UriBuilderFactory uriBuilderFactory;
     private final URI learnerRecordSummariesUrl;
     private final URI learnerRecordEventsUrl;
-    private final URI bookingUri;
+    private final String bookingUri;
     private final String moduleRecordUri;
 
     public LearnerRecordService(HttpService httpService,
                                 UriBuilderFactory uriBuilderFactory,
                                 @Value("${learnerRecord.summariesUrl}") URI learnerRecordSummariesUrl,
                                 @Value("${learnerRecord.eventsUrl}") URI learnerRecordEventsUrl,
-                                @Value("${learnerRecord.bookingsUrl}") URI bookingUri,
+                                @Value("${learnerRecord.bookingsUrl}") String bookingUri,
                                 @Value("${learnerRecord.moduleRecordsUrl}") String moduleRecordUri
     ) {
         this.httpService = httpService;
@@ -57,8 +57,13 @@ public class LearnerRecordService {
         return httpService.getList(learnerRecordEventsUrl, LearnerRecordEvent.class);
     }
 
-    public List<Booking> getBookings() {
-        return httpService.getList(bookingUri, Booking.class);
+    public List<Booking> getBookings(LocalDate from, LocalDate to) {
+        URI uri = uriBuilderFactory.builder(bookingUri)
+                .queryParam("from", from)
+                .queryParam("to", to)
+                .build(new HashMap<>());
+
+        return httpService.getList(uri, Booking.class);
     }
 
     public List<ModuleRecord> getModules(LocalDate from, LocalDate to) {

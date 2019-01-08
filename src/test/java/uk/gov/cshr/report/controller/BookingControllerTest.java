@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.service.ReportService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
@@ -53,10 +54,16 @@ public class BookingControllerTest {
 
         List<BookingReportRow> report = Lists.newArrayList(reportRow);
 
-        when(reportService.buildBookingReport()).thenReturn(report);
+        LocalDate from = LocalDate.parse("2018-01-01");
+        LocalDate to = LocalDate.parse("2018-01-31");
+
+        when(reportService.buildBookingReport(from, to)).thenReturn(report);
 
         mockMvc.perform(
-                get("/bookings").with(csrf())
+                get("/bookings")
+                        .param("from", "2018-01-01")
+                        .param("to", "2018-01-31")
+                        .with(csrf())
                         .accept("application/csv"))
                 .andDo(print())
                 .andExpect(status().isOk())
