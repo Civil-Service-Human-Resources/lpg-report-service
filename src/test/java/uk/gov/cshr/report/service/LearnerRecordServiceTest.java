@@ -24,7 +24,7 @@ public class LearnerRecordServiceTest {
 
     private URI learnerRecordSummariesUrl;
     private URI learnerRecordEventsUri;
-    private URI bookingUri;
+    private String bookingUri;
     private String moduleRecordUri = "http://localhost/modules";
     private HttpService httpService = mock(HttpService.class);
     private LearnerRecordService learnerRecordService;
@@ -34,7 +34,7 @@ public class LearnerRecordServiceTest {
     public void setUp() throws Exception {
         learnerRecordSummariesUrl = new URI("http://localhost/learner-record-summaries");
         learnerRecordEventsUri = new URI("http://localhost/learner-record-events");
-        bookingUri = new URI("http://localhost/bookings");
+        bookingUri = "http://localhost/bookings";
 
         learnerRecordService = new LearnerRecordService(httpService, uriBuilderFactory, learnerRecordSummariesUrl,
                 learnerRecordEventsUri, bookingUri, moduleRecordUri);
@@ -42,12 +42,23 @@ public class LearnerRecordServiceTest {
 
     @Test
     public void shouldReturnListOfBookings() {
+        LocalDate from = LocalDate.parse("2018-01-01");
+        LocalDate to = LocalDate.parse("2018-01-31");
+
+        UriBuilder uriBuilder = mock(UriBuilder.class);
+        URI uri = URI.create("http://locahost");
+
+        when(uriBuilderFactory.builder(bookingUri)).thenReturn(uriBuilder);
+        when(uriBuilder.queryParam("from", from)).thenReturn(uriBuilder);
+        when(uriBuilder.queryParam("to", to)).thenReturn(uriBuilder);
+        when(uriBuilder.build(eq(new HashMap<>()))).thenReturn(uri);
+
         List<Booking> bookings = Lists.newArrayList(new Booking());
-        when(httpService.getList(bookingUri, Booking.class)).thenReturn(bookings);
+        when(httpService.getList(uri, Booking.class)).thenReturn(bookings);
 
-        assertEquals(bookings, learnerRecordService.getBookings());
+        assertEquals(bookings, learnerRecordService.getBookings(from, to));
 
-        verify(httpService).getList(bookingUri, Booking.class);
+        verify(httpService).getList(uri, Booking.class);
     }
 
     @Test

@@ -32,11 +32,11 @@ public class ReportService {
         this.reportRowFactory = reportRowFactory;
     }
 
-    public List<BookingReportRow> buildBookingReport() {
+    public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to) {
 
         List<BookingReportRow> report = new ArrayList<>();
 
-        List<Booking> bookings = learnerRecordService.getBookings();
+        List<Booking> bookings = learnerRecordService.getBookings(from, to);
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
         Map<String, Event> eventMap = learningCatalogueService.getEventMap();
 
