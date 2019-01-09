@@ -23,8 +23,9 @@ public class ReportRowFactory {
         reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
         reportRow.setGrade(civilServant.getGrade());
 
-        reportRow.setCourseId(event.getModule().getCourse().getId());
-        reportRow.setCourseTitle(event.getModule().getCourse().getTitle());
+        // TODO: This will need to change when LPFG-209 is merged
+        reportRow.setCourseId(event.getCourse().getId());
+        reportRow.setCourseTitle(event.getCourse().getTitle());
         reportRow.setModuleId(event.getModule().getId());
         reportRow.setModuleTitle(event.getModule().getTitle());
 

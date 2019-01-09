@@ -62,7 +62,6 @@ public class ReportRowFactoryTest {
         module.setId(moduleId);
         module.setTitle(moduleTitle);
         module.setRequired(true);
-        module.setCourse(course);
 
         LearningProvider learningProvider = new LearningProvider();
         learningProvider.setId(learningProviderId);
@@ -72,6 +71,7 @@ public class ReportRowFactoryTest {
         event.setId(eventUid);
         event.setModule(module);
         event.setLearningProvider(learningProvider);
+        event.setCourse(course);
 
         BookingReportRow reportRow = reportRowFactory.createBookingReportRow(civilServant, event, booking);
 
@@ -127,11 +127,11 @@ public class ReportRowFactoryTest {
         module.setId(moduleId);
         module.setTitle(moduleTitle);
         module.setRequired(true);
-        module.setCourse(course);
 
         Event event = new Event();
         event.setId(eventUid);
         event.setModule(module);
+        event.setCourse(course);
 
         BookingReportRow reportRow = reportRowFactory.createBookingReportRow(civilServant, event, booking);
 
