@@ -13,28 +13,34 @@ import java.util.Optional;
 
 @Component
 public class ReportRowFactory {
-    public BookingReportRow createBookingReportRow(CivilServant civilServant, Event event, Booking booking) {
+    public BookingReportRow createBookingReportRow(Optional<CivilServant> civilServantOptional, Optional<Event> eventOptional, Booking booking) {
         BookingReportRow reportRow = new BookingReportRow();
-        reportRow.setLearnerId(civilServant.getId());
-        reportRow.setName(civilServant.getName());
-        reportRow.setEmail(civilServant.getEmail());
-        reportRow.setDepartment(civilServant.getOrganisation());
-        reportRow.setProfession(civilServant.getProfession());
-        reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
-        reportRow.setGrade(civilServant.getGrade());
+
+        if (civilServantOptional.isPresent()) {
+            CivilServant civilServant = civilServantOptional.get();
+            reportRow.setLearnerId(civilServant.getId());
+            reportRow.setName(civilServant.getName());
+            reportRow.setEmail(civilServant.getEmail());
+            reportRow.setDepartment(civilServant.getOrganisation());
+            reportRow.setProfession(civilServant.getProfession());
+            reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
+            reportRow.setGrade(civilServant.getGrade());
+        }
 
         // TODO: This will need to change when LPFG-209 is merged
-        reportRow.setCourseId(event.getCourse().getId());
-        reportRow.setCourseTitle(event.getCourse().getTitle());
-        reportRow.setModuleId(event.getModule().getId());
-        reportRow.setModuleTitle(event.getModule().getTitle());
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
+            reportRow.setCourseId(event.getCourse().getId());
+            reportRow.setCourseTitle(event.getCourse().getTitle());
+            reportRow.setModuleId(event.getModule().getId());
+            reportRow.setModuleTitle(event.getModule().getTitle());
+            reportRow.setRequired(event.getModule().getRequired());
+            Optional.ofNullable(event.getLearningProvider()).ifPresent(
+                learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
+            );
+        }
 
         reportRow.setStatus(booking.getStatus().getValue());
-        reportRow.setRequired(event.getModule().getRequired());
-
-        Optional.ofNullable(event.getLearningProvider()).ifPresent(
-            learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
-        );
 
         return reportRow;
     }

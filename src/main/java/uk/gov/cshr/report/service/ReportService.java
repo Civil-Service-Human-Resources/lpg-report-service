@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ReportService {
@@ -44,8 +45,8 @@ public class ReportService {
             if (civilServantMap.containsKey(booking.getLearner())) {
                 String eventUid = Paths.get(booking.getEvent()).getFileName().toString();
 
-                CivilServant civilServant = civilServantMap.get(booking.getLearner());
-                Event event = eventMap.get(eventUid);
+                Optional<CivilServant> civilServant = Optional.ofNullable(civilServantMap.get(booking.getLearner()));
+                Optional<Event> event = Optional.ofNullable(eventMap.get(eventUid));
                 report.add(reportRowFactory.createBookingReportRow(civilServant, event, booking));
             }
         }
