@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -73,13 +74,13 @@ public class ReportServiceTest {
         when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
 
         BookingReportRow reportRow = new BookingReportRow();
-        when(reportRowFactory.createBookingReportRow(civilServant1, event, booking1)).thenReturn(reportRow);
+        when(reportRowFactory.createBookingReportRow(Optional.of(civilServant1), Optional.of(event), booking1)).thenReturn(reportRow);
 
         List<BookingReportRow> result = reportService.buildBookingReport(from, to);
 
         assertEquals(Collections.singletonList(reportRow), result);
 
-        verify(reportRowFactory).createBookingReportRow(civilServant1, event, booking1);
+        verify(reportRowFactory).createBookingReportRow(Optional.of(civilServant1), Optional.of(event), booking1);
         verifyNoMoreInteractions(reportRowFactory);
     }
 
