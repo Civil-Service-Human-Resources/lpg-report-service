@@ -10,4 +10,8 @@ public class Booking {
     private String event;
     private BookingStatus status;
     private String bookingTime;
+    private String confirmationTime;
+    private String cancellationTime;
+    private String accessibilityOptions;
+    private String bookingCancellationReason;
 }
