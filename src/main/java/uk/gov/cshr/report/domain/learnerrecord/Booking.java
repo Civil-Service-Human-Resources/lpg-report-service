@@ -13,5 +13,5 @@ public class Booking {
     private String confirmationTime;
     private String cancellationTime;
     private String accessibilityOptions;
-    private String bookingCancellationReason;
+    private String cancellationReason;
 }
