@@ -8,7 +8,8 @@ import java.time.Instant;
 
 @Data
 @JsonPropertyOrder({ "learnerId", "name", "email", "department", "profession", "otherAreasOfWork", "grade", "courseId",
-        "courseTitle", "moduleId", "moduleTitle","learningProvider", "required", "status" })
+        "courseTitle", "moduleId", "moduleTitle","learningProvider", "required", "status", "bookingTime", "confirmationTime",
+        "cancellationTime", "accessibilityOptions", "bookingCancellationReason"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookingReportRow {
     private String learnerId;
