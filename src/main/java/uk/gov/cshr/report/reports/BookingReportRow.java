@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
-import java.time.Instant;
-
 @Data
 @JsonPropertyOrder({ "learnerId", "name", "email", "department", "profession", "otherAreasOfWork", "grade", "courseId",
         "courseTitle", "moduleId", "moduleTitle","learningProvider", "required", "status", "bookingTime", "confirmationTime",
