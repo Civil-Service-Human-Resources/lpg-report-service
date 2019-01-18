@@ -1,7 +1,6 @@
 package uk.gov.cshr.report.service;
 
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.LearnerRecordEvent;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
@@ -13,10 +12,10 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ReportService {
@@ -32,11 +31,11 @@ public class ReportService {
         this.reportRowFactory = reportRowFactory;
     }
 
-    public List<BookingReportRow> buildBookingReport() {
+    public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to) {
 
         List<BookingReportRow> report = new ArrayList<>();
 
-        List<Booking> bookings = learnerRecordService.getBookings();
+        List<Booking> bookings = learnerRecordService.getBookings(from, to);
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
         Map<String, Event> eventMap = learningCatalogueService.getEventMap();
 
@@ -44,8 +43,8 @@ public class ReportService {
             if (civilServantMap.containsKey(booking.getLearner())) {
                 String eventUid = Paths.get(booking.getEvent()).getFileName().toString();
 
-                CivilServant civilServant = civilServantMap.get(booking.getLearner());
-                Event event = eventMap.get(eventUid);
+                Optional<CivilServant> civilServant = Optional.ofNullable(civilServantMap.get(booking.getLearner()));
+                Optional<Event> event = Optional.ofNullable(eventMap.get(eventUid));
                 report.add(reportRowFactory.createBookingReportRow(civilServant, event, booking));
             }
         }

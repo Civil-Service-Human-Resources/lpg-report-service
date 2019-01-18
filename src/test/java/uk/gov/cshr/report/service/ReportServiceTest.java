@@ -16,10 +16,10 @@ import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -62,7 +62,10 @@ public class ReportServiceTest {
 
         Event event = new Event();
 
-        when(learnerRecordService.getBookings()).thenReturn(Arrays.asList(booking1, booking2));
+        LocalDate from = LocalDate.parse("2018-01-01");
+        LocalDate to = LocalDate.parse("2018-01-31");
+
+        when(learnerRecordService.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
         when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
                 "learner1", civilServant1,
                 "learner3", civilServant3
@@ -70,13 +73,13 @@ public class ReportServiceTest {
         when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
 
         BookingReportRow reportRow = new BookingReportRow();
-        when(reportRowFactory.createBookingReportRow(civilServant1, event, booking1)).thenReturn(reportRow);
+        when(reportRowFactory.createBookingReportRow(Optional.of(civilServant1), Optional.of(event), booking1)).thenReturn(reportRow);
 
-        List<BookingReportRow> result = reportService.buildBookingReport();
+        List<BookingReportRow> result = reportService.buildBookingReport(from, to);
 
         assertEquals(Collections.singletonList(reportRow), result);
 
-        verify(reportRowFactory).createBookingReportRow(civilServant1, event, booking1);
+        verify(reportRowFactory).createBookingReportRow(Optional.of(civilServant1), Optional.of(event), booking1);
         verifyNoMoreInteractions(reportRowFactory);
     }
 

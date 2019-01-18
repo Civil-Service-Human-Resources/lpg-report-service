@@ -14,6 +14,7 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -73,7 +74,7 @@ public class ReportRowFactoryTest {
         event.setModule(module);
         event.setLearningProvider(learningProvider);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(civilServant, event, booking);
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
@@ -133,7 +134,7 @@ public class ReportRowFactoryTest {
         event.setId(eventUid);
         event.setModule(module);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(civilServant, event, booking);
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());

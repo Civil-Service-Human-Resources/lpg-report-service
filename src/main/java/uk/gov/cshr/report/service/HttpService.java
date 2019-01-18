@@ -1,5 +1,7 @@
 package uk.gov.cshr.report.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import java.util.Map;
 
 @Service
 public class HttpService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpService.class);
     private final RestTemplate restTemplate;
     private final HttpHeadersFactory httpHeadersFactory;
     private final RequestEntityFactory requestEntityFactory;
@@ -37,6 +40,7 @@ public class HttpService {
 
     <T> Map<String, T> getMap(URI uri, Class<T> type) {
         RequestEntity requestEntity = buildRequest(uri);
+        LOGGER.debug(String.format("GET %s", uri));
         ResponseEntity<Map<String, T>> response = restTemplate.exchange(requestEntity,
                 parameterizedTypeReferenceFactory.createMapReference(type)
         );
