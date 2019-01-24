@@ -125,4 +125,48 @@ public class ReportServiceTest {
         verify(reportRowFactory).createModuleReportRow(civilServant1, module, moduleRecord1);
         verifyNoMoreInteractions(reportRowFactory);
     }
+
+    @Test
+    public void shouldReturnModuleReportByProfession() {
+        int professionId = 2;
+
+        ModuleRecord moduleRecord1 = new ModuleRecord();
+        moduleRecord1.setModuleId("module1");
+        moduleRecord1.setLearner("learner1");
+
+        ModuleRecord moduleRecord2 = new ModuleRecord();
+        moduleRecord2.setModuleId("module2");
+        moduleRecord2.setLearner("learner2");
+
+        CivilServant civilServant1 = new CivilServant();
+        civilServant1.setId("learner1");
+
+        CivilServant civilServant2 = new CivilServant();
+        civilServant2.setId("learner2");
+
+        CivilServant civilServant3 = new CivilServant();
+        civilServant3.setId("learner3");
+
+        Module module = new Module();
+
+        LocalDate from = LocalDate.of(2018, 1, 1);
+        LocalDate to = LocalDate.of(2018, 1, 1);
+
+        when(learnerRecordService.getModules(from ,to)).thenReturn(Arrays.asList(moduleRecord1, moduleRecord2));
+        when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
+                "learner1", civilServant1,
+                "learner3", civilServant3
+        ));
+        when(learningCatalogueService.getModuleMap(professionId)).thenReturn(ImmutableMap.of("module1", module));
+
+        ModuleReportRow reportRow = new ModuleReportRow();
+        when(reportRowFactory.createModuleReportRow(civilServant1, module, moduleRecord1)).thenReturn(reportRow);
+
+        List<ModuleReportRow> result = reportService.buildModuleReport(from, to, professionId);
+
+        assertEquals(Collections.singletonList(reportRow), result);
+
+        verify(reportRowFactory).createModuleReportRow(civilServant1, module, moduleRecord1);
+        verifyNoMoreInteractions(reportRowFactory);
+    }
 }

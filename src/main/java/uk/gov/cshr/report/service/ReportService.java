@@ -54,11 +54,25 @@ public class ReportService {
     }
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to) {
-        List<ModuleReportRow> report = new ArrayList<>();
-
         List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
+
+        return buildModuleReport(moduleRecords, civilServantMap, moduleMap);
+    }
+
+    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, int professionId) {
+        List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
+        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+        Map<String, Module> moduleMap = learningCatalogueService.getModuleMap(professionId);
+
+        return buildModuleReport(moduleRecords, civilServantMap, moduleMap);
+    }
+
+    private List<ModuleReportRow> buildModuleReport(List<ModuleRecord> moduleRecords,
+                                                    Map<String, CivilServant> civilServantMap,
+                                                    Map<String, Module> moduleMap) {
+        List<ModuleReportRow> report = new ArrayList<>();
 
         for (ModuleRecord moduleRecord : moduleRecords) {
             if (civilServantMap.containsKey(moduleRecord.getLearner())) {

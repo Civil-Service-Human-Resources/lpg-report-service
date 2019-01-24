@@ -10,7 +10,6 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 import uk.gov.cshr.report.service.ReportService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -30,6 +29,17 @@ public class ModuleController {
     ) {
 
         List<ModuleReportRow> report = reportService.buildModuleReport(from, to);
+
+        return ResponseEntity.ok(report);
+    }
+
+    @GetMapping(produces = "application/csv", params = "professionId")
+    public ResponseEntity<List<ModuleReportRow>> generateModuleReport(
+            @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
+            @RequestParam int professionId
+    ) {
+        List<ModuleReportRow> report = reportService.buildModuleReport(from, to, professionId);
 
         return ResponseEntity.ok(report);
     }

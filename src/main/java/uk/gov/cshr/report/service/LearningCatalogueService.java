@@ -15,14 +15,17 @@ public class LearningCatalogueService {
 
     private final URI eventUri;
     private final URI moduleUri;
+    private final String moduleByProfessionUri;
 
     public LearningCatalogueService(HttpService httpService,
                                     @Value("${learningCatalogue.eventsUrl}") URI eventUri,
-                                    @Value("${learningCatalogue.modulesUrl}") URI moduleUri
+                                    @Value("${learningCatalogue.modulesUrl}") URI moduleUri,
+                                    @Value("${learningCatalogue.modulesByProfessionUrl}") String modulesByProfessionUri
                                     ) {
         this.httpService = httpService;
         this.eventUri = eventUri;
         this.moduleUri = moduleUri;
+        this.moduleByProfessionUri = modulesByProfessionUri;
     }
 
     public Map<String, Event> getEventMap() {
@@ -33,4 +36,8 @@ public class LearningCatalogueService {
         return httpService.getMap(moduleUri, Module.class);
     }
 
+    public Map<String, Module> getModuleMap(int professionId) {
+        URI uri = URI.create(String.format(moduleByProfessionUri, professionId));
+        return httpService.getMap(uri, Module.class);
+    }
 }
