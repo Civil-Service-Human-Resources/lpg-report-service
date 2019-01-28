@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AccessTokenService {
-    String getAccessToken() {
+    public String getAccessToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
 

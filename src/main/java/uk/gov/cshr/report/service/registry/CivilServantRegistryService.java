@@ -3,6 +3,7 @@ package uk.gov.cshr.report.service.registry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.domain.registry.CivilServant;
+import uk.gov.cshr.report.exception.ProfessionNotSetException;
 import uk.gov.cshr.report.service.HttpService;
 import uk.gov.cshr.report.service.registry.domain.CivilServantResource;
 
@@ -30,6 +31,11 @@ public class CivilServantRegistryService {
 
     public boolean userHasProfession(long professionId) {
         CivilServantResource civilServant = httpService.get(civilServantProfileUri, CivilServantResource.class);
+
+        if (null == civilServant.getProfession()) {
+            throw new ProfessionNotSetException();
+        }
+
         return civilServant.getProfession().getId() == professionId;
     }
 }

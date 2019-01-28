@@ -51,7 +51,7 @@ public class HttpService {
 
     public <T> T get(URI uri, Class<T> type) {
         RequestEntity requestEntity = buildRequest(uri);
-        ResponseEntity<T> response = restTemplate.getForEntity(uri, type);
+        ResponseEntity<T> response = restTemplate.exchange(requestEntity, type);
 
         return response.getBody();
     }

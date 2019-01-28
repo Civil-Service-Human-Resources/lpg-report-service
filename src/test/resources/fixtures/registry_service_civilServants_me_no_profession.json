@@ -1,0 +1,44 @@
+{
+  "fullName": "Test User",
+  "grade": {
+    "code": "AO",
+    "name": "Administrative officer"
+  },
+  "organisationalUnit": {
+    "id": 2,
+    "name": "Department of Health & Social Care",
+    "code": "dh",
+    "paymentMethods": [
+      "PURCHASE_ORDER"
+    ]
+  },
+  "otherAreasOfWork": [
+    {
+      "id": 14,
+      "name": "I don't know"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Contract management"
+    },
+    {
+      "name": "Leadership"
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "http://localhost:9002/civilServants/2{?projection}",
+      "templated": true
+    },
+    "organisationalUnit": {
+      "href": "http://localhost:9002/civilServants/2/organisationalUnit"
+    },
+    "grade": {
+      "href": "http://localhost:9002/civilServants/2/grade"
+    },
+    "profession": {
+      "href": "http://localhost:9002/civilServants/2/profession"
+    }
+  }
+}

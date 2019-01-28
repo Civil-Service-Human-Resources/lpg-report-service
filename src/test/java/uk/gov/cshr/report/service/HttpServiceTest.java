@@ -122,7 +122,7 @@ public class HttpServiceTest {
         ResponseEntity<CivilServantResource> responseEntity = mock(ResponseEntity.class);
         when(responseEntity.getBody()).thenReturn(civilServantResource);
 
-        when(restTemplate.getForEntity(uri, CivilServantResource.class)).thenReturn(responseEntity);
+        when(restTemplate.exchange(requestEntity, CivilServantResource.class)).thenReturn(responseEntity);
 
         assertEquals(civilServantResource, httpService.get(uri, CivilServantResource.class));
     }

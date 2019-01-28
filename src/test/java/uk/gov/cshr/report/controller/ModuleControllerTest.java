@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import uk.gov.cshr.report.exception.ProfessionNotSetException;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 import uk.gov.cshr.report.service.ReportService;
 import uk.gov.cshr.report.service.registry.CivilServantRegistryService;
@@ -21,8 +22,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -169,6 +169,27 @@ public class ModuleControllerTest {
                 .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",true,COMPLETED,2018-01-01T00:00:00")));
     }
 
+    @Test
+    @WithMockUser(username = "user", authorities = {"PROFESSION_REPORTER"})
+    public void shouldReturn400ForProfessionReporterIfProfessionNotSet() throws Exception {
+
+        long professionId = 2;
+
+        LocalDate from = LocalDate.now().minusDays(7);
+        LocalDate to = LocalDate.now();
+
+        doThrow(new ProfessionNotSetException()).when(civilServantRegistryService).userHasProfession(professionId);
+
+        mockMvc.perform(
+                get("/modules")
+                        .param("from", from.format(DateTimeFormatter.ISO_DATE))
+                        .param("to", to.format(DateTimeFormatter.ISO_DATE))
+                        .param("professionId", String.valueOf(professionId))
+                        .with(csrf())
+                        .accept("text/csv"))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 
     @Test
     @WithMockUser(username = "user", authorities = {"PROFESSION_REPORTER"})
