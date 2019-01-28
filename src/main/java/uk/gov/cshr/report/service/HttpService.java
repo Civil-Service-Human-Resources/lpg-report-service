@@ -30,7 +30,7 @@ public class HttpService {
         this.parameterizedTypeReferenceFactory = parameterizedTypeReferenceFactory;
     }
 
-    <T> List<T> getList(URI uri, Class<T> type) {
+    public <T> List<T> getList(URI uri, Class<T> type) {
         RequestEntity requestEntity = buildRequest(uri);
         ResponseEntity<List<T>> response = restTemplate.exchange(requestEntity,
                 parameterizedTypeReferenceFactory.createListReference(type)
@@ -39,12 +39,19 @@ public class HttpService {
         return response.getBody();
     }
 
-    <T> Map<String, T> getMap(URI uri, Class<T> type) {
+    public <T> Map<String, T> getMap(URI uri, Class<T> type) {
         RequestEntity requestEntity = buildRequest(uri);
         LOGGER.debug(String.format("GET %s", uri));
         ResponseEntity<Map<String, T>> response = restTemplate.exchange(requestEntity,
                 parameterizedTypeReferenceFactory.createMapReference(type)
         );
+
+        return response.getBody();
+    }
+
+    public <T> T get(URI uri, Class<T> type) {
+        RequestEntity requestEntity = buildRequest(uri);
+        ResponseEntity<T> response = restTemplate.getForEntity(uri, type);
 
         return response.getBody();
     }

@@ -12,6 +12,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.service.registry.domain.CivilServantResource;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -100,5 +101,29 @@ public class HttpServiceTest {
         when(restTemplate.exchange(requestEntity, parameterizedTypeReference)).thenReturn(responseEntity);
 
         assertEquals(ImmutableMap.of("booking-id", booking), httpService.getMap(uri, Booking.class));
+    }
+
+    @Test
+    public void shouldReturnSingleResource() throws URISyntaxException {
+        String accessToken = "access-token";
+
+        when(accessTokenService.getAccessToken()).thenReturn(accessToken);
+
+        HttpHeaders headers = mock(HttpHeaders.class);
+        when(httpHeadersFactory.authorizationHeaders(accessToken)).thenReturn(headers);
+
+        URI uri = new URI("http://example.org");
+
+        RequestEntity requestEntity = mock(RequestEntity.class);
+        when(requestEntityFactory.createGetRequest(headers, uri)).thenReturn(requestEntity);
+
+        CivilServantResource civilServantResource = new CivilServantResource();
+
+        ResponseEntity<CivilServantResource> responseEntity = mock(ResponseEntity.class);
+        when(responseEntity.getBody()).thenReturn(civilServantResource);
+
+        when(restTemplate.getForEntity(uri, CivilServantResource.class)).thenReturn(responseEntity);
+
+        assertEquals(civilServantResource, httpService.get(uri, CivilServantResource.class));
     }
 }

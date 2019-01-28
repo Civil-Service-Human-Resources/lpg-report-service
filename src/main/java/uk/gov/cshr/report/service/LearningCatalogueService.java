@@ -36,7 +36,7 @@ public class LearningCatalogueService {
         return httpService.getMap(moduleUri, Module.class);
     }
 
-    public Map<String, Module> getModuleMap(int professionId) {
+    public Map<String, Module> getModuleMap(long professionId) {
         URI uri = URI.create(String.format(moduleByProfessionUri, professionId));
         return httpService.getMap(uri, Module.class);
     }

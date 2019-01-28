@@ -34,6 +34,7 @@ learnerRecord:
 registryService:
   serviceUrl: ${REGISTRY_SERVICE_URL:http://localhost:9002}
   civilServantsUrl: "${registryService.serviceUrl}/report/civilServants"
+  civilServantProfileUri: "${registryService.serviceUrl}/civilServants/me"
 
 learningCatalogue:
   serviceUrl: ${LEARNING_CATALOGUE_SERVICE_URL:http://localhost:9001}

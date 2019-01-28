@@ -1,7 +1,6 @@
 package uk.gov.cshr.report.service;
 
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.LearnerRecordEvent;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
@@ -10,10 +9,10 @@ import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
+import uk.gov.cshr.report.service.registry.CivilServantRegistryService;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +60,7 @@ public class ReportService {
         return buildModuleReport(moduleRecords, civilServantMap, moduleMap);
     }
 
-    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, int professionId) {
+    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, long professionId) {
         List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap(professionId);

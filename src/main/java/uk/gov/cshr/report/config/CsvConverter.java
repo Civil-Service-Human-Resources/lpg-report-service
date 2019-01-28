@@ -19,12 +19,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-class CsvConverter<T> extends AbstractHttpMessageConverter<T> {
+public class CsvConverter<T> extends AbstractHttpMessageConverter<T> {
 
         private final ObjectMapper objectMapper;
 
         CsvConverter(ObjectMapper objectMapper) {
-            super(new MediaType("application", "csv", Charset.forName("UTF-8")));
+            super(new MediaType("text", "csv", Charset.forName("UTF-8")));
             this.objectMapper = objectMapper;
         }
 

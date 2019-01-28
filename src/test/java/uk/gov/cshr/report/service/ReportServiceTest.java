@@ -14,9 +14,9 @@ import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
+import uk.gov.cshr.report.service.registry.CivilServantRegistryService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
