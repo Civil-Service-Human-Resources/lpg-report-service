@@ -6,4 +6,5 @@ import lombok.Data;
 public class Course {
     private String id;
     private String title;
+    private String topicId;
 }
