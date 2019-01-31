@@ -6,13 +6,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.util.UriBuilder;
-import uk.gov.cshr.report.domain.learnerrecord.Booking;
-import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
+import uk.gov.cshr.report.dto.learnerrecord.Booking;
+import uk.gov.cshr.report.dto.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 

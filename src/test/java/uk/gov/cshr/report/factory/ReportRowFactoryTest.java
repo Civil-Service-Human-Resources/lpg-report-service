@@ -1,14 +1,14 @@
 package uk.gov.cshr.report.factory;
 
 import org.junit.Test;
-import uk.gov.cshr.report.domain.catalogue.Course;
-import uk.gov.cshr.report.domain.catalogue.Event;
-import uk.gov.cshr.report.domain.catalogue.LearningProvider;
-import uk.gov.cshr.report.domain.catalogue.Module;
-import uk.gov.cshr.report.domain.learnerrecord.Booking;
-import uk.gov.cshr.report.domain.learnerrecord.BookingStatus;
-import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
-import uk.gov.cshr.report.domain.registry.CivilServant;
+import uk.gov.cshr.report.dto.catalogue.Course;
+import uk.gov.cshr.report.dto.catalogue.Event;
+import uk.gov.cshr.report.dto.catalogue.LearningProvider;
+import uk.gov.cshr.report.dto.catalogue.Module;
+import uk.gov.cshr.report.dto.learnerrecord.Booking;
+import uk.gov.cshr.report.dto.learnerrecord.BookingStatus;
+import uk.gov.cshr.report.dto.learnerrecord.ModuleRecord;
+import uk.gov.cshr.report.dto.registry.CivilServant;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 

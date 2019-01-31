@@ -2,7 +2,7 @@ package uk.gov.cshr.report.service.registry;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.registry.CivilServant;
+import uk.gov.cshr.report.dto.registry.CivilServant;
 import uk.gov.cshr.report.exception.ProfessionNotSetException;
 import uk.gov.cshr.report.service.HttpService;
 import uk.gov.cshr.report.service.registry.domain.CivilServantResource;

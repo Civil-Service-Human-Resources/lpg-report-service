@@ -1,4 +1,4 @@
-package uk.gov.cshr.report.domain.learnerrecord;
+package uk.gov.cshr.report.dto.learnerrecord;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

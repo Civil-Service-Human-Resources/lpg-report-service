@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.gov.cshr.report.domain.LearnerRecordEvent;
-import uk.gov.cshr.report.domain.LearnerRecordSummary;
+import uk.gov.cshr.report.dto.LearnerRecordEvent;
+import uk.gov.cshr.report.dto.LearnerRecordSummary;
 import uk.gov.cshr.report.service.LearnerRecordService;
 
 import javax.servlet.http.HttpServletResponse;

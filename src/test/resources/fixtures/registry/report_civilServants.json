@@ -1,0 +1,49 @@
+{
+  "3c706a70-3fff-4e7b-ae7f-102c1d46f569": {
+    "id": "3c706a70-3fff-4e7b-ae7f-102c1d46f569",
+    "name": "Test User",
+    "email": "learner@domain.com",
+    "organisation": "Department of Health & Social Care",
+    "profession": null,
+    "otherAreasOfWork": [
+      "I don't know"
+    ],
+    "grade": null
+  },
+  "9fbd4ae2-2db3-44c7-9544-88e80255b56e": {
+    "id": "9fbd4ae2-2db3-44c7-9544-88e80255b56e",
+    "name": null,
+    "email": null,
+    "organisation": "HM Revenue & Customs",
+    "profession": "Communications",
+    "otherAreasOfWork": [],
+    "grade": "Executive officer"
+  },
+  "c4cb1208-eca7-46a6-b496-0f6f354c6eac": {
+    "id": "c4cb1208-eca7-46a6-b496-0f6f354c6eac",
+    "name": null,
+    "email": "cshr-reporter@domain.com",
+    "organisation": null,
+    "profession": "Corporate finance",
+    "otherAreasOfWork": [],
+    "grade": "Grade 6"
+  },
+  "fbc29c68-f787-45bc-acfa-d03d99a9dff0": {
+    "id": "fbc29c68-f787-45bc-acfa-d03d99a9dff0",
+    "name": null,
+    "email": null,
+    "organisation": null,
+    "profession": null,
+    "otherAreasOfWork": [],
+    "grade": null
+  },
+  "8dc80f78-9a52-4c31-ac54-d280a70c18eb": {
+    "id": "8dc80f78-9a52-4c31-ac54-d280a70c18eb",
+    "name": null,
+    "email": "course-manager@domain.com",
+    "organisation": "Cabinet Office",
+    "profession": "Analysis",
+    "otherAreasOfWork": [],
+    "grade": "Administrative assistant"
+  }
+}

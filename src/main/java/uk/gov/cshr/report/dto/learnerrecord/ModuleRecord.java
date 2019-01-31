@@ -1,4 +1,4 @@
-package uk.gov.cshr.report.domain.learnerrecord;
+package uk.gov.cshr.report.dto.learnerrecord;
 
 import lombok.Data;
 

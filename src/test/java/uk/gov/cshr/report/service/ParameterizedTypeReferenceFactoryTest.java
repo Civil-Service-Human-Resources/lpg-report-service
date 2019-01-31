@@ -2,8 +2,8 @@ package uk.gov.cshr.report.service;
 
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
-import uk.gov.cshr.report.domain.catalogue.Event;
-import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.dto.catalogue.Event;
+import uk.gov.cshr.report.dto.learnerrecord.Booking;
 import uk.gov.cshr.report.exception.IllegalTypeException;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class ParameterizedTypeReferenceFactoryTest {
         ParameterizedTypeReference<Map<String, Event>> parameterizedTypeReference =
                 factory.createMapReference(Event.class);
 
-        assertEquals("java.util.Map<java.lang.String, uk.gov.cshr.report.domain.catalogue.Event>",
+        assertEquals("java.util.Map<java.lang.String, uk.gov.cshr.report.dto.catalogue.Event>",
                 parameterizedTypeReference.getType().toString());
     }
 
@@ -29,7 +29,7 @@ public class ParameterizedTypeReferenceFactoryTest {
         ParameterizedTypeReference<List<Booking>> parameterizedTypeReference =
                 factory.createListReference(Booking.class);
 
-        assertEquals("java.util.List<uk.gov.cshr.report.domain.learnerrecord.Booking>",
+        assertEquals("java.util.List<uk.gov.cshr.report.dto.learnerrecord.Booking>",
                 parameterizedTypeReference.getType().toString());
     }
 
@@ -39,7 +39,7 @@ public class ParameterizedTypeReferenceFactoryTest {
         try {
             factory.createListReference(Event.class);
         } catch (IllegalTypeException e) {
-            assertEquals("Unrecognized type: uk.gov.cshr.report.domain.catalogue.Event", e.getMessage());
+            assertEquals("Unrecognized type: uk.gov.cshr.report.dto.catalogue.Event", e.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ public class ParameterizedTypeReferenceFactoryTest {
         try {
             factory.createMapReference(Booking.class);
         } catch (IllegalTypeException e) {
-            assertEquals("Unrecognized type: uk.gov.cshr.report.domain.learnerrecord.Booking", e.getMessage());
+            assertEquals("Unrecognized type: uk.gov.cshr.report.dto.learnerrecord.Booking", e.getMessage());
         }
     }
 

@@ -1,4 +1,4 @@
-package uk.gov.cshr.report.domain.catalogue;
+package uk.gov.cshr.report.dto.catalogue;
 
 import lombok.Data;
 

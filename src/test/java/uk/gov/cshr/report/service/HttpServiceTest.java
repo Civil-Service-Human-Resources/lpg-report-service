@@ -11,7 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.dto.learnerrecord.Booking;
 import uk.gov.cshr.report.service.registry.domain.CivilServantResource;
 
 import java.net.URI;

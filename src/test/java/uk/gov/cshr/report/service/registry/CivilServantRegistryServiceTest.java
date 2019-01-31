@@ -3,9 +3,8 @@ package uk.gov.cshr.report.service.registry;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
-import uk.gov.cshr.report.domain.registry.CivilServant;
+import uk.gov.cshr.report.dto.registry.CivilServant;
 import uk.gov.cshr.report.service.HttpService;
-import uk.gov.cshr.report.service.registry.CivilServantRegistryService;
 import uk.gov.cshr.report.service.registry.domain.CivilServantResource;
 import uk.gov.cshr.report.service.registry.domain.Profession;
 

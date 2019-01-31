@@ -5,15 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.LearnerRecordEvent;
-import uk.gov.cshr.report.domain.LearnerRecordSummary;
-import uk.gov.cshr.report.domain.learnerrecord.Booking;
-import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
+import uk.gov.cshr.report.dto.LearnerRecordEvent;
+import uk.gov.cshr.report.dto.LearnerRecordSummary;
+import uk.gov.cshr.report.dto.learnerrecord.Booking;
+import uk.gov.cshr.report.dto.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 

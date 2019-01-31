@@ -2,8 +2,8 @@ package uk.gov.cshr.report.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.catalogue.Event;
-import uk.gov.cshr.report.domain.catalogue.Module;
+import uk.gov.cshr.report.dto.catalogue.Event;
+import uk.gov.cshr.report.dto.catalogue.Module;
 
 import java.net.URI;
 import java.util.Map;

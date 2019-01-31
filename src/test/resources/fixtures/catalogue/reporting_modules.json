@@ -1,0 +1,4082 @@
+{
+  "OHEKisEXQASt7Arifi7glw": {
+    "id": "OHEKisEXQASt7Arifi7glw",
+    "title": "How to manage remote direct reports",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "tzGeycrwQtS7CbHLU5I9vA",
+      "title": "How to manage remote direct reports"
+    }
+  },
+  "ekHVWErFQGqWoiaeTmaTpQ": {
+    "id": "ekHVWErFQGqWoiaeTmaTpQ",
+    "title": "APM project management qualification (PMQ) for PRINCE2® practitioners",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "EsDrNqh3RQWYbUqsQ3mtFg",
+      "title": "APM project management qualification (PMQ) for PRINCE2® practitioners"
+    }
+  },
+  "migHKaO8ToS4asAR1zsxGw": {
+    "id": "migHKaO8ToS4asAR1zsxGw",
+    "title": "Developing people: scenarios",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "mbtDM1TWQSuuhYQy3Z4JUw": {
+    "id": "mbtDM1TWQSuuhYQy3Z4JUw",
+    "title": "Written communication: managers guide",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "IIikGtZoRlueydvvLg1hHw",
+      "title": "Written communication"
+    }
+  },
+  "c5ST213NRDmGgJpX5HmZaA": {
+    "id": "c5ST213NRDmGgJpX5HmZaA",
+    "title": "Health and safety for managers",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "DvlrPusiRxqSoTlYfeWQmg",
+      "title": "Health and Safety"
+    }
+  },
+  "FsKQ_nFZSqujVllNDEYdrA": {
+    "id": "FsKQ_nFZSqujVllNDEYdrA",
+    "title": "Make a lasting power of attorney on GOV.UK: video transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "nqmx4CB7SfKPscTZN-6p7A": {
+    "id": "nqmx4CB7SfKPscTZN-6p7A",
+    "title": "Managing risks and interdependencies: additional resources",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "MBlZJv-ZRDCYZsCByjzRuQ": {
+    "id": "MBlZJv-ZRDCYZsCByjzRuQ",
+    "title": "Working with budgets",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "2F4YSD6hTsSMst7Ziz-TCQ": {
+    "id": "2F4YSD6hTsSMst7Ziz-TCQ",
+    "title": "Putting it into practice activity",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "0EuGjOBwR62fFpnOhTilHQ",
+      "title": "Analysing evidence: effective collaboration"
+    }
+  },
+  "CeHg4SLlT8GjW6y7LROfBw": {
+    "id": "CeHg4SLlT8GjW6y7LROfBw",
+    "title": "Awareness of finance in government: aide-memoire",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "Wva21KBCTwGRRR0ykyzuvA": {
+    "id": "Wva21KBCTwGRRR0ykyzuvA",
+    "title": "Knowledge check ",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "GlTW9AuzQXurPIgYGb_xMg": {
+    "id": "GlTW9AuzQXurPIgYGb_xMg",
+    "title": "Manager&amp;#x27;s guide",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "KW7JC9K_SG2lmGWLaMWwTQ": {
+    "id": "KW7JC9K_SG2lmGWLaMWwTQ",
+    "title": "The change control process",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "LTODzR__SWSpaTD14Xldqw": {
+    "id": "LTODzR__SWSpaTD14Xldqw",
+    "title": "Challenging unconscious bias in recruitment decisions",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "RrGmBqIoRxKoYwGHUN7kfA",
+      "title": "Diversity and inclusion"
+    }
+  },
+  "J6RwuY8ZTQyHxWO9yc8PMQ": {
+    "id": "J6RwuY8ZTQyHxWO9yc8PMQ",
+    "title": "CIPS Forecasting Techniques",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "K74cuQPETHu25P369kPGNA": {
+    "id": "K74cuQPETHu25P369kPGNA",
+    "title": "APM project management qualification (PMQ) for PRINCE2® practitioners",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "CwgY-TuXQeW9Y7IAMfowrA",
+      "title": "APM project management qualification (PMQ) for PRINCE2® practitioners"
+    }
+  },
+  "IeHnj6lVTYyeC4WJL-N-aQ": {
+    "id": "IeHnj6lVTYyeC4WJL-N-aQ",
+    "title": "Module B4 Change Control",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "qTbh6-9DTdO2u21FDzpn8w",
+      "title": "Contract Management: Foundation Level"
+    }
+  },
+  "UWL_qenOS2S2nG1vvnpH1Q": {
+    "id": "UWL_qenOS2S2nG1vvnpH1Q",
+    "title": "Managing information as an asset",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "AAlTi6qXRzW0_tTtevbK4Q",
+      "title": "Responsibility for information"
+    }
+  },
+  "ElYHtez4TyuYAP5KriXZjA": {
+    "id": "ElYHtez4TyuYAP5KriXZjA",
+    "title": "Understanding and using business cases: introduction (transcript)",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "OCBvtaZWT223ZDzPa3BYzg": {
+    "id": "OCBvtaZWT223ZDzPa3BYzg",
+    "title": "3 TED talks every HR manager should watch",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "5AFY44f-RieCrkasgeasvQ",
+      "title": "3 TED talks every HR manager should watch"
+    }
+  },
+  "FJQXVIdxRPa0wOyZvwfXRQ": {
+    "id": "FJQXVIdxRPa0wOyZvwfXRQ",
+    "title": "Basic fire safety",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "DvlrPusiRxqSoTlYfeWQmg",
+      "title": "Health and Safety"
+    }
+  },
+  "4i-neSjKSXmCMFQYYCY_IA": {
+    "id": "4i-neSjKSXmCMFQYYCY_IA",
+    "title": " Awareness of finance in government: challenge case study ",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "XtBMtue2QnOKNTa34jBiIw": {
+    "id": "XtBMtue2QnOKNTa34jBiIw",
+    "title": "Working with finance in government: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "XFfD_XZ6RmyhBIZLGDcHpQ": {
+    "id": "XFfD_XZ6RmyhBIZLGDcHpQ",
+    "title": "APM project management qualification (PMQ) preparation workshop",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "OgtQdU94T42PqmbRC-oFNA",
+      "title": "APM project management qualification (PMQ) preparation workshop"
+    }
+  },
+  "Sl34afTWSUOb4o0EbrLiuQ": {
+    "id": "Sl34afTWSUOb4o0EbrLiuQ",
+    "title": "Outcomes and benefits: additional resources",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "wM8uXAjjScuj-dMJARfXvA": {
+    "id": "wM8uXAjjScuj-dMJARfXvA",
+    "title": "Problems of matrix organisations",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "9r_soSz1Ti-JvivAse5tYw",
+      "title": "Problems of matrix organisations"
+    }
+  },
+  "Wcfu9fRXTkWZ2f3ZqcKOFg": {
+    "id": "Wcfu9fRXTkWZ2f3ZqcKOFg",
+    "title": "Data quality",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "LJsfvbl5SXis_6uxs9wBWg",
+      "title": "Data quality"
+    }
+  },
+  "vr9c2644RTirE4U1xwFh0w": {
+    "id": "vr9c2644RTirE4U1xwFh0w",
+    "title": "CIPS Increase the influence of procurement",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "FQnlIJXkRkWkBxQAWgVOMg": {
+    "id": "FQnlIJXkRkWkBxQAWgVOMg",
+    "title": "Additional resources",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "G2QpoK5wQZC_72F36IQnWw": {
+    "id": "G2QpoK5wQZC_72F36IQnWw",
+    "title": "",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "eoXIba3TQBKFKyZzg4cy6w",
+      "title": "APM project fundamentals qualifications"
+    }
+  },
+  "BjMpszJnTZuSo-BDNnPLhA": {
+    "id": "BjMpszJnTZuSo-BDNnPLhA",
+    "title": "Four key things about returning to work when having mental health problems",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "U57hRgUeShaV3LRyXrvBIg": {
+    "id": "U57hRgUeShaV3LRyXrvBIg",
+    "title": "Building emotional intelligence",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "TqjvUs-zQYys2EiXYqj31Q",
+      "title": "Emotional intelligence"
+    }
+  },
+  "CBIo4eFuQF-n4K8U_JGDTQ": {
+    "id": "CBIo4eFuQF-n4K8U_JGDTQ",
+    "title": "Staying accountable",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "O0xZK2U9Rbu2uHfKKoe0Gg": {
+    "id": "O0xZK2U9Rbu2uHfKKoe0Gg",
+    "title": "Goal setting: TED talks",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "AfZMeBtoSxK5B6Ryz-Knzw",
+      "title": "Goal setting: TED talks"
+    }
+  },
+  "AXK5twcvRyqCMAlDKDu50w": {
+    "id": "AXK5twcvRyqCMAlDKDu50w",
+    "title": "Unconscious bias in the workplace",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "RrGmBqIoRxKoYwGHUN7kfA",
+      "title": "Diversity and inclusion"
+    }
+  },
+  "Qh5cW-DbQUCv6vvOvkKjbA": {
+    "id": "Qh5cW-DbQUCv6vvOvkKjbA",
+    "title": "10 steps to setting SMART objectives",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "csER0g7fRnCAV9XmT1IYKA",
+      "title": "10 steps to setting SMART objectives"
+    }
+  },
+  "c5_E1YQvSUOupt7g9p9LoQ": {
+    "id": "c5_E1YQvSUOupt7g9p9LoQ",
+    "title": "Case study 1: collaboration on an education policy",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "HaQN0qE6Rhq_2cDKHOYxEw": {
+    "id": "HaQN0qE6Rhq_2cDKHOYxEw",
+    "title": "Commercial cycle 4:  workshop",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "I1Uf3KPkSTmirf5DN5b08Q",
+      "title": "Commercial cycle 4: contract management"
+    }
+  },
+  "of3ACQQ6QyWv5K1nNcpV2A": {
+    "id": "of3ACQQ6QyWv5K1nNcpV2A",
+    "title": "Why is scope management important?",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "YZoMq5BZQX6WPAJqdCL3vA": {
+    "id": "YZoMq5BZQX6WPAJqdCL3vA",
+    "title": "Managing poor performance: questionnaire",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "X6Uyp9ewS9Gd2VdMGFybdQ": {
+    "id": "X6Uyp9ewS9Gd2VdMGFybdQ",
+    "title": "Project delivery: Glossary",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "QbHW-v__SOieL-vKpJ5LwA": {
+    "id": "QbHW-v__SOieL-vKpJ5LwA",
+    "title": "Skill up",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "MgwhHemuSLGdlBLgMFJBcA": {
+    "id": "MgwhHemuSLGdlBLgMFJBcA",
+    "title": "Understanding and using business cases: how are business cases produced?",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "VSzLRK6BT2u_TeHSl5Psfg": {
+    "id": "VSzLRK6BT2u_TeHSl5Psfg",
+    "title": "Managing performance: the follow-up conversation",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "cV1QRIfiS9-kBqN5rxALoQ": {
+    "id": "cV1QRIfiS9-kBqN5rxALoQ",
+    "title": "Spotify engineering culture: part 1",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "E-5tkB8fQN-IrK4dKpzwsg",
+      "title": "Spotify engineering culture: part 1"
+    }
+  },
+  "C6ato2h8TGi-8XkOM9hdVg": {
+    "id": "C6ato2h8TGi-8XkOM9hdVg",
+    "title": "Types of application",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "K9MJG5IwRk2JDmBz0hydQA": {
+    "id": "K9MJG5IwRk2JDmBz0hydQA",
+    "title": "Managing poor performance: create your own checklist",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "7QnpKQS_TMimWdsFa12zxw": {
+    "id": "7QnpKQS_TMimWdsFa12zxw",
+    "title": "How to engage stakeholders",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "PBMQssCvQCeEiucu8tW4fw": {
+    "id": "PBMQssCvQCeEiucu8tW4fw",
+    "title": "Working with budgets: manager guide",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "HqPOTMllQ7OyZgVYcss-0Q": {
+    "id": "HqPOTMllQ7OyZgVYcss-0Q",
+    "title": "Measuring benefits",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "XBqgvLNoQYO6p5hbgXTf2Q": {
+    "id": "XBqgvLNoQYO6p5hbgXTf2Q",
+    "title": "Event: face to face",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "_3-n4UiMTO6swCmWqMVWRA": {
+    "id": "_3-n4UiMTO6swCmWqMVWRA",
+    "title": "Getting It Right: Scope and Change additional resources",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "TSEFcFvERn63c15evF91EA": {
+    "id": "TSEFcFvERn63c15evF91EA",
+    "title": "Understanding and using business cases: knowledge check",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "9oPsetBuT2mlbTD0yI7hDQ": {
+    "id": "9oPsetBuT2mlbTD0yI7hDQ",
+    "title": "Customer insight: case study",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "SvEcj5NvQKuUsk8PJhwb-g",
+      "title": "Customer insight"
+    }
+  },
+  "OyNLl1GsRcC0jmKFLWyjUQ": {
+    "id": "OyNLl1GsRcC0jmKFLWyjUQ",
+    "title": "Help a colleague",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "TSnI7F6oSpWM0UiThKseWg": {
+    "id": "TSnI7F6oSpWM0UiThKseWg",
+    "title": "PRINCE2 in 100 seconds",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "L4Mb4fd-SdeNJ9lH1sGhTg",
+      "title": "PRINCE2 in 100 seconds"
+    }
+  },
+  "B2xino7aSOaR6PLi0Iz9fQ": {
+    "id": "B2xino7aSOaR6PLi0Iz9fQ",
+    "title": "NAO report: government commercial and contracting (2016)",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "_e5npix_TFCeS_8nUVgXnA",
+      "title": "Commercial journey"
+    }
+  },
+  "wevJNKWuSYC0ctU2MO6ldA": {
+    "id": "wevJNKWuSYC0ctU2MO6ldA",
+    "title": "Understanding and using business cases: the role of business cases (transcript)",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "tMPzsGqRSbiF1eit4_jIiw": {
+    "id": "tMPzsGqRSbiF1eit4_jIiw",
+    "title": "Managing performance: being a performance manager",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "_jJ75hp5Qk6GmUO8Jtfewg": {
+    "id": "_jJ75hp5Qk6GmUO8Jtfewg",
+    "title": "Foundation Evaluation and Accreditation",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "qTbh6-9DTdO2u21FDzpn8w",
+      "title": "Contract Management: Foundation Level"
+    }
+  },
+  "O2gNaACaQCe_pDpYhPJkcA": {
+    "id": "O2gNaACaQCe_pDpYhPJkcA",
+    "title": "Building self-awareness",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "TqjvUs-zQYys2EiXYqj31Q",
+      "title": "Emotional intelligence"
+    }
+  },
+  "T6i-wVvdQyiM5qkW5ZZLtQ": {
+    "id": "T6i-wVvdQyiM5qkW5ZZLtQ",
+    "title": "Outcomes and benefits: glossary",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "eLvQ9zRJTl6bGIILxpPpBg": {
+    "id": "eLvQ9zRJTl6bGIILxpPpBg",
+    "title": "Enhancing your leadership impact",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "KTKubOLwT36lPhCbU0LdTA",
+      "title": "Enhancing your leadership impact"
+    }
+  },
+  "9EQ0v6xtRIyttKYzHpWhKQ": {
+    "id": "9EQ0v6xtRIyttKYzHpWhKQ",
+    "title": "Managing performance: the performance management system",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "csO8ienDQI6i4IF5rKTZYA": {
+    "id": "csO8ienDQI6i4IF5rKTZYA",
+    "title": "6 traits of leaders who successfully manage remote employees",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "FVcqCC8ISGe0rLylyoByEQ",
+      "title": "6 traits of leaders who successfully manage remote employees"
+    }
+  },
+  "tXMEmKm-Qzq3BNNYIXiOAg": {
+    "id": "tXMEmKm-Qzq3BNNYIXiOAg",
+    "title": "NAO report: transforming government’s contract management (2014)",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "_e5npix_TFCeS_8nUVgXnA",
+      "title": "Commercial journey"
+    }
+  },
+  "zjivZPkTTH6jAYmJ3Lkbhg": {
+    "id": "zjivZPkTTH6jAYmJ3Lkbhg",
+    "title": "Managing performance: managing dips in performance",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "QfwI7fjbSQyPsWbMLs0GIw": {
+    "id": "QfwI7fjbSQyPsWbMLs0GIw",
+    "title": "Hear from the experts: transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "37yOc7GSRIqMjOgIV6LvXw": {
+    "id": "37yOc7GSRIqMjOgIV6LvXw",
+    "title": "The 3 questions every manager struggles with making career development plans",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "K-zAWsiHQ8qMirvNiOADfQ",
+      "title": "The 3 questions every manager struggles with making career development plans"
+    }
+  },
+  "j3P_pYd1R0KCHU4a4rw5uw": {
+    "id": "j3P_pYd1R0KCHU4a4rw5uw",
+    "title": "Introduction to project delivery: Managers guide",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "HOkIyGYWTLqjvf87F3QUgg": {
+    "id": "HOkIyGYWTLqjvf87F3QUgg",
+    "title": "Risky business: mythbuster",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "BnOK8Hk4SoWphkfLYDI9Qw": {
+    "id": "BnOK8Hk4SoWphkfLYDI9Qw",
+    "title": "CIPS Procurement Leadership",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "iP7qvelpQt2pNFRj-damcg": {
+    "id": "iP7qvelpQt2pNFRj-damcg",
+    "title": "The commercial journey",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "_e5npix_TFCeS_8nUVgXnA",
+      "title": "Commercial journey"
+    }
+  },
+  "EL0TtKSwQPuXhShR7vb8jQ": {
+    "id": "EL0TtKSwQPuXhShR7vb8jQ",
+    "title": "Module B2 Procurement and  Mobilisation",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "qTbh6-9DTdO2u21FDzpn8w",
+      "title": "Contract Management: Foundation Level"
+    }
+  },
+  "ERnS-A99QMSha3sFfqvktA": {
+    "id": "ERnS-A99QMSha3sFfqvktA",
+    "title": "Performance Objectives and Competency",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "1pt3ROMNSFGSXmopNDLoTA",
+      "title": "Performance objectives and competency"
+    }
+  },
+  "OMwyvNnzSNmHTCI5725hWg": {
+    "id": "OMwyvNnzSNmHTCI5725hWg",
+    "title": "Active listening knowledge check",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "fM6lUo61QImffsteAxhpaw",
+      "title": "Introduction to communicating effectively"
+    }
+  },
+  "EXa_VmvSS2ihC7tufVZORA": {
+    "id": "EXa_VmvSS2ihC7tufVZORA",
+    "title": "CIPS Developments in Commercial Law",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "ISxWjH0hS0SIZNazzSRWbg": {
+    "id": "ISxWjH0hS0SIZNazzSRWbg",
+    "title": "Managing performance: the annual performance cycle",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "eGYkTE8jR3SzKbEA5J1U1Q": {
+    "id": "eGYkTE8jR3SzKbEA5J1U1Q",
+    "title": "How projects run: Governance",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "7Af9Z9XFR4CDSaMgOIDJuw",
+      "title": "How projects run"
+    }
+  },
+  "q0z1gTElTYOLXiWOSBfWaw": {
+    "id": "q0z1gTElTYOLXiWOSBfWaw",
+    "title": "Awareness of finance in government: resources",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "N80TY9VvT969NUyOSCq5sQ": {
+    "id": "N80TY9VvT969NUyOSCq5sQ",
+    "title": "Managing poor performance: managing poor performance procedure",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "3XPBWM3BQWisgzHDK6_-mg": {
+    "id": "3XPBWM3BQWisgzHDK6_-mg",
+    "title": "CIPS Business Finance",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "MdKserukTNaPa_9OY71MIQ": {
+    "id": "MdKserukTNaPa_9OY71MIQ",
+    "title": "Building relationships",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "vYijv2pWQE6rNXXvOUnzKA": {
+    "id": "vYijv2pWQE6rNXXvOUnzKA",
+    "title": " Working with Agile: reflective activity",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "gDUBtOxgTYu9ukVwXcmWmA": {
+    "id": "gDUBtOxgTYu9ukVwXcmWmA",
+    "title": "Stakeholder management: a practical exercise",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "qbNc2DBVQJyG47UrZaVJ_w": {
+    "id": "qbNc2DBVQJyG47UrZaVJ_w",
+    "title": "Working with budgets: example budget",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "yIrz5ggzR0-AvPM5ILzYVg": {
+    "id": "yIrz5ggzR0-AvPM5ILzYVg",
+    "title": "Nurturing Talent – One to One Support",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "pe5ZLfe2QrKO__4rQEm6rg",
+      "title": "Nurturing Talent – One to One Support"
+    }
+  },
+  "EIgOo-P-TxyjTSBen-3ENg": {
+    "id": "EIgOo-P-TxyjTSBen-3ENg",
+    "title": "What is risk?",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "G4JFdfBHTIWs1Ao7mOz_9Q": {
+    "id": "G4JFdfBHTIWs1Ao7mOz_9Q",
+    "title": "This is project delivery (video transcript)",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "mxvdRBP3Tu25BlD0mf0HRw": {
+    "id": "mxvdRBP3Tu25BlD0mf0HRw",
+    "title": " Reacting to changes to your plan",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "JGn4wsMDSg-mmGk12Xug4Q": {
+    "id": "JGn4wsMDSg-mmGk12Xug4Q",
+    "title": "How we do Agile — Roo Reynolds: video transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "bDtPfpM-SkWLJ3bOZYVApg": {
+    "id": "bDtPfpM-SkWLJ3bOZYVApg",
+    "title": "Developing people: meaning of people development",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "H9v0lCeHSCSl_AgRI1dl3A": {
+    "id": "H9v0lCeHSCSl_AgRI1dl3A",
+    "title": "Managing in a digital environment",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "YjqfPWWYSISTXaqNsKtnrA",
+      "title": "Managing in a digital environment"
+    }
+  },
+  "_SEMcI21Th-fHvOChn7Y0g": {
+    "id": "_SEMcI21Th-fHvOChn7Y0g",
+    "title": "Working with budgets: how to plan your budget (transcript)",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "WP6sMw2KSGy4Sy7H0y_9bA": {
+    "id": "WP6sMw2KSGy4Sy7H0y_9bA",
+    "title": "Over to you: suggested solutions",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "C1-Gv56UQOOGLG3naJHehg": {
+    "id": "C1-Gv56UQOOGLG3naJHehg",
+    "title": "Manual handling",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "DvlrPusiRxqSoTlYfeWQmg",
+      "title": "Health and Safety"
+    }
+  },
+  "epyUOhiCS6ml9eotO1ysYw": {
+    "id": "epyUOhiCS6ml9eotO1ysYw",
+    "title": "Working with budgets: budgeting procedures (transcript)",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "ovuz5_p5SWi9Pri4Lag1yA": {
+    "id": "ovuz5_p5SWi9Pri4Lag1yA",
+    "title": "Tools and techniques",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "5Bvgl35IQBqNmOktfMXBig": {
+    "id": "5Bvgl35IQBqNmOktfMXBig",
+    "title": "Setting the scene: role of the Senior Responsible Officer: video transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "7Af9Z9XFR4CDSaMgOIDJuw",
+      "title": "How projects run"
+    }
+  },
+  "KDd4AyTTSaa8lh4UZLKKqQ": {
+    "id": "KDd4AyTTSaa8lh4UZLKKqQ",
+    "title": "The gubbins of government",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "I8jO21dLSVureIqpmMxQgA",
+      "title": "The gubbins of government"
+    }
+  },
+  "ULF7vRbVT7yxhmEf0G6YGQ": {
+    "id": "ULF7vRbVT7yxhmEf0G6YGQ",
+    "title": "Setting up for a fall",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "Ze2LCYlWRKWtMCWdM-AC7w": {
+    "id": "Ze2LCYlWRKWtMCWdM-AC7w",
+    "title": "How to define requirements",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "p90PxcsOQK-dkwgTQHWAtw": {
+    "id": "p90PxcsOQK-dkwgTQHWAtw",
+    "title": "Why finance in government is important",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "kUAr8MawS7GmUKuqV0JR0A": {
+    "id": "kUAr8MawS7GmUKuqV0JR0A",
+    "title": "Check your knowledge",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "1km0uz0NSEednTqEWJ9uRQ": {
+    "id": "1km0uz0NSEednTqEWJ9uRQ",
+    "title": "When customer insight makes things better: video transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "SvEcj5NvQKuUsk8PJhwb-g",
+      "title": "Customer insight"
+    }
+  },
+  "XioyX4LDRdGXcuwgIqowgw": {
+    "id": "XioyX4LDRdGXcuwgIqowgw",
+    "title": "6 incredible TED talks about time management",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "XYo9FVL8T_m9tBE-brlhow",
+      "title": "6 incredible TED talks about time management"
+    }
+  },
+  "_57beBRKTaWlfIHZTWL-zQ": {
+    "id": "_57beBRKTaWlfIHZTWL-zQ",
+    "title": "Government Project Delivery Community",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "JaJfo3gtREqTh19rswASsw": {
+    "id": "JaJfo3gtREqTh19rswASsw",
+    "title": "Working with budgets: workshop workbook",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "k65eQATaQSq1Rt4xQyfwHA": {
+    "id": "k65eQATaQSq1Rt4xQyfwHA",
+    "title": "Leading in ambiguity",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "kw1rRpnFS8SgNon8b30pwg",
+      "title": "Leading in ambiguity"
+    }
+  },
+  "7Azw-Ue3QOusksmPmoDO8g": {
+    "id": "7Azw-Ue3QOusksmPmoDO8g",
+    "title": "Working with budgets: glossary",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "riaGafkuQN6M3AmKJeUWcw": {
+    "id": "riaGafkuQN6M3AmKJeUWcw",
+    "title": " What are the benefits? Suggested solutions",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "28EygD6xROC_duVBMlnIDw": {
+    "id": "28EygD6xROC_duVBMlnIDw",
+    "title": "Growth mindest",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "rnK5-8vlQ_m_gjPIxH5huQ",
+      "title": "Growth mindset"
+    }
+  },
+  "SLlCIECgRHyjI5k_mxUTOA": {
+    "id": "SLlCIECgRHyjI5k_mxUTOA",
+    "title": "CIPS Master Award in Complex Capital Projects",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "SROLNZJ9TMK-4LXV5n6g9A": {
+    "id": "SROLNZJ9TMK-4LXV5n6g9A",
+    "title": "Managing risks: video transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "_vX2pe_STU-oWz2pyIdRGw": {
+    "id": "_vX2pe_STU-oWz2pyIdRGw",
+    "title": "Experiences in Agile",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "mNBeeZgRT7mjbBWnVSb6uA": {
+    "id": "mNBeeZgRT7mjbBWnVSb6uA",
+    "title": "Stakeholder management: check your knowledge",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "w-XNl3T1RkCWVvHTqkG2dw": {
+    "id": "w-XNl3T1RkCWVvHTqkG2dw",
+    "title": "What does good performance management mean?",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "T7XY0HyrTryeKb3dsuYn4w": {
+    "id": "T7XY0HyrTryeKb3dsuYn4w",
+    "title": "Working with finance in the business of government ",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "nAa5lW3HTbCIs0ZCHHoMlw": {
+    "id": "nAa5lW3HTbCIs0ZCHHoMlw",
+    "title": "Working with budgets: forecasting (transcript)",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "8NBVlIvQS42jm_UzkOoQXw": {
+    "id": "8NBVlIvQS42jm_UzkOoQXw",
+    "title": "PAC report: transforming contract management (2014)",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "_e5npix_TFCeS_8nUVgXnA",
+      "title": "Commercial journey"
+    }
+  },
+  "EKmLnVlxQRm7pqLcPdrnpA": {
+    "id": "EKmLnVlxQRm7pqLcPdrnpA",
+    "title": "Developing people: additional resources",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "vcK-nkMGS7y1IXMJ0c9qVw": {
+    "id": "vcK-nkMGS7y1IXMJ0c9qVw",
+    "title": "How projects run: additional resources",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "7Af9Z9XFR4CDSaMgOIDJuw",
+      "title": "How projects run"
+    }
+  },
+  "zgof4loiQnu2xTw7dLaAXA": {
+    "id": "zgof4loiQnu2xTw7dLaAXA",
+    "title": "Project delivery: personal action plan",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "aGbp2htISqqMWvm2KWBZOQ": {
+    "id": "aGbp2htISqqMWvm2KWBZOQ",
+    "title": "Goal setting",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "7haTgcDySxW-4f-rKakwzQ",
+      "title": "Goal setting"
+    }
+  },
+  "4Qm0DZbJRoqCfGin8p8Fsg": {
+    "id": "4Qm0DZbJRoqCfGin8p8Fsg",
+    "title": "How projects run: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "7Af9Z9XFR4CDSaMgOIDJuw",
+      "title": "How projects run"
+    }
+  },
+  "ah9aeVIiSzm1_wASR7e75Q": {
+    "id": "ah9aeVIiSzm1_wASR7e75Q",
+    "title": "Tackling unconscious bias",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "RrGmBqIoRxKoYwGHUN7kfA",
+      "title": "Diversity and inclusion"
+    }
+  },
+  "biw6jRbCT9ma4DukeG0--Q": {
+    "id": "biw6jRbCT9ma4DukeG0--Q",
+    "title": "5 awesome ways to give feedback to your team",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "dNmyNUoaS-ibt6JaOvqN_A",
+      "title": "5 awesome ways to give feedback to your team"
+    }
+  },
+  "S-i-ekASQcqRVZFyYHy6Tw": {
+    "id": "S-i-ekASQcqRVZFyYHy6Tw",
+    "title": "PRINCE2: foundation",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "SkGd8Pu3SWiX3FpdwFk68w",
+      "title": "PRINCE2: foundation"
+    }
+  },
+  "Ion0P9T-SlClc_GJ14RE7A": {
+    "id": "Ion0P9T-SlClc_GJ14RE7A",
+    "title": "Awareness of finance",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "3pnp4tPgT_eWUYslpMkeTQ": {
+    "id": "3pnp4tPgT_eWUYslpMkeTQ",
+    "title": "Developing people: learning about learning",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "PVTwZC3AS-6RcAGsg7ZhcA": {
+    "id": "PVTwZC3AS-6RcAGsg7ZhcA",
+    "title": "Resilience",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "KV2OZ9NPSIuvwULHPlk8Ug",
+      "title": "Resilience"
+    }
+  },
+  "IoKQfZCoTru9PZpoWqZJTw": {
+    "id": "IoKQfZCoTru9PZpoWqZJTw",
+    "title": "Identifying customer and stakeholder requirements: additonal resources",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "Act-bgA7SUmrf3C7aWauHw": {
+    "id": "Act-bgA7SUmrf3C7aWauHw",
+    "title": "Managing in a digital environment",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "H_Sph1pVRmmTdTXGDFO9Yg",
+      "title": "Managing in a digital environment"
+    }
+  },
+  "GQZ3lcrDRIKL1YMXuvOKIQ": {
+    "id": "GQZ3lcrDRIKL1YMXuvOKIQ",
+    "title": "PRINCE2: practitioner",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "Y9RifpJhTuODVakT8FQ5iw",
+      "title": "PRINCE2: practitioner"
+    }
+  },
+  "Gn18-u1_TgiN7SrkuDCVlA": {
+    "id": "Gn18-u1_TgiN7SrkuDCVlA",
+    "title": "Commercial cycle 2: managers guide",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "BsNv6FmFSRKRQbUGgYQNVw",
+      "title": "Commercial cycle 2: shaping your approach"
+    }
+  },
+  "6EIOXW1LRU-rteTOg1nU0g": {
+    "id": "6EIOXW1LRU-rteTOg1nU0g",
+    "title": "Teamworking",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "lw6bIum7T7-g7P6Lb0A32w",
+      "title": "Teamworking"
+    }
+  },
+  "TJsyXck4SOapxVNjGYggkA": {
+    "id": "TJsyXck4SOapxVNjGYggkA",
+    "title": "Introduction to finance",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "Jpy99Gm7RjSTLbmAn8jOIQ": {
+    "id": "Jpy99Gm7RjSTLbmAn8jOIQ",
+    "title": "8 tips for virtual collaboration",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "BIgVuWnYRcOZUMgFA-QzOg",
+      "title": "8 tips for virtual collaboration"
+    }
+  },
+  "zUwqIEviR5G7LnBvhe98-g": {
+    "id": "zUwqIEviR5G7LnBvhe98-g",
+    "title": "Developing people: supporting development",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "dhYaFLcZSvCQD8ThVQ3Owg": {
+    "id": "dhYaFLcZSvCQD8ThVQ3Owg",
+    "title": "Government as a platform",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "UQsWCjwKT1-UjG6gOVxK6w",
+      "title": "Government as a platform"
+    }
+  },
+  "nIsrBucTQdWlNNFmaF_3fg": {
+    "id": "nIsrBucTQdWlNNFmaF_3fg",
+    "title": "Managing poor performance: important issues",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "cFv7fI8DQeOYs02_n2FIjw": {
+    "id": "cFv7fI8DQeOYs02_n2FIjw",
+    "title": "Make a lasting power of attorney on GOV.UK",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "xvJ2TSpgRC6nMnnmxikimA": {
+    "id": "xvJ2TSpgRC6nMnnmxikimA",
+    "title": "Module B5 Stakeholder Engagement",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "qTbh6-9DTdO2u21FDzpn8w",
+      "title": "Contract Management: Foundation Level"
+    }
+  },
+  "imQVVii8Tje3zc5RrcAPnQ": {
+    "id": "imQVVii8Tje3zc5RrcAPnQ",
+    "title": "Working with Agile: attending a Retrospective",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "worjExMnRyKOQKQ14IvvrA": {
+    "id": "worjExMnRyKOQKQ14IvvrA",
+    "title": "Relationship mapping",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "GyBe3_ANQNKHmCtclKGRwg": {
+    "id": "GyBe3_ANQNKHmCtclKGRwg",
+    "title": "Project planning: example plans",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "K_3pvTgsQii0g_LF_NhCvA": {
+    "id": "K_3pvTgsQii0g_LF_NhCvA",
+    "title": "The Green Book: appraisal and evaluation in central government",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "_JWyfJjwRyCvq-Y8EhHzEA": {
+    "id": "_JWyfJjwRyCvq-Y8EhHzEA",
+    "title": "Government Commercial Function: operating standards",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_e5npix_TFCeS_8nUVgXnA",
+      "title": "Commercial journey"
+    }
+  },
+  "MdTDTlUQSRGhxfOIKv4F-Q": {
+    "id": "MdTDTlUQSRGhxfOIKv4F-Q",
+    "title": "Let’s collaborate",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "NzyRwhkGSn6WTopl6oGsvQ": {
+    "id": "NzyRwhkGSn6WTopl6oGsvQ",
+    "title": "PRINCE2: practitioner",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "N1o3KI6lTJ239xQ6_AQmnA",
+      "title": "PRINCE2: practitioner"
+    }
+  },
+  "MinO1n41TkCEP3qHxUfVtA": {
+    "id": "MinO1n41TkCEP3qHxUfVtA",
+    "title": "Perspective on projects",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "PJ6esN64SCStjeBrI8Y3Vg": {
+    "id": "PJ6esN64SCStjeBrI8Y3Vg",
+    "title": "Creating and maintaining a plan",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "8a6h91xrTleNYFV8-CKL1A": {
+    "id": "8a6h91xrTleNYFV8-CKL1A",
+    "title": "The importance of project planning",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "sfHJjI2zSKm2SSnMFV9luA": {
+    "id": "sfHJjI2zSKm2SSnMFV9luA",
+    "title": "Keeping track",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "-yxEyZRuSkappNpkwY77Uw": {
+    "id": "-yxEyZRuSkappNpkwY77Uw",
+    "title": "Understanding and using business cases: workshop workbook",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "06XwB8I6RrORevMud0N4lQ": {
+    "id": "06XwB8I6RrORevMud0N4lQ",
+    "title": "Project planning: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "cBfoDjcJQbyiJSEvcVepkA": {
+    "id": "cBfoDjcJQbyiJSEvcVepkA",
+    "title": "Embracing digital to lead and innovate",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "Zco7brijQ86L8NPK0sljeQ",
+      "title": "Embracing digital to lead and innovate"
+    }
+  },
+  "dGH6B9OISE26D6v031ZXeQ": {
+    "id": "dGH6B9OISE26D6v031ZXeQ",
+    "title": "Ask an expert (video transcript)",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "MNH5go5SSemdQgIOSX9fxQ": {
+    "id": "MNH5go5SSemdQgIOSX9fxQ",
+    "title": "Developing people: development activities",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "4zkvt-qRSy6c4TEjjv3a-Q": {
+    "id": "4zkvt-qRSy6c4TEjjv3a-Q",
+    "title": "This is project delivery",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "wL8m1LogSziQqih0pOf4NQ": {
+    "id": "wL8m1LogSziQqih0pOf4NQ",
+    "title": "Keep your goals to yourself",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "ES5zRqbIRGiaSfQCxxdJhg",
+      "title": "Keep your goals to yourself"
+    }
+  },
+  "dKZx39LyRFCdYn4fHfFTTg": {
+    "id": "dKZx39LyRFCdYn4fHfFTTg",
+    "title": "Working with Agile: Glossary",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "VYHgm_4PTgmraCosnEZzvg": {
+    "id": "VYHgm_4PTgmraCosnEZzvg",
+    "title": "Commercial cycle 3: workshop",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "QEsijBscTBSjrjUrSmhZ5w",
+      "title": "Commercial cycle 3: procuring your solution"
+    }
+  },
+  "rkoqm57kRBGBeqc5QamYtA": {
+    "id": "rkoqm57kRBGBeqc5QamYtA",
+    "title": "Project planning: quiz",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "Q5V-AZ2PRU2VtdFVL10oSg": {
+    "id": "Q5V-AZ2PRU2VtdFVL10oSg",
+    "title": "Finance awareness aide-memoire",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "xggQ3LrKTiGC7GDnFD8WZA": {
+    "id": "xggQ3LrKTiGC7GDnFD8WZA",
+    "title": "Understanding and using business cases: business cases in action",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "QwX9cFfZSmmsI9_C5DBkbA": {
+    "id": "QwX9cFfZSmmsI9_C5DBkbA",
+    "title": "Developing people: assessing development needs",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "JI9jFfQAScebj6sy5SIRmg": {
+    "id": "JI9jFfQAScebj6sy5SIRmg",
+    "title": "Assumptions and dependencies",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "OqJpNWS0Qx-Z-6KA0DiB1w": {
+    "id": "OqJpNWS0Qx-Z-6KA0DiB1w",
+    "title": "Working with Agile: further learning",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "Fyc6mzHUQK6ydyNd88EOig": {
+    "id": "Fyc6mzHUQK6ydyNd88EOig",
+    "title": "Capability in the Civil Service",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "GXz0-zmiTBSiThCMdzFs5g",
+      "title": "Capability in the Civil Service"
+    }
+  },
+  "BijgO9K0TOOLBhkeVCeoDg": {
+    "id": "BijgO9K0TOOLBhkeVCeoDg",
+    "title": "Working with budgets: managing a budget",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "lyUpP85HQXGZ7qJTe9Fabw": {
+    "id": "lyUpP85HQXGZ7qJTe9Fabw",
+    "title": "Working with Agile: what is involved in Show and tell",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "f0wEQrZJQH2VqhQLbQQh6Q": {
+    "id": "f0wEQrZJQH2VqhQLbQQh6Q",
+    "title": "When change is needed",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "uAAwXXuDS--KRbPC2wMTMg": {
+    "id": "uAAwXXuDS--KRbPC2wMTMg",
+    "title": "Project delivery global glossary",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "hFXijlsaQS-jJrN2u5Ykdw": {
+    "id": "hFXijlsaQS-jJrN2u5Ykdw",
+    "title": "Owning the benefits: video transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "tALPVIEDSiumZpbu8YNRfw": {
+    "id": "tALPVIEDSiumZpbu8YNRfw",
+    "title": "Introduction to communicating effectively: personal action plan",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "fM6lUo61QImffsteAxhpaw",
+      "title": "Introduction to communicating effectively"
+    }
+  },
+  "qAOaoZp0SyqQw-_X1-CmFg": {
+    "id": "qAOaoZp0SyqQw-_X1-CmFg",
+    "title": "Making the most of your team",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "pcq-6it_SXaztA6bKnth0w",
+      "title": "Making the most of your team"
+    }
+  },
+  "l-N7W0dJT-WoMaEMmstdqw": {
+    "id": "l-N7W0dJT-WoMaEMmstdqw",
+    "title": "How finance works in your department ",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "_N3LyJvDTy-4yQunW256SQ": {
+    "id": "_N3LyJvDTy-4yQunW256SQ",
+    "title": "Project planning: additional resources",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "I4ZPChj7QX6JiAU12HqeqQ": {
+    "id": "I4ZPChj7QX6JiAU12HqeqQ",
+    "title": " Keeping your eye on outcomes and benefits",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "b16nUrfTTCm8Dii6KKfpOQ": {
+    "id": "b16nUrfTTCm8Dii6KKfpOQ",
+    "title": "Expert negotiation skill masterclass",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "BJEUtYwwRKauGWZ9pQxevw",
+      "title": "Expert negotiation skill masterclass"
+    }
+  },
+  "Ilhnl3cBQO2g2S2A8voKPg": {
+    "id": "Ilhnl3cBQO2g2S2A8voKPg",
+    "title": "Commercial cycle 3: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "QEsijBscTBSjrjUrSmhZ5w",
+      "title": "Commercial cycle 3: procuring your solution"
+    }
+  },
+  "nh9eiJPmQJeCK5EJuYfipQ": {
+    "id": "nh9eiJPmQJeCK5EJuYfipQ",
+    "title": "How to make your employee performance evaluations awesome",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "Ji43Bz1cRoC0mKUh80qyqg",
+      "title": "How to make your employee performance evaluations awesome"
+    }
+  },
+  "7_nf1I4pSZebE772ZuGfiw": {
+    "id": "7_nf1I4pSZebE772ZuGfiw",
+    "title": "Understanding and using business cases: glossary",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "IfwbFsPZTkupIAqTI8hoog": {
+    "id": "IfwbFsPZTkupIAqTI8hoog",
+    "title": "5 common mistakes managers make with remote workers",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "OF5Sb8jjTuuppqumWGAulA",
+      "title": "5 common mistakes managers make with remote workers"
+    }
+  },
+  "BCfRbtI8TdKU2eG8_Gs1Ug": {
+    "id": "BCfRbtI8TdKU2eG8_Gs1Ug",
+    "title": "Commercial cycle 2: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "BsNv6FmFSRKRQbUGgYQNVw",
+      "title": "Commercial cycle 2: shaping your approach"
+    }
+  },
+  "qGs_DFiXSNmkMPjXmINc9A": {
+    "id": "qGs_DFiXSNmkMPjXmINc9A",
+    "title": "What are the benefits?",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "ZdnoeXE-SLm6lAZxDm5LuQ": {
+    "id": "ZdnoeXE-SLm6lAZxDm5LuQ",
+    "title": "Commercial awareness: summary",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "7kcX_U5UTzmzoqIZBNAeNg": {
+    "id": "7kcX_U5UTzmzoqIZBNAeNg",
+    "title": "Top tips",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "jxVgR663TxCYT-mY70PXjg": {
+    "id": "jxVgR663TxCYT-mY70PXjg",
+    "title": "Commercial specialist guidance",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "EUz8DciiRVKhFhvnx4ZRqg": {
+    "id": "EUz8DciiRVKhFhvnx4ZRqg",
+    "title": "10 questions about finance you’re too senior to ask",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "BiC1FYQcSTG9EpG5COsvxw",
+      "title": "10 questions about finance you’re too senior to ask"
+    }
+  },
+  "bN2o8gWdRKqqQ5qzCU16Jw": {
+    "id": "bN2o8gWdRKqqQ5qzCU16Jw",
+    "title": "Operational contracts: finance training",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "yBSSgCddRYy6BlhoXiL7Mw",
+      "title": "Operational contracts: finance training"
+    }
+  },
+  "0B7S7RhJSIK0daaVu675YA": {
+    "id": "0B7S7RhJSIK0daaVu675YA",
+    "title": "Customer insight: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "SvEcj5NvQKuUsk8PJhwb-g",
+      "title": "Customer insight"
+    }
+  },
+  "IOSMVty1TnC93lCdtmx9hw": {
+    "id": "IOSMVty1TnC93lCdtmx9hw",
+    "title": "Commercial cycle 3: managers guide",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "QEsijBscTBSjrjUrSmhZ5w",
+      "title": "Commercial cycle 3: procuring your solution"
+    }
+  },
+  "0Du3Y2IvSfahXzENDSvkDQ": {
+    "id": "0Du3Y2IvSfahXzENDSvkDQ",
+    "title": "The human factor",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "GVTaTYI_Sn-LKQ3X-cjA-A": {
+    "id": "GVTaTYI_Sn-LKQ3X-cjA-A",
+    "title": "Transactional finance and link to commercial process",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "D3kqf9S9RZKsVe0Y43aCfg": {
+    "id": "D3kqf9S9RZKsVe0Y43aCfg",
+    "title": "\nSlips, trips and falls",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "DvlrPusiRxqSoTlYfeWQmg",
+      "title": "Health and Safety"
+    }
+  },
+  "T49kNYHsSVmDrPFp5v_rlg": {
+    "id": "T49kNYHsSVmDrPFp5v_rlg",
+    "title": "Introduction to commercial in government",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "PD79Yn1GSBibjRsktW9FOw": {
+    "id": "PD79Yn1GSBibjRsktW9FOw",
+    "title": "Managing poor performance: poor performance scenarios",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "FBfMmzTFTFSvNihUkXvpVQ": {
+    "id": "FBfMmzTFTFSvNihUkXvpVQ",
+    "title": "Agile project management: foundation",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "AnhjGZ0gS_S5_rx2FNOUMA",
+      "title": "Agile project management: foundation"
+    }
+  },
+  "5Nt3IJ8dQSGht9fVB97wuA": {
+    "id": "5Nt3IJ8dQSGht9fVB97wuA",
+    "title": "Meaning of people development",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "V0JTScKOTfyQNvI1j5Jw5Q": {
+    "id": "V0JTScKOTfyQNvI1j5Jw5Q",
+    "title": "Getting It Right: Scope and Change top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "aF6H4n6URhKUy2mWuzYUkA": {
+    "id": "aF6H4n6URhKUy2mWuzYUkA",
+    "title": "Module B1 Design and Ongoing Development",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "qTbh6-9DTdO2u21FDzpn8w",
+      "title": "Contract Management: Foundation Level"
+    }
+  },
+  "84Os5uFoTtmuiHhxXB9vIw": {
+    "id": "84Os5uFoTtmuiHhxXB9vIw",
+    "title": "Challenge case study: reflective activity",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "UFXHcUiSRR2z3V4FIWl54Q": {
+    "id": "UFXHcUiSRR2z3V4FIWl54Q",
+    "title": "Difficult conversations",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "HI8Ql2nkStiYBj4eSqcidw",
+      "title": "Difficult conversations"
+    }
+  },
+  "dJf0q1ruQAWrMOTmRIgkYg": {
+    "id": "dJf0q1ruQAWrMOTmRIgkYg",
+    "title": "Government security classifications",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "AAlTi6qXRzW0_tTtevbK4Q",
+      "title": "Responsibility for information"
+    }
+  },
+  "XYDebb-TQ_2Ky_XjbtJhYg": {
+    "id": "XYDebb-TQ_2Ky_XjbtJhYg",
+    "title": "Communicate more effectively at a distance",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "fM6lUo61QImffsteAxhpaw",
+      "title": "Introduction to communicating effectively"
+    }
+  },
+  "N8-h6JH6SkSTV45CuMUbDA": {
+    "id": "N8-h6JH6SkSTV45CuMUbDA",
+    "title": "Top 10 TED leadership lessons your employees need to learn",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "1_LHvKF5QfSPYwkydj0gQg",
+      "title": "Top 10 TED leadership lessons your employees need to learn"
+    }
+  },
+  "cV_I1LDrT5GSiVqvIwiBhw": {
+    "id": "cV_I1LDrT5GSiVqvIwiBhw",
+    "title": "Mental health support at work",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "TlnOSRj8SXWf5wIzjmKvzQ": {
+    "id": "TlnOSRj8SXWf5wIzjmKvzQ",
+    "title": "Developing people: manager guide",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "lVzuyyhJSWOSOoE1qiKvfw": {
+    "id": "lVzuyyhJSWOSOoE1qiKvfw",
+    "title": "Understanding and using business cases: top tips",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "U3TfOQlLTbaI989a8MZ4Sg": {
+    "id": "U3TfOQlLTbaI989a8MZ4Sg",
+    "title": "Engaging stakeholders: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "wP299amAQ4GgcldwTHSrxw": {
+    "id": "wP299amAQ4GgcldwTHSrxw",
+    "title": "Written communications: writing drafts for ministers and senior officials",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "ypvHvLcTQaO2MmRQjmqE3A",
+      "title": "Written communications: writing drafts for ministers and senior officials"
+    }
+  },
+  "P70l8iNNQhSb1tCqiOFaGg": {
+    "id": "P70l8iNNQhSb1tCqiOFaGg",
+    "title": "Getting from an aim to a schedule",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "NTEfTVjkQVq3h9QWhog6MQ": {
+    "id": "NTEfTVjkQVq3h9QWhog6MQ",
+    "title": "CIPS Advanced Negotiations",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "1gl8ESsQSj-8j8Y53vglLg": {
+    "id": "1gl8ESsQSj-8j8Y53vglLg",
+    "title": "Introduction to communicating effectively: line manager guide",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "fM6lUo61QImffsteAxhpaw",
+      "title": "Introduction to communicating effectively"
+    }
+  },
+  "kLvUf7PlRlWdzaL8c-TWOw": {
+    "id": "kLvUf7PlRlWdzaL8c-TWOw",
+    "title": "Project planning: glossary",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "CqhdZUTHRVuOa-Hk9EZxRg": {
+    "id": "CqhdZUTHRVuOa-Hk9EZxRg",
+    "title": "Managing performance: top tips",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "ACWg0mPbQDG7V7bEkQn8YA": {
+    "id": "ACWg0mPbQDG7V7bEkQn8YA",
+    "title": "Developing people: personal development plans",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "ZduZa3bUSFms-epAHFYvzg": {
+    "id": "ZduZa3bUSFms-epAHFYvzg",
+    "title": "Working with budgets: learning summary",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "59WS_Da_S6mxC60eA619AA": {
+    "id": "59WS_Da_S6mxC60eA619AA",
+    "title": "How projects are run",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "S4e8iSVYTmCPh14Gyb3pEQ": {
+    "id": "S4e8iSVYTmCPh14Gyb3pEQ",
+    "title": "Project delivery: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "XYZF2qqeQGasCWLEBFxq1g": {
+    "id": "XYZF2qqeQGasCWLEBFxq1g",
+    "title": "The time-cost-quality triangle animation",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "jdVhe-qYR9uo-XNgN4f_EQ": {
+    "id": "jdVhe-qYR9uo-XNgN4f_EQ",
+    "title": "Setting SMART objectives",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "NgoKaq_VS4yrAWPSSX1mTw",
+      "title": "Setting SMART objectives"
+    }
+  },
+  "FSmLJGrETRyL2HqoAv7zgA": {
+    "id": "FSmLJGrETRyL2HqoAv7zgA",
+    "title": "Understanding and using business cases: manager guide",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "Cr5gU6ecQheX5BrNjsO6ew": {
+    "id": "Cr5gU6ecQheX5BrNjsO6ew",
+    "title": "Additional resources",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "uuFj0hqKSqmKJwlH9uJqYQ": {
+    "id": "uuFj0hqKSqmKJwlH9uJqYQ",
+    "title": "Manager guide",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "jm0nnLtuQfCocus3cho_pw": {
+    "id": "jm0nnLtuQfCocus3cho_pw",
+    "title": "Let&amp;amp;#x27;s collaborate: transcript",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "TRXitsMtTmidijnH__RqLg": {
+    "id": "TRXitsMtTmidijnH__RqLg",
+    "title": "Experiences in Agile: video transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "Z5YTTH-ZRvyHPefFbZPwbg": {
+    "id": "Z5YTTH-ZRvyHPefFbZPwbg",
+    "title": "Getting from an aim to a schedule: transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "qWuzdiemS52rW-kVF-MdeA": {
+    "id": "qWuzdiemS52rW-kVF-MdeA",
+    "title": "Managing remote employees: how to be an effective remote manager",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "AKlxMo1rSbqPTQsCJwLqOA",
+      "title": "Managing remote employees: how to be an effective remote manager"
+    }
+  },
+  "8CrYXzrmTmuXRJqxBVezOg": {
+    "id": "8CrYXzrmTmuXRJqxBVezOg",
+    "title": "Working with budgets: principles of budgeting",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "smpIW0SjRfK4xwKUIT7VeA": {
+    "id": "smpIW0SjRfK4xwKUIT7VeA",
+    "title": "Managing performance: manager guide",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "iG0K0fTFTzWEHjxI4OnRyg": {
+    "id": "iG0K0fTFTzWEHjxI4OnRyg",
+    "title": "Introduction to communicating effectively: unconscious bias reflective task",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "fM6lUo61QImffsteAxhpaw",
+      "title": "Introduction to communicating effectively"
+    }
+  },
+  "4DTZApG9QSWfdE_a_frH6Q": {
+    "id": "4DTZApG9QSWfdE_a_frH6Q",
+    "title": "Outcomes and benefits: check your knowledge",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "YXJ8rqiaQrGPtszYgw3G3Q": {
+    "id": "YXJ8rqiaQrGPtszYgw3G3Q",
+    "title": "What is project planning?",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "KGuG425KQK6fEsqIEUtqBg": {
+    "id": "KGuG425KQK6fEsqIEUtqBg",
+    "title": "Using display screen equipment",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "DvlrPusiRxqSoTlYfeWQmg",
+      "title": "Health and Safety"
+    }
+  },
+  "fbHl0e3iT-afj_AOU3MQ4Q": {
+    "id": "fbHl0e3iT-afj_AOU3MQ4Q",
+    "title": "Mental health conditions and stigma",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "62Kp22XIQn-i7Uf3jQk7bg": {
+    "id": "62Kp22XIQn-i7Uf3jQk7bg",
+    "title": "How projects run: glossary",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "7Af9Z9XFR4CDSaMgOIDJuw",
+      "title": "How projects run"
+    }
+  },
+  "r7UWJyQ3QKSHXxW0b8bTTg": {
+    "id": "r7UWJyQ3QKSHXxW0b8bTTg",
+    "title": "The time-cost-quality triangle animation: transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "QU56TuhsRHiSVfkesRsQqA": {
+    "id": "QU56TuhsRHiSVfkesRsQqA",
+    "title": "The art of being a successful remote manager",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "uSvLYkpSTPS7jv6og6wjtg",
+      "title": "The art of being a successful remote manager"
+    }
+  },
+  "Onx1DpfLS7eDx881sO93-g": {
+    "id": "Onx1DpfLS7eDx881sO93-g",
+    "title": "Working flexibly",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "AAlTi6qXRzW0_tTtevbK4Q",
+      "title": "Responsibility for information"
+    }
+  },
+  "rIjFq0LBS7yFVCmsjrvDbA": {
+    "id": "rIjFq0LBS7yFVCmsjrvDbA",
+    "title": "The 7 principles of public life",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "_e5npix_TFCeS_8nUVgXnA",
+      "title": "Commercial journey"
+    }
+  },
+  "xgYxkbqjQvWP8zM6sKcriQ": {
+    "id": "xgYxkbqjQvWP8zM6sKcriQ",
+    "title": "How we do Agile",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "TwUvPokQTv2Sh3C6GG-kyg": {
+    "id": "TwUvPokQTv2Sh3C6GG-kyg",
+    "title": " Annual report and accounts and financial information",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "drWKfj8eQ0-3XJO3Dq7Rng": {
+    "id": "drWKfj8eQ0-3XJO3Dq7Rng",
+    "title": "Commercial cycle 2: workshop",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "BsNv6FmFSRKRQbUGgYQNVw",
+      "title": "Commercial cycle 2: shaping your approach"
+    }
+  },
+  "DyuEwaAURB-1yV95JM-68A": {
+    "id": "DyuEwaAURB-1yV95JM-68A",
+    "title": "Stakeholder management: completed matrix",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "y0-OSI86TvSOedU5yc_CVQ": {
+    "id": "y0-OSI86TvSOedU5yc_CVQ",
+    "title": "Developing people: discussing development needs",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "EOymqhg9RvuWuUCQnE0nCw": {
+    "id": "EOymqhg9RvuWuUCQnE0nCw",
+    "title": "How projects run: assurance",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "7Af9Z9XFR4CDSaMgOIDJuw",
+      "title": "How projects run"
+    }
+  },
+  "g30On24XR3m2z7DrEHYd0w": {
+    "id": "g30On24XR3m2z7DrEHYd0w",
+    "title": "CIPS Negotiating Complex Deals",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "K2MR-qw9Qa6LErVvQmj8vA": {
+    "id": "K2MR-qw9Qa6LErVvQmj8vA",
+    "title": "Managing poor performance: manager’s guide",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "9hTPf0r8RlKg2DFlm2AmrA": {
+    "id": "9hTPf0r8RlKg2DFlm2AmrA",
+    "title": "Learning summary",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "Y-yJyAgsR_GVUJnf6V7HHQ": {
+    "id": "Y-yJyAgsR_GVUJnf6V7HHQ",
+    "title": "Case study 3: collaboration on a sports participation policy",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "IqPlIIH9SZWqS5nGBWqteg": {
+    "id": "IqPlIIH9SZWqS5nGBWqteg",
+    "title": "Matrix management: 7 key elements for success",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "JeDJ6xywRgC5YRuD5A4tKw",
+      "title": "Matrix management: 7 key elements for success"
+    }
+  },
+  "JC7pryWaSRe9uLuAEd-jeQ": {
+    "id": "JC7pryWaSRe9uLuAEd-jeQ",
+    "title": "Knowledge check",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "Y8FteZxtSBSw4AuwW5sJVQ": {
+    "id": "Y8FteZxtSBSw4AuwW5sJVQ",
+    "title": "Working with budgets: top tips",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "ukWIeaR5StyiLZ6cAjD0Yg": {
+    "id": "ukWIeaR5StyiLZ6cAjD0Yg",
+    "title": "Working with budgets: creating a budget",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "ZEJa5rG4QlunF1zy6ojJYA": {
+    "id": "ZEJa5rG4QlunF1zy6ojJYA",
+    "title": "Managing poor performance: managing dips in performance",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "E1loGQjDQui8LLyd1P1a_Q": {
+    "id": "E1loGQjDQui8LLyd1P1a_Q",
+    "title": "Project delivery: additional resources",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "W7qnC8ryQBSyJwr8VAxwCA": {
+    "id": "W7qnC8ryQBSyJwr8VAxwCA",
+    "title": "What are your top 3 risks?",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "Ttt_zF-ERbW-_4DzrtjbTg": {
+    "id": "Ttt_zF-ERbW-_4DzrtjbTg",
+    "title": "Introduction to communicating effectively: rate your communication skills",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "fM6lUo61QImffsteAxhpaw",
+      "title": "Introduction to communicating effectively"
+    }
+  },
+  "CAs79vfzTK6FmbtGC-uPdw": {
+    "id": "CAs79vfzTK6FmbtGC-uPdw",
+    "title": "Mental health at work scenarios",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "agXFYQCZT6-p3Qnmd21qvw": {
+    "id": "agXFYQCZT6-p3Qnmd21qvw",
+    "title": "How emotionally intelligent are you?",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "TqjvUs-zQYys2EiXYqj31Q",
+      "title": "Emotional intelligence"
+    }
+  },
+  "RuEJBF90QZqmhHN1ot4YPw": {
+    "id": "RuEJBF90QZqmhHN1ot4YPw",
+    "title": "The commercial cycle explored",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "5fwzrXaRTxWlXioDb5KmpQ": {
+    "id": "5fwzrXaRTxWlXioDb5KmpQ",
+    "title": "Understanding and using business cases: perspectives (transcript)",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "73U_jnczSBSBCrP95EEKlQ": {
+    "id": "73U_jnczSBSBCrP95EEKlQ",
+    "title": "Developing people: top tips",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "tpd4Cc2SS2yT2NFXgSRZdQ": {
+    "id": "tpd4Cc2SS2yT2NFXgSRZdQ",
+    "title": "Leading people through change",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "dQEcCVJGTJ-uzDWzYe12Qw",
+      "title": "Leading people through change"
+    }
+  },
+  "I9bRy8svTluK2hyfaUHpaA": {
+    "id": "I9bRy8svTluK2hyfaUHpaA",
+    "title": "6 tips on being a successful remote manager",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "BVMts5V4R5WmxJtRlsZuTg",
+      "title": "6 tips on being a successful remote manager"
+    }
+  },
+  "CJet0bvsQA-bvNNMIUyWEA": {
+    "id": "CJet0bvsQA-bvNNMIUyWEA",
+    "title": "Model answers",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "40ZeVbciSjmV0Ak7KNs9WA": {
+    "id": "40ZeVbciSjmV0Ak7KNs9WA",
+    "title": "Why does government need a strong commercial function? transcript",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "95q39dspSZywGjQ8R1gEwQ": {
+    "id": "95q39dspSZywGjQ8R1gEwQ",
+    "title": "Follow the money",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "ueLS_UaoR-WXzpii4tmQZw": {
+    "id": "ueLS_UaoR-WXzpii4tmQZw",
+    "title": "CIPS Supplier Appraisal and Financial Analysis",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "jgTOfRpXTGy6CUMKh22_4w": {
+    "id": "jgTOfRpXTGy6CUMKh22_4w",
+    "title": "Prioritising risk",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "O4j5VjSCTbao8f1dgX0Q3g": {
+    "id": "O4j5VjSCTbao8f1dgX0Q3g",
+    "title": "Setting up a job alert",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "QcJ4h8g0TIGgomD_bd9zIQ": {
+    "id": "QcJ4h8g0TIGgomD_bd9zIQ",
+    "title": "Working more digitally",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "VAWMIcE8TA-5_RaYiR-ctA",
+      "title": "Working more digitally"
+    }
+  },
+  "JX99zVjbSyWvmxk1_BX2LA": {
+    "id": "JX99zVjbSyWvmxk1_BX2LA",
+    "title": "Over to you",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Jj2DmhJoSqqtB7E6LM4w4g",
+      "title": "Project planning"
+    }
+  },
+  "WivAo1mnQMGAyF4lD1DFSA": {
+    "id": "WivAo1mnQMGAyF4lD1DFSA",
+    "title": "Resilient leadership",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "F1AARV88S9OS3vYqJ9OQoA",
+      "title": "Resilient leadership: workshop"
+    }
+  },
+  "ZQBX709STxKnr5dmzNGoYg": {
+    "id": "ZQBX709STxKnr5dmzNGoYg",
+    "title": "Identifying customer and stakeholder requirements: Introduction",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "m0w44yaUQYqoMsHF3WQ3og": {
+    "id": "m0w44yaUQYqoMsHF3WQ3og",
+    "title": "Working with finance in government - workshop workbook",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "ShmSCqCkTDyiiN5Cuy2hbg": {
+    "id": "ShmSCqCkTDyiiN5Cuy2hbg",
+    "title": "Stress in the workplace",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "DvlrPusiRxqSoTlYfeWQmg",
+      "title": "Health and Safety"
+    }
+  },
+  "Y5AA4n6qR9aAm0BJpbxBPQ": {
+    "id": "Y5AA4n6qR9aAm0BJpbxBPQ",
+    "title": "Project management approaches",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "Rrz9VpQkTgCKRIinA1w-BQ": {
+    "id": "Rrz9VpQkTgCKRIinA1w-BQ",
+    "title": "Module B3 Managing Contract Delivery and Exit ",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "qTbh6-9DTdO2u21FDzpn8w",
+      "title": "Contract Management: Foundation Level"
+    }
+  },
+  "P7PWkv5lSOSilM0usWeepw": {
+    "id": "P7PWkv5lSOSilM0usWeepw",
+    "title": "Confidence check-in",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "PhzH_0-LQxq_BpVkDxBgIw": {
+    "id": "PhzH_0-LQxq_BpVkDxBgIw",
+    "title": "Importance of accounting standards ",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "kY95nhpgRuelr0Vsl_9smQ": {
+    "id": "kY95nhpgRuelr0Vsl_9smQ",
+    "title": "Why we are so bad at coaching and performance appraisals",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "JfuNaMJVR8CpSNa-B5JBQA",
+      "title": "Why we are so bad at coaching and performance appraisals"
+    }
+  },
+  "bs6qPTsLQuGJCdMEYSeu7w": {
+    "id": "bs6qPTsLQuGJCdMEYSeu7w",
+    "title": "Doing the long distance thing: how to work with remote managers",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "pt9vX-BCS22un8xq-T6JIw",
+      "title": "Doing the long distance thing: how to work with remote managers"
+    }
+  },
+  "PVon70nEQg6diDG4-cfCfA": {
+    "id": "PVon70nEQg6diDG4-cfCfA",
+    "title": "Managing Teams Remotely",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "0w32xNEqSi2o5qkveg-W2g",
+      "title": "Managing teams remotely"
+    }
+  },
+  "RL91NVJvQQi6_MN1WzoVvQ": {
+    "id": "RL91NVJvQQi6_MN1WzoVvQ",
+    "title": "Setting the scene",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "kjPyNftYRMaMWussxI4q5A": {
+    "id": "kjPyNftYRMaMWussxI4q5A",
+    "title": "Case study 4: collaborating to fix a health and safety issue",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "-Ezoc-hyRqOP4xA6Z8BzaA": {
+    "id": "-Ezoc-hyRqOP4xA6Z8BzaA",
+    "title": "Operational contracts: risk and contingency training",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "RWtqiFZ2T7GOq1KaiX4aeA",
+      "title": "Operational contracts: risk and contingency training"
+    }
+  },
+  "X14tGPS7RIOrEao2A66oPQ": {
+    "id": "X14tGPS7RIOrEao2A66oPQ",
+    "title": "Our customers",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "RrGmBqIoRxKoYwGHUN7kfA",
+      "title": "Diversity and inclusion"
+    }
+  },
+  "BpC8IWa9S428SkcLjGaGaw": {
+    "id": "BpC8IWa9S428SkcLjGaGaw",
+    "title": "Top tips",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "Guv1sNgnSWuY_ps_PJtYIg": {
+    "id": "Guv1sNgnSWuY_ps_PJtYIg",
+    "title": "Managing poor performance: in-depth scenario",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "NXxtvQsjRSyO7Zmk6765hg": {
+    "id": "NXxtvQsjRSyO7Zmk6765hg",
+    "title": "Managing issues",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "G8aCJwXdQq-6YW9JPqguvw": {
+    "id": "G8aCJwXdQq-6YW9JPqguvw",
+    "title": "APM project management qualification",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "esIdcCmqTXaui_GGUZ-41w",
+      "title": "APM project management qualification"
+    }
+  },
+  "QoQ4qVQCToS5eh_lgzNixA": {
+    "id": "QoQ4qVQCToS5eh_lgzNixA",
+    "title": "Optimising your emotional intelligence",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "FTvw7WYoT2KeABZ4SrpIVQ",
+      "title": "Optimising your emotional intelligence"
+    }
+  },
+  "ldp2xLchRMqKJXVqQvfzCg": {
+    "id": "ldp2xLchRMqKJXVqQvfzCg",
+    "title": "Mindfulness for Busy People",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "GR-jhpmQR3CVyKzh3fYdTw",
+      "title": "Mindfulness for busy people"
+    }
+  },
+  "Br71DJG4RYWBgbJBI4SOkg": {
+    "id": "Br71DJG4RYWBgbJBI4SOkg",
+    "title": "Managing poor performance: personal action plan",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "AEWKLZkJRUOL7IXrdSLd9w": {
+    "id": "AEWKLZkJRUOL7IXrdSLd9w",
+    "title": "Working with Agile: additional resources",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "r8RtSMGRQ2qqLe6O2X-mtg": {
+    "id": "r8RtSMGRQ2qqLe6O2X-mtg",
+    "title": "Working with Agile: managers guide",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "PsE59ocXS4ivVnjWnJxqkQ": {
+    "id": "PsE59ocXS4ivVnjWnJxqkQ",
+    "title": "Project delivery: glossary",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "DZZxfOuTS0qdTGAtFwtPug": {
+    "id": "DZZxfOuTS0qdTGAtFwtPug",
+    "title": "Project delivery: reflective evaluation",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "2vy9_o_MTB-Vp69xtDb7KQ": {
+    "id": "2vy9_o_MTB-Vp69xtDb7KQ",
+    "title": "Key principles of collaboration: transcript",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "EcuUl3arReONDaoMW3c8Kw": {
+    "id": "EcuUl3arReONDaoMW3c8Kw",
+    "title": "Awareness of finance in government: Diagnostic survey",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "WP2nanMjRoitJoVpMGhnrA": {
+    "id": "WP2nanMjRoitJoVpMGhnrA",
+    "title": "Emotional intelligence: top tips",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "TqjvUs-zQYys2EiXYqj31Q",
+      "title": "Emotional intelligence"
+    }
+  },
+  "XIQzJWAkRje9tK54-YfJjA": {
+    "id": "XIQzJWAkRje9tK54-YfJjA",
+    "title": "Talking about mental health in the Civil Service",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "qH25-yehRCuuChlwUkewnA": {
+    "id": "qH25-yehRCuuChlwUkewnA",
+    "title": "Managing poor performance: advice",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "cRF9nRcRQb2uBLP0WLYzdw": {
+    "id": "cRF9nRcRQb2uBLP0WLYzdw",
+    "title": "Writing competency examples",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "geVbtbMKSnqt9oFZGKFycA": {
+    "id": "geVbtbMKSnqt9oFZGKFycA",
+    "title": "5 must see TED talks for career professionals",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "yWQgten4R-yBsVMrF0b6Hw",
+      "title": "5 must-see TED talks for career professionals"
+    }
+  },
+  "JrNq-xV9Ske0CKba5g5-7g": {
+    "id": "JrNq-xV9Ske0CKba5g5-7g",
+    "title": "Working with finance in government",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "jS0T3yAIQlq-NvFk6nMWWw": {
+    "id": "jS0T3yAIQlq-NvFk6nMWWw",
+    "title": "Data visualisation: 101",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "XQFqoVGBTOS0DrMahG06OA",
+      "title": "Data visualisation: 101"
+    }
+  },
+  "SDD-fF3zScekq_SSMymt3Q": {
+    "id": "SDD-fF3zScekq_SSMymt3Q",
+    "title": "Working with Agile: getting started",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "y9IkAbs2S1-47i8b_PSgQQ": {
+    "id": "y9IkAbs2S1-47i8b_PSgQQ",
+    "title": "Understanding and using business cases: what is a business case?",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "W-iGYc3eQG6e5CUSof67Fw",
+      "title": "Understanding and using business cases"
+    }
+  },
+  "-tGvHjo8S6iEDvjROUuGcg": {
+    "id": "-tGvHjo8S6iEDvjROUuGcg",
+    "title": "No Limits",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "I8_x0L3nQEeeNrIeS4-v4w",
+      "title": "Core Civil Service Skills- No Limits"
+    }
+  },
+  "ErHgHNhOS4CW3JgJvm0b7g": {
+    "id": "ErHgHNhOS4CW3JgJvm0b7g",
+    "title": "APM project management qualification (PMQ) preparation workshop",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "P0FH1m4GTdaebdAAXEkMcg",
+      "title": "APM project management qualification (PMQ) preparation workshop"
+    }
+  },
+  "FZdSxlpZSXOl4Fu5gMfAJA": {
+    "id": "FZdSxlpZSXOl4Fu5gMfAJA",
+    "title": "Fraud",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "AAlTi6qXRzW0_tTtevbK4Q",
+      "title": "Responsibility for information"
+    }
+  },
+  "l1PuIYbMTnWijKxqmDF7xA": {
+    "id": "l1PuIYbMTnWijKxqmDF7xA",
+    "title": "How Adobe structures feedback conversations",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "rsPEiFOTS5KU7aUgpIgIsQ",
+      "title": "How Adobe structures feedback conversations"
+    }
+  },
+  "kUlTLEs8RuiC7Znj5EHXyA": {
+    "id": "kUlTLEs8RuiC7Znj5EHXyA",
+    "title": "In their shoes",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "vgGadiAEQl2Mof5yvyTdXA": {
+    "id": "vgGadiAEQl2Mof5yvyTdXA",
+    "title": "8 tips for working with remote teams: leadership training",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "luS9HzMaTZ-9iVy-x8E2pA",
+      "title": "8 tips for working with remote teams: leadership training"
+    }
+  },
+  "MyYubhI0TuaYDWxdWWbYkA": {
+    "id": "MyYubhI0TuaYDWxdWWbYkA",
+    "title": "Working with finance in government: Manager guide",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "XsXEqUltStKqPfoeVGW74w": {
+    "id": "XsXEqUltStKqPfoeVGW74w",
+    "title": "Mental health: top tips",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "nyLfNGUZT9yZ5sZVVCyyWg": {
+    "id": "nyLfNGUZT9yZ5sZVVCyyWg",
+    "title": "Why Agile works? video transcript",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "8uzU4ROjT4yH5s5H86_yJw": {
+    "id": "8uzU4ROjT4yH5s5H86_yJw",
+    "title": "Why Project Delivery",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "45iIpeGvS4isytC0rHabwg": {
+    "id": "45iIpeGvS4isytC0rHabwg",
+    "title": "The psychology behind better workplace feedback (15 surprising facts)",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "gNpNHRrDRAS2Gl7d_likCw",
+      "title": "The psychology behind better workplace feedback (15 surprising facts)"
+    }
+  },
+  "-Va1ewNZSpmnOZqcwMyAfg": {
+    "id": "-Va1ewNZSpmnOZqcwMyAfg",
+    "title": "Working with budgets: introduction transcript",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "dma5v0c_QBKWatnnZ6Gp-g": {
+    "id": "dma5v0c_QBKWatnnZ6Gp-g",
+    "title": "Looking out for each other",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "V3QOQndiSzKji0eOmIs_GQ": {
+    "id": "V3QOQndiSzKji0eOmIs_GQ",
+    "title": "Inclusive leadership",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "lO3PIlozQN-Nf8exgnqqkQ",
+      "title": "Inclusive leadership"
+    }
+  },
+  "HFvcAPI5Sqeu2LmY1ESwcQ": {
+    "id": "HFvcAPI5Sqeu2LmY1ESwcQ",
+    "title": "CIPS Modern Slavery Act",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "RWonQ6j0Rji7WdsqwQ2Zzg": {
+    "id": "RWonQ6j0Rji7WdsqwQ2Zzg",
+    "title": "Start with why",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "T8yE8o2LSyGcay95Z-gJBQ",
+      "title": "Start with why"
+    }
+  },
+  "xeerPqMgS2yBxlVISrWHAQ": {
+    "id": "xeerPqMgS2yBxlVISrWHAQ",
+    "title": "Delegation: Achieving results through others ",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "GvFYXcr2TJm2Y1352yyI0Q",
+      "title": "Delegation: achieving results through others"
+    }
+  },
+  "ySQU6LK-TNKTwlUsA41zTQ": {
+    "id": "ySQU6LK-TNKTwlUsA41zTQ",
+    "title": "Working with Agile: what is a backlog?",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "v2SrRq4iSM2C28KIKQONbA": {
+    "id": "v2SrRq4iSM2C28KIKQONbA",
+    "title": "Identifying requirement: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "gSp8cj2XRiaF9GWU0Y5MQg": {
+    "id": "gSp8cj2XRiaF9GWU0Y5MQg",
+    "title": "Why project delivery? (video transcript)",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "4sTNZYa_THeaMrvAJEe5nQ": {
+    "id": "4sTNZYa_THeaMrvAJEe5nQ",
+    "title": "Outcome and benefits: top tips",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "b-GVeJ4mTACk285GbJyMoQ": {
+    "id": "b-GVeJ4mTACk285GbJyMoQ",
+    "title": "Getting The Most From Matrix Working",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "UW1cueDsRBKe7QppC7KgwA",
+      "title": "Matrix working"
+    }
+  },
+  "WDmtSeD4RBGtkb4XrgPPHw": {
+    "id": "WDmtSeD4RBGtkb4XrgPPHw",
+    "title": "Managing poor performance: top tips",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "h1ywOyCrRAqWNjtY66cgew",
+      "title": "Managing poor performance"
+    }
+  },
+  "dL5BUKEhTOiny9PSw8fohQ": {
+    "id": "dL5BUKEhTOiny9PSw8fohQ",
+    "title": "Case study 2: team collaboration in an operational environment",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "wyWYOeqyRrOLSjSVsSurnA": {
+    "id": "wyWYOeqyRrOLSjSVsSurnA",
+    "title": "Top tips",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "drOaKVBTRPib5jNqYlbCVg": {
+    "id": "drOaKVBTRPib5jNqYlbCVg",
+    "title": "What is Agile?",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "eMgOrH1WSleVJY3FsQeNtQ": {
+    "id": "eMgOrH1WSleVJY3FsQeNtQ",
+    "title": "Protecting and sharing information",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "AAlTi6qXRzW0_tTtevbK4Q",
+      "title": "Responsibility for information"
+    }
+  },
+  "fzSf3lCYR2yFe5xlafBJeA": {
+    "id": "fzSf3lCYR2yFe5xlafBJeA",
+    "title": "Embracing digital to lead and innovate",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "EJTKaydUTrO8eariovcMkg",
+      "title": "Embracing digital to lead and innovate"
+    }
+  },
+  "dc3oUlOqTjmOPqx7mSrw9w": {
+    "id": "dc3oUlOqTjmOPqx7mSrw9w",
+    "title": "Why focus on outcomes and benefits?",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "6mKUo4GQQsS2cRTGjfl08g": {
+    "id": "6mKUo4GQQsS2cRTGjfl08g",
+    "title": "What is Agile?: video transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "54UUx3JBST-cbQnPxKz9DA": {
+    "id": "54UUx3JBST-cbQnPxKz9DA",
+    "title": "How projects run: test your knowledge",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "7Af9Z9XFR4CDSaMgOIDJuw",
+      "title": "How projects run"
+    }
+  },
+  "4wSRyjFISZe-5Ke28I2Yyg": {
+    "id": "4wSRyjFISZe-5Ke28I2Yyg",
+    "title": " Introduction to communicating effectively: team communication checklist",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "fM6lUo61QImffsteAxhpaw",
+      "title": "Introduction to communicating effectively"
+    }
+  },
+  "MclXceRDRSKL1WG_KwlBoA": {
+    "id": "MclXceRDRSKL1WG_KwlBoA",
+    "title": "Our inclusive workplace",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "RrGmBqIoRxKoYwGHUN7kfA",
+      "title": "Diversity and inclusion"
+    }
+  },
+  "Xe9hrAORQaCtm3O_vR8ltQ": {
+    "id": "Xe9hrAORQaCtm3O_vR8ltQ",
+    "title": "How projects run: roles and responsibilities",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "7Af9Z9XFR4CDSaMgOIDJuw",
+      "title": "How projects run"
+    }
+  },
+  "Sc_MvbPCTX6gn9hKdfpjdg": {
+    "id": "Sc_MvbPCTX6gn9hKdfpjdg",
+    "title": "Module B6 Risk Management",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "qTbh6-9DTdO2u21FDzpn8w",
+      "title": "Contract Management: Foundation Level"
+    }
+  },
+  "ANNS0wT9TPKS3S6bIsi35g": {
+    "id": "ANNS0wT9TPKS3S6bIsi35g",
+    "title": "Collaboration toolkit",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "YoQfEkNyR3GBh6ORFpL1mg": {
+    "id": "YoQfEkNyR3GBh6ORFpL1mg",
+    "title": "Equality, diversity and inclusion in the Civil Service",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "RrGmBqIoRxKoYwGHUN7kfA",
+      "title": "Diversity and inclusion"
+    }
+  },
+  "VOoR9Gz0SSigma4fHTgFyw": {
+    "id": "VOoR9Gz0SSigma4fHTgFyw",
+    "title": "Owning the benefits",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "aMvaePP7QF2yUUemqYlrKw",
+      "title": "Outcomes and benefits"
+    }
+  },
+  "zSbXQiFYRMqHZuNJN8vE1Q": {
+    "id": "zSbXQiFYRMqHZuNJN8vE1Q",
+    "title": "Being commercially aware: transcript",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "Xh15sdVXRsi7ahLuEmHVog": {
+    "id": "Xh15sdVXRsi7ahLuEmHVog",
+    "title": "NAO report: open-book accounting and supply-chain assurance (2015)",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "_e5npix_TFCeS_8nUVgXnA",
+      "title": "Commercial journey"
+    }
+  },
+  "u4JS_SV_QpejuFVZO-ZBhg": {
+    "id": "u4JS_SV_QpejuFVZO-ZBhg",
+    "title": "Managing risks",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "S79a1GNeT0StrtD3vVUS1Q": {
+    "id": "S79a1GNeT0StrtD3vVUS1Q",
+    "title": "Developing people: transcript for Meaning of people development",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "79T3EIysRw2ltpFbaXRKSw",
+      "title": "Developing people"
+    }
+  },
+  "7z_5YygmTR-oTsXImAhsgA": {
+    "id": "7z_5YygmTR-oTsXImAhsgA",
+    "title": "Working with finance in government: Glossary",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "R916CBvFRSSysCbBvDzCiA",
+      "title": "Working with finance in government"
+    }
+  },
+  "GPTKuml9SBy0K9oZQeqlFQ": {
+    "id": "GPTKuml9SBy0K9oZQeqlFQ",
+    "title": "Listen more actively and improve your communication skills",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "fM6lUo61QImffsteAxhpaw",
+      "title": "Introduction to communicating effectively"
+    }
+  },
+  "FOsfAxedQ-yU7VwhdapJGg": {
+    "id": "FOsfAxedQ-yU7VwhdapJGg",
+    "title": "The role of the Senior Responsible Owner",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "7Af9Z9XFR4CDSaMgOIDJuw",
+      "title": "How projects run"
+    }
+  },
+  "jR0SgMp-TjOeRVgImi-Daw": {
+    "id": "jR0SgMp-TjOeRVgImi-Daw",
+    "title": "Working with Agile: attending a standup",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "nQlLkz9sRPy4QFeGe5YJWQ": {
+    "id": "nQlLkz9sRPy4QFeGe5YJWQ",
+    "title": "PAC report: Transforming contract management: progress review (2016)",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "_e5npix_TFCeS_8nUVgXnA",
+      "title": "Commercial journey"
+    }
+  },
+  "5QijBMq0Rn66E418Uw-5hA": {
+    "id": "5QijBMq0Rn66E418Uw-5hA",
+    "title": "Why you will fail to have a great career",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "D8oWpeM7RCai27XaG-v0qw",
+      "title": "Why you will fail to have a great career"
+    }
+  },
+  "LGNtPoGqQG-TWQurUuCliA": {
+    "id": "LGNtPoGqQG-TWQurUuCliA",
+    "title": "Why finance is important in government: video transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "O2eXXNIKSWyfqRr4U8KpZw": {
+    "id": "O2eXXNIKSWyfqRr4U8KpZw",
+    "title": "Managing performance: what does good performance management mean? transcript",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "p52QwxTRQGaJq3pR0mVdzg": {
+    "id": "p52QwxTRQGaJq3pR0mVdzg",
+    "title": "Application examples",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "Y0A0ZA9STfmewkx-zDBWNA": {
+    "id": "Y0A0ZA9STfmewkx-zDBWNA",
+    "title": "Communicate more effectively face-to-face with customers",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "fM6lUo61QImffsteAxhpaw",
+      "title": "Introduction to communicating effectively"
+    }
+  },
+  "VkqxBK3YSDGTYj4Lg3Rmdg": {
+    "id": "VkqxBK3YSDGTYj4Lg3Rmdg",
+    "title": "Key principles of collaboration",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "UtRvsvcjSF2hdGnFMde1WQ": {
+    "id": "UtRvsvcjSF2hdGnFMde1WQ",
+    "title": "Commercial cycle 1: setting the direction",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "SClQbjX0Qy2AgRFYoqEUYA",
+      "title": "Commercial cycle 1: setting the direction"
+    }
+  },
+  "JTJcuO_6SNWKriJA02RmaA": {
+    "id": "JTJcuO_6SNWKriJA02RmaA",
+    "title": "The 5 major pitfalls of managing a partially remote team",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "kT5aAXZ9SyiOg0HZ_xcEYg",
+      "title": "The 5 major pitfalls of managing a partially remote team"
+    }
+  },
+  "hi38jzhWSg6xPLhlrTOAMA": {
+    "id": "hi38jzhWSg6xPLhlrTOAMA",
+    "title": "Matrix management",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "qHpNcj3YSMCh0PsybuI1oA",
+      "title": "Matrix management"
+    }
+  },
+  "AOI4Ewg7TNW7bHbC4sf4nw": {
+    "id": "AOI4Ewg7TNW7bHbC4sf4nw",
+    "title": "Managing changes to scope",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "IVVHAJXKStu8uhEGjz91cg": {
+    "id": "IVVHAJXKStu8uhEGjz91cg",
+    "title": "Working with Agile: top tips ",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "MZuUvS7qS8edxgTKh7-yKw": {
+    "id": "MZuUvS7qS8edxgTKh7-yKw",
+    "title": "The 6 hallmarks of collaboration",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "XG22JMdmQXWZniLLJQ_XLQ",
+      "title": "Collaboration across departments, government and beyond"
+    }
+  },
+  "UV9F1x0eSAqFpyiUKPG-jQ": {
+    "id": "UV9F1x0eSAqFpyiUKPG-jQ",
+    "title": "Customer insight: managers guide",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "SvEcj5NvQKuUsk8PJhwb-g",
+      "title": "Customer insight"
+    }
+  },
+  "cQzIhIYzQ3OeHh4JpSToHw": {
+    "id": "cQzIhIYzQ3OeHh4JpSToHw",
+    "title": "Government as a platform",
+    "type": "video",
+    "required": false,
+    "course": {
+      "id": "P58_9PDfTcOBvF7FjbB_7w",
+      "title": "Government as a platform"
+    }
+  },
+  "Fe348HOPQOKf-IXghHnc6Q": {
+    "id": "Fe348HOPQOKf-IXghHnc6Q",
+    "title": "In the workplace",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "AAlTi6qXRzW0_tTtevbK4Q",
+      "title": "Responsibility for information"
+    }
+  },
+  "KZLUYcz6QXCzrCfyr0OChg": {
+    "id": "KZLUYcz6QXCzrCfyr0OChg",
+    "title": "The legal framework",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "RrGmBqIoRxKoYwGHUN7kfA",
+      "title": "Diversity and inclusion"
+    }
+  },
+  "Kf6B4GgDSi2q65oG3qNImA": {
+    "id": "Kf6B4GgDSi2q65oG3qNImA",
+    "title": "Why Agile works?",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "NwpSdMmTRDeDO0SlHkIM3g",
+      "title": "Working with Agile"
+    }
+  },
+  "VIbVeOvoQ8SBZ_VA3M6GFQ": {
+    "id": "VIbVeOvoQ8SBZ_VA3M6GFQ",
+    "title": "Introduction to finance: animation transcript",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "Hvuq9RyUQkC2zuqmZGaWWQ",
+      "title": "Awareness of finance in government"
+    }
+  },
+  "76lB-TCPTfyL7ZGhyYhzOg": {
+    "id": "76lB-TCPTfyL7ZGhyYhzOg",
+    "title": "Ask an expert",
+    "type": "video",
+    "required": true,
+    "course": {
+      "id": "_AdtAE3PTP22U1jwkQI2NQ",
+      "title": "Identifying customer and stakeholder requirements"
+    }
+  },
+  "BDHx47ldS0aAuqHsgy0fPg": {
+    "id": "BDHx47ldS0aAuqHsgy0fPg",
+    "title": "Emotional intelligence overview",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "TqjvUs-zQYys2EiXYqj31Q",
+      "title": "Emotional intelligence"
+    }
+  },
+  "249qfGHFQvGuZjhYGiwciA": {
+    "id": "249qfGHFQvGuZjhYGiwciA",
+    "title": "Getting It Right: Scope and Change glossary",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "dflJGc6oSlmm0VBCm-716w",
+      "title": "Getting it right: scope and change"
+    }
+  },
+  "cp-9eOgNQ-aU1s8_oYESJg": {
+    "id": "cp-9eOgNQ-aU1s8_oYESJg",
+    "title": "Introduction to project delivery in government",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "f17wkg1BQrmeuqeoqA-l4g",
+      "title": "Introduction to Project Delivery"
+    }
+  },
+  "Ab1evyZNSfWmsKaHJ6w_0A": {
+    "id": "Ab1evyZNSfWmsKaHJ6w_0A",
+    "title": "CIPS Procurement Risk Management",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "jSgeyT0uQh2VvZGFvbS_2g": {
+    "id": "jSgeyT0uQh2VvZGFvbS_2g",
+    "title": "Recap",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "KqwC7BKtQy6iyWg2UShIrg": {
+    "id": "KqwC7BKtQy6iyWg2UShIrg",
+    "title": "Further reading",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "TqjvUs-zQYys2EiXYqj31Q",
+      "title": "Emotional intelligence"
+    }
+  },
+  "bzQhwfWnSDCOSS-uj-GoqA": {
+    "id": "bzQhwfWnSDCOSS-uj-GoqA",
+    "title": "PRINCE2: foundation",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "JogxVUvARiSVPkhlVpRCTg",
+      "title": "PRINCE2: foundation"
+    }
+  },
+  "Arl-mLTsQhi595UfvLTNrg": {
+    "id": "Arl-mLTsQhi595UfvLTNrg",
+    "title": "Introducing unconscious bias",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "RrGmBqIoRxKoYwGHUN7kfA",
+      "title": "Diversity and inclusion"
+    }
+  },
+  "7LuMVb2eTeyXq3XTM2FnmA": {
+    "id": "7LuMVb2eTeyXq3XTM2FnmA",
+    "title": "How commercially aware are you?",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "GJ1c30TyQAWp8evvD-derg": {
+    "id": "GJ1c30TyQAWp8evvD-derg",
+    "title": "Staying safe online",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "AAlTi6qXRzW0_tTtevbK4Q",
+      "title": "Responsibility for information"
+    }
+  },
+  "XzwMTqneQR-PCpxLAuaW-Q": {
+    "id": "XzwMTqneQR-PCpxLAuaW-Q",
+    "title": "Knowledge check",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "e0HNfmkTSMiRPHVJ9ljnxA",
+      "title": "Commercial awareness"
+    }
+  },
+  "R3_QqGapQI26FLwltORQtw": {
+    "id": "R3_QqGapQI26FLwltORQtw",
+    "title": "Resilient leadership: one-to-one",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "xDN3ZvmFS4qkbA3iCVQLLQ",
+      "title": "Resilient leadership: one to one"
+    }
+  },
+  "SWH8hOG7TwWMwXg81QyUTQ": {
+    "id": "SWH8hOG7TwWMwXg81QyUTQ",
+    "title": "That conversation with your boss",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "Om4BwUxjTaaZZzCDZu5-zQ": {
+    "id": "Om4BwUxjTaaZZzCDZu5-zQ",
+    "title": "Reflective activity",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "TqjvUs-zQYys2EiXYqj31Q",
+      "title": "Emotional intelligence"
+    }
+  },
+  "RX-eBCchT7OGSV0HFD0oEQ": {
+    "id": "RX-eBCchT7OGSV0HFD0oEQ",
+    "title": "APM project fundamentals qualifications",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "cboy3ZOWSwKJnHCnJpCs9A",
+      "title": "APM project fundamentals qualifications"
+    }
+  },
+  "EcbE4tZzT9iXPO2S2wd59Q": {
+    "id": "EcbE4tZzT9iXPO2S2wd59Q",
+    "title": "High-impact communication",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "TEW5-15SQ-SRx6-YS8Zo6w",
+      "title": "High-impact communication"
+    }
+  },
+  "WiWPyhXmTjuxLQqttlWCRA": {
+    "id": "WiWPyhXmTjuxLQqttlWCRA",
+    "title": "Mental health: reflective activity",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "GYiWLxbiRcKrrFTOb6TUhw": {
+    "id": "GYiWLxbiRcKrrFTOb6TUhw",
+    "title": "Mental health awareness quiz",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "UB17rkiGSCWNO3XPqQXccg",
+      "title": "Mental health at work"
+    }
+  },
+  "fkRWw6FtSQGi5aQyAaRMGw": {
+    "id": "fkRWw6FtSQGi5aQyAaRMGw",
+    "title": "Test your knowledge",
+    "type": "elearning",
+    "required": true,
+    "course": {
+      "id": "f_ezQdqDSwqAW7HKrI3nDQ",
+      "title": "Managing risk, issues and dependencies"
+    }
+  },
+  "nVWZDmrJSg-Cd55GkYtbIA": {
+    "id": "nVWZDmrJSg-Cd55GkYtbIA",
+    "title": "Working with budgets: managing public money",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "u3cFYdz1R0ynhnGWupTlfA": {
+    "id": "u3cFYdz1R0ynhnGWupTlfA",
+    "title": "Working with budgets: diagnostic survey",
+    "type": "file",
+    "required": false,
+    "course": {
+      "id": "L1U3cK3GQtuf3iDg71NqJw",
+      "title": "Working with budgets"
+    }
+  },
+  "dS1WtZ4ZRNGoER7EBvxF1w": {
+    "id": "dS1WtZ4ZRNGoER7EBvxF1w",
+    "title": "Managing Successful Programmes (MSP): foundation",
+    "type": "face-to-face",
+    "required": false,
+    "course": {
+      "id": "Od_vsyRuRD-EjYoAVTLkgQ",
+      "title": "Managing Successful Programmes (MSP): foundation"
+    }
+  },
+  "mFkD3BbkQB-4XVP-_KC_pw": {
+    "id": "mFkD3BbkQB-4XVP-_KC_pw",
+    "title": "What the Civil Service of tomorrow will look like",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "dyBsqX3xTZiegdIFWQPK-A",
+      "title": "What the Civil Service of tomorrow will look like"
+    }
+  },
+  "2C6XrUdHS46eVjTPC5BKkg": {
+    "id": "2C6XrUdHS46eVjTPC5BKkg",
+    "title": "Managing performance: the first conversation",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "3TKVJyBGRlOyyYQxYyUaAQ",
+      "title": "Managing performance"
+    }
+  },
+  "5D5KcwAXRDee9d126ZEOMA": {
+    "id": "5D5KcwAXRDee9d126ZEOMA",
+    "title": "CIPS assessing, managing and monitoring risk",
+    "type": "link",
+    "required": true,
+    "course": {
+      "id": "bCLyVO9CRJ6IKmDVOcU-Lg",
+      "title": "Chartered Institute of Procurement and Supply (CIPS)"
+    }
+  },
+  "yKNmsBbpRiGiMXxyiILO5A": {
+    "id": "yKNmsBbpRiGiMXxyiILO5A",
+    "title": "Application process",
+    "type": "file",
+    "required": true,
+    "course": {
+      "id": "eh8SK4H3S7SlhzvVee0O3w",
+      "title": "Applying for jobs"
+    }
+  },
+  "LM_XFMh3QzSBKx7thxtuSg": {
+    "id": "LM_XFMh3QzSBKx7thxtuSg",
+    "title": "From self-awareness to self-management",
+    "type": "elearning",
+    "required": false,
+    "course": {
+      "id": "TqjvUs-zQYys2EiXYqj31Q",
+      "title": "Emotional intelligence"
+    }
+  },
+  "5M31q5IURm-dydW9WYeKSg": {
+    "id": "5M31q5IURm-dydW9WYeKSg",
+    "title": "Written communication",
+    "type": "face-to-face",
+    "required": true,
+    "course": {
+      "id": "IIikGtZoRlueydvvLg1hHw",
+      "title": "Written communication"
+    }
+  },
+  "2flPgvCkSHmSIe_opxeHMQ": {
+    "id": "2flPgvCkSHmSIe_opxeHMQ",
+    "title": "Challenges and benefits of matrix management in the workplace",
+    "type": "link",
+    "required": false,
+    "course": {
+      "id": "-USxI9aTTomZ93kGw_lIDA",
+      "title": "Challenges and benefits of matrix management in the workplace"
+    }
+  }
+}
