@@ -199,26 +199,9 @@ public class ModuleControllerIntegrationTest {
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(civilServantProfileResponseBody, MediaType.APPLICATION_JSON_UTF8));
 
-        String learnerRecordResponse = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/learnerrecord/reporting_module-records.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9000/reporting/module-records?from=2018-01-01&to=2018-12-31"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(learnerRecordResponse, MediaType.APPLICATION_JSON_UTF8));
-
-        String registryServiceResponse = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/registry/report_civilServants.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9002/report/civilServants"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(registryServiceResponse, MediaType.APPLICATION_JSON_UTF8));
-
-        String learningCatalogueResponse = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/catalogue/reporting_modules.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9001/reporting/modules?professionId=" + professionId))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(learningCatalogueResponse, MediaType.APPLICATION_JSON_UTF8));
+        server.expect(never(), requestTo("http://localhost:9000/reporting/module-records?from=2018-01-01&to=2018-12-31"));
+        server.expect(never(), requestTo("http://localhost:9002/report/civilServants"));
+        server.expect(never(), requestTo("http://localhost:9001/reporting/modules?professionId=" + professionId));
 
         mockMvc.perform(
                 get("/modules")
@@ -246,26 +229,9 @@ public class ModuleControllerIntegrationTest {
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(civilServantProfileResponseBody, MediaType.APPLICATION_JSON_UTF8));
 
-        String learnerRecordResponse = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/learnerrecord/reporting_module-records.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9000/reporting/module-records?from=2018-01-01&to=2018-12-31"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(learnerRecordResponse, MediaType.APPLICATION_JSON_UTF8));
-
-        String registryServiceResponse = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/registry/report_civilServants.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9002/report/civilServants"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(registryServiceResponse, MediaType.APPLICATION_JSON_UTF8));
-
-        String learningCatalogueResponse = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/catalogue/reporting_modules.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9001/reporting/modules?professionId=" + professionId))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(learningCatalogueResponse, MediaType.APPLICATION_JSON_UTF8));
+        server.expect(never(), requestTo("http://localhost:9000/reporting/module-records?from=2018-01-01&to=2018-12-31"));
+        server.expect(never(), requestTo("http://localhost:9002/report/civilServants"));
+        server.expect(never(), requestTo("http://localhost:9001/reporting/modules?professionId=" + professionId));
 
         mockMvc.perform(
                 get("/modules")
@@ -286,33 +252,10 @@ public class ModuleControllerIntegrationTest {
         LocalDate to = LocalDate.of(2018, 12, 31);
         String professionId = "2";
 
-        String civilServantProfileResponseBody = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/registry/civilServants_me.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9002/civilServants/me"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(civilServantProfileResponseBody, MediaType.APPLICATION_JSON_UTF8));
-
-        String learnerRecordResponse = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/learnerrecord/reporting_module-records.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9000/reporting/module-records?from=2018-01-01&to=2018-12-31"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(learnerRecordResponse, MediaType.APPLICATION_JSON_UTF8));
-
-        String registryServiceResponse = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/registry/report_civilServants.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9002/report/civilServants"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(registryServiceResponse, MediaType.APPLICATION_JSON_UTF8));
-
-        String learningCatalogueResponse = new String(Files.readAllBytes(
-                Paths.get(getClass().getResource("/fixtures/catalogue/reporting_modules.json").toURI())));
-
-        server.expect(never(), requestTo("http://localhost:9001/reporting/modules?professionId=" + professionId))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(learningCatalogueResponse, MediaType.APPLICATION_JSON_UTF8));
+        server.expect(never(), requestTo("http://localhost:9002/civilServants/me"));
+        server.expect(never(), requestTo("http://localhost:9000/reporting/module-records?from=2018-01-01&to=2018-12-31"));
+        server.expect(never(), requestTo("http://localhost:9002/report/civilServants"));
+        server.expect(never(), requestTo("http://localhost:9001/reporting/modules?professionId=" + professionId));
 
         mockMvc.perform(
                 get("/modules")
@@ -325,5 +268,4 @@ public class ModuleControllerIntegrationTest {
                 .andExpect(status().isForbidden())
                 .andExpect(content().string(equalTo("")));
     }
-
 }
