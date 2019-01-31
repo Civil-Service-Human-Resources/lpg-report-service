@@ -40,7 +40,7 @@ learningCatalogue:
   serviceUrl: ${LEARNING_CATALOGUE_SERVICE_URL:http://localhost:9001}
   eventsUrl: "${learningCatalogue.serviceUrl}/reporting/events"
   modulesUrl: "${learningCatalogue.serviceUrl}/reporting/modules"
-  modulesByProfessionUrl: "${learningCatalogue.serviceUrl}/reporting/modules/%s"
+  modulesByProfessionUrl: "${learningCatalogue.serviceUrl}/reporting/modules?professionId=%s"
 ---
 
 spring:
