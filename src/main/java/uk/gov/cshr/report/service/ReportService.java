@@ -11,7 +11,6 @@ import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 import uk.gov.cshr.report.service.registry.CivilServantRegistryService;
 
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ public class ReportService {
 
         for (Booking booking : bookings) {
             if (civilServantMap.containsKey(booking.getLearner())) {
-                String eventUid = Paths.get(booking.getEvent()).getFileName().toString();
+                String eventUid = booking.getEventUid();
 
                 Optional<CivilServant> civilServant = Optional.ofNullable(civilServantMap.get(booking.getLearner()));
                 Optional<Event> event = Optional.ofNullable(eventMap.get(eventUid));

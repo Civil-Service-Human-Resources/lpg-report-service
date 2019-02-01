@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "learner": "8dc80f78-9a52-4c31-ac54-d280a70c18eb",
+    "learnerEmail": "user@example.org",
+    "event": "http://localhost:9001/courses/GvFYXcr2TJm2Y1352yyI0Q/modules/xeerPqMgS2yBxlVISrWHAQ/events/4vb4x-BAS1GvrKqgwk6yNQ",
+    "status": "Requested",
+    "bookingTime": "2019-02-01T14:31:07Z",
+    "eventUid": "4vb4x-BAS1GvrKqgwk6yNQ",
+    "eventPath": "/courses/GvFYXcr2TJm2Y1352yyI0Q/modules/xeerPqMgS2yBxlVISrWHAQ/events/4vb4x-BAS1GvrKqgwk6yNQ"
+  },
+  {
+    "id": 34,
+    "learner": "3c706a70-3fff-4e7b-ae7f-102c1d46f569",
+    "learnerEmail": "learner@domain.com",
+    "event": "http://localhost:9001/courses/1WiZoY7uT0epdcgj8S+6zg/modules/sE36a9lFSCmrQaF24ixx7A/events/gPjF0K9LRwqx/U44JqdoaA",
+    "status": "Confirmed",
+    "bookingTime": "2019-01-10T14:57:12Z",
+    "eventUid": "gPjF0K9LRwqx/U44JqdoaA",
+    "eventPath": "/courses/1WiZoY7uT0epdcgj8S+6zg/modules/sE36a9lFSCmrQaF24ixx7A/events/gPjF0K9LRwqx/U44JqdoaA"
+  },
+  {
+    "id": 323,
+    "learner": "c4cb1208-eca7-46a6-b496-0f6f354c6eac",
+    "learnerEmail": "cshr-reporter@domain.com",
+    "event": "http://localhost:9001/courses/zVoyd5yUScKokd2xOacPzg/modules/nO3rbP0uS7e/DNKPtLtXLg/events/BCv48JfHRR2YZoTFrM1nvQ",
+    "status": "Confirmed",
+    "bookingTime": "2019-01-10T14:57:12Z",
+    "eventUid": "BCv48JfHRR2YZoTFrM1nvQ",
+    "eventPath": "/courses/zVoyd5yUScKokd2xOacPzg/modules/nO3rbP0uS7e/DNKPtLtXLg/events/BCv48JfHRR2YZoTFrM1nvQ"
+  }
+]

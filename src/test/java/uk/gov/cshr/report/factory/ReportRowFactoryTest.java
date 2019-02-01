@@ -44,7 +44,7 @@ public class ReportRowFactoryTest {
         Booking booking = new Booking();
         booking.setStatus(status);
         booking.setLearner(learnerUid);
-        booking.setEvent(eventUid);
+        booking.setEventUid(eventUid);
 
         CivilServant civilServant = new CivilServant();
         civilServant.setId(learnerUid);
@@ -63,6 +63,7 @@ public class ReportRowFactoryTest {
         module.setId(moduleId);
         module.setTitle(moduleTitle);
         module.setRequired(true);
+        module.setCourse(course);
 
         LearningProvider learningProvider = new LearningProvider();
         learningProvider.setId(learningProviderId);
@@ -72,7 +73,6 @@ public class ReportRowFactoryTest {
         event.setId(eventUid);
         event.setModule(module);
         event.setLearningProvider(learningProvider);
-        event.setCourse(course);
 
         BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
 
@@ -109,7 +109,7 @@ public class ReportRowFactoryTest {
         Booking booking = new Booking();
         booking.setStatus(status);
         booking.setLearner(learnerUid);
-        booking.setEvent(eventUid);
+        booking.setEventUid(eventUid);
 
         CivilServant civilServant = new CivilServant();
         civilServant.setId(learnerUid);
@@ -128,11 +128,11 @@ public class ReportRowFactoryTest {
         module.setId(moduleId);
         module.setTitle(moduleTitle);
         module.setRequired(true);
+        module.setCourse(course);
 
         Event event = new Event();
         event.setId(eventUid);
         event.setModule(module);
-        event.setCourse(course);
 
         BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
 

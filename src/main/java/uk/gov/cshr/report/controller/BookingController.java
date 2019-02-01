@@ -21,7 +21,7 @@ public class BookingController {
         this.reportService = reportService;
     }
 
-    @GetMapping(produces = "text/csv; charset=utf-8", params = {"from", "to"})
+    @GetMapping(produces = "text/csv", params = {"from", "to"})
     public ResponseEntity<List<BookingReportRow>> generateBookingReport(
             @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to

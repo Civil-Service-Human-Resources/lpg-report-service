@@ -7,7 +7,7 @@ public class Booking {
     private Integer id;
     private String learner;
     private String learnerEmail;
-    private String event;
+    private String eventUid;
     private BookingStatus status;
     private String bookingTime;
 }

@@ -1,0 +1,53 @@
+{
+  "4vb4x-BAS1GvrKqgwk6yNQ": {
+    "id": "4vb4x-BAS1GvrKqgwk6yNQ",
+    "module": {
+      "id": "xeerPqMgS2yBxlVISrWHAQ",
+      "title": "Pork chop turducken ball",
+      "type": "face-to-face",
+      "required": false,
+      "course": {
+        "id": "GvFYXcr2TJm2Y1352yyI0Q",
+        "title": "Beef ribs kevin filet mignon"
+      }
+    },
+    "learningProvider": {
+      "id": "BBvIp9erQyeANS580mwtqg",
+      "name": "Turkey fatback spare ribs"
+    }
+  },
+  "BCv48JfHRR2YZoTFrM1nvQ": {
+    "id": "BCv48JfHRR2YZoTFrM1nvQ",
+    "module": {
+      "id": "nO3rbP0uS7e/DNKPtLtXLg",
+      "title": "Spicy jalapeno bacon ipsum dolor",
+      "type": "face-to-face",
+      "required": true,
+      "course": {
+        "id": "zVoyd5yUScKokd2xOacPzg",
+        "title": "Sirloin ground round drumstick"
+      }
+    },
+    "learningProvider": {
+      "id": "BBvIp9erQyeANS580mwtqg",
+      "name": "Turkey fatback spare ribs"
+    }
+  },
+  "gPjF0K9LRwqx/U44JqdoaA": {
+    "id": "gPjF0K9LRwqx/U44JqdoaA",
+    "module": {
+      "id": "sE36a9lFSCmrQaF24ixx7A",
+      "title": "Pork belly picanha ribeye turkey",
+      "type": "face-to-face",
+      "required": false,
+      "course": {
+        "id": "1WiZoY7uT0epdcgj8S+6zg",
+        "title": "Chicken strip steak doner"
+      }
+    },
+    "learningProvider": {
+      "id": "BBvIp9erQyeANS580mwtqg",
+      "name": "Turkey fatback spare ribs"
+    }
+  }
+}

@@ -45,11 +45,11 @@ public class ReportServiceTest {
     @Test
     public void shouldReturnBookingReport() {
         Booking booking1 = new Booking();
-        booking1.setEvent("event1");
+        booking1.setEventUid("event1");
         booking1.setLearner("learner1");
 
         Booking booking2 = new Booking();
-        booking2.setEvent("event2");
+        booking2.setEventUid("event2");
         booking2.setLearner("learner2");
 
         CivilServant civilServant1 = new CivilServant();
