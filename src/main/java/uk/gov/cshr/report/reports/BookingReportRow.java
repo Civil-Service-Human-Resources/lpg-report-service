@@ -6,7 +6,8 @@ import lombok.Data;
 
 @Data
 @JsonPropertyOrder({ "learnerId", "name", "email", "department", "profession", "otherAreasOfWork", "grade", "courseId",
-        "courseTitle", "moduleId", "moduleTitle","learningProvider", "required", "status" })
+        "courseTitle", "moduleId", "moduleTitle","learningProvider", "required", "status", "bookingTime", "confirmationTime",
+        "cancellationTime", "accessibilityOptions", "bookingCancellationReason"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookingReportRow {
     private String learnerId;
@@ -23,4 +24,9 @@ public class BookingReportRow {
     private String learningProvider;
     private boolean required;
     private String status;
+    private String bookingTime;
+    private String confirmationTime;
+    private String cancellationTime;
+    private String accessibilityOptions;
+    private String bookingCancellationReason;
 }
