@@ -27,11 +27,10 @@ public class ReportRowFactory {
             reportRow.setGrade(civilServant.getGrade());
         }
 
-        // TODO: This will need to change when LPFG-209 is merged
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
-            reportRow.setCourseId(event.getCourse().getId());
-            reportRow.setCourseTitle(event.getCourse().getTitle());
+            reportRow.setCourseId(event.getModule().getCourse().getId());
+            reportRow.setCourseTitle(event.getModule().getCourse().getTitle());
             reportRow.setModuleId(event.getModule().getId());
             reportRow.setModuleTitle(event.getModule().getTitle());
             reportRow.setRequired(event.getModule().getRequired());

@@ -16,7 +16,6 @@ import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

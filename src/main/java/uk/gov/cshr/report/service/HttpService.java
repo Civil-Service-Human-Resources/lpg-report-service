@@ -15,7 +15,6 @@ import java.util.Map;
 @Service
 public class HttpService {
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpService.class);
-
     private final RestTemplate restTemplate;
     private final HttpHeadersFactory httpHeadersFactory;
     private final RequestEntityFactory requestEntityFactory;
