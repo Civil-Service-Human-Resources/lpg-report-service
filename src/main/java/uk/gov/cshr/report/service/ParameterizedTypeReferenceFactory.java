@@ -3,6 +3,7 @@ package uk.gov.cshr.report.service;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
+import uk.gov.cshr.report.domain.LearnerRecordEvent;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
@@ -22,7 +23,8 @@ public class ParameterizedTypeReferenceFactory {
 
     private final Map<String, ParameterizedTypeReference> listParameterizedTypeReferenceMap = ImmutableMap.of(
             "uk.gov.cshr.report.domain.learnerrecord.Booking", new ParameterizedTypeReference<List<Booking>>() {},
-            "uk.gov.cshr.report.domain.learnerrecord.ModuleRecord", new ParameterizedTypeReference<List<ModuleRecord>>() {}
+            "uk.gov.cshr.report.domain.learnerrecord.ModuleRecord", new ParameterizedTypeReference<List<ModuleRecord>>() {},
+            "uk.gov.cshr.report.domain.LearnerRecordEvent", new ParameterizedTypeReference<List<LearnerRecordEvent>>() {}
     );
 
     private final Map<String, ParameterizedTypeReference> mapParameterizedTypeReferenceMap = ImmutableMap.of(

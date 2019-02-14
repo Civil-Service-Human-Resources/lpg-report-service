@@ -49,7 +49,7 @@ public class LearnerRecordService {
         return httpService.getList(learnerRecordSummariesUrl, LearnerRecordSummary.class);
     }
 
-    @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")
+//    @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")
     public List<LearnerRecordEvent> listEvents() {
         LOGGER.debug("Listing events");
 
