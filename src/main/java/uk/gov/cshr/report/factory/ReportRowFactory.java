@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Component
 public class ReportRowFactory {
-    public BookingReportRow createBookingReportRow(Optional<CivilServant> civilServantOptional, Optional<Event> eventOptional, Booking booking) {
+    public BookingReportRow createBookingReportRow(Optional<CivilServant> civilServantOptional, Event event, Booking booking) {
         BookingReportRow reportRow = new BookingReportRow();
 
         if (civilServantOptional.isPresent()) {
@@ -27,18 +27,14 @@ public class ReportRowFactory {
             reportRow.setGrade(civilServant.getGrade());
         }
 
-        // TODO: This will need to change when LPFG-209 is merged
-        if (eventOptional.isPresent()) {
-            Event event = eventOptional.get();
-            reportRow.setCourseId(event.getCourse().getId());
-            reportRow.setCourseTitle(event.getCourse().getTitle());
-            reportRow.setModuleId(event.getModule().getId());
-            reportRow.setModuleTitle(event.getModule().getTitle());
-            reportRow.setRequired(event.getModule().getRequired());
-            Optional.ofNullable(event.getLearningProvider()).ifPresent(
-                learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
-            );
-        }
+        reportRow.setCourseId(event.getCourse().getId());
+        reportRow.setCourseTitle(event.getCourse().getTitle());
+        reportRow.setModuleId(event.getModule().getId());
+        reportRow.setModuleTitle(event.getModule().getTitle());
+        reportRow.setRequired(event.getModule().getRequired());
+        Optional.ofNullable(event.getLearningProvider()).ifPresent(
+            learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
+        );
 
         reportRow.setStatus(booking.getStatus().getValue());
 

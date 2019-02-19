@@ -74,13 +74,13 @@ public class ReportServiceTest {
         when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
 
         BookingReportRow reportRow = new BookingReportRow();
-        when(reportRowFactory.createBookingReportRow(Optional.of(civilServant1), Optional.of(event), booking1)).thenReturn(reportRow);
+        when(reportRowFactory.createBookingReportRow(Optional.of(civilServant1), event, booking1)).thenReturn(reportRow);
 
         List<BookingReportRow> result = reportService.buildBookingReport(from, to);
 
         assertEquals(Collections.singletonList(reportRow), result);
 
-        verify(reportRowFactory).createBookingReportRow(Optional.of(civilServant1), Optional.of(event), booking1);
+        verify(reportRowFactory).createBookingReportRow(Optional.of(civilServant1), event, booking1);
         verifyNoMoreInteractions(reportRowFactory);
     }
 

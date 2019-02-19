@@ -74,7 +74,7 @@ public class ReportRowFactoryTest {
         event.setLearningProvider(learningProvider);
         event.setCourse(course);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), event, booking);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
@@ -134,7 +134,7 @@ public class ReportRowFactoryTest {
         event.setModule(module);
         event.setCourse(course);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), event, booking);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
