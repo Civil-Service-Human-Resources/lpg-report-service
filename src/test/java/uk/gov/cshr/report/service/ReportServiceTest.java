@@ -42,7 +42,7 @@ public class ReportServiceTest {
     @InjectMocks
     private ReportService reportService;
 
-    @Ignore
+    @Test
     public void shouldReturnBookingReport() {
         Booking booking1 = new Booking();
         booking1.setEvent("event1");
