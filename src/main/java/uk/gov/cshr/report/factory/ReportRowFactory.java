@@ -31,6 +31,7 @@ public class ReportRowFactory {
             Event event = eventOptional.get();
             reportRow.setCourseId(event.getModule().getCourse().getId());
             reportRow.setCourseTitle(event.getModule().getCourse().getTitle());
+            reportRow.setTopicId(event.getModule().getCourse().getTopicId());
             reportRow.setModuleId(event.getModule().getId());
             reportRow.setModuleTitle(event.getModule().getTitle());
             reportRow.setRequired(event.getModule().getRequired());
@@ -61,6 +62,7 @@ public class ReportRowFactory {
 
         reportRow.setCourseId(module.getCourse().getId());
         reportRow.setCourseTitle(module.getCourse().getTitle());
+        reportRow.setCourseTopicId(module.getCourse().getTopicId());
         reportRow.setModuleId(module.getId());
         reportRow.setModuleTitle(module.getTitle());
         reportRow.setModuleType(module.getType());
