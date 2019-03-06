@@ -31,6 +31,7 @@ public class ReportRowFactory {
             Event event = eventOptional.get();
             reportRow.setCourseId(event.getModule().getCourse().getId());
             reportRow.setCourseTitle(event.getModule().getCourse().getTitle());
+            reportRow.setTopicId(event.getModule().getCourse().getTopicId());
             reportRow.setModuleId(event.getModule().getId());
             reportRow.setModuleTitle(event.getModule().getTitle());
             reportRow.setRequired(event.getModule().getRequired());
