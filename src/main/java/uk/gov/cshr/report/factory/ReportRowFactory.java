@@ -20,7 +20,6 @@ public class ReportRowFactory {
             CivilServant civilServant = civilServantOptional.get();
             reportRow.setLearnerId(civilServant.getId());
             reportRow.setName(civilServant.getName());
-            reportRow.setEmail(civilServant.getEmail());
             reportRow.setDepartment(civilServant.getOrganisation());
             reportRow.setProfession(civilServant.getProfession());
             reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
@@ -39,7 +38,7 @@ public class ReportRowFactory {
                 learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
             );
         }
-
+        reportRow.setEmail(booking.getLearnerEmail());
         reportRow.setStatus(booking.getStatus().getValue());
         reportRow.setBookingTime(booking.getBookingTime());
         reportRow.setConfirmationTime(booking.getConfirmationTime());
