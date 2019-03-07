@@ -45,6 +45,7 @@ public class ReportRowFactoryTest {
         booking.setStatus(status);
         booking.setLearner(learnerUid);
         booking.setEvent(eventUid);
+        booking.setLearnerEmail(email);
 
         CivilServant civilServant = new CivilServant();
         civilServant.setId(learnerUid);
@@ -53,7 +54,6 @@ public class ReportRowFactoryTest {
         civilServant.setOtherAreasOfWork(otherAreasOfWork);
         civilServant.setOrganisation(organisation);
         civilServant.setGrade(grade);
-        civilServant.setEmail(email);
 
         Course course = new Course();
         course.setId(courseId);
@@ -109,6 +109,7 @@ public class ReportRowFactoryTest {
         Booking booking = new Booking();
         booking.setStatus(status);
         booking.setLearner(learnerUid);
+        booking.setLearnerEmail(email);
         booking.setEvent(eventUid);
 
         CivilServant civilServant = new CivilServant();
@@ -118,7 +119,6 @@ public class ReportRowFactoryTest {
         civilServant.setOtherAreasOfWork(otherAreasOfWork);
         civilServant.setOrganisation(organisation);
         civilServant.setGrade(grade);
-        civilServant.setEmail(email);
 
         Course course = new Course();
         course.setId(courseId);
