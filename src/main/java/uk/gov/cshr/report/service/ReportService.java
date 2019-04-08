@@ -1,6 +1,7 @@
 package uk.gov.cshr.report.service;
 
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
@@ -23,12 +24,14 @@ public class ReportService {
     private final CivilServantRegistryService civilServantRegistryService;
     private final LearningCatalogueService learningCatalogueService;
     private final ReportRowFactory reportRowFactory;
+    private final IdentityService identityService;
 
-    public ReportService(LearnerRecordService learnerRecordService, CivilServantRegistryService civilServantRegistryService, LearningCatalogueService learningCatalogueService, ReportRowFactory reportRowFactory) {
+    public ReportService(LearnerRecordService learnerRecordService, CivilServantRegistryService civilServantRegistryService, LearningCatalogueService learningCatalogueService, ReportRowFactory reportRowFactory, IdentityService identityService) {
         this.learnerRecordService = learnerRecordService;
         this.civilServantRegistryService = civilServantRegistryService;
         this.learningCatalogueService = learningCatalogueService;
         this.reportRowFactory = reportRowFactory;
+        this.identityService = identityService;
     }
 
     public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to) {
@@ -56,6 +59,7 @@ public class ReportService {
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to) {
         List<ModuleReportRow> report = new ArrayList<>();
 
+        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
         List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
@@ -64,9 +68,10 @@ public class ReportService {
             if (civilServantMap.containsKey(moduleRecord.getLearner())) {
 
                 CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+                Identity identity = identitiesMap.get(moduleRecord.getLearner());
                 Module module = moduleMap.get(moduleRecord.getModuleId());
                 if (module != null) {
-                    report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord));
+                    report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity));
                 }
             }
         }

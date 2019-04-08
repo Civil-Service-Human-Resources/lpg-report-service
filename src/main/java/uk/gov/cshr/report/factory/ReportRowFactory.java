@@ -3,6 +3,7 @@ package uk.gov.cshr.report.factory;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
+import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
@@ -50,11 +51,11 @@ public class ReportRowFactory {
         return reportRow;
     }
 
-    public ModuleReportRow createModuleReportRow(CivilServant civilServant, Module module, ModuleRecord moduleRecord) {
+    public ModuleReportRow createModuleReportRow(CivilServant civilServant, Module module, ModuleRecord moduleRecord, Identity identity) {
         ModuleReportRow reportRow = new ModuleReportRow();
+        reportRow.setEmail(identity.getUsername());
         reportRow.setLearnerId(civilServant.getId());
         reportRow.setName(civilServant.getName());
-        reportRow.setEmail(civilServant.getEmail());
         reportRow.setDepartment(civilServant.getOrganisation());
         reportRow.setProfession(civilServant.getProfession());
         reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
@@ -66,7 +67,6 @@ public class ReportRowFactory {
         reportRow.setModuleId(module.getId());
         reportRow.setModuleTitle(module.getTitle());
         reportRow.setModuleType(module.getType());
-
         reportRow.setStatus(moduleRecord.getState());
         reportRow.setDate(moduleRecord.getStateChangeDate());
 
