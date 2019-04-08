@@ -197,6 +197,7 @@ public class ReportRowFactoryTest {
         module.setCourse(course);
 
         Identity identity = new Identity();
+        identity.setUsername(email);
 
         ModuleReportRow reportRow = reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity);
 
