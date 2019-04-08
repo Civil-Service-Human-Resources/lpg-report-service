@@ -65,7 +65,9 @@ public class ReportService {
 
                 CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
                 Module module = moduleMap.get(moduleRecord.getModuleId());
-                report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord));
+                if (module != null) {
+                    report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord));
+                }
             }
         }
         return report;
