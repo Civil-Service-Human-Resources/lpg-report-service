@@ -5,6 +5,7 @@ import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.LearningProvider;
 import uk.gov.cshr.report.domain.catalogue.Module;
+import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.BookingStatus;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
@@ -195,7 +196,9 @@ public class ReportRowFactoryTest {
         module.setRequired(true);
         module.setCourse(course);
 
-        ModuleReportRow reportRow = reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord);
+        Identity identity = new Identity();
+
+        ModuleReportRow reportRow = reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());

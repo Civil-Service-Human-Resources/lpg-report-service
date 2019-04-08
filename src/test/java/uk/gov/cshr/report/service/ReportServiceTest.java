@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
+import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
@@ -113,15 +114,15 @@ public class ReportServiceTest {
                 "learner3", civilServant3
         ));
         when(learningCatalogueService.getModuleMap()).thenReturn(ImmutableMap.of("module1", module));
-
+        Identity identity = new Identity();
         ModuleReportRow reportRow = new ModuleReportRow();
-        when(reportRowFactory.createModuleReportRow(civilServant1, module, moduleRecord1)).thenReturn(reportRow);
+        when(reportRowFactory.createModuleReportRow(civilServant1, module, moduleRecord1, identity)).thenReturn(reportRow);
 
         List<ModuleReportRow> result = reportService.buildModuleReport(from, to);
 
         assertEquals(Collections.singletonList(reportRow), result);
 
-        verify(reportRowFactory).createModuleReportRow(civilServant1, module, moduleRecord1);
+        verify(reportRowFactory).createModuleReportRow(civilServant1, module, moduleRecord1, identity);
         verifyNoMoreInteractions(reportRowFactory);
     }
 }
