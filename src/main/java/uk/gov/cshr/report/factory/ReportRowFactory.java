@@ -71,7 +71,9 @@ public class ReportRowFactory {
         reportRow.setModuleId(module.getId());
         reportRow.setModuleTitle(module.getTitle());
         reportRow.setModuleType(module.getType());
-        reportRow.setStatus(moduleRecord.getState());
+        if (moduleRecord.getState()!= null) {
+            reportRow.setStatus(moduleRecord.getState());
+        }
         reportRow.setDate(moduleRecord.getStateChangeDate());
 
         return reportRow;
