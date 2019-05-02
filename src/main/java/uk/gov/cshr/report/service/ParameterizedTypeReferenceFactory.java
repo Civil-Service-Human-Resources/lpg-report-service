@@ -3,6 +3,7 @@ package uk.gov.cshr.report.service;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
+import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
@@ -29,7 +30,9 @@ public class ParameterizedTypeReferenceFactory {
             "uk.gov.cshr.report.domain.catalogue.Event", new ParameterizedTypeReference<Map<String, Event>>() {},
             "uk.gov.cshr.report.domain.catalogue.Module", new ParameterizedTypeReference<Map<String, Module>>() {},
             "uk.gov.cshr.report.domain.registry.CivilServant",
-                new ParameterizedTypeReference<Map<String, CivilServant>>() {}
+                new ParameterizedTypeReference<Map<String, CivilServant>>() {},
+            "uk.gov.cshr.report.domain.identity.Identity",
+            new ParameterizedTypeReference<Map<String, Identity>>() {}
     );
 
 
