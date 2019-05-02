@@ -60,7 +60,9 @@ public class ReportRowFactory {
         reportRow.setName(civilServant.getName());
         reportRow.setDepartment(civilServant.getOrganisation());
         reportRow.setProfession(civilServant.getProfession());
-        reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
+        if (civilServant.getOtherAreasOfWork() != null){
+            reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
+        }
         reportRow.setGrade(civilServant.getGrade());
 
         reportRow.setCourseId(module.getCourse().getId());
