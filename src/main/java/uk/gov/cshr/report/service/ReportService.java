@@ -70,7 +70,7 @@ public class ReportService {
                 CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
                 Identity identity = identitiesMap.get(moduleRecord.getLearner());
                 Module module = moduleMap.get(moduleRecord.getModuleId());
-                if (module != null) {
+                if (module != null && identity != null && civilServant != null) {
                     report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity));
                 }
             }
