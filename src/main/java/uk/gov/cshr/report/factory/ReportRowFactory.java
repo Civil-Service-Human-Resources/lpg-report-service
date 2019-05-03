@@ -56,7 +56,7 @@ public class ReportRowFactory {
     public ModuleReportRow createModuleReportRow(CivilServant civilServant, Module module, ModuleRecord moduleRecord, Identity identity) {
         ModuleReportRow reportRow = new ModuleReportRow();
         reportRow.setEmail(identity.getUsername());
-        reportRow.setLearnerId(civilServant.getId());
+        reportRow.setLearnerId(identity.getUid());
         reportRow.setName(civilServant.getName());
         reportRow.setDepartment(civilServant.getOrganisation());
         reportRow.setProfession(civilServant.getProfession());
