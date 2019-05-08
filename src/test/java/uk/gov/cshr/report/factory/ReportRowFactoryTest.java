@@ -1,6 +1,7 @@
 package uk.gov.cshr.report.factory;
 
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithMockUser;
 import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.LearningProvider;
@@ -75,7 +76,11 @@ public class ReportRowFactoryTest {
         event.setModule(module);
         event.setLearningProvider(learningProvider);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
+        Identity identity = new Identity();
+        identity.setUsername(email);
+        identity.setUid(learnerUid);
+
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking, identity, false);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
@@ -92,6 +97,7 @@ public class ReportRowFactoryTest {
     }
 
     @Test
+    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
     public void shouldReturnBookingReportRowWithoutLearningProvider() {
         BookingStatus status = BookingStatus.CONFIRMED;
         String learnerUid = "learner-uid";
@@ -135,7 +141,11 @@ public class ReportRowFactoryTest {
         event.setId(eventUid);
         event.setModule(module);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
+        Identity identity = new Identity();
+        identity.setUsername(email);
+        identity.setUid(learnerUid);
+
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking, identity, false);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
@@ -198,8 +208,9 @@ public class ReportRowFactoryTest {
 
         Identity identity = new Identity();
         identity.setUsername(email);
+        identity.setUid(learnerUid);
 
-        ModuleReportRow reportRow = reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity);
+        ModuleReportRow reportRow = reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, false);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
