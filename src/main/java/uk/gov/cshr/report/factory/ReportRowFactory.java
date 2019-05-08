@@ -14,19 +14,25 @@ import java.util.Optional;
 
 @Component
 public class ReportRowFactory {
-    public BookingReportRow createBookingReportRow(Optional<CivilServant> civilServantOptional, Optional<Event> eventOptional, Booking booking) {
+    public BookingReportRow createBookingReportRow(Optional<CivilServant> civilServantOptional, Optional<Event> eventOptional, Booking booking, Identity identity, boolean isProfessionReporter) {
         BookingReportRow reportRow = new BookingReportRow();
 
         if (civilServantOptional.isPresent()) {
             CivilServant civilServant = civilServantOptional.get();
-            reportRow.setLearnerId(civilServant.getId());
-            reportRow.setName(civilServant.getName());
+
+            if (!isProfessionReporter) {
+                reportRow.setLearnerId(identity.getUid());
+                reportRow.setName(civilServant.getName());
+                reportRow.setEmail(booking.getLearnerEmail());
+            }
+
             reportRow.setDepartment(civilServant.getOrganisation());
             reportRow.setProfession(civilServant.getProfession());
-            if (civilServant.getOtherAreasOfWork() != null){
+            reportRow.setGrade(civilServant.getGrade());
+
+            if (civilServant.getOtherAreasOfWork() != null) {
                 reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
             }
-            reportRow.setGrade(civilServant.getGrade());
         }
 
         if (eventOptional.isPresent()) {
@@ -38,10 +44,9 @@ public class ReportRowFactory {
             reportRow.setModuleTitle(event.getModule().getTitle());
             reportRow.setRequired(event.getModule().getRequired());
             Optional.ofNullable(event.getLearningProvider()).ifPresent(
-                learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
+                    learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
             );
         }
-        reportRow.setEmail(booking.getLearnerEmail());
         reportRow.setStatus(booking.getStatus().getValue());
         reportRow.setBookingTime(booking.getBookingTime());
         reportRow.setConfirmationTime(booking.getConfirmationTime());
@@ -53,14 +58,18 @@ public class ReportRowFactory {
         return reportRow;
     }
 
-    public ModuleReportRow createModuleReportRow(CivilServant civilServant, Module module, ModuleRecord moduleRecord, Identity identity) {
+    public ModuleReportRow createModuleReportRow(CivilServant civilServant, Module module, ModuleRecord moduleRecord, Identity identity, boolean isProfessionReporter) {
         ModuleReportRow reportRow = new ModuleReportRow();
-        reportRow.setEmail(identity.getUsername());
-        reportRow.setLearnerId(identity.getUid());
-        reportRow.setName(civilServant.getName());
+
+        if (!isProfessionReporter) {
+            reportRow.setEmail(identity.getUsername());
+            reportRow.setLearnerId(identity.getUid());
+            reportRow.setName(civilServant.getName());
+        }
+
         reportRow.setDepartment(civilServant.getOrganisation());
         reportRow.setProfession(civilServant.getProfession());
-        if (civilServant.getOtherAreasOfWork() != null){
+        if (civilServant.getOtherAreasOfWork() != null) {
             reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
         }
         reportRow.setGrade(civilServant.getGrade());
@@ -71,7 +80,7 @@ public class ReportRowFactory {
         reportRow.setModuleId(module.getId());
         reportRow.setModuleTitle(module.getTitle());
         reportRow.setModuleType(module.getType());
-        if (moduleRecord.getState()!= null) {
+        if (moduleRecord.getState() != null) {
             reportRow.setStatus(moduleRecord.getState());
         }
         reportRow.setDate(moduleRecord.getStateChangeDate());

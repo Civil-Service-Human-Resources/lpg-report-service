@@ -1,9 +1,9 @@
 package uk.gov.cshr.report.service;
 
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
+import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
@@ -34,29 +34,33 @@ public class ReportService {
         this.identityService = identityService;
     }
 
-    public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to) {
+    public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
 
         List<BookingReportRow> report = new ArrayList<>();
 
         List<Booking> bookings = learnerRecordService.getBookings(from, to);
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
         Map<String, Event> eventMap = learningCatalogueService.getEventMap();
+        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
 
         for (Booking booking : bookings) {
             if (civilServantMap.containsKey(booking.getLearner())) {
                 String eventUid = Paths.get(booking.getEvent()).getFileName().toString();
+                Identity identity = identitiesMap.get(booking.getLearner());
 
-                if (eventMap.containsKey(eventUid)){
+                if (eventMap.containsKey(eventUid)) {
                     Optional<CivilServant> civilServant = Optional.ofNullable(civilServantMap.get(booking.getLearner()));
                     Optional<Event> event = Optional.ofNullable(eventMap.get(eventUid));
-                    report.add(reportRowFactory.createBookingReportRow(civilServant, event, booking));
+                    report.add(reportRowFactory.createBookingReportRow(civilServant, event, booking, identity, isProfessionReporter));
                 }
             }
         }
+
+
         return report;
     }
 
-    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to) {
+    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
         List<ModuleReportRow> report = new ArrayList<>();
 
         Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
@@ -73,7 +77,7 @@ public class ReportService {
                 if (moduleMap.containsKey(moduleRecord.getModuleId())) {
                     Module module = moduleMap.get(moduleRecord.getModuleId());
                     if (module != null && identity != null && civilServant != null) {
-                        report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity));
+                        report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
                     }
                 }
             }
