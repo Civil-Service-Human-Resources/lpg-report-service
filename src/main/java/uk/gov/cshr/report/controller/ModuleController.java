@@ -3,6 +3,7 @@ package uk.gov.cshr.report.controller;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +30,7 @@ public class ModuleController {
             @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
             Authentication authentication
     ) {
-        boolean isProfessionReporter = authentication.getAuthorities().contains("PROFESSION_REPORTER");
+        boolean isProfessionReporter = authentication.getAuthorities().contains(new SimpleGrantedAuthority("PROFESSION_REPORTER"));
         List<ModuleReportRow> report = reportService.buildModuleReport(from, to, isProfessionReporter);
 
         return ResponseEntity.ok(report);
