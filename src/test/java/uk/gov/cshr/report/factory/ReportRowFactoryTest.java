@@ -14,8 +14,6 @@ import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -32,7 +30,7 @@ public class ReportRowFactoryTest {
         String eventUid = "event-uid";
         String name = "learner name";
         String profession = "profession1";
-        List<String> otherAreasOfWork = Arrays.asList("profession2", "profession3");
+        String otherAreasOfWork = "commercial, digital";
         String organisation = "_department";
         String grade = "_grade";
         String email = "user@example.org";
@@ -104,7 +102,7 @@ public class ReportRowFactoryTest {
         String eventUid = "event-uid";
         String name = "learner name";
         String profession = "profession1";
-        List<String> otherAreasOfWork = Arrays.asList("profession2", "profession3");
+        String otherAreasOfWork = "commercial, digital";
         String organisation = "_department";
         String grade = "_grade";
         String email = "user@example.org";
@@ -170,7 +168,7 @@ public class ReportRowFactoryTest {
         String learnerUid = "learner-uid";
         String name = "learner name";
         String profession = "profession1";
-        List<String> otherAreasOfWork = Arrays.asList("profession2", "profession3");
+        String otherAreasOfWork = "commercial, digital";
         String organisation = "_department";
         String grade = "_grade";
         String email = "user@example.org";
