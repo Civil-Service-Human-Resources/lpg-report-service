@@ -30,9 +30,7 @@ public class ReportRowFactory {
             reportRow.setProfession(civilServant.getProfession());
             reportRow.setGrade(civilServant.getGrade());
 
-            if (civilServant.getOtherAreasOfWork() != null) {
-                reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
-            }
+            reportRow.setOtherAreasOfWork(civilServant.getOtherAreasOfWork());
         }
 
         if (eventOptional.isPresent()) {
@@ -69,9 +67,7 @@ public class ReportRowFactory {
 
         reportRow.setDepartment(civilServant.getOrganisation());
         reportRow.setProfession(civilServant.getProfession());
-        if (civilServant.getOtherAreasOfWork() != null) {
-            reportRow.setOtherAreasOfWork(String.join(", ", civilServant.getOtherAreasOfWork()));
-        }
+        reportRow.setOtherAreasOfWork(civilServant.getOtherAreasOfWork());
         reportRow.setGrade(civilServant.getGrade());
 
         reportRow.setCourseId(module.getCourse().getId());
