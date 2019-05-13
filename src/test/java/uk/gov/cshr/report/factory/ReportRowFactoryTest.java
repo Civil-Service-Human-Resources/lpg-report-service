@@ -1,6 +1,7 @@
 package uk.gov.cshr.report.factory;
 
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithMockUser;
 import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.LearningProvider;
@@ -13,8 +14,6 @@ import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +30,7 @@ public class ReportRowFactoryTest {
         String eventUid = "event-uid";
         String name = "learner name";
         String profession = "profession1";
-        List<String> otherAreasOfWork = Arrays.asList("profession2", "profession3");
+        String otherAreasOfWork = "commercial, digital";
         String organisation = "_department";
         String grade = "_grade";
         String email = "user@example.org";
@@ -75,7 +74,11 @@ public class ReportRowFactoryTest {
         event.setModule(module);
         event.setLearningProvider(learningProvider);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
+        Identity identity = new Identity();
+        identity.setUsername(email);
+        identity.setUid(learnerUid);
+
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking, identity, false);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
@@ -92,13 +95,14 @@ public class ReportRowFactoryTest {
     }
 
     @Test
+    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
     public void shouldReturnBookingReportRowWithoutLearningProvider() {
         BookingStatus status = BookingStatus.CONFIRMED;
         String learnerUid = "learner-uid";
         String eventUid = "event-uid";
         String name = "learner name";
         String profession = "profession1";
-        List<String> otherAreasOfWork = Arrays.asList("profession2", "profession3");
+        String otherAreasOfWork = "commercial, digital";
         String organisation = "_department";
         String grade = "_grade";
         String email = "user@example.org";
@@ -135,7 +139,11 @@ public class ReportRowFactoryTest {
         event.setId(eventUid);
         event.setModule(module);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking);
+        Identity identity = new Identity();
+        identity.setUsername(email);
+        identity.setUid(learnerUid);
+
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking, identity, false);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
@@ -160,7 +168,7 @@ public class ReportRowFactoryTest {
         String learnerUid = "learner-uid";
         String name = "learner name";
         String profession = "profession1";
-        List<String> otherAreasOfWork = Arrays.asList("profession2", "profession3");
+        String otherAreasOfWork = "commercial, digital";
         String organisation = "_department";
         String grade = "_grade";
         String email = "user@example.org";
@@ -198,8 +206,9 @@ public class ReportRowFactoryTest {
 
         Identity identity = new Identity();
         identity.setUsername(email);
+        identity.setUid(learnerUid);
 
-        ModuleReportRow reportRow = reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity);
+        ModuleReportRow reportRow = reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, false);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());

@@ -6,18 +6,18 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.test.context.support.WithMockUser;
 import uk.gov.cshr.report.domain.catalogue.Event;
-import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
-import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
-import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -43,6 +43,7 @@ public class ReportServiceTest {
     private ReportService reportService;
 
     @Test
+    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
     public void shouldReturnBookingReport() {
         Booking booking1 = new Booking();
         booking1.setEvent("event1");
@@ -62,6 +63,10 @@ public class ReportServiceTest {
         civilServant3.setId("learner3");
 
         Event event = new Event();
+        event.setId("event1");
+
+        Identity identity = new Identity();
+        identity.setUsername("test@example.com");
 
         LocalDate from = LocalDate.parse("2018-01-01");
         LocalDate to = LocalDate.parse("2018-01-31");
@@ -74,13 +79,10 @@ public class ReportServiceTest {
         when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
 
         BookingReportRow reportRow = new BookingReportRow();
-        when(reportRowFactory.createBookingReportRow(Optional.of(civilServant1), Optional.of(event), booking1)).thenReturn(reportRow);
+        when(reportRowFactory.createBookingReportRow(any(), any(), any(), any(), anyBoolean())).thenReturn(reportRow);
 
-        List<BookingReportRow> result = reportService.buildBookingReport(from, to);
+        List<BookingReportRow> result = reportService.buildBookingReport(from, to, false);
 
         assertEquals(Collections.singletonList(reportRow), result);
-
-        verify(reportRowFactory).createBookingReportRow(Optional.of(civilServant1), Optional.of(event), booking1);
-        verifyNoMoreInteractions(reportRowFactory);
     }
 }

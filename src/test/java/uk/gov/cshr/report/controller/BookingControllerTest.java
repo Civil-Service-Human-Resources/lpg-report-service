@@ -35,6 +35,7 @@ public class BookingControllerTest {
     private ReportService reportService;
 
     @Test
+    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
     public void shouldReturnBookingReport() throws Exception {
         BookingReportRow reportRow = new BookingReportRow();
         reportRow.setStatus("Confirmed");
@@ -57,7 +58,7 @@ public class BookingControllerTest {
         LocalDate from = LocalDate.parse("2018-01-01");
         LocalDate to = LocalDate.parse("2018-01-31");
 
-        when(reportService.buildBookingReport(from, to)).thenReturn(report);
+        when(reportService.buildBookingReport(from, to, false)).thenReturn(report);
 
         mockMvc.perform(
                 get("/bookings")

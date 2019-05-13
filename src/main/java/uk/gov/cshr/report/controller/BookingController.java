@@ -2,6 +2,8 @@ package uk.gov.cshr.report.controller;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +26,10 @@ public class BookingController {
     @GetMapping(produces = "application/csv; charset=utf-8", params = {"from", "to"})
     public ResponseEntity<List<BookingReportRow>> generateBookingReport(
             @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-            @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
+            @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to, Authentication authentication
     ) {
-        List<BookingReportRow> bookingReport = reportService.buildBookingReport(from, to);
+        boolean isProfessionReporter = authentication.getAuthorities().contains(new SimpleGrantedAuthority("PROFESSION_REPORTER"));
+        List<BookingReportRow> bookingReport = reportService.buildBookingReport(from, to, isProfessionReporter);
         return ResponseEntity.ok(bookingReport);
     }
 }

@@ -13,12 +13,12 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 import uk.gov.cshr.report.service.ReportService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,6 +37,7 @@ public class ModuleControllerTest {
     private ReportService reportService;
 
     @Test
+    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
     public void shouldReturnBookingReport() throws Exception {
         ModuleReportRow reportRow = new ModuleReportRow();
         reportRow.setStatus("Confirmed");
@@ -60,7 +61,7 @@ public class ModuleControllerTest {
         LocalDate from = LocalDate.now().minusDays(7);
         LocalDate to = LocalDate.now();
 
-        when(reportService.buildModuleReport(any(), any())).thenReturn(report);
+        when(reportService.buildModuleReport(any(), any(), anyBoolean())).thenReturn(report);
 
         mockMvc.perform(
                 get("/modules")
