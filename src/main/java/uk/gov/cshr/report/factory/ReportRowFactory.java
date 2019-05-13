@@ -79,7 +79,8 @@ public class ReportRowFactory {
         if (moduleRecord.getState() != null) {
             reportRow.setStatus(moduleRecord.getState());
         }
-        reportRow.setDate(moduleRecord.getStateChangeDate());
+        reportRow.setUpdatedAt(moduleRecord.getStateChangeDate());
+        reportRow.setCompletedAt(moduleRecord.getCompletedAt());
 
         return reportRow;
     }

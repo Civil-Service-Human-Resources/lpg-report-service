@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"learnerId", "name", "email", "department", "profession", "otherAreasOfWork", "grade", "courseId",
-        "courseTitle", "courseTopicId", "moduleId", "moduleTitle", "learningProvider", "required", "status", "date"})
+        "courseTitle", "courseTopicId", "moduleId", "moduleTitle", "learningProvider", "required", "status", "dateUpdated", "dateCompleted"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ModuleReportRow {
     private String learnerId;
@@ -24,7 +24,8 @@ public class ModuleReportRow {
     private boolean required;
 
     private String status;
-    private String date;
+    private String updatedAt;
+    private String completedAt;
 
     public String getLearnerId() {
         return learnerId;
@@ -146,11 +147,19 @@ public class ModuleReportRow {
         this.status = status;
     }
 
-    public String getDate() {
-        return date;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(String completedAt) {
+        this.completedAt = completedAt;
     }
 }

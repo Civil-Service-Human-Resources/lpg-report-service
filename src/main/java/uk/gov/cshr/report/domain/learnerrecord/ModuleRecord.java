@@ -8,4 +8,5 @@ public class ModuleRecord {
     private String state;
     private String learner;
     private String stateChangeDate;
+    private String completedAt;
 }
