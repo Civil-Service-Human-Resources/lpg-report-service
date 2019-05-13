@@ -224,6 +224,6 @@ public class ReportRowFactoryTest {
         assertEquals(moduleType, reportRow.getModuleType());
 
         assertEquals(moduleState, reportRow.getStatus());
-        assertEquals(stateChangeDate, reportRow.getDate());
+        assertEquals(stateChangeDate, reportRow.getUpdatedAt());
     }
 }

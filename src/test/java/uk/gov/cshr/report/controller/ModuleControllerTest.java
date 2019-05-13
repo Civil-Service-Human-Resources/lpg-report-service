@@ -54,7 +54,7 @@ public class ModuleControllerTest {
         reportRow.setModuleTitle("module title");
         reportRow.setRequired(true);
         reportRow.setStatus("COMPLETED");
-        reportRow.setDate("2018-01-01T00:00:00");
+        reportRow.setUpdatedAt("2018-01-01T00:00:00");
 
         List<ModuleReportRow> report = Lists.newArrayList(reportRow);
 
