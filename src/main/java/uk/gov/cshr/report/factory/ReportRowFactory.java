@@ -23,7 +23,7 @@ public class ReportRowFactory {
             if (!isProfessionReporter) {
                 reportRow.setLearnerId(identity.getUid());
                 reportRow.setName(civilServant.getName());
-                reportRow.setEmail(booking.getLearnerEmail());
+                reportRow.setEmail(identity.getUsername());
             }
 
             reportRow.setDepartment(civilServant.getOrganisation());
