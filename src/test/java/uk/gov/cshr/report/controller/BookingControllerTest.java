@@ -51,6 +51,7 @@ public class BookingControllerTest {
         reportRow.setModuleId("module-id");
         reportRow.setModuleTitle("module title");
         reportRow.setRequired(true);
+        reportRow.setAssociatedLearning(true);
         reportRow.setLearningProvider("learning-provider");
 
         List<BookingReportRow> report = Lists.newArrayList(reportRow);
@@ -68,8 +69,8 @@ public class BookingControllerTest {
                         .accept("application/csv"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("learnerId,name,email,department,profession,otherAreasOfWork,grade,courseId,courseTitle,moduleId,moduleTitle,learningProvider,required,status")))
-                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",learning-provider,true,Confirmed")));
+                .andExpect(content().string(containsString("learnerId,name,email,department,profession,otherAreasOfWork,grade,courseId,courseTitle,moduleId,moduleTitle,learningProvider,required,associatedLearning,status")))
+                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",learning-provider,true,true,Confirmed")));
     }
 
 }
