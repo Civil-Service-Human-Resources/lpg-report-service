@@ -41,6 +41,7 @@ public class ReportRowFactory {
             reportRow.setModuleId(event.getModule().getId());
             reportRow.setModuleTitle(event.getModule().getTitle());
             reportRow.setRequired(event.getModule().getRequired());
+            reportRow.setAssociatedLearning(event.getModule().getAssociatedLearning());
             Optional.ofNullable(event.getLearningProvider()).ifPresent(
                     learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
             );
