@@ -41,7 +41,7 @@ public class ReportRowFactory {
             reportRow.setModuleId(event.getModule().getId());
             reportRow.setModuleTitle(event.getModule().getTitle());
             reportRow.setRequired(event.getModule().getRequired());
-            reportRow.setAssociatedLearning(event.getModule().getAssociatedLearning());
+            reportRow.setPaidFor(event.getModule().getAssociatedLearning());
             Optional.ofNullable(event.getLearningProvider()).ifPresent(
                     learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
             );
@@ -78,7 +78,7 @@ public class ReportRowFactory {
         reportRow.setModuleTitle(module.getTitle());
         reportRow.setModuleType(module.getType());
         if(module.getAssociatedLearning() != null) {
-            reportRow.setAssociateLearning(module.getAssociatedLearning());
+            reportRow.setPaidFor(module.getAssociatedLearning());
         }
 
         if (moduleRecord.getState() != null) {

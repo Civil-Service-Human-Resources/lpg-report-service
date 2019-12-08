@@ -51,7 +51,7 @@ public class BookingControllerTest {
         reportRow.setModuleId("module-id");
         reportRow.setModuleTitle("module title");
         reportRow.setRequired(true);
-        reportRow.setAssociatedLearning(true);
+        reportRow.setPaidFor(true);
         reportRow.setLearningProvider("learning-provider");
 
         List<BookingReportRow> report = Lists.newArrayList(reportRow);

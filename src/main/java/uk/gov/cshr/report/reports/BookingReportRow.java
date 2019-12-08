@@ -21,7 +21,7 @@ public class BookingReportRow {
     private String moduleTitle;
     private String learningProvider;
     private boolean required;
-    private boolean associatedLearning;
+    private boolean paidFor;
     private String status;
     private String bookingTime;
     private String confirmationTime;
@@ -199,7 +199,7 @@ public class BookingReportRow {
         this.poNumber = poNumber;
     }
 
-    public boolean isAssociatedLearning() { return associatedLearning; }
+    public boolean isPaidFor() { return paidFor; }
 
-    public void setAssociatedLearning(boolean associatedLearning) { this.associatedLearning = associatedLearning; }
+    public void setPaidFor(boolean associatedLearning) { this.paidFor = associatedLearning; }
 }
