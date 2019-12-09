@@ -201,5 +201,5 @@ public class BookingReportRow {
 
     public boolean isPaidFor() { return paidFor; }
 
-    public void setPaidFor(boolean associatedLearning) { this.paidFor = associatedLearning; }
+    public void setPaidFor(boolean paidFor) { this.paidFor = paidFor; }
 }

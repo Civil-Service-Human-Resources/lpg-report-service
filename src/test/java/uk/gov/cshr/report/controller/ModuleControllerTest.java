@@ -53,6 +53,7 @@ public class ModuleControllerTest {
         reportRow.setModuleId("module-id");
         reportRow.setModuleTitle("module title");
         reportRow.setRequired(true);
+        reportRow.setPaidFor(true);
         reportRow.setStatus("COMPLETED");
         reportRow.setUpdatedAt("2018-01-01T00:00:00");
 
@@ -71,7 +72,7 @@ public class ModuleControllerTest {
                         .accept("application/csv"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("learnerId,name,email,department,profession,otherAreasOfWork,grade,courseId,courseTitle,moduleId,moduleTitle,required,status,updatedAt")))
-                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",true,COMPLETED,2018-01-01T00:00:00")));
+                .andExpect(content().string(containsString("learnerId,name,email,department,profession,otherAreasOfWork,grade,courseId,courseTitle,moduleId,moduleTitle,required,status,paidFor,updatedAt")))
+                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",true,COMPLETED,true,2018-01-01T00:00:00")));
     }
 }
