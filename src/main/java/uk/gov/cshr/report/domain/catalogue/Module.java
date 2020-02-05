@@ -8,5 +8,6 @@ public class Module {
     private String title;
     private String type;
     private Boolean required;
+    private Boolean associatedLearning;
     private Course course;
 }

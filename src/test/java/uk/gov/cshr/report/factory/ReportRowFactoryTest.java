@@ -63,6 +63,7 @@ public class ReportRowFactoryTest {
         module.setId(moduleId);
         module.setTitle(moduleTitle);
         module.setRequired(true);
+        module.setAssociatedLearning(true);
         module.setCourse(course);
 
         LearningProvider learningProvider = new LearningProvider();
@@ -133,6 +134,7 @@ public class ReportRowFactoryTest {
         module.setId(moduleId);
         module.setTitle(moduleTitle);
         module.setRequired(true);
+        module.setAssociatedLearning(true);
         module.setCourse(course);
 
         Event event = new Event();
@@ -202,6 +204,7 @@ public class ReportRowFactoryTest {
         module.setTitle(moduleTitle);
         module.setType(moduleType);
         module.setRequired(true);
+        module.setAssociatedLearning(true);
         module.setCourse(course);
 
         Identity identity = new Identity();
