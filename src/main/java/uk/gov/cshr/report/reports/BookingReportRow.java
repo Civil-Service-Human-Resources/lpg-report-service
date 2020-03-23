@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"learnerId", "name", "email", "department", "profession", "otherAreasOfWork", "grade", "courseId",
         "courseTitle", "moduleId", "moduleTitle", "learningProvider", "required", "associatedLearning", "status", "bookingTime", "confirmationTime",
-        "cancellationTime", "accessibilityOptions", "bookingCancellationReason", "topicId", "poNumber"})
-//"startTime", "endTime", "location"})
+        "cancellationTime", "accessibilityOptions", "bookingCancellationReason", "topicId", "poNumber", "eventId", "bookingReference", "location", "eventDate"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookingReportRow {
     private String learnerId;
