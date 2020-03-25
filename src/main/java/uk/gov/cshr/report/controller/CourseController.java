@@ -24,8 +24,7 @@ public class CourseController {
         this.reportService = reportService;
     }
 
-    @GetMapping(produces = "application/csv")
-    @RequestMapping("/mandatory")
+    @GetMapping(value = "/mandatory", produces = "application/csv")
     public ResponseEntity<List<CourseReportRow>> generateMandatoryCourseReport(
             @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
@@ -33,7 +32,6 @@ public class CourseController {
     ) {
         boolean isProfessionReporter = authentication.getAuthorities().contains(new SimpleGrantedAuthority("PROFESSION_REPORTER"));
         List<CourseReportRow> report = reportService.buildMandatoryCourseReport(from, to, isProfessionReporter);
-
         return ResponseEntity.ok(report);
     }
 }
