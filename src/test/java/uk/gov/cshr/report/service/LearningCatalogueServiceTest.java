@@ -16,6 +16,7 @@ import static org.mockito.Mockito.when;
 public class LearningCatalogueServiceTest {
     private URI eventUri;
     private URI moduleUri;
+    private URI mandatoryCoursesUri;
     private HttpService httpService;
     private LearningCatalogueService learningCatalogueService;
 
@@ -23,7 +24,7 @@ public class LearningCatalogueServiceTest {
     public void setUp() throws Exception {
         eventUri = new URI("http://example.org");
         httpService = mock(HttpService.class);
-        learningCatalogueService = new LearningCatalogueService(httpService, eventUri, moduleUri);
+        learningCatalogueService = new LearningCatalogueService(httpService, eventUri, moduleUri, mandatoryCoursesUri);
     }
 
     @Test

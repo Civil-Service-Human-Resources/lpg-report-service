@@ -26,6 +26,7 @@ public class LearnerRecordServiceTest {
     private URI learnerRecordEventsUri;
     private String bookingUri;
     private String moduleRecordUri = "http://localhost/modules";
+    private String courseRecordUri = "http://localhost/courses";
     private HttpService httpService = mock(HttpService.class);
     private LearnerRecordService learnerRecordService;
     private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
@@ -37,7 +38,7 @@ public class LearnerRecordServiceTest {
         bookingUri = "http://localhost/bookings";
 
         learnerRecordService = new LearnerRecordService(httpService, uriBuilderFactory, learnerRecordSummariesUrl,
-                learnerRecordEventsUri, bookingUri, moduleRecordUri);
+                learnerRecordEventsUri, bookingUri, moduleRecordUri, courseRecordUri);
     }
 
     @Test
