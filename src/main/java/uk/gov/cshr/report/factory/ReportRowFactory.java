@@ -1,5 +1,6 @@
 package uk.gov.cshr.report.factory;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
@@ -114,12 +115,13 @@ public class ReportRowFactory {
         reportRow.setCourseTopicId(course.getTopicId());
         reportRow.setRequired(required);
 
-        if (courseRecord.getState() != null) {
-            reportRow.setStatus(courseRecord.getState());
-            reportRow.setCompletedAt(courseRecord.getLastUpdated());
-        } else {
+        String state = courseRecord.getState();
+        if (StringUtils.isBlank(state) || StringUtils.equalsIgnoreCase("null", state)) {
             reportRow.setStatus("IN-PROGRESS");
             reportRow.setUpdatedAt(courseRecord.getLastUpdated());
+        } else {
+            reportRow.setStatus(state);
+            reportRow.setCompletedAt(courseRecord.getLastUpdated());
         }
 
         return reportRow;
