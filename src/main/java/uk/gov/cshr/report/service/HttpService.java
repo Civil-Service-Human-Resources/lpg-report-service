@@ -37,12 +37,6 @@ public class HttpService {
         return response.getBody();
     }
 
-    String getStringResponse(URI uri) {
-        RequestEntity requestEntity = buildRequest(uri);
-        ResponseEntity<String> response = restTemplate.exchange(requestEntity, String.class);
-        return response.getBody();
-    }
-
     <T> Map<String, T> getMap(URI uri, Class<T> type) {
         RequestEntity requestEntity = buildRequest(uri);
         LOGGER.debug(String.format("GET %s", uri));

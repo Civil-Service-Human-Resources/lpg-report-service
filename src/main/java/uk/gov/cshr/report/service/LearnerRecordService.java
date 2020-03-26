@@ -84,8 +84,6 @@ public class LearnerRecordService {
                 .queryParam("from", from)
                 .queryParam("to", to)
                 .build(new HashMap<>());
-        String stringResponse = httpService.getStringResponse(uri);
-        //return httpService.getList(uri, CourseRecord.class);
-        return new ArrayList<>();
+        return httpService.getList(uri, CourseRecord.class);
     }
 }
