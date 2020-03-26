@@ -7,6 +7,7 @@ import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -38,6 +39,8 @@ public class LearningCatalogueService {
     }
 
     public Map<String, Course> getMandatoryCourses() {
-        return httpService.getMap(mandatoryCoursesUri, Course.class);
+        String stringResponse = httpService.getStringResponse(mandatoryCoursesUri);
+        //return httpService.getMap(mandatoryCoursesUri, Course.class);
+        return new HashMap<>();
     }
 }
