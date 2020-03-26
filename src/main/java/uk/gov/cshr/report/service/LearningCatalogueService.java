@@ -39,8 +39,6 @@ public class LearningCatalogueService {
     }
 
     public Map<String, Course> getMandatoryCourses() {
-        String stringResponse = httpService.getStringResponse(mandatoryCoursesUri);
-        //return httpService.getMap(mandatoryCoursesUri, Course.class);
-        return new HashMap<>();
+        return httpService.getMap(mandatoryCoursesUri, Course.class);
     }
 }
