@@ -34,7 +34,7 @@ public class HttpService {
         ResponseEntity<List<T>> response = restTemplate.exchange(requestEntity,
                 parameterizedTypeReferenceFactory.createListReference(type)
         );
-        
+
         return response.getBody();
     }
 
