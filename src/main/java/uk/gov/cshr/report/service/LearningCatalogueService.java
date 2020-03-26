@@ -22,7 +22,7 @@ public class LearningCatalogueService {
     public LearningCatalogueService(HttpService httpService,
                                     @Value("${learningCatalogue.eventsUrl}") URI eventUri,
                                     @Value("${learningCatalogue.modulesUrl}") URI moduleUri,
-                                    @Value("learningCatalogue.mandatoryCoursesUri") URI mandatoryCoursesUri
+                                    @Value("${learningCatalogue.mandatoryCoursesUri}") URI mandatoryCoursesUri
                                     ) {
         this.httpService = httpService;
         this.eventUri = eventUri;
