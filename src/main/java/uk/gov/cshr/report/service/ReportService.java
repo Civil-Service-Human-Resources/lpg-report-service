@@ -106,7 +106,7 @@ public class ReportService {
                 if (courseMap.containsKey(courseRecord.getCourseId())) {
                     Course course = courseMap.get(courseRecord.getCourseId());
                     if (course != null && identity != null && civilServant != null) {
-                        report.add(reportRowFactory.createCourseReportRow(civilServant, course, courseRecord, identity, isProfessionReporter));
+                        report.add(reportRowFactory.createCourseReportRow(civilServant, course, courseRecord, identity, isProfessionReporter, true));
                     }
                 }
             }

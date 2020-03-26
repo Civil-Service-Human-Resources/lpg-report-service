@@ -93,7 +93,7 @@ public class ReportRowFactory {
         return reportRow;
     }
 
-    public CourseReportRow createCourseReportRow(CivilServant civilServant, Course course, CourseRecord courseRecord, Identity identity, boolean isProfessionReporter) {
+    public CourseReportRow createCourseReportRow(CivilServant civilServant, Course course, CourseRecord courseRecord, Identity identity, boolean isProfessionReporter, boolean required) {
         CourseReportRow reportRow = new CourseReportRow();
 
         if (!isProfessionReporter) {
@@ -110,6 +110,7 @@ public class ReportRowFactory {
         reportRow.setCourseId(course.getId());
         reportRow.setCourseTitle(course.getTitle());
         reportRow.setCourseTopicId(course.getTopicId());
+        reportRow.setRequired(required);
 
         if (courseRecord.getState() != null) {
             reportRow.setStatus(courseRecord.getState());
@@ -118,6 +119,7 @@ public class ReportRowFactory {
             reportRow.setStatus("IN-PROGRESS");
             reportRow.setUpdatedAt(courseRecord.getLastUpdateDate());
         }
+
         return reportRow;
     }
 }
