@@ -114,10 +114,10 @@ public class ReportRowFactory {
 
         if (courseRecord.getState() != null) {
             reportRow.setStatus(courseRecord.getState());
-            reportRow.setCompletedAt(courseRecord.getLastUpdateDate());
+            reportRow.setCompletedAt(courseRecord.getLastUpdated());
         } else {
             reportRow.setStatus("IN-PROGRESS");
-            reportRow.setUpdatedAt(courseRecord.getLastUpdateDate());
+            reportRow.setUpdatedAt(courseRecord.getLastUpdated());
         }
 
         return reportRow;

@@ -14,6 +14,7 @@ import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class LearnerRecordService {
                                 @Value("${learnerRecord.eventsUrl}") URI learnerRecordEventsUrl,
                                 @Value("${learnerRecord.bookingsUrl}") String bookingUri,
                                 @Value("${learnerRecord.moduleRecordsUrl}") String moduleRecordUri,
-                                @Value("${learnerRecord.courseRecordUri}") String courseRecordUri
+                                @Value("${learnerRecord.courseRecordUrl}") String courseRecordUri
     ) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
@@ -83,7 +84,8 @@ public class LearnerRecordService {
                 .queryParam("from", from)
                 .queryParam("to", to)
                 .build(new HashMap<>());
-
-        return httpService.getList(uri, CourseRecord.class);
+        String stringResponse = httpService.getStringResponse(uri);
+        //return httpService.getList(uri, CourseRecord.class);
+        return new ArrayList<>();
     }
 }

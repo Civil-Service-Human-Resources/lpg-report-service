@@ -34,7 +34,12 @@ public class HttpService {
         ResponseEntity<List<T>> response = restTemplate.exchange(requestEntity,
                 parameterizedTypeReferenceFactory.createListReference(type)
         );
+        return response.getBody();
+    }
 
+    String getStringResponse(URI uri) {
+        RequestEntity requestEntity = buildRequest(uri);
+        ResponseEntity<String> response = restTemplate.exchange(requestEntity, String.class);
         return response.getBody();
     }
 
