@@ -3,6 +3,7 @@ package uk.gov.cshr.report.service;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
+import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 
@@ -41,4 +42,10 @@ public class LearningCatalogueServiceTest {
         assertEquals(moduleMap, learningCatalogueService.getModuleMap());
     }
 
+    @Test
+    public void shouldReturnMandatoryCourses() {
+        Map<String, Course> courseMap = ImmutableMap.of("course-id", new Course());
+        when(httpService.getMap(mandatoryCoursesUri, Course.class)).thenReturn(courseMap);
+        assertEquals(courseMap, learningCatalogueService.getMandatoryCourses());
+    }
 }

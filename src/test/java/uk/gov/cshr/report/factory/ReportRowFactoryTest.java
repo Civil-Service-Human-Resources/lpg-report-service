@@ -9,9 +9,11 @@ import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.BookingStatus;
+import uk.gov.cshr.report.domain.learnerrecord.CourseRecord;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.reports.BookingReportRow;
+import uk.gov.cshr.report.reports.CourseReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.util.Optional;
@@ -228,5 +230,55 @@ public class ReportRowFactoryTest {
 
         assertEquals(moduleState, reportRow.getStatus());
         assertEquals(stateChangeDate, reportRow.getUpdatedAt());
+    }
+
+    @Test
+    public void shouldReturnCourseReportRow() {
+
+        String courseState = "COMPLETED";
+        String stateChangeDate = "2018-01-01T00:00:00";
+
+        String learnerUid = "learner-uid";
+        String name = "learner name";
+        String profession = "profession1";
+        String otherAreasOfWork = "commercial, digital";
+        String organisation = "_department";
+        String grade = "_grade";
+        String email = "user@example.org";
+        String courseId = "course-id";
+        String courseTitle = "course-title";
+
+        CourseRecord courseRecord = new CourseRecord();
+        courseRecord.setState(courseState);
+        courseRecord.setLastUpdated(stateChangeDate);
+
+        CivilServant civilServant = new CivilServant();
+        civilServant.setOrganisation(organisation);
+        civilServant.setProfession(profession);
+        civilServant.setName(name);
+        civilServant.setOtherAreasOfWork(otherAreasOfWork);
+        civilServant.setGrade(grade);
+
+        Course course = new Course();
+        course.setId(courseId);
+        course.setTitle(courseTitle);
+
+        Identity identity = new Identity();
+        identity.setUsername(email);
+        identity.setUid(learnerUid);
+
+        CourseReportRow reportRow = reportRowFactory.createCourseReportRow(civilServant, course, courseRecord, identity, false, false);
+
+        assertEquals(learnerUid, reportRow.getLearnerId());
+        assertEquals(name, reportRow.getName());
+        assertEquals(profession, reportRow.getProfession());
+        assertEquals(String.join(", ", otherAreasOfWork), reportRow.getOtherAreasOfWork());
+        assertEquals(organisation, reportRow.getDepartment());
+        assertEquals(grade, reportRow.getGrade());
+        assertEquals(email, reportRow.getEmail());
+        assertEquals(courseId, reportRow.getCourseId());
+        assertEquals(courseTitle, reportRow.getCourseTitle());
+        assertEquals(courseState, reportRow.getStatus());
+        assertEquals(stateChangeDate, reportRow.getCompletedAt());
     }
 }
