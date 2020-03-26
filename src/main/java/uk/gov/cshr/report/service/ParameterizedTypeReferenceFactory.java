@@ -3,10 +3,12 @@ package uk.gov.cshr.report.service;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
+import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.CourseRecord;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.exception.IllegalTypeException;
@@ -23,12 +25,14 @@ public class ParameterizedTypeReferenceFactory {
 
     private final Map<String, ParameterizedTypeReference> listParameterizedTypeReferenceMap = ImmutableMap.of(
             "uk.gov.cshr.report.domain.learnerrecord.Booking", new ParameterizedTypeReference<List<Booking>>() {},
-            "uk.gov.cshr.report.domain.learnerrecord.ModuleRecord", new ParameterizedTypeReference<List<ModuleRecord>>() {}
+            "uk.gov.cshr.report.domain.learnerrecord.ModuleRecord", new ParameterizedTypeReference<List<ModuleRecord>>() {},
+            "uk.gov.cshr.report.domain.learnerrecord.CourseRecord", new ParameterizedTypeReference<List<CourseRecord>>() {}
     );
 
     private final Map<String, ParameterizedTypeReference> mapParameterizedTypeReferenceMap = ImmutableMap.of(
             "uk.gov.cshr.report.domain.catalogue.Event", new ParameterizedTypeReference<Map<String, Event>>() {},
             "uk.gov.cshr.report.domain.catalogue.Module", new ParameterizedTypeReference<Map<String, Module>>() {},
+            "uk.gov.cshr.report.domain.catalogue.Course", new ParameterizedTypeReference<Map<String, Course>>() {},
             "uk.gov.cshr.report.domain.registry.CivilServant",
                 new ParameterizedTypeReference<Map<String, CivilServant>>() {},
             "uk.gov.cshr.report.domain.identity.Identity",
