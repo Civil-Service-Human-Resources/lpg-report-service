@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 @JsonPropertyOrder({"learnerId", "name", "email", "department", "profession", "otherAreasOfWork", "grade", "courseId",
-        "courseTitle", "courseTopicId", "paidFor", "required", "status", "updatedAt", "completedAt"})
+        "courseTitle", "courseTopicId", "required", "status", "updatedAt", "completedAt"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class CourseReportRow {
@@ -21,7 +21,6 @@ public class CourseReportRow {
     private String courseTitle;
     private String courseTopicId;
     private boolean required;
-    private boolean paidFor;
 
     private String status;
     private String updatedAt;

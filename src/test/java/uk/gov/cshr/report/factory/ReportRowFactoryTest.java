@@ -240,13 +240,16 @@ public class ReportRowFactoryTest {
 
         String learnerUid = "learner-uid";
         String name = "learner name";
-        String profession = "profession1";
+        String profession = "profession";
         String otherAreasOfWork = "commercial, digital";
         String organisation = "_department";
         String grade = "_grade";
         String email = "user@example.org";
         String courseId = "course-id";
         String courseTitle = "course-title";
+        String courseTopicId = "topic-id";
+        boolean isRequired = true;
+        boolean isProfessionReporter = false;
 
         CourseRecord courseRecord = new CourseRecord();
         courseRecord.setState(courseState);
@@ -255,6 +258,7 @@ public class ReportRowFactoryTest {
         CivilServant civilServant = new CivilServant();
         civilServant.setOrganisation(organisation);
         civilServant.setProfession(profession);
+
         civilServant.setName(name);
         civilServant.setOtherAreasOfWork(otherAreasOfWork);
         civilServant.setGrade(grade);
@@ -262,22 +266,26 @@ public class ReportRowFactoryTest {
         Course course = new Course();
         course.setId(courseId);
         course.setTitle(courseTitle);
+        course.setTopicId(courseTopicId);
 
         Identity identity = new Identity();
         identity.setUsername(email);
         identity.setUid(learnerUid);
 
-        CourseReportRow reportRow = reportRowFactory.createCourseReportRow(civilServant, course, courseRecord, identity, false, false);
+        CourseReportRow reportRow = reportRowFactory.createCourseReportRow(civilServant, course, courseRecord, identity, isProfessionReporter, isRequired);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
+        assertEquals(email, reportRow.getEmail());
+        assertEquals(organisation, reportRow.getDepartment());
         assertEquals(profession, reportRow.getProfession());
         assertEquals(String.join(", ", otherAreasOfWork), reportRow.getOtherAreasOfWork());
-        assertEquals(organisation, reportRow.getDepartment());
         assertEquals(grade, reportRow.getGrade());
-        assertEquals(email, reportRow.getEmail());
+
         assertEquals(courseId, reportRow.getCourseId());
         assertEquals(courseTitle, reportRow.getCourseTitle());
+        assertEquals(courseTopicId, reportRow.getCourseTopicId());
+        assertEquals(isRequired, reportRow.isRequired());
         assertEquals(courseState, reportRow.getStatus());
         assertEquals(stateChangeDate, reportRow.getCompletedAt());
     }

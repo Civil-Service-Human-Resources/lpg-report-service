@@ -52,7 +52,6 @@ public class CourseControllerTest {
         courseReportRow.setCourseTitle("course title");
         courseReportRow.setCourseTopicId("course topic id");
         courseReportRow.setRequired(true);
-        courseReportRow.setPaidFor(true);
         courseReportRow.setStatus("COMPLETED");
         courseReportRow.setUpdatedAt("2020-01-01T00:00:00");
         courseReportRow.setCompletedAt("2018-01-01T00:00:00");
@@ -72,7 +71,7 @@ public class CourseControllerTest {
                         .accept("application/csv"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("learnerId,name,email,department,profession,otherAreasOfWork,grade,courseId,courseTitle,courseTopicId,paidFor,required,status,updatedAt,completedAt")))
-                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",\"course topic id\",true,true,COMPLETED,2020-01-01T00:00:00,2018-01-01T00:00:00")));
+                .andExpect(content().string(containsString("learnerId,name,email,department,profession,otherAreasOfWork,grade,courseId,courseTitle,courseTopicId,required,status,updatedAt,completedAt")))
+                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",\"course topic id\",true,COMPLETED,2020-01-01T00:00:00,2018-01-01T00:00:00")));
     }
 }
