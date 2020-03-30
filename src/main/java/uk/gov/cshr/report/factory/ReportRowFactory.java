@@ -117,7 +117,7 @@ public class ReportRowFactory {
 
         String state = courseRecord.getState();
         if (StringUtils.isBlank(state) || StringUtils.equalsIgnoreCase("null", state)) {
-            reportRow.setStatus("IN-PROGRESS");
+            reportRow.setStatus("IN_PROGRESS");
             reportRow.setUpdatedAt(courseRecord.getLastUpdated());
         } else {
             reportRow.setStatus(state);
