@@ -16,10 +16,8 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
@@ -89,28 +87,27 @@ public class ReportService {
     }
 
     public List<CourseReportRow> buildMandatoryCourseReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
-        List<CourseReportRow> report = new ArrayList<>();
-
-        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
-        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
 
         List<CourseRecord> courseRecords = learnerRecordService.getCourses(from, to);
+        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
+        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
         Map<String, Course> courseMap = learningCatalogueService.getMandatoryCourses();
 
-        for (CourseRecord courseRecord : courseRecords) {
-            if (civilServantMap.containsKey(courseRecord.getLearner())) {
-
-                CivilServant civilServant = civilServantMap.get(courseRecord.getLearner());
-                Identity identity = identitiesMap.get(courseRecord.getLearner());
-
-                if (courseMap.containsKey(courseRecord.getCourseId())) {
-                    Course course = courseMap.get(courseRecord.getCourseId());
-                    if (course != null && identity != null && civilServant != null) {
-                        report.add(reportRowFactory.createCourseReportRow(civilServant, course, courseRecord, identity, isProfessionReporter, true));
-                    }
-                }
-            }
-        }
-        return report;
+        return courseRecords
+                .stream()
+                .filter(courseRecord -> civilServantMap.containsKey(courseRecord.getLearner()))
+                .filter(courseRecord -> courseMap.containsKey(courseRecord.getCourseId()))
+                .map(
+                        courseRecord -> {
+                            Course course = courseMap.get(courseRecord.getCourseId());
+                            Identity identity = identitiesMap.get(courseRecord.getLearner());
+                            CivilServant civilServant = civilServantMap.get(courseRecord.getLearner());
+                            if (course != null && identity != null && civilServant != null) {
+                                return reportRowFactory.createCourseReportRow(civilServant, course, courseRecord, identity, isProfessionReporter, true);
+                            }
+                            return null;
+                        })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 }
