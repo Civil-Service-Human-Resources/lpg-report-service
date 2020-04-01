@@ -167,5 +167,4 @@ public class ModuleReportRow {
     public void setCompletedAt(String completedAt) {
         this.completedAt = completedAt;
     }
-
 }
