@@ -16,6 +16,8 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.util.Optional;
 
+import static uk.gov.cshr.report.domain.Status.IN_PROGRESS;
+
 @Component
 public class ReportRowFactory {
     public BookingReportRow createBookingReportRow(Optional<CivilServant> civilServantOptional, Optional<Event> eventOptional, Booking booking, Identity identity, boolean isProfessionReporter) {
@@ -117,7 +119,7 @@ public class ReportRowFactory {
 
         String state = courseRecord.getState();
         if (StringUtils.isBlank(state) || StringUtils.equalsIgnoreCase("null", state)) {
-            reportRow.setStatus("IN_PROGRESS");
+            reportRow.setStatus(IN_PROGRESS.getValue());
             reportRow.setUpdatedAt(courseRecord.getLastUpdated());
         } else {
             reportRow.setStatus(state);
