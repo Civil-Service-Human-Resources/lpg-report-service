@@ -18,9 +18,7 @@ See the `diagram/` folder for diagram source in draw.io XML format
 
 For a complete list of build dependencies check the `build.gradle` file. The main source dependencies are:  
 - Spring Boot 2.0 (web, jersey, security, config)
-- Spring Data JPA 2.0.5
 - Spring Security OAuth2 2.3.3
-- h2 database (in-memory DB for local development) 1.4
 - opencsv 4.1
 
 ### Test-time
