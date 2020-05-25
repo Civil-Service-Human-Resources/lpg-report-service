@@ -41,13 +41,17 @@ public class ReportRowFactory {
             reportRow.setModuleId(event.getModule().getId());
             reportRow.setModuleTitle(event.getModule().getTitle());
             reportRow.setRequired(event.getModule().getRequired());
-            if(event.getModule().getAssociatedLearning() != null) {
+            reportRow.setEventID(event.getId());
+            reportRow.setLocation(event.getLocation());
+            reportRow.setEventDate(event.getEventDate());
+            if (event.getModule().getAssociatedLearning() != null) {
                 reportRow.setPaidFor(event.getModule().getAssociatedLearning());
             }
             Optional.ofNullable(event.getLearningProvider()).ifPresent(
                     learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
             );
         }
+        reportRow.setBookingReference(booking.getBookingReference());
         reportRow.setStatus(booking.getStatus().getValue());
         reportRow.setBookingTime(booking.getBookingTime());
         reportRow.setConfirmationTime(booking.getConfirmationTime());
@@ -79,7 +83,7 @@ public class ReportRowFactory {
         reportRow.setModuleId(module.getId());
         reportRow.setModuleTitle(module.getTitle());
         reportRow.setModuleType(module.getType());
-        if(module.getAssociatedLearning() != null) {
+        if (module.getAssociatedLearning() != null) {
             reportRow.setPaidFor(module.getAssociatedLearning());
         }
 

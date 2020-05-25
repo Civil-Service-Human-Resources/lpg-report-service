@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"learnerId", "name", "email", "department", "profession", "otherAreasOfWork", "grade", "courseId",
         "courseTitle", "moduleId", "moduleTitle", "learningProvider", "required", "associatedLearning", "status", "bookingTime", "confirmationTime",
-        "cancellationTime", "accessibilityOptions", "bookingCancellationReason", "topicId", "poNumber"})
+        "cancellationTime", "accessibilityOptions", "bookingCancellationReason", "topicId", "poNumber", "eventId", "bookingReference", "location", "eventDate"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookingReportRow {
     private String learnerId;
@@ -30,6 +30,10 @@ public class BookingReportRow {
     private String bookingCancellationReason;
     private String topicId;
     private String poNumber;
+    private String eventID;
+    private String bookingReference;
+    private String eventDate;
+    private String location;
 
     public String getLearnerId() {
         return learnerId;
@@ -199,7 +203,43 @@ public class BookingReportRow {
         this.poNumber = poNumber;
     }
 
-    public boolean isPaidFor() { return paidFor; }
+    public boolean isPaidFor() {
+        return paidFor;
+    }
 
-    public void setPaidFor(boolean paidFor) { this.paidFor = paidFor; }
+    public void setPaidFor(boolean paidFor) {
+        this.paidFor = paidFor;
+    }
+
+    public String getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(String eventID) {
+        this.eventID = eventID;
+    }
+
+    public String getBookingReference() {
+        return bookingReference;
+    }
+
+    public void setBookingReference(String bookingReference) {
+        this.bookingReference = bookingReference;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
 }
