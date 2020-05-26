@@ -1,11 +1,7 @@
 package uk.gov.cshr.report.service;
 
 import java.nio.file.Paths;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +11,6 @@ import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
-import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
@@ -82,14 +77,14 @@ public class ReportService {
 
         moduleReportRows.forEach(reportRow -> {
             if (moduleMap.containsKey(reportRow.getModuleId())) {
-                mapDataFromModuleToreportRow(reportRow, moduleMap.get(reportRow.getModuleId()));
+                report.add(mapDataFromModuleToreportRow(reportRow, moduleMap.get(reportRow.getModuleId())));
             }
         });
 
         return report;
     }
 
-    private void mapDataFromModuleToreportRow(ModuleReportRow reportRow, Module module) {
+    private ModuleReportRow mapDataFromModuleToreportRow(ModuleReportRow reportRow, Module module) {
         reportRow.setCourseId(module.getCourse().getId());
         reportRow.setCourseTitle(module.getCourse().getTitle());
         reportRow.setCourseTopicId(module.getCourse().getTopicId());
@@ -100,5 +95,7 @@ public class ReportService {
         if (module.getAssociatedLearning() != null) {
             reportRow.setPaidFor(module.getAssociatedLearning());
         }
+
+        return reportRow;
     }
 }
