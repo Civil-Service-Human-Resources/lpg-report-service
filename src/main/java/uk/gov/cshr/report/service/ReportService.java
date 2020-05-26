@@ -1,6 +1,16 @@
 package uk.gov.cshr.report.service;
 
-import org.springframework.stereotype.Service;
+import java.nio.file.Paths;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
@@ -10,13 +20,10 @@ import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
+import uk.gov.cshr.report.repository.DbRepository;
 
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ReportService {
@@ -25,13 +32,21 @@ public class ReportService {
     private final LearningCatalogueService learningCatalogueService;
     private final ReportRowFactory reportRowFactory;
     private final IdentityService identityService;
+    private final DbRepository dbRepository;
 
-    public ReportService(LearnerRecordService learnerRecordService, CivilServantRegistryService civilServantRegistryService, LearningCatalogueService learningCatalogueService, ReportRowFactory reportRowFactory, IdentityService identityService) {
+    @Autowired
+    public ReportService(LearnerRecordService learnerRecordService,
+            CivilServantRegistryService civilServantRegistryService,
+            LearningCatalogueService learningCatalogueService,
+            ReportRowFactory reportRowFactory,
+            IdentityService identityService,
+            DbRepository dbRepository) {
         this.learnerRecordService = learnerRecordService;
         this.civilServantRegistryService = civilServantRegistryService;
         this.learningCatalogueService = learningCatalogueService;
         this.reportRowFactory = reportRowFactory;
         this.identityService = identityService;
+        this.dbRepository = dbRepository;
     }
 
     public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
@@ -62,26 +77,28 @@ public class ReportService {
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
         List<ModuleReportRow> report = new ArrayList<>();
-
-        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
-        List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
-        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+        List<ModuleReportRow> moduleReportRows = dbRepository.getModuleReportData(from, to, isProfessionReporter);
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
 
-        for (ModuleRecord moduleRecord : moduleRecords) {
-            if (civilServantMap.containsKey(moduleRecord.getLearner())) {
-
-                CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
-                Identity identity = identitiesMap.get(moduleRecord.getLearner());
-
-                if (moduleMap.containsKey(moduleRecord.getModuleId())) {
-                    Module module = moduleMap.get(moduleRecord.getModuleId());
-                    if (module != null && identity != null && civilServant != null) {
-                        report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
-                    }
-                }
+        moduleReportRows.forEach(reportRow -> {
+            if (moduleMap.containsKey(reportRow.getModuleId())) {
+                mapDataFromModuleToreportRow(reportRow, moduleMap.get(reportRow.getModuleId()));
             }
-        }
+        });
+
         return report;
+    }
+
+    private void mapDataFromModuleToreportRow(ModuleReportRow reportRow, Module module) {
+        reportRow.setCourseId(module.getCourse().getId());
+        reportRow.setCourseTitle(module.getCourse().getTitle());
+        reportRow.setCourseTopicId(module.getCourse().getTopicId());
+        reportRow.setModuleId(module.getId());
+        reportRow.setModuleTitle(module.getTitle());
+        reportRow.setModuleType(module.getType());
+
+        if (module.getAssociatedLearning() != null) {
+            reportRow.setPaidFor(module.getAssociatedLearning());
+        }
     }
 }
