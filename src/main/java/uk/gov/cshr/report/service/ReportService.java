@@ -77,14 +77,14 @@ public class ReportService {
 
         moduleReportRows.forEach(reportRow -> {
             if (moduleMap.containsKey(reportRow.getModuleId())) {
-                report.add(mapDataFromModuleToreportRow(reportRow, moduleMap.get(reportRow.getModuleId())));
+                report.add(mapDataFromModuleToReportRow(reportRow, moduleMap.get(reportRow.getModuleId())));
             }
         });
 
         return report;
     }
 
-    private ModuleReportRow mapDataFromModuleToreportRow(ModuleReportRow reportRow, Module module) {
+    private ModuleReportRow mapDataFromModuleToReportRow(ModuleReportRow reportRow, Module module) {
         reportRow.setCourseId(module.getCourse().getId());
         reportRow.setCourseTitle(module.getCourse().getTitle());
         reportRow.setCourseTopicId(module.getCourse().getTopicId());
