@@ -36,10 +36,10 @@ public class ModuleReportRowRepository {
     }
 
     public List<ModuleReportRow> getModuleReportData(LocalDate from, LocalDate to, boolean isProfessionReporter) {
-        return jdbcTemplate.query(GET_LEARNER_RECORD_REPORT_DATA, (rs, rowNum) -> extractModuleRecord(rs, isProfessionReporter), from, to);
+        return jdbcTemplate.query(GET_LEARNER_RECORD_REPORT_DATA, (rs, rowNum) -> extractModuleReportRow(rs, isProfessionReporter), from, to);
     }
 
-    private ModuleReportRow extractModuleRecord(ResultSet rs, boolean isProfessionReporter) throws SQLException {
+    private ModuleReportRow extractModuleReportRow(ResultSet rs, boolean isProfessionReporter) throws SQLException {
         ModuleReportRow reportRow = new ModuleReportRow();
 
         if (!isProfessionReporter) {
