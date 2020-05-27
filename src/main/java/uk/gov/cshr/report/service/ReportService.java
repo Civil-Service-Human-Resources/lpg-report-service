@@ -15,7 +15,7 @@ import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
-import uk.gov.cshr.report.repository.DbRepository;
+import uk.gov.cshr.report.repository.ModuleReportRowRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class ReportService {
     private final LearningCatalogueService learningCatalogueService;
     private final ReportRowFactory reportRowFactory;
     private final IdentityService identityService;
-    private final DbRepository dbRepository;
+    private final ModuleReportRowRepository moduleReportRowRepository;
 
     @Autowired
     public ReportService(LearnerRecordService learnerRecordService,
@@ -35,13 +35,13 @@ public class ReportService {
             LearningCatalogueService learningCatalogueService,
             ReportRowFactory reportRowFactory,
             IdentityService identityService,
-            DbRepository dbRepository) {
+            ModuleReportRowRepository moduleReportRowRepository) {
         this.learnerRecordService = learnerRecordService;
         this.civilServantRegistryService = civilServantRegistryService;
         this.learningCatalogueService = learningCatalogueService;
         this.reportRowFactory = reportRowFactory;
         this.identityService = identityService;
-        this.dbRepository = dbRepository;
+        this.moduleReportRowRepository = moduleReportRowRepository;
     }
 
     public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
@@ -72,7 +72,7 @@ public class ReportService {
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
         List<ModuleReportRow> report = new ArrayList<>();
-        List<ModuleReportRow> moduleReportRows = dbRepository.getModuleReportData(from, to, isProfessionReporter);
+        List<ModuleReportRow> moduleReportRows = moduleReportRowRepository.getModuleReportData(from, to, isProfessionReporter);
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
 
         moduleReportRows.forEach(reportRow -> {
