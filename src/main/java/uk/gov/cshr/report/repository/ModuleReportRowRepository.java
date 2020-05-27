@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DbRepository {
+public class ModuleReportRowRepository {
     private static final String GET_LEARNER_RECORD_REPORT_DATA = "select i.email, i.uid, c.full_name, ou.name, p.name, g.name, group_concat(p2.name), mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date FROM learner_record.module_record mr " +
         "LEFT JOIN learner_record.course_record cr ON cr.course_id = mr.course_id " +
         "INNER JOIN identity.identity i ON cr.user_id = i.uid " +
@@ -25,12 +25,13 @@ public class DbRepository {
         "LEFT JOIN csrs.civil_servant_other_areas_of_work oaw on c.id = oaw.civil_servant_id " +
         "LEFT JOIN csrs.profession p2 on p2.id  = oaw.other_areas_of_work_id " +
         "WHERE mr.updated_at BETWEEN ? AND ? AND mr.course_id IS NOT NULL " +
-        "GROUP BY c.id, learner_record.mr.module_id, learner_record.mr.state, learner_record.cr.user_id, learner_record.mr.updated_at, learner_record.mr.completion_date";
+        "GROUP BY c.id, learner_record.mr.module_id, learner_record.mr.state, learner_record.cr.user_id, learner_record.mr.updated_at, learner_record.mr.completion_date " +
+        "ORDER BY mr.completion_date ASC";
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public DbRepository(DataSource dataSource) {
+    public ModuleReportRowRepository(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
