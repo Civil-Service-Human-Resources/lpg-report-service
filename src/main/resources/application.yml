@@ -10,7 +10,7 @@ spring:
     enabled: false
 
 h2database:
-  enabled: true
+  enabled: false
 
 server:
   port: 9004
