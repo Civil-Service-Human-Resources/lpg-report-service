@@ -81,7 +81,7 @@ public class ReportService {
         }
 
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
-        
+
         moduleReportRows.forEach(reportRow -> {
             if (moduleMap.containsKey(reportRow.getModuleId())) {
                 report.add(mapDataFromModuleToReportRow(reportRow, moduleMap.get(reportRow.getModuleId())));
