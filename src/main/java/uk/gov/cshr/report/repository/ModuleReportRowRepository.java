@@ -25,8 +25,7 @@ public class ModuleReportRowRepository {
         "LEFT JOIN csrs.civil_servant_other_areas_of_work oaw on c.id = oaw.civil_servant_id " +
         "LEFT JOIN csrs.profession p2 on p2.id  = oaw.other_areas_of_work_id " +
         "WHERE mr.updated_at BETWEEN ? AND ? AND mr.course_id IS NOT NULL " +
-        "GROUP BY c.id, learner_record.mr.module_id, learner_record.mr.state, learner_record.cr.user_id, learner_record.mr.updated_at, learner_record.mr.completion_date " +
-        "ORDER BY mr.completion_date ASC";
+        "GROUP BY c.id, learner_record.mr.module_id, learner_record.mr.state, learner_record.cr.user_id, learner_record.mr.updated_at, learner_record.mr.completion_date";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -35,8 +34,8 @@ public class ModuleReportRowRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<ModuleReportRow> getModuleReportData(LocalDate from, LocalDate to, boolean isProfessionReporter) {
-        return jdbcTemplate.query(GET_LEARNER_RECORD_REPORT_DATA, (rs, rowNum) -> extractModuleReportRow(rs, isProfessionReporter), from, to);
+    public List<ModuleReportRow> getModuleReportData(LocalDate date, boolean isProfessionReporter) {
+        return jdbcTemplate.query(GET_LEARNER_RECORD_REPORT_DATA, (rs, rowNum) -> extractModuleReportRow(rs, isProfessionReporter), date.atStartOfDay(), date.plusDays(1).atStartOfDay());
     }
 
     private ModuleReportRow extractModuleReportRow(ResultSet rs, boolean isProfessionReporter) throws SQLException {
