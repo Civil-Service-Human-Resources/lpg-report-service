@@ -11,11 +11,12 @@ import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
-import uk.gov.cshr.report.repository.ModuleReportRowRepository;
+import uk.gov.cshr.report.repository.DbRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class ReportService {
     private final LearningCatalogueService learningCatalogueService;
     private final ReportRowFactory reportRowFactory;
     private final IdentityService identityService;
-    private final ModuleReportRowRepository moduleReportRowRepository;
+    private final DbRepository dbRepository;
 
     @Autowired
     public ReportService(LearnerRecordService learnerRecordService,
@@ -35,13 +36,13 @@ public class ReportService {
             LearningCatalogueService learningCatalogueService,
             ReportRowFactory reportRowFactory,
             IdentityService identityService,
-            ModuleReportRowRepository moduleReportRowRepository) {
+            DbRepository dbRepository) {
         this.learnerRecordService = learnerRecordService;
         this.civilServantRegistryService = civilServantRegistryService;
         this.learningCatalogueService = learningCatalogueService;
         this.reportRowFactory = reportRowFactory;
         this.identityService = identityService;
-        this.moduleReportRowRepository = moduleReportRowRepository;
+        this.dbRepository = dbRepository;
     }
 
     public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
@@ -71,11 +72,27 @@ public class ReportService {
     }
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
-        long start = System.currentTimeMillis();
-        List<ModuleReportRow> moduleReportRows = moduleReportRowRepository.getModuleReportData(from, to, isProfessionReporter);
-        long end = System.currentTimeMillis();
-        System.out.println("Db fetched after: " + (end - start) + " milliseconds");
+        List<ModuleReportRow> report = new ArrayList<>();
+        Map<String, Identity> identitiesMap = dbRepository.getIdentities();
+        List<ModuleRecord> moduleRecords = dbRepository.getModuleRecords(from, to);
+        Map<String, CivilServant> civilServantMap = dbRepository.getCivilServants();
+        Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
 
-        return moduleReportRows;
+        for (ModuleRecord moduleRecord : moduleRecords) {
+            if (civilServantMap.containsKey(moduleRecord.getLearner())) {
+
+                CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+                Identity identity = identitiesMap.get(moduleRecord.getLearner());
+
+                if (moduleMap.containsKey(moduleRecord.getModuleId())) {
+                    Module module = moduleMap.get(moduleRecord.getModuleId());
+                    if (module != null && identity != null && civilServant != null) {
+                        report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
+                    }
+                }
+            }
+        }
+
+        return report;
     }
 }
