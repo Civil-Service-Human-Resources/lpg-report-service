@@ -1,17 +1,16 @@
 package uk.gov.cshr.report.service;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.security.test.context.support.WithMockUser;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
+import static org.mockito.Mockito.when;
 
-import uk.gov.cshr.report.domain.catalogue.Course;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import uk.gov.cshr.report.domain.catalogue.Event;
-import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.registry.CivilServant;
@@ -20,13 +19,15 @@ import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 import uk.gov.cshr.report.repository.ModuleReportRowRepository;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.test.context.support.WithMockUser;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReportServiceTest {
@@ -116,33 +117,23 @@ public class ReportServiceTest {
         moduleReportRow1.setModuleId(MODULE_1);
         moduleReportRow1.setLearnerId(LEARNER_1);
         moduleReportRow1.setEmail(EMAIL_1);
+        moduleReportRow1.setModuleId(MODULE_1);
+        moduleReportRow1.setCourseId(COURSE_1);
 
         ModuleReportRow moduleReportRow2 = new ModuleReportRow();
         moduleReportRow2.setModuleId(MODULE_2);
         moduleReportRow2.setLearnerId(LEARNER_2);
         moduleReportRow2.setEmail(EMAIL_2);
+        moduleReportRow2.setModuleId(MODULE_2);
+        moduleReportRow2.setCourseId(COURSE_2);
 
         List<ModuleReportRow> moduleReportRows = ImmutableList.of(moduleReportRow1, moduleReportRow2);
-
-        Course course1 = new Course();
-        course1.setId(COURSE_1);
-        Module module1 = new Module();
-        module1.setId(MODULE_1);
-        module1.setCourse(course1);
-
-        Course course2 = new Course();
-        course2.setId(COURSE_2);
-        Module module2 = new Module();
-        module2.setId(MODULE_2);
-        module2.setCourse(course2);
 
         LocalDate from = LocalDate.parse(DATE_FROM);
         LocalDate to = LocalDate.parse(DATE_TO);
 
         when(moduleReportRowRepository.getModuleReportData(any(LocalDate.class), any(LocalDate.class), anyBoolean()))
             .thenReturn(moduleReportRows);
-        when(learningCatalogueService.getModuleMap())
-            .thenReturn(ImmutableMap.of(module1.getId(), module1, module2.getId(), module2));
 
         List<ModuleReportRow> result = reportService.buildModuleReport(from, to, true);
 
