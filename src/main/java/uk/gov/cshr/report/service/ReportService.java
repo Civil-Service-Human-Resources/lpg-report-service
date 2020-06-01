@@ -74,7 +74,7 @@ public class ReportService {
         List<ModuleReportRow> report = new ArrayList<>();
         List<ModuleReportRow> moduleReportRows = moduleReportRowRepository.getModuleReportData(from, to, isProfessionReporter);
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
-
+        
         moduleReportRows.forEach(reportRow -> {
             if (moduleMap.containsKey(reportRow.getModuleId())) {
                 report.add(mapDataFromModuleToReportRow(reportRow, moduleMap.get(reportRow.getModuleId())));
