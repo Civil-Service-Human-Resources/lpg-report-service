@@ -1,7 +1,6 @@
 package uk.gov.cshr.report.service;
 
 import java.nio.file.Paths;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,13 +72,7 @@ public class ReportService {
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
         List<ModuleReportRow> report = new ArrayList<>();
-        List<ModuleReportRow> moduleReportRows = new ArrayList<>();
-        long days = Duration.between(from.atStartOfDay(), to.atStartOfDay()).toDays();
-
-        for (long index = 0; index < days; index++) {
-            moduleReportRows.addAll(moduleReportRowRepository.getModuleReportData(from.plusDays(index), isProfessionReporter));
-        }
-
+        List<ModuleReportRow> moduleReportRows = moduleReportRowRepository.getModuleReportData(from, to, isProfessionReporter);
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
 
         moduleReportRows.forEach(reportRow -> {
