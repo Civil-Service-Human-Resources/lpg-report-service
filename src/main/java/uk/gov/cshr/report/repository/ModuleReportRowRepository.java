@@ -15,7 +15,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ModuleReportRowRepository {
-    private static final String GET_LEARNER_RECORD_REPORT_DATA = "select i.email, i.uid, c.full_name, ou.name, p.name, g.name, group_concat(p2.name), mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date FROM learner_record.module_record mr " +
+    private static final String GET_LEARNER_RECORD_REPORT_DATA = "select i.email, i.uid, c.full_name, ou.name, p.name, g.name, group_concat(p2.name), mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date, mr.module_title, mr.module_type, cr.course_id, cr.course_title " +
+        "FROM learner_record.module_record mr " +
         "LEFT JOIN learner_record.course_record cr ON cr.course_id = mr.course_id " +
         "INNER JOIN identity.identity i ON cr.user_id = i.uid " +
         "INNER JOIN csrs.civil_servant c ON i.id = c.identity_id " +
@@ -25,7 +26,7 @@ public class ModuleReportRowRepository {
         "LEFT JOIN csrs.civil_servant_other_areas_of_work oaw on c.id = oaw.civil_servant_id " +
         "LEFT JOIN csrs.profession p2 on p2.id  = oaw.other_areas_of_work_id " +
         "WHERE mr.updated_at BETWEEN ? AND ? AND mr.course_id IS NOT NULL " +
-        "GROUP BY c.id, learner_record.mr.module_id, learner_record.mr.state, learner_record.cr.user_id, learner_record.mr.updated_at, learner_record.mr.completion_date " +
+        "GROUP BY c.id, learner_record.mr.module_id, learner_record.mr.state, learner_record.cr.user_id, learner_record.mr.updated_at, learner_record.mr.completion_date, learner_record.mr.module_title, learner_record.mr.module_type, learner_record.cr.course_id " +
         "ORDER BY mr.completion_date ASC";
 
     private final JdbcTemplate jdbcTemplate;
@@ -52,7 +53,6 @@ public class ModuleReportRowRepository {
         reportRow.setProfession(rs.getString(5));
         reportRow.setGrade(rs.getString(6));
         reportRow.setOtherAreasOfWork(rs.getString(7));
-        reportRow.setModuleId(rs.getString(8));
 
         String state = rs.getString(9);
         if (state != null) {
@@ -61,6 +61,13 @@ public class ModuleReportRowRepository {
         reportRow.setLearnerId(rs.getString(10));
         reportRow.setUpdatedAt(rs.getString(11));
         reportRow.setCompletedAt(rs.getString(12));
+
+        reportRow.setModuleId(rs.getString(8));
+        reportRow.setModuleTitle(rs.getString(13));
+        reportRow.setModuleType(rs.getString(14));
+
+        reportRow.setCourseId(rs.getString(15));
+        reportRow.setCourseTitle(rs.getString(16));
 
         return reportRow;
     }
