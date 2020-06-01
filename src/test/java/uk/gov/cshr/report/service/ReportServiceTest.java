@@ -139,7 +139,7 @@ public class ReportServiceTest {
         LocalDate from = LocalDate.parse(DATE_FROM);
         LocalDate to = LocalDate.parse(DATE_TO);
 
-        when(moduleReportRowRepository.getModuleReportData(any(LocalDate.class), anyBoolean()))
+        when(moduleReportRowRepository.getModuleReportData(any(LocalDate.class), any(LocalDate.class), anyBoolean()))
             .thenReturn(moduleReportRows);
         when(learningCatalogueService.getModuleMap())
             .thenReturn(ImmutableMap.of(module1.getId(), module1, module2.getId(), module2));
