@@ -63,11 +63,24 @@ public class ReportService {
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
         List<ModuleReportRow> report = new ArrayList<>();
 
+        long start = System.currentTimeMillis();
         Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
+        long end = System.currentTimeMillis();
+        System.out.println("Identity request: " + (end - start) + " milliseconds.");
+        start = System.currentTimeMillis();
         List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
+        end = System.currentTimeMillis();
+        System.out.println("Learner record request: " + (end - start) + " milliseconds.");
+        start = System.currentTimeMillis();
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+        end = System.currentTimeMillis();
+        System.out.println("Learner civil servant request: " + (end - start) + " milliseconds.");
+        start = System.currentTimeMillis();
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
+        end = System.currentTimeMillis();
+        System.out.println("Learning catalogue: " + (end - start) + " milliseconds.");
 
+        start = System.currentTimeMillis();
         for (ModuleRecord moduleRecord : moduleRecords) {
             if (civilServantMap.containsKey(moduleRecord.getLearner())) {
 
@@ -82,6 +95,9 @@ public class ReportService {
                 }
             }
         }
+        end = System.currentTimeMillis();
+        System.out.println("Assembling data: " + (end - start) + " milliseconds.");
+
         return report;
     }
 }
