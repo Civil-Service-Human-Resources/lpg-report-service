@@ -22,19 +22,17 @@ import org.springframework.stereotype.Repository;
 public class DbRepository {
     private static final String GET_IDENTITIES = "SELECT i.email, i.uid " +
         "FROM identity.identity i";
-    private static final String GET_LEARNER_RECORDS = "SELECT mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date " +
-        "FROM learner_record.module_record mr " +
-        "INNER JOIN learner_record.course_record cr on cr.course_id = mr.course_id " +
-        "WHERE mr.updated_at BETWEEN ? AND ?";
-    private static final String GET_CIVIL_SERVANTS = "select c.id, c.full_name, ou.name, p.name, i.uid, g.name, group_concat(p2.name) " +
-        "FROM csrs.civil_servant c " +
-        "LEFT JOIN csrs.organisational_unit ou on ou.id = c.organisational_unit_id " +
-        "LEFT JOIN csrs.profession p on p.id = c.profession_id " +
-        "LEFT JOIN csrs.identity i on i.id = c.identity_id " +
-        "LEFT JOIN csrs.grade g on g.id = c.grade_id " +
-        "LEFT JOIN csrs.civil_servant_other_areas_of_work oaw on c.id = oaw.civil_servant_id " +
-        "LEFT JOIN csrs.profession p2 on p2.id  = oaw.other_areas_of_work_id " +
-        "group by c.id";
+    private static final String GET_LEARNER_RECORDS = "SELECT mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date FROM module_record mr " +
+        "LEFT OUTER JOIN course_record cr on ((cr.course_id, cr.user_id) = (mr.course_id, mr.user_id)) " +
+        "WHERE (mr.updated_at BETWEEN ? AND ?) AND (EXISTS (select mr.course_id, mr.user_id FROM course_record cr2 where mr.course_id = cr2.course_id and mr.user_id = cr2.user_id))";
+    private static final String GET_CIVIL_SERVANTS = "SELECT cr.id, cr.full_name, o.name, p.name, i.uid, g.name, group_concat(p2.name) " +
+        "FROM csrs.civil_servant cr " +
+        "INNER JOIN csrs.civil_servant_other_areas_of_work omw on cr.id = omw.civil_servant_id " +
+        "INNER JOIN csrs.profession p2 on omw.other_areas_of_work_id = p2.id " +
+        "LEFT OUTER JOIN csrs.organisational_unit o on (o.id = cr.organisational_unit_id) " +
+        "LEFT OUTER JOIN csrs.profession p on (p.id = cr.profession_id) " +
+        "LEFT OUTER JOIN csrs.identity i on (i.id = cr.identity_id) " +
+        "LEFT OUTER JOIN csrs.grade g on (g.id = cr.grade_id) group by cr.id";
 
     private final JdbcTemplate jdbcTemplate;
 
