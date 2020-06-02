@@ -25,7 +25,7 @@ public class DbRepository {
     private static final String GET_LEARNER_RECORDS = "SELECT mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date " +
         "FROM learner_record.module_record mr " +
         "LEFT JOIN learner_record.course_record cr on cr.course_id = mr.course_id " +
-        "WHERE mr.updated_at BETWEEN ? AND ? AND mr.course_id IS NOT NULL";
+        "WHERE mr.updated_at BETWEEN '2020-05-01 00:00:00' AND '2020-05-31 23:59:59' AND mr.course_id IS NOT NULL";
     private static final String GET_CIVIL_SERVANTS = "select c.id, c.full_name, ou.name, p.name, i.uid, g.name, group_concat(p2.name) " +
         "FROM csrs.civil_servant c " +
         "LEFT JOIN csrs.organisational_unit ou on ou.id = c.organisational_unit_id " +
@@ -49,7 +49,7 @@ public class DbRepository {
     }
 
     public List<ModuleRecord> getModuleRecords(LocalDate from, LocalDate to) {
-        return jdbcTemplate.query(GET_LEARNER_RECORDS, (rs, rowNum) -> extractModuleRecord(rs), from, to);
+        return jdbcTemplate.query(GET_LEARNER_RECORDS, (rs, rowNum) -> extractModuleRecord(rs));
     }
 
     public Map<String, CivilServant> getCivilServants() {
