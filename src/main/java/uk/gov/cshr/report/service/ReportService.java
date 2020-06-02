@@ -73,10 +73,22 @@ public class ReportService {
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
         List<ModuleReportRow> report = new ArrayList<>();
+        long start = System.currentTimeMillis();
         Map<String, Identity> identitiesMap = dbRepository.getIdentities();
+        long end = System.currentTimeMillis();
+        System.out.println("Identities fetch time: " + (end - start) + " milliseconds");
+        start = System.currentTimeMillis();
         List<ModuleRecord> moduleRecords = dbRepository.getModuleRecords(from, to);
+        end = System.currentTimeMillis();
+        System.out.println("Module records fetch time: " + (end - start) + " milliseconds");
+        start = System.currentTimeMillis();
         Map<String, CivilServant> civilServantMap = dbRepository.getCivilServants();
+        end = System.currentTimeMillis();
+        System.out.println("Civil servants fetch time: " + (end - start) + " milliseconds");
+        start = System.currentTimeMillis();
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
+        end = System.currentTimeMillis();
+        System.out.println("Modules fetch time: " + (end - start) + " milliseconds");
 
         for (ModuleRecord moduleRecord : moduleRecords) {
             if (civilServantMap.containsKey(moduleRecord.getLearner())) {
