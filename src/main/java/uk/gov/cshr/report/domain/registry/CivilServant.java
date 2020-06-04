@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class CivilServant {
     private String id;
-    private String name;
-    private String email;
+    private String uuid;
+    private String fullName;
     private String organisation;
     private String profession;
     private String otherAreasOfWork;

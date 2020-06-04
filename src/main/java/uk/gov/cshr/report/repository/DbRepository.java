@@ -27,7 +27,7 @@ public class DbRepository {
         "WHERE b.booking_time BETWEEN ? AND ?";
     private static final String GET_IDENTITIES = "SELECT i.email, i.uid " +
         "FROM identity.identity i";
-    private static final String GET_CIVIL_SERVANTS = "SELECT cr.id, cr.full_name, o.name, p.name, i.uid, g.name, group_concat(p2.name) " +
+    private static final String GET_CIVIL_SERVANTS = "SELECT cr.id, cr.fullName, o.name, p.name, i.uid, g.name, group_concat(p2.name) " +
         "FROM csrs.civil_servant cr " +
         "INNER JOIN csrs.civil_servant_other_areas_of_work omw on cr.id = omw.civil_servant_id " +
         "INNER JOIN csrs.profession p2 on omw.other_areas_of_work_id = p2.id " +
@@ -58,6 +58,6 @@ public class DbRepository {
 
     public Map<String, CivilServant> getCivilServantMap() {
         return jdbcTemplate.query(GET_CIVIL_SERVANTS, (rs, rowNum) -> QueryResultExtractor.extractCivilServant(rs)).stream()
-            .collect(Collectors.toMap(CivilServant::getEmail, civilServant -> civilServant));
+            .collect(Collectors.toMap(CivilServant::getUuid, civilServant -> civilServant));
     }
 }
