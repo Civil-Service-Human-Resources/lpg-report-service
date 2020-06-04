@@ -1,13 +1,10 @@
 package uk.gov.cshr.report.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import uk.gov.cshr.report.domain.catalogue.Course;
@@ -48,18 +45,9 @@ public class ReportServiceTest {
     private static final String LEARNER_3 = "learner3";
     private static final String DATE_FROM = "2018-01-01";
     private static final String DATE_TO = "2018-01-31";
-    
-    @Mock
-    private LearnerRecordService learnerRecordService;
-
-    @Mock
-    private CivilServantRegistryService civilServantRegistryService;
 
     @Mock
     private LearningCatalogueService learningCatalogueService;
-
-    @Mock
-    private IdentityService identityService;
 
     @Mock
     private DbRepository dbRepository;
@@ -68,11 +56,8 @@ public class ReportServiceTest {
 
     @Before
     public void initialize() {
-        reportService = new ReportService(learnerRecordService,
-            civilServantRegistryService,
-            learningCatalogueService,
+        reportService = new ReportService(learningCatalogueService,
             new ReportRowFactory(),
-            identityService,
             dbRepository);
     }
 
@@ -116,10 +101,10 @@ public class ReportServiceTest {
         LocalDate from = LocalDate.parse(DATE_FROM);
         LocalDate to = LocalDate.parse(DATE_TO);
 
-        when(identityService.getIdentitiesMap())
+        when(dbRepository.getIdentitiesMap())
             .thenReturn(ImmutableMap.of(identity.getUid(), identity));
-        when(learnerRecordService.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
-        when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
+        when(dbRepository.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
+        when(dbRepository.getCivilServantMap()).thenReturn(ImmutableMap.of(
                 LEARNER_1, civilServant1,
                 LEARNER_3, civilServant3
         ));
@@ -170,11 +155,11 @@ public class ReportServiceTest {
         LocalDate from = LocalDate.parse(DATE_FROM);
         LocalDate to = LocalDate.parse(DATE_TO);
 
-        when(dbRepository.getIdentities())
+        when(dbRepository.getIdentitiesMap())
             .thenReturn(ImmutableMap.of(identity1.getUid(), identity1, identity2.getUid(), identity2));
         when(dbRepository.getModuleRecords(from, to))
             .thenReturn(ImmutableList.of(moduleRecord1, moduleRecord2));
-        when(dbRepository.getCivilServants())
+        when(dbRepository.getCivilServantMap())
             .thenReturn(ImmutableMap.of(civilServant1.getId(), civilServant1, civilServant2.getId(), civilServant2));
         when(learningCatalogueService.getModuleMap())
             .thenReturn(ImmutableMap.of(module1.getId(), module1, module2.getId(), module2));

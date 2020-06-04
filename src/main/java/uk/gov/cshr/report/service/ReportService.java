@@ -23,36 +23,26 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReportService {
-    private final LearnerRecordService learnerRecordService;
-    private final CivilServantRegistryService civilServantRegistryService;
     private final LearningCatalogueService learningCatalogueService;
     private final ReportRowFactory reportRowFactory;
-    private final IdentityService identityService;
     private final DbRepository dbRepository;
 
     @Autowired
-    public ReportService(LearnerRecordService learnerRecordService,
-            CivilServantRegistryService civilServantRegistryService,
-            LearningCatalogueService learningCatalogueService,
+    public ReportService(LearningCatalogueService learningCatalogueService,
             ReportRowFactory reportRowFactory,
-            IdentityService identityService,
             DbRepository dbRepository) {
-        this.learnerRecordService = learnerRecordService;
-        this.civilServantRegistryService = civilServantRegistryService;
         this.learningCatalogueService = learningCatalogueService;
         this.reportRowFactory = reportRowFactory;
-        this.identityService = identityService;
         this.dbRepository = dbRepository;
     }
 
     public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
-
         List<BookingReportRow> report = new ArrayList<>();
 
-        List<Booking> bookings = learnerRecordService.getBookings(from, to);
-        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+        List<Booking> bookings = dbRepository.getBookings(from, to);
+        Map<String, CivilServant> civilServantMap = dbRepository.getCivilServantMap();
         Map<String, Event> eventMap = learningCatalogueService.getEventMap();
-        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
+        Map<String, Identity> identitiesMap = dbRepository.getIdentitiesMap();
 
         for (Booking booking : bookings) {
             if (civilServantMap.containsKey(booking.getLearner())) {
@@ -73,9 +63,9 @@ public class ReportService {
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
         List<ModuleReportRow> report = new ArrayList<>();
-        Map<String, Identity> identitiesMap = dbRepository.getIdentities();
+        Map<String, Identity> identitiesMap = dbRepository.getIdentitiesMap();
         List<ModuleRecord> moduleRecords = dbRepository.getModuleRecords(from, to);
-        Map<String, CivilServant> civilServantMap = dbRepository.getCivilServants();
+        Map<String, CivilServant> civilServantMap = dbRepository.getCivilServantMap();
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
 
         for (ModuleRecord moduleRecord : moduleRecords) {
