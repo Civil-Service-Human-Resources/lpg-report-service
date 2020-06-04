@@ -52,10 +52,10 @@ public class QueryResultExtractor {
     public static CivilServant extractCivilServant(ResultSet rs) throws SQLException {
         CivilServant civilServant = new CivilServant();
         civilServant.setId(rs.getString(1));
-        civilServant.setName(rs.getString(2));
+        civilServant.setFullName(rs.getString(2));
         civilServant.setOrganisation(rs.getString(3));
         civilServant.setProfession(rs.getString(4));
-        civilServant.setEmail(rs.getString(5));
+        civilServant.setUuid(rs.getString(5));
         civilServant.setGrade(rs.getString(6));
         civilServant.setOtherAreasOfWork(rs.getString(7));
 
