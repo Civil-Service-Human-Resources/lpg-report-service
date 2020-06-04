@@ -31,14 +31,14 @@ public class SecurityConfig extends ResourceServerConfigurerAdapter {
     }
 
     @Bean
-    public TokenStore getTokenStore() {
-        return new JwtTokenStore(accessTokenConverter());
+    public TokenStore getTokenStore(OAuthProperties oAuthProperties) {
+        return new JwtTokenStore(accessTokenConverter(oAuthProperties));
     }
 
     @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
+    public JwtAccessTokenConverter accessTokenConverter(OAuthProperties oAuthProperties) {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setSigningKey("lpg-test");
+        jwtAccessTokenConverter.setSigningKey(oAuthProperties.getJwtKey());
         return jwtAccessTokenConverter;
     }
 
