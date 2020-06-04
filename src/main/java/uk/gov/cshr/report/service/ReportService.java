@@ -44,16 +44,11 @@ public class ReportService {
         Map<String, Event> eventMap = learningCatalogueService.getEventMap();
         Map<String, Identity> identitiesMap = dbRepository.getIdentitiesMap();
 
-        System.out.println("Event map keys:");
-        System.out.println(eventMap.keySet().toString());
-
         for (Booking booking : bookings) {
             if (civilServantMap.containsKey(booking.getLearner())) {
                 String eventUid = Paths.get(booking.getEvent()).getFileName().toString();
                 Identity identity = identitiesMap.get(booking.getLearner());
 
-                System.out.println("Event uid: " + eventUid);
-                System.out.println("eventMap contains eventUid? " + eventMap.containsKey(eventUid));
                 if (eventMap.containsKey(eventUid)) {
                     Optional<CivilServant> civilServant = Optional.ofNullable(civilServantMap.get(booking.getLearner()));
                     Optional<Event> event = Optional.ofNullable(eventMap.get(eventUid));
@@ -61,8 +56,7 @@ public class ReportService {
                 }
             }
         }
-
-
+        
         return report;
     }
 
