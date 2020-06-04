@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import javax.sql.DataSource;
 
 import uk.gov.cshr.report.domain.identity.Identity;
+import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.BookingStatus;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.reports.ModuleReportRow;
@@ -20,11 +22,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class DbRepository {
-    private static final String GET_IDENTITIES = "SELECT i.email, i.uid " +
-        "FROM identity.identity i";
-    private static final String GET_LEARNER_RECORDS = "SELECT mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date FROM module_record mr " +
+    private static final String GET_MODULE_RECORDS = "SELECT mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date FROM module_record mr " +
         "LEFT OUTER JOIN course_record cr on ((cr.course_id, cr.user_id) = (mr.course_id, mr.user_id)) " +
         "WHERE (mr.updated_at BETWEEN ? AND ?) AND (EXISTS (select mr.course_id, mr.user_id FROM course_record cr2 where mr.course_id = cr2.course_id and mr.user_id = cr2.user_id))";
+    private static final String GET_BOOKINGS = "SELECT b.id, b.accessibility_options, b.booking_time, b.cancellation_reason, b.cancellation_time, b.confirmation_time, b.event_id, b.learner_id, b.po_number, b.status, b.booking_reference " +
+        "FROM booking b " +
+        "WHERE b.booking_time BETWEEN ? AND ?";
+    private static final String GET_IDENTITIES = "SELECT i.email, i.uid " +
+        "FROM identity.identity i";
     private static final String GET_CIVIL_SERVANTS = "SELECT cr.id, cr.full_name, o.name, p.name, i.uid, g.name, group_concat(p2.name) " +
         "FROM csrs.civil_servant cr " +
         "INNER JOIN csrs.civil_servant_other_areas_of_work omw on cr.id = omw.civil_servant_id " +
@@ -41,26 +46,22 @@ public class DbRepository {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public Map<String, Identity> getIdentities() {
+    public List<ModuleRecord> getModuleRecords(LocalDate from, LocalDate to) {
+        return jdbcTemplate.query(GET_MODULE_RECORDS, (rs, rowNum) -> extractModuleRecord(rs), from, to);
+    }
+
+    public List<Booking> getBookings(LocalDate from, LocalDate to) {
+        return jdbcTemplate.query(GET_BOOKINGS, (rs, rowNum) -> extractBooking(rs), from, to);
+    }
+
+    public Map<String, Identity> getIdentitiesMap() {
         return jdbcTemplate.query(GET_IDENTITIES, (rs, rowNum) -> extractIdentity(rs)).stream()
             .collect(Collectors.toMap(Identity::getUid, identity -> identity));
     }
 
-    public List<ModuleRecord> getModuleRecords(LocalDate from, LocalDate to) {
-        return jdbcTemplate.query(GET_LEARNER_RECORDS, (rs, rowNum) -> extractModuleRecord(rs), from, to);
-    }
-
-    public Map<String, CivilServant> getCivilServants() {
+    public Map<String, CivilServant> getCivilServantMap() {
         return jdbcTemplate.query(GET_CIVIL_SERVANTS, (rs, rowNum) -> extractCivilServant(rs)).stream()
             .collect(Collectors.toMap(CivilServant::getEmail, civilServant -> civilServant));
-    }
-
-    private Identity extractIdentity(ResultSet rs) throws SQLException {
-        Identity identity = new Identity();
-        identity.setUsername(rs.getString(1));
-        identity.setUid(rs.getString(2));
-
-        return identity;
     }
 
     private ModuleRecord extractModuleRecord(ResultSet rs) throws SQLException {
@@ -72,6 +73,31 @@ public class DbRepository {
         moduleRecord.setCompletedAt(rs.getString(5));
 
         return moduleRecord;
+    }
+
+    private Booking extractBooking(ResultSet rs) throws SQLException {
+        Booking booking = new Booking();
+        booking.setId(rs.getInt(1));
+        booking.setAccessibilityOptions(rs.getString(2));
+        booking.setBookingTime(rs.getString(3));
+        booking.setCancellationReason(rs.getString(4));
+        booking.setCancellationTime(rs.getString(5));
+        booking.setConfirmationTime(rs.getString(6));
+        booking.setEvent(rs.getString(7));
+        booking.setLearner(rs.getString(8));
+        booking.setPoNumber(rs.getString(9));
+        booking.setStatus(BookingStatus.forValue(rs.getString(10)));
+        booking.setBookingReference(rs.getString(11));
+
+        return booking;
+    }
+
+    private Identity extractIdentity(ResultSet rs) throws SQLException {
+        Identity identity = new Identity();
+        identity.setUsername(rs.getString(1));
+        identity.setUid(rs.getString(2));
+
+        return identity;
     }
 
     private CivilServant extractCivilServant(ResultSet rs) throws SQLException {
