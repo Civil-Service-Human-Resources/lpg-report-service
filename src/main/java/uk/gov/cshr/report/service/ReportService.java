@@ -44,10 +44,7 @@ public class ReportService {
         Map<String, Event> eventMap = learningCatalogueService.getEventMap();
         Map<String, Identity> identitiesMap = dbRepository.getIdentitiesMap();
 
-        System.out.println("Civil servant keys: " + civilServantMap.keySet().toString());
-
         for (Booking booking : bookings) {
-            System.out.println("Booking learner id: " + booking.getLearner());
             if (civilServantMap.containsKey(booking.getLearner())) {
                 String eventUid = Paths.get(booking.getEvent()).getFileName().toString();
                 Identity identity = identitiesMap.get(booking.getLearner());
