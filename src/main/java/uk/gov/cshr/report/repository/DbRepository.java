@@ -22,9 +22,10 @@ public class DbRepository {
     private static final String GET_MODULE_RECORDS = "SELECT mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date FROM module_record mr " +
         "LEFT OUTER JOIN learner_record.course_record cr on ((cr.course_id, cr.user_id) = (mr.course_id, mr.user_id)) " +
         "WHERE (mr.updated_at BETWEEN ? AND ?) AND (EXISTS (select mr.course_id, mr.user_id FROM course_record cr2 where mr.course_id = cr2.course_id and mr.user_id = cr2.user_id))";
-    private static final String GET_BOOKINGS = "SELECT b.id, b.accessibility_options, b.booking_time, b.cancellation_reason, b.cancellation_time, b.confirmation_time, b.event_id, l.uid, b.po_number, b.status, b.booking_reference " +
+    private static final String GET_BOOKINGS = "SELECT b.id, b.accessibility_options, b.booking_time, b.cancellation_reason, b.cancellation_time, b.confirmation_time, e.uid, l.uid, b.po_number, b.status, b.booking_reference " +
         "FROM learner_record.booking b " +
         "LEFT OUTER JOIN learner_record.learner l ON l.id = b.learner_id " +
+        "LEFT OUTER JOIN learner_record.event e ON e.id = b.event_id " +
         "WHERE b.booking_time BETWEEN ? AND ?";
     private static final String GET_IDENTITIES = "SELECT i.email, i.uid " +
         "FROM identity.identity i";
