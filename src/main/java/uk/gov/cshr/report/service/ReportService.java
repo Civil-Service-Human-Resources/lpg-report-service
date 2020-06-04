@@ -46,6 +46,7 @@ public class ReportService {
 
         for (Booking booking : bookings) {
             System.out.println("Learner id: " + booking.getLearner());
+            System.out.println("Contains learner record? " + civilServantMap.containsKey(booking.getLearner()));
             if (civilServantMap.containsKey(booking.getLearner())) {
                 String eventUid = Paths.get(booking.getEvent()).getFileName().toString();
                 Identity identity = identitiesMap.get(booking.getLearner());
