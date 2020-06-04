@@ -23,7 +23,7 @@ public class DbRepository {
         "LEFT OUTER JOIN course_record cr on ((cr.course_id, cr.user_id) = (mr.course_id, mr.user_id)) " +
         "WHERE (mr.updated_at BETWEEN ? AND ?) AND (EXISTS (select mr.course_id, mr.user_id FROM course_record cr2 where mr.course_id = cr2.course_id and mr.user_id = cr2.user_id))";
     private static final String GET_BOOKINGS = "SELECT b.id, b.accessibility_options, b.booking_time, b.cancellation_reason, b.cancellation_time, b.confirmation_time, b.event_id, b.learner_id, b.po_number, b.status, b.booking_reference " +
-        "FROM booking b " +
+        "FROM learner_record.booking b " +
         "WHERE b.booking_time BETWEEN ? AND ?";
     private static final String GET_IDENTITIES = "SELECT i.email, i.uid " +
         "FROM identity.identity i";
