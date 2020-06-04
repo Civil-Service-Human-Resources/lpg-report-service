@@ -22,12 +22,13 @@ public class DbRepository {
     private static final String GET_MODULE_RECORDS = "SELECT mr.module_id, mr.state, cr.user_id, mr.updated_at, mr.completion_date FROM module_record mr " +
         "LEFT OUTER JOIN learner_record.course_record cr on ((cr.course_id, cr.user_id) = (mr.course_id, mr.user_id)) " +
         "WHERE (mr.updated_at BETWEEN ? AND ?) AND (EXISTS (select mr.course_id, mr.user_id FROM course_record cr2 where mr.course_id = cr2.course_id and mr.user_id = cr2.user_id))";
-    private static final String GET_BOOKINGS = "SELECT b.id, b.accessibility_options, b.booking_time, b.cancellation_reason, b.cancellation_time, b.confirmation_time, b.event_id, b.learner_id, b.po_number, b.status, b.booking_reference " +
+    private static final String GET_BOOKINGS = "SELECT b.id, b.accessibility_options, b.booking_time, b.cancellation_reason, b.cancellation_time, b.confirmation_time, b.event_id, l.uid, b.po_number, b.status, b.booking_reference " +
         "FROM learner_record.booking b " +
+        "LEFT OUTER JOIN learner_record.learner l ON l.id = b.learner_id " +
         "WHERE b.booking_time BETWEEN ? AND ?";
     private static final String GET_IDENTITIES = "SELECT i.email, i.uid " +
         "FROM identity.identity i";
-    private static final String GET_CIVIL_SERVANTS = "SELECT cr.id, cr.full_name, o.name, p.name, i.id, g.name, group_concat(p2.name) " +
+    private static final String GET_CIVIL_SERVANTS = "SELECT cr.id, cr.full_name, o.name, p.name, i.uid, g.name, group_concat(p2.name) " +
         "FROM csrs.civil_servant cr " +
         "INNER JOIN csrs.civil_servant_other_areas_of_work omw on cr.id = omw.civil_servant_id " +
         "INNER JOIN csrs.profession p2 on omw.other_areas_of_work_id = p2.id " +
@@ -58,6 +59,6 @@ public class DbRepository {
 
     public Map<String, CivilServant> getCivilServantMap() {
         return jdbcTemplate.query(GET_CIVIL_SERVANTS, (rs, rowNum) -> QueryResultExtractor.extractCivilServant(rs)).stream()
-            .collect(Collectors.toMap(CivilServant::getUuid, civilServant -> civilServant));
+            .collect(Collectors.toMap(CivilServant::getUid, civilServant -> civilServant));
     }
 }

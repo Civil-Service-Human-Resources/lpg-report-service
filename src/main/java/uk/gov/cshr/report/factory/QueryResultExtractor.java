@@ -55,7 +55,7 @@ public class QueryResultExtractor {
         civilServant.setName(rs.getString(2));
         civilServant.setOrganisation(rs.getString(3));
         civilServant.setProfession(rs.getString(4));
-        civilServant.setUuid(rs.getString(5));
+        civilServant.setUid(rs.getString(5));
         civilServant.setGrade(rs.getString(6));
         civilServant.setOtherAreasOfWork(rs.getString(7));
 
