@@ -1,22 +1,23 @@
 package uk.gov.cshr.report.service;
 
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.CourseRecord;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
+import uk.gov.cshr.report.reports.CourseReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
@@ -83,5 +84,30 @@ public class ReportService {
             }
         }
         return report;
+    }
+
+    public List<CourseReportRow> buildMandatoryCourseReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
+
+        List<CourseRecord> courseRecords = learnerRecordService.getCourses(from, to);
+        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
+        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+        Map<String, Course> courseMap = learningCatalogueService.getMandatoryCourses();
+
+        return courseRecords
+                .stream()
+                .filter(courseRecord -> civilServantMap.containsKey(courseRecord.getLearner()))
+                .filter(courseRecord -> courseMap.containsKey(courseRecord.getCourseId()))
+                .map(
+                        courseRecord -> {
+                            Course course = courseMap.get(courseRecord.getCourseId());
+                            Identity identity = identitiesMap.get(courseRecord.getLearner());
+                            CivilServant civilServant = civilServantMap.get(courseRecord.getLearner());
+                            if (course != null && identity != null && civilServant != null) {
+                                return reportRowFactory.createCourseReportRow(civilServant, course, courseRecord, identity, isProfessionReporter, true);
+                            }
+                            return null;
+                        })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 }

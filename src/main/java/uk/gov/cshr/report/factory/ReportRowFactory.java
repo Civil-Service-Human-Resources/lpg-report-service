@@ -1,16 +1,22 @@
 package uk.gov.cshr.report.factory;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.CourseRecord;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.reports.BookingReportRow;
+import uk.gov.cshr.report.reports.CourseReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.util.Optional;
+
+import static uk.gov.cshr.report.domain.Status.IN_PROGRESS;
 
 @Component
 public class ReportRowFactory {
@@ -88,6 +94,37 @@ public class ReportRowFactory {
         }
         reportRow.setUpdatedAt(moduleRecord.getStateChangeDate());
         reportRow.setCompletedAt(moduleRecord.getCompletedAt());
+
+        return reportRow;
+    }
+
+    public CourseReportRow createCourseReportRow(CivilServant civilServant, Course course, CourseRecord courseRecord, Identity identity, boolean isProfessionReporter, boolean required) {
+        CourseReportRow reportRow = new CourseReportRow();
+
+        if (!isProfessionReporter) {
+            reportRow.setLearnerId(identity.getUid());
+            reportRow.setName(civilServant.getName());
+            reportRow.setEmail(identity.getUsername());
+        }
+
+        reportRow.setDepartment(civilServant.getOrganisation());
+        reportRow.setProfession(civilServant.getProfession());
+        reportRow.setOtherAreasOfWork(civilServant.getOtherAreasOfWork());
+        reportRow.setGrade(civilServant.getGrade());
+
+        reportRow.setCourseId(course.getId());
+        reportRow.setCourseTitle(course.getTitle());
+        reportRow.setCourseTopicId(course.getTopicId());
+        reportRow.setRequired(required);
+
+        String state = courseRecord.getState();
+        if (StringUtils.isBlank(state) || StringUtils.equalsIgnoreCase("null", state)) {
+            reportRow.setStatus(IN_PROGRESS.getValue());
+            reportRow.setUpdatedAt(courseRecord.getLastUpdated());
+        } else {
+            reportRow.setStatus(state);
+            reportRow.setCompletedAt(courseRecord.getLastUpdated());
+        }
 
         return reportRow;
     }

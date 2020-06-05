@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.util.UriBuilder;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.CourseRecord;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
 
@@ -26,6 +27,7 @@ public class LearnerRecordServiceTest {
     private URI learnerRecordEventsUri;
     private String bookingUri;
     private String moduleRecordUri = "http://localhost/modules";
+    private String courseRecordUri = "http://localhost/courses";
     private HttpService httpService = mock(HttpService.class);
     private LearnerRecordService learnerRecordService;
     private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
@@ -37,7 +39,7 @@ public class LearnerRecordServiceTest {
         bookingUri = "http://localhost/bookings";
 
         learnerRecordService = new LearnerRecordService(httpService, uriBuilderFactory, learnerRecordSummariesUrl,
-                learnerRecordEventsUri, bookingUri, moduleRecordUri);
+                learnerRecordEventsUri, bookingUri, moduleRecordUri, courseRecordUri);
     }
 
     @Test
@@ -79,5 +81,25 @@ public class LearnerRecordServiceTest {
         assertEquals(moduleRecords, learnerRecordService.getModules(from, to));
 
         verify(httpService).getList(uri, ModuleRecord.class);
+    }
+
+    @Test
+    public void shouldReturnListOfCourseRecords() {
+        LocalDate from = LocalDate.of(2018, 1, 1);
+        LocalDate to = LocalDate.of(2018, 1, 2);
+
+        UriBuilder uriBuilder = mock(UriBuilder.class);
+        URI uri = URI.create("http://locahost");
+
+        when(uriBuilderFactory.builder(courseRecordUri)).thenReturn(uriBuilder);
+        when(uriBuilder.queryParam("from", from)).thenReturn(uriBuilder);
+        when(uriBuilder.queryParam("to", to)).thenReturn(uriBuilder);
+        when(uriBuilder.build(eq(new HashMap<>()))).thenReturn(uri);
+
+        List<CourseRecord> courseRecords = Lists.newArrayList(new CourseRecord());
+        when(httpService.getList(uri, CourseRecord.class)).thenReturn(courseRecords);
+        assertEquals(courseRecords, learnerRecordService.getCourses(from, to));
+
+        verify(httpService).getList(uri, CourseRecord.class);
     }
 }
