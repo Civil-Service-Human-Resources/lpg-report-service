@@ -112,7 +112,6 @@ public class ReportServiceTest {
 
         List<BookingReportRow> result = reportService.buildBookingReport(from, to, false);
         assertEquals(result.size(), 1);
-        assertEquals(result.get(0).getEventID(), EVENT_1);
         assertEquals(result.get(0).getModuleId(), MODULE_1);
         assertEquals(result.get(0).getLearnerId(), LEARNER_1);
         assertEquals(result.get(0).getEmail(), EMAIL_1);
