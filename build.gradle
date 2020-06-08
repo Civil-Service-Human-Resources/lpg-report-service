@@ -53,7 +53,7 @@ dependencies {
     compile 'org.hibernate:hibernate-core:5.2.16.Final'
     compile 'org.hibernate:hibernate-entitymanager:5.2.16.Final'
 
-    compile 'org.flywaydb:flyway-core:5.0.7'
+    compile 'org.flywaydb:flyway-core:5.1.4'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.springframework.security:spring-security-test'

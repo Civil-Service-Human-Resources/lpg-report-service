@@ -15,4 +15,5 @@ public class Booking {
     private String accessibilityOptions;
     private String cancellationReason;
     private String poNumber;
+    private String bookingReference;
 }
