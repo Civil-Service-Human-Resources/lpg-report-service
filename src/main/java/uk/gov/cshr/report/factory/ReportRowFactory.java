@@ -58,7 +58,9 @@ public class ReportRowFactory {
         reportRow.setConfirmationTime(booking.getConfirmationTime());
         reportRow.setCancellationTime(booking.getCancellationTime());
         reportRow.setAccessibilityOptions(booking.getAccessibilityOptions());
-        reportRow.setBookingCancellationReason(BookingCancellationReason.valueOf(booking.getCancellationReason()));
+        if (booking.getCancellationReason() != null) {
+            reportRow.setBookingCancellationReason(BookingCancellationReason.valueOf(booking.getCancellationReason()));
+        }
         reportRow.setPoNumber(booking.getPoNumber());
 
         return reportRow;
