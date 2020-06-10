@@ -19,6 +19,8 @@ public class OAuthProperties implements Serializable {
 
     private String checkTokenUrl;
 
+    private String jwtKey;
+
     public String getServiceUrl() {
         return serviceUrl;
     }
@@ -57,5 +59,13 @@ public class OAuthProperties implements Serializable {
 
     public void setCheckTokenUrl(String checkTokenUrl) {
         this.checkTokenUrl = checkTokenUrl;
+    }
+
+    public String getJwtKey() {
+        return jwtKey;
+    }
+
+    public void setJwtKey(String jwtKey) {
+        this.jwtKey = jwtKey;
     }
 }
