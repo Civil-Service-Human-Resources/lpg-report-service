@@ -47,6 +47,7 @@ dependencies {
     compile 'org.codehaus.janino:janino:3.0.8'
     compile 'org.projectlombok:lombok:1.18.4'
     compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.8.8'
+    compile 'org.apache.commons:commons-collections4:4.1'
 
     compile 'mysql:mysql-connector-java:8.0.20'
     compile 'com.h2database:h2:1.4.197'

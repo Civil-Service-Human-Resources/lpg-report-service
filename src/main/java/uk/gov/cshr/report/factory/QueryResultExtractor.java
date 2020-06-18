@@ -2,6 +2,7 @@ package uk.gov.cshr.report.factory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
@@ -18,8 +19,16 @@ public class QueryResultExtractor {
         moduleRecord.setModuleId(rs.getString(1));
         moduleRecord.setState(rs.getString(2));
         moduleRecord.setLearner(rs.getString(3));
-        moduleRecord.setStateChangeDate(rs.getString(4));
-        moduleRecord.setCompletedAt(rs.getString(5));
+
+        Object updateDate = rs.getObject(4);
+        if (updateDate != null) {
+            moduleRecord.setStateChangeDate(((Timestamp) updateDate).toLocalDateTime().toString());
+        }
+
+        Object completedDate = rs.getObject(5);
+        if (completedDate != null) {
+            moduleRecord.setCompletedAt(((Timestamp) completedDate).toLocalDateTime().toString());
+        }
 
         return moduleRecord;
     }
@@ -58,6 +67,14 @@ public class QueryResultExtractor {
         civilServant.setUid(rs.getString(5));
         civilServant.setGrade(rs.getString(6));
         civilServant.setOtherAreasOfWork(rs.getString(7));
+
+        return civilServant;
+    }
+
+    public static CivilServant extractCivilServantForOrganisationUnit(ResultSet rs) throws SQLException {
+        CivilServant civilServant = new CivilServant();
+        civilServant.setOrganizationUnit(rs.getString(1));
+        civilServant.setProfession(rs.getString(2));
 
         return civilServant;
     }

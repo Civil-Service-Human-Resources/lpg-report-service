@@ -1,12 +1,14 @@
 package uk.gov.cshr.report.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
@@ -15,6 +17,7 @@ import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.BookingStatus;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
+import uk.gov.cshr.report.enums.ReporterRole;
 import uk.gov.cshr.report.factory.ReportRowFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
@@ -25,6 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import com.google.common.collect.ImmutableList;
@@ -52,6 +57,9 @@ public class ReportServiceTest {
     @Mock
     private DbRepository dbRepository;
 
+    @Mock
+    private Authentication authentication;
+
     private ReportService reportService;
 
     @Before
@@ -62,7 +70,7 @@ public class ReportServiceTest {
     }
 
     @Test
-    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
+    @WithMockUser(username = "user", authorities = {"CSHR_REPORTER"})
     public void shouldReturnBookingReport() {
         Booking booking1 = new Booking();
         booking1.setEvent(EVENT_1);
@@ -101,16 +109,18 @@ public class ReportServiceTest {
         LocalDate from = LocalDate.parse(DATE_FROM);
         LocalDate to = LocalDate.parse(DATE_TO);
 
+        when(authentication.getAuthorities())
+            .thenReturn(Collections.singletonList(new SimpleGrantedAuthority(ReporterRole.CSHR_REPORTER.getValue())));
         when(dbRepository.getIdentitiesMap())
             .thenReturn(ImmutableMap.of(identity.getUid(), identity));
         when(dbRepository.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
-        when(dbRepository.getCivilServantMap()).thenReturn(ImmutableMap.of(
+        when(dbRepository.getAllCivilServants()).thenReturn(ImmutableMap.of(
                 LEARNER_1, civilServant1,
                 LEARNER_3, civilServant3
         ));
         when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of(EVENT_1, event));
 
-        List<BookingReportRow> result = reportService.buildBookingReport(from, to, false);
+        List<BookingReportRow> result = reportService.buildBookingReport(from, to, authentication);
         assertEquals(result.size(), 1);
         assertEquals(result.get(0).getEventID(), EVENT_1);
         assertEquals(result.get(0).getModuleId(), MODULE_1);
@@ -120,7 +130,7 @@ public class ReportServiceTest {
     }
 
     @Test
-    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
+    @WithMockUser(username = "user", authorities = {"CSHR_REPORTER"})
     public void shouldReturnModuleReport() {
         Identity identity1 = new Identity();
         identity1.setUsername(EMAIL_1);
@@ -155,16 +165,18 @@ public class ReportServiceTest {
         LocalDate from = LocalDate.parse(DATE_FROM);
         LocalDate to = LocalDate.parse(DATE_TO);
 
+        when(authentication.getAuthorities())
+            .thenReturn(Collections.singletonList(new SimpleGrantedAuthority(ReporterRole.CSHR_REPORTER.getValue())));
         when(dbRepository.getIdentitiesMap())
             .thenReturn(ImmutableMap.of(identity1.getUid(), identity1, identity2.getUid(), identity2));
         when(dbRepository.getModuleRecords(from, to))
             .thenReturn(ImmutableList.of(moduleRecord1, moduleRecord2));
-        when(dbRepository.getCivilServantMap())
+        when(dbRepository.getAllCivilServants())
             .thenReturn(ImmutableMap.of(civilServant1.getId(), civilServant1, civilServant2.getId(), civilServant2));
         when(learningCatalogueService.getModuleMap())
             .thenReturn(ImmutableMap.of(module1.getId(), module1, module2.getId(), module2));
 
-        List<ModuleReportRow> result = reportService.buildModuleReport(from, to, false);
+        List<ModuleReportRow> result = reportService.buildModuleReport(from, to, authentication);
 
         assertEquals(result.size(), 2);
         assertEquals(result.get(0).getModuleId(), MODULE_1);

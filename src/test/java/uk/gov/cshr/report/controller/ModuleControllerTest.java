@@ -1,5 +1,21 @@
 package uk.gov.cshr.report.controller;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import uk.gov.cshr.report.reports.ModuleReportRow;
+import uk.gov.cshr.report.service.ReportService;
+
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,22 +25,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import uk.gov.cshr.report.reports.ModuleReportRow;
-import uk.gov.cshr.report.service.ReportService;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-import static org.hamcrest.Matchers.containsString;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ModuleController.class)
 @RunWith(SpringRunner.class)
@@ -37,7 +37,7 @@ public class ModuleControllerTest {
     private ReportService reportService;
 
     @Test
-    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
+    @WithMockUser(username = "user", authorities = {"PROFESSION_REPORTER"})
     public void shouldReturnBookingReport() throws Exception {
         ModuleReportRow reportRow = new ModuleReportRow();
         reportRow.setStatus("Confirmed");
@@ -62,7 +62,7 @@ public class ModuleControllerTest {
         LocalDate from = LocalDate.now().minusDays(7);
         LocalDate to = LocalDate.now();
 
-        when(reportService.buildModuleReport(any(), any(), anyBoolean())).thenReturn(report);
+        when(reportService.buildModuleReport(any(), any(), any())).thenReturn(report);
 
         mockMvc.perform(
                 get("/modules")
