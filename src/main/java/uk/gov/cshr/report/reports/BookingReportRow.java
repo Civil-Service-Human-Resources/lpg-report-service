@@ -1,7 +1,5 @@
 package uk.gov.cshr.report.reports;
 
-import uk.gov.cshr.report.enums.BookingCancellationReason;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -29,7 +27,7 @@ public class BookingReportRow {
     private String confirmationTime;
     private String cancellationTime;
     private String accessibilityOptions;
-    private BookingCancellationReason bookingCancellationReason;
+    private String bookingCancellationReason;
     private String topicId;
     private String poNumber;
     private String eventID;
@@ -181,11 +179,11 @@ public class BookingReportRow {
         this.accessibilityOptions = accessibilityOptions;
     }
 
-    public BookingCancellationReason getBookingCancellationReason() {
+    public String getBookingCancellationReason() {
         return bookingCancellationReason;
     }
 
-    public void setBookingCancellationReason(BookingCancellationReason bookingCancellationReason) {
+    public void setBookingCancellationReason(String bookingCancellationReason) {
         this.bookingCancellationReason = bookingCancellationReason;
     }
 

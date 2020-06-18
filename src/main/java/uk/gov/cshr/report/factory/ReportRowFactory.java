@@ -7,7 +7,6 @@ import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
-import uk.gov.cshr.report.enums.BookingCancellationReason;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
@@ -58,9 +57,7 @@ public class ReportRowFactory {
         reportRow.setConfirmationTime(booking.getConfirmationTime());
         reportRow.setCancellationTime(booking.getCancellationTime());
         reportRow.setAccessibilityOptions(booking.getAccessibilityOptions());
-        if (booking.getCancellationReason() != null) {
-            reportRow.setBookingCancellationReason(BookingCancellationReason.valueOf(booking.getCancellationReason()));
-        }
+        reportRow.setBookingCancellationReason(booking.getCancellationReason());
         reportRow.setPoNumber(booking.getPoNumber());
 
         return reportRow;
