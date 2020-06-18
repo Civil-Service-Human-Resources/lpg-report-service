@@ -46,11 +46,11 @@ public class DbRepository {
     }
 
     public List<ModuleRecord> getModuleRecords(LocalDate from, LocalDate to) {
-        return jdbcTemplate.query(GET_MODULE_RECORDS, (rs, rowNum) -> QueryResultExtractor.extractModuleRecord(rs), from, to);
+        return jdbcTemplate.query(GET_MODULE_RECORDS, (rs, rowNum) -> QueryResultExtractor.extractModuleRecord(rs), from, to.plusDays(1));
     }
 
     public List<Booking> getBookings(LocalDate from, LocalDate to) {
-        return jdbcTemplate.query(GET_BOOKINGS, (rs, rowNum) -> QueryResultExtractor.extractBooking(rs), from, to);
+        return jdbcTemplate.query(GET_BOOKINGS, (rs, rowNum) -> QueryResultExtractor.extractBooking(rs), from, to.plusDays(1));
     }
 
     public Map<String, Identity> getIdentitiesMap() {
