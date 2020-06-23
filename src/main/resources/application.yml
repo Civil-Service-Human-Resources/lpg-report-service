@@ -6,11 +6,6 @@ spring:
     default-property-inclusion: non_null
   resources:
     add-mappings: false
-  flyway:
-    enabled: false
-
-h2database:
-  enabled: false
 
 server:
   port: 9004
@@ -49,12 +44,4 @@ learningCatalogue:
 ---
 
 spring:
-  profiles: test, production
-  datasource:
-    url: ${DATASOURCE:jdbc:mysql://localhost:3306/learner_record?user=root&password=password&useSSL=false}
-    platform: mysql
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      connection-timeout: 30000
-      idle-timeout: 600000
-      max-lifetime: 1800000
+  profiles: production
