@@ -96,7 +96,7 @@ public class ReportRowFactoryTest {
     }
 
     @Test
-    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
+    @WithMockUser(username = "user", authorities = {"PROFESSION_REPORTER"})
     public void shouldReturnBookingReportRowWithoutLearningProvider() {
         BookingStatus status = BookingStatus.CONFIRMED;
         String learnerUid = "learner-uid";

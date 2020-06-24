@@ -8,6 +8,7 @@ public class CivilServant {
     private String uid;
     private String name;
     private String organisation;
+    private String organizationUnit;
     private String profession;
     private String otherAreasOfWork;
     private String grade;
