@@ -46,7 +46,7 @@ public class QueryResultExtractor {
         }
 
         Object confirmationTime = rs.getObject(6);
-        if (cancellationTime != null) {
+        if (confirmationTime != null) {
             booking.setConfirmationTime(((Timestamp) confirmationTime).toLocalDateTime().toString());
         }
 
