@@ -3,6 +3,7 @@ package uk.gov.cshr.report.factory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
@@ -22,12 +23,12 @@ public class QueryResultExtractor {
 
         Object updateDate = rs.getObject(4);
         if (updateDate != null) {
-            moduleRecord.setStateChangeDate(((Timestamp) updateDate).toLocalDateTime().toString() + "Z");
+            moduleRecord.setStateChangeDate(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) updateDate).toLocalDateTime()));
         }
 
         Object completedDate = rs.getObject(5);
         if (completedDate != null) {
-            moduleRecord.setCompletedAt(((Timestamp) completedDate).toLocalDateTime().toString() + "Z");
+            moduleRecord.setCompletedAt(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) completedDate).toLocalDateTime()));
         }
 
         return moduleRecord;
@@ -40,19 +41,19 @@ public class QueryResultExtractor {
 
         Object bookingTime = rs.getObject(3);
         if (bookingTime != null) {
-            booking.setBookingTime(((Timestamp) bookingTime).toLocalDateTime().toString() + "Z");
+            booking.setBookingTime(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) bookingTime).toLocalDateTime()));
         }
 
         booking.setCancellationReason(rs.getString(4));
 
         Object cancellationTime = rs.getObject(5);
         if (cancellationTime != null) {
-            booking.setCancellationTime(((Timestamp) cancellationTime).toLocalDateTime().toString() + "Z");
+            booking.setCancellationTime(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) cancellationTime).toLocalDateTime()));
         }
 
         Object confirmationTime = rs.getObject(6);
         if (confirmationTime != null) {
-            booking.setConfirmationTime(((Timestamp) confirmationTime).toLocalDateTime().toString() + "Z");
+            booking.setConfirmationTime(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) confirmationTime).toLocalDateTime()));
         }
 
         booking.setEvent(rs.getString(7));
