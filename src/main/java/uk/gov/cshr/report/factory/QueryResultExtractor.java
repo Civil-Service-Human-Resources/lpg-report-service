@@ -39,8 +39,17 @@ public class QueryResultExtractor {
         booking.setAccessibilityOptions(rs.getString(2));
         booking.setBookingTime(rs.getString(3));
         booking.setCancellationReason(rs.getString(4));
-        booking.setCancellationTime(rs.getString(5));
-        booking.setConfirmationTime(rs.getString(6));
+
+        Object cancellationTime = rs.getObject(5);
+        if (cancellationTime != null) {
+            booking.setCancellationTime(((Timestamp) cancellationTime).toLocalDateTime().toString());
+        }
+
+        Object confirmationTime = rs.getObject(6);
+        if (cancellationTime != null) {
+            booking.setConfirmationTime(((Timestamp) confirmationTime).toLocalDateTime().toString());
+        }
+
         booking.setEvent(rs.getString(7));
         booking.setLearner(rs.getString(8));
         booking.setPoNumber(rs.getString(9));
