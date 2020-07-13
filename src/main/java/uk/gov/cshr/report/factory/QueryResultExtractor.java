@@ -37,7 +37,12 @@ public class QueryResultExtractor {
         Booking booking = new Booking();
         booking.setId(rs.getInt(1));
         booking.setAccessibilityOptions(rs.getString(2));
-        booking.setBookingTime(rs.getString(3));
+
+        Object bookingTime = rs.getObject(3);
+        if (bookingTime != null) {
+            booking.setBookingTime(((Timestamp) bookingTime).toLocalDateTime().toString());
+        }
+
         booking.setCancellationReason(rs.getString(4));
 
         Object cancellationTime = rs.getObject(5);
