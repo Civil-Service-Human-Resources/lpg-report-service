@@ -22,12 +22,12 @@ public class QueryResultExtractor {
 
         Object updateDate = rs.getObject(4);
         if (updateDate != null) {
-            moduleRecord.setStateChangeDate(((Timestamp) updateDate).toLocalDateTime().toString());
+            moduleRecord.setStateChangeDate(((Timestamp) updateDate).toLocalDateTime().toString() + "Z");
         }
 
         Object completedDate = rs.getObject(5);
         if (completedDate != null) {
-            moduleRecord.setCompletedAt(((Timestamp) completedDate).toLocalDateTime().toString());
+            moduleRecord.setCompletedAt(((Timestamp) completedDate).toLocalDateTime().toString() + "Z");
         }
 
         return moduleRecord;
@@ -40,19 +40,19 @@ public class QueryResultExtractor {
 
         Object bookingTime = rs.getObject(3);
         if (bookingTime != null) {
-            booking.setBookingTime(((Timestamp) bookingTime).toLocalDateTime().toString());
+            booking.setBookingTime(((Timestamp) bookingTime).toLocalDateTime().toString() + "Z");
         }
 
         booking.setCancellationReason(rs.getString(4));
 
         Object cancellationTime = rs.getObject(5);
         if (cancellationTime != null) {
-            booking.setCancellationTime(((Timestamp) cancellationTime).toLocalDateTime().toString());
+            booking.setCancellationTime(((Timestamp) cancellationTime).toLocalDateTime().toString() + "Z");
         }
 
         Object confirmationTime = rs.getObject(6);
         if (confirmationTime != null) {
-            booking.setConfirmationTime(((Timestamp) confirmationTime).toLocalDateTime().toString());
+            booking.setConfirmationTime(((Timestamp) confirmationTime).toLocalDateTime().toString() + "Z");
         }
 
         booking.setEvent(rs.getString(7));
