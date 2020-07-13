@@ -28,7 +28,7 @@ public class DbRepository {
         "FROM learner_record.booking b " +
         "LEFT OUTER JOIN learner_record.learner l ON l.id = b.learner_id " +
         "LEFT OUTER JOIN learner_record.event e ON e.id = b.event_id " +
-        "WHERE b.booking_time BETWEEN ? and ?";
+        "WHERE b.booking_time between b.booking_time <= ? ";
     private static final String GET_IDENTITIES = "SELECT i.email, i.uid " +
         "FROM identity.identity i";
     private static final String GET_CIVIL_SERVANT_BY_USER_ID = "select cr.organisational_unit_id, cr.profession_id " +
