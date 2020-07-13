@@ -23,12 +23,12 @@ public class QueryResultExtractor {
 
         Object updateDate = rs.getObject(4);
         if (updateDate != null) {
-            moduleRecord.setStateChangeDate(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) updateDate).toLocalDateTime()));
+            moduleRecord.setStateChangeDate(formatDate(updateDate));
         }
 
         Object completedDate = rs.getObject(5);
         if (completedDate != null) {
-            moduleRecord.setCompletedAt(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) completedDate).toLocalDateTime()));
+            moduleRecord.setCompletedAt(formatDate(completedDate));
         }
 
         return moduleRecord;
@@ -41,19 +41,19 @@ public class QueryResultExtractor {
 
         Object bookingTime = rs.getObject(3);
         if (bookingTime != null) {
-            booking.setBookingTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) bookingTime).toLocalDateTime()));
+            booking.setBookingTime(formatDate(bookingTime));
         }
 
         booking.setCancellationReason(rs.getString(4));
 
         Object cancellationTime = rs.getObject(5);
         if (cancellationTime != null) {
-            booking.setCancellationTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) cancellationTime).toLocalDateTime()));
+            booking.setCancellationTime(formatDate(cancellationTime));
         }
 
         Object confirmationTime = rs.getObject(6);
         if (confirmationTime != null) {
-            booking.setConfirmationTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) confirmationTime).toLocalDateTime()));
+            booking.setConfirmationTime(formatDate(confirmationTime));
         }
 
         booking.setEvent(rs.getString(7));
@@ -92,5 +92,9 @@ public class QueryResultExtractor {
         civilServant.setProfession(rs.getString(2));
 
         return civilServant;
+    }
+
+    private static String formatDate(Object date) {
+        return DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) date).toLocalDateTime()) + "Z";
     }
 }
