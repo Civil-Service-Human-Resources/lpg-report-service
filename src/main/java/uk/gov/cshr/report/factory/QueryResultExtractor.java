@@ -23,12 +23,12 @@ public class QueryResultExtractor {
 
         Object updateDate = rs.getObject(4);
         if (updateDate != null) {
-            moduleRecord.setStateChangeDate(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) updateDate).toLocalDateTime()));
+            moduleRecord.setStateChangeDate(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) updateDate).toLocalDateTime()));
         }
 
         Object completedDate = rs.getObject(5);
         if (completedDate != null) {
-            moduleRecord.setCompletedAt(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) completedDate).toLocalDateTime()));
+            moduleRecord.setCompletedAt(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) completedDate).toLocalDateTime()));
         }
 
         return moduleRecord;
@@ -41,19 +41,19 @@ public class QueryResultExtractor {
 
         Object bookingTime = rs.getObject(3);
         if (bookingTime != null) {
-            booking.setBookingTime(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) bookingTime).toLocalDateTime()));
+            booking.setBookingTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) bookingTime).toLocalDateTime()));
         }
 
         booking.setCancellationReason(rs.getString(4));
 
         Object cancellationTime = rs.getObject(5);
         if (cancellationTime != null) {
-            booking.setCancellationTime(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) cancellationTime).toLocalDateTime()));
+            booking.setCancellationTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) cancellationTime).toLocalDateTime()));
         }
 
         Object confirmationTime = rs.getObject(6);
         if (confirmationTime != null) {
-            booking.setConfirmationTime(DateTimeFormatter.BASIC_ISO_DATE.format(((Timestamp) confirmationTime).toLocalDateTime()));
+            booking.setConfirmationTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(((Timestamp) confirmationTime).toLocalDateTime()));
         }
 
         booking.setEvent(rs.getString(7));
