@@ -7,6 +7,7 @@ import uk.gov.cshr.report.domain.registry.CivilServant;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -25,12 +26,12 @@ public class CivilServantRegistryServiceTest {
     }
 
     @Test
-    public void shouldReturnMapOfCivilServantsByUid() {
+    public void shouldReturnMapOfCivilServantsByUid() throws ExecutionException, InterruptedException {
 
         Map<String, CivilServant> civilServantMap = ImmutableMap.of("civil-servant-uid", new CivilServant());
 
         when(httpService.getMap(civilServantUri, CivilServant.class)).thenReturn(civilServantMap);
 
-        assertEquals(civilServantMap, civilServantRegistryService.getCivilServantMap());
+        assertEquals(civilServantMap, civilServantRegistryService.getCivilServantMap().get());
     }
 }

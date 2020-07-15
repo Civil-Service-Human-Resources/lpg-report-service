@@ -13,6 +13,7 @@ import uk.gov.cshr.report.service.ReportService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/modules")
@@ -29,7 +30,7 @@ public class ModuleController {
             @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
             Authentication authentication
-    ) {
+    ) throws ExecutionException, InterruptedException {
         boolean isProfessionReporter = authentication.getAuthorities().contains(new SimpleGrantedAuthority("PROFESSION_REPORTER"));
         List<ModuleReportRow> report = reportService.buildModuleReport(from, to, isProfessionReporter);
 

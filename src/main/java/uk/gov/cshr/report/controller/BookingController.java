@@ -13,6 +13,7 @@ import uk.gov.cshr.report.service.ReportService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequestMapping("/bookings")
@@ -27,7 +28,7 @@ public class BookingController {
     public ResponseEntity<List<BookingReportRow>> generateBookingReport(
             @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to, Authentication authentication
-    ) {
+    ) throws ExecutionException, InterruptedException {
         boolean isProfessionReporter = authentication.getAuthorities().contains(new SimpleGrantedAuthority("PROFESSION_REPORTER"));
         List<BookingReportRow> bookingReport = reportService.buildBookingReport(from, to, isProfessionReporter);
         return ResponseEntity.ok(bookingReport);
