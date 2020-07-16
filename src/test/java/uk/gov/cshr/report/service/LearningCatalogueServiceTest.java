@@ -28,10 +28,10 @@ public class LearningCatalogueServiceTest {
     }
 
     @Test
-    public void shouldReturnMapOfEvents() {
+    public void shouldReturnMapOfEvents() throws ExecutionException, InterruptedException {
         Map<String, Event> eventMap = ImmutableMap.of("event-id", new Event());
         when(httpService.getMap(eventUri, Event.class)).thenReturn(eventMap);
-        assertEquals(eventMap, learningCatalogueService.getEventMap());
+        assertEquals(eventMap, learningCatalogueService.getEventMap().get());
     }
 
     @Test

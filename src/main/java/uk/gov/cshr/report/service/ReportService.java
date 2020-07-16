@@ -1,7 +1,5 @@
 package uk.gov.cshr.report.service;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
@@ -42,10 +40,17 @@ public class ReportService {
 
         List<BookingReportRow> report = new ArrayList<>();
 
-        List<Booking> bookings = learnerRecordService.getBookings(from, to);
-        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap().get();
-        Map<String, Event> eventMap = learningCatalogueService.getEventMap();
-        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap().get();
+        CompletableFuture<List<Booking>> bookingsFuture = learnerRecordService.getBookings(from, to);
+        CompletableFuture<Map<String, CivilServant>> civilServantMapFuture = civilServantRegistryService.getCivilServantMap();
+        CompletableFuture<Map<String, Event>> eventMapFuture = learningCatalogueService.getEventMap();
+        CompletableFuture<Map<String, Identity>> identitiesMapFuture = identityService.getIdentitiesMap();
+
+        CompletableFuture.allOf(bookingsFuture, civilServantMapFuture, eventMapFuture, identitiesMapFuture).join();
+
+        List<Booking> bookings = bookingsFuture.get();
+        Map<String, CivilServant> civilServantMap = civilServantMapFuture.get();
+        Map<String, Event> eventMap = eventMapFuture.get();
+        Map<String, Identity> identitiesMap = identitiesMapFuture.get();
 
         for (Booking booking : bookings) {
             if (civilServantMap.containsKey(booking.getLearner())) {
@@ -59,7 +64,6 @@ public class ReportService {
                 }
             }
         }
-
 
         return report;
     }

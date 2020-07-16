@@ -58,13 +58,14 @@ public class LearnerRecordService {
         return httpService.getList(learnerRecordEventsUrl, LearnerRecordEvent.class);
     }
 
-    public List<Booking> getBookings(LocalDate from, LocalDate to) {
+    @Async
+    public CompletableFuture<List<Booking>> getBookings(LocalDate from, LocalDate to) {
         URI uri = uriBuilderFactory.builder(bookingUri)
                 .queryParam("from", from)
                 .queryParam("to", to)
                 .build(new HashMap<>());
 
-        return httpService.getList(uri, Booking.class);
+        return CompletableFuture.completedFuture(httpService.getList(uri, Booking.class));
     }
 
     @Async

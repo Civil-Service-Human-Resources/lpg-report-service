@@ -42,7 +42,7 @@ public class LearnerRecordServiceTest {
     }
 
     @Test
-    public void shouldReturnListOfBookings() {
+    public void shouldReturnListOfBookings() throws ExecutionException, InterruptedException {
         LocalDate from = LocalDate.parse("2018-01-01");
         LocalDate to = LocalDate.parse("2018-01-31");
 
@@ -57,7 +57,7 @@ public class LearnerRecordServiceTest {
         List<Booking> bookings = Lists.newArrayList(new Booking());
         when(httpService.getList(uri, Booking.class)).thenReturn(bookings);
 
-        assertEquals(bookings, learnerRecordService.getBookings(from, to));
+        assertEquals(bookings, learnerRecordService.getBookings(from, to).get());
 
         verify(httpService).getList(uri, Booking.class);
     }

@@ -75,13 +75,13 @@ public class ReportServiceTest {
         LocalDate from = LocalDate.parse("2018-01-01");
         LocalDate to = LocalDate.parse("2018-01-31");
 
-        when(learnerRecordService.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
+        when(learnerRecordService.getBookings(from, to)).thenReturn(CompletableFuture.completedFuture(Arrays.asList(booking1, booking2)));
         when(civilServantRegistryService.getCivilServantMap()).thenReturn(CompletableFuture.completedFuture(ImmutableMap.of(
                 "learner1", civilServant1,
                 "learner3", civilServant3
         )));
         when(identityService.getIdentitiesMap()).thenReturn(CompletableFuture.completedFuture(ImmutableMap.of(identity.getUid(), identity)));
-        when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
+        when(learningCatalogueService.getEventMap()).thenReturn(CompletableFuture.completedFuture(ImmutableMap.of("event1", event)));
 
         BookingReportRow reportRow = new BookingReportRow();
         when(reportRowFactory.createBookingReportRow(any(), any(), any(), any(), anyBoolean())).thenReturn(reportRow);

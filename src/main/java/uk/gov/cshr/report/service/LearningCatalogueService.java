@@ -27,8 +27,9 @@ public class LearningCatalogueService {
         this.moduleUri = moduleUri;
     }
 
-    public Map<String, Event> getEventMap() {
-        return httpService.getMap(eventUri, Event.class);
+    @Async
+    public CompletableFuture<Map<String, Event>> getEventMap() {
+        return CompletableFuture.completedFuture(httpService.getMap(eventUri, Event.class));
     }
 
     @Async
