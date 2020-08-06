@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -41,7 +42,7 @@ public class LearnerRecordServiceTest {
     }
 
     @Test
-    public void shouldReturnListOfBookings() {
+    public void shouldReturnListOfBookings() throws ExecutionException, InterruptedException {
         LocalDate from = LocalDate.parse("2018-01-01");
         LocalDate to = LocalDate.parse("2018-01-31");
 
@@ -56,13 +57,13 @@ public class LearnerRecordServiceTest {
         List<Booking> bookings = Lists.newArrayList(new Booking());
         when(httpService.getList(uri, Booking.class)).thenReturn(bookings);
 
-        assertEquals(bookings, learnerRecordService.getBookings(from, to));
+        assertEquals(bookings, learnerRecordService.getBookings(from, to).get());
 
         verify(httpService).getList(uri, Booking.class);
     }
 
     @Test
-    public void shouldReturnListOfModuleRecords() {
+    public void shouldReturnListOfModuleRecords() throws ExecutionException, InterruptedException {
         LocalDate from = LocalDate.of(2018, 1, 1);
         LocalDate to = LocalDate.of(2018, 1, 2);
 
@@ -76,7 +77,7 @@ public class LearnerRecordServiceTest {
 
         List<ModuleRecord> moduleRecords = Lists.newArrayList(new ModuleRecord());
         when(httpService.getList(uri, ModuleRecord.class)).thenReturn(moduleRecords);
-        assertEquals(moduleRecords, learnerRecordService.getModules(from, to));
+        assertEquals(moduleRecords, learnerRecordService.getModules(from, to).get());
 
         verify(httpService).getList(uri, ModuleRecord.class);
     }

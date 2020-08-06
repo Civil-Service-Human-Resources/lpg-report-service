@@ -18,6 +18,9 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -44,7 +47,7 @@ public class ReportServiceTest {
 
     @Test
     @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
-    public void shouldReturnBookingReport() {
+    public void shouldReturnBookingReport() throws ExecutionException, InterruptedException {
         Booking booking1 = new Booking();
         booking1.setEvent("event1");
         booking1.setLearner("learner1");
@@ -66,17 +69,19 @@ public class ReportServiceTest {
         event.setId("event1");
 
         Identity identity = new Identity();
+        identity.setUid(UUID.randomUUID().toString());
         identity.setUsername("test@example.com");
 
         LocalDate from = LocalDate.parse("2018-01-01");
         LocalDate to = LocalDate.parse("2018-01-31");
 
-        when(learnerRecordService.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
-        when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
+        when(learnerRecordService.getBookings(from, to)).thenReturn(CompletableFuture.completedFuture(Arrays.asList(booking1, booking2)));
+        when(civilServantRegistryService.getCivilServantMap()).thenReturn(CompletableFuture.completedFuture(ImmutableMap.of(
                 "learner1", civilServant1,
                 "learner3", civilServant3
-        ));
-        when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
+        )));
+        when(identityService.getIdentitiesMap()).thenReturn(CompletableFuture.completedFuture(ImmutableMap.of(identity.getUid(), identity)));
+        when(learningCatalogueService.getEventMap()).thenReturn(CompletableFuture.completedFuture(ImmutableMap.of("event1", event)));
 
         BookingReportRow reportRow = new BookingReportRow();
         when(reportRowFactory.createBookingReportRow(any(), any(), any(), any(), anyBoolean())).thenReturn(reportRow);

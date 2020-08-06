@@ -3,12 +3,14 @@ package uk.gov.cshr.report.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.domain.identity.Identity;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class IdentityService {
@@ -25,10 +27,10 @@ public class IdentityService {
         this.identitiesListUrl = identitiesListUrl;
     }
 
+    @Async
     @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")
-    public Map<String, Identity> getIdentitiesMap() {
+    public CompletableFuture<Map<String, Identity>> getIdentitiesMap() {
         LOGGER.debug("Listing identities");
-
-        return httpService.getMap(identitiesListUrl, Identity.class);
+        return CompletableFuture.completedFuture(httpService.getMap(identitiesListUrl, Identity.class));
     }
 }
