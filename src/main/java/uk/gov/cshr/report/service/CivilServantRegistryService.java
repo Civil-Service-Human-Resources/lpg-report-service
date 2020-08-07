@@ -1,11 +1,13 @@
 package uk.gov.cshr.report.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class CivilServantRegistryService {
@@ -19,7 +21,8 @@ public class CivilServantRegistryService {
         this.civilServantUri = civilServantUri;
     }
 
-    public Map<String, CivilServant> getCivilServantMap() {
-        return httpService.getMap(civilServantUri, CivilServant.class);
+    @Async
+    public CompletableFuture<Map<String, CivilServant>> getCivilServantMap() {
+        return CompletableFuture.completedFuture(httpService.getMap(civilServantUri, CivilServant.class));
     }
 }

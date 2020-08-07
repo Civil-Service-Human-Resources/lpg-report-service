@@ -24,6 +24,7 @@ oauth:
   checkTokenUrl: "${oauth.serviceUrl}/oauth/check_token"
   tokenUrl: "${oauth.serviceUrl}/oauth/token"
   identitiesListUrl: "${oauth.serviceUrl}/api/identities/map"
+  jwtKey: ${jwt_key}
 
 learnerRecord:
   serviceUrl: ${LEARNER_RECORD_URL:http://localhost:9000}

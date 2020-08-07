@@ -8,6 +8,7 @@ import uk.gov.cshr.report.domain.catalogue.Module;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -27,17 +28,17 @@ public class LearningCatalogueServiceTest {
     }
 
     @Test
-    public void shouldReturnMapOfEvents() {
+    public void shouldReturnMapOfEvents() throws ExecutionException, InterruptedException {
         Map<String, Event> eventMap = ImmutableMap.of("event-id", new Event());
         when(httpService.getMap(eventUri, Event.class)).thenReturn(eventMap);
-        assertEquals(eventMap, learningCatalogueService.getEventMap());
+        assertEquals(eventMap, learningCatalogueService.getEventMap().get());
     }
 
     @Test
-    public void shouldReturnMapOfModules() {
+    public void shouldReturnMapOfModules() throws ExecutionException, InterruptedException {
         Map<String, Module> moduleMap = ImmutableMap.of("module-id", new Module());
         when(httpService.getMap(moduleUri, Module.class)).thenReturn(moduleMap);
-        assertEquals(moduleMap, learningCatalogueService.getModuleMap());
+        assertEquals(moduleMap, learningCatalogueService.getModuleMap().get());
     }
 
 }
