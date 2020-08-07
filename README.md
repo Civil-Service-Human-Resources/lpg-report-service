@@ -2,7 +2,15 @@
 
 ## Purpose
 
-Spring Boot based RESTful API for generating CSV reports for modules completed, bookings made and learner record summaries. Report Service is called by the management site, acts as a client of CSRS, learner record and learning catalogue, aggregating the three data sources together into an extract for admin users.
+Spring Boot based RESTful API for generating CSV reports for modules completed, bookings made and learner record summaries. Report Service is called by the management site, acts as a client of identity, CSRS, learner record and learning catalogue, aggregating the four data sources together into an extract for admin users.
+
+### Booking Report
+
+The booking report generates an MI extract of the bookings registered within a given time window. The data dependencies of bookings (from learner-record), civil servants (from CSRS), events (from learning-catalogue) and identities (from identity-service) are requested asynchronously, synchronising on report generation after all requests are complete, enabling the data to be collected in parallel.
+
+### Module Report
+
+The module completion report generates an MI extract of the learning modules completed by users within a given time window, and filtered depending on the roles such that organisation reporters see only module completion records for users within their organisation. A full breakdown of roles is available in Confluence. The data dependencies of module records (from learner-record), civil servants (from CSRS), course modules (from learning-catalogue) and identities (from identity-service) are requested asynchronously, synchronising on report generation after all requests are complete, enabling the data to be collected in parallel.
 
 
 ## Component overview
