@@ -2,7 +2,6 @@ package uk.gov.cshr.report.controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import lombok.extern.slf4j.Slf4j;
 import uk.gov.cshr.report.reports.ModuleReportRow;
@@ -32,7 +31,7 @@ public class ModuleController {
             @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
             Authentication authentication
-    ) throws ExecutionException, InterruptedException {
+    ) {
         log.info("Generating learner record report by user with ID \"{}\", from \"{}\" to \"{}\"", authentication.getPrincipal(), from, to);
         boolean isProfessionReporter = authentication.getAuthorities().contains(new SimpleGrantedAuthority("PROFESSION_REPORTER"));
         List<ModuleReportRow> report = reportService.buildModuleReport(from, to, isProfessionReporter);
