@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class ReportService {
@@ -36,21 +34,14 @@ public class ReportService {
         this.identityService = identityService;
     }
 
-    public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) throws ExecutionException, InterruptedException {
+    public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
 
         List<BookingReportRow> report = new ArrayList<>();
 
-        CompletableFuture<List<Booking>> bookingsFuture = learnerRecordService.getBookings(from, to);
-        CompletableFuture<Map<String, CivilServant>> civilServantMapFuture = civilServantRegistryService.getCivilServantMap();
-        CompletableFuture<Map<String, Event>> eventMapFuture = learningCatalogueService.getEventMap();
-        CompletableFuture<Map<String, Identity>> identitiesMapFuture = identityService.getIdentitiesMap();
-
-        CompletableFuture.allOf(bookingsFuture, civilServantMapFuture, eventMapFuture, identitiesMapFuture).join();
-
-        List<Booking> bookings = bookingsFuture.get();
-        Map<String, CivilServant> civilServantMap = civilServantMapFuture.get();
-        Map<String, Event> eventMap = eventMapFuture.get();
-        Map<String, Identity> identitiesMap = identitiesMapFuture.get();
+        List<Booking> bookings = learnerRecordService.getBookings(from, to);
+        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+        Map<String, Event> eventMap = learningCatalogueService.getEventMap();
+        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
 
         for (Booking booking : bookings) {
             if (civilServantMap.containsKey(booking.getLearner())) {
@@ -68,21 +59,14 @@ public class ReportService {
         return report;
     }
 
-    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) throws ExecutionException, InterruptedException {
+    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
 
         List<ModuleReportRow> report = new ArrayList<>();
 
-        CompletableFuture<Map<String, Identity>> identitiesMapFuture = identityService.getIdentitiesMap();
-        CompletableFuture<List<ModuleRecord>> moduleRecordsFuture = learnerRecordService.getModules(from, to);
-        CompletableFuture<Map<String, CivilServant>> civilServantMapFuture = civilServantRegistryService.getCivilServantMap();
-        CompletableFuture<Map<String, Module>> moduleMapFuture = learningCatalogueService.getModuleMap();
-
-        CompletableFuture.allOf(identitiesMapFuture, moduleRecordsFuture, civilServantMapFuture, moduleMapFuture).join();
-
-        Map<String, Identity> identitiesMap = identitiesMapFuture.get();
-        List<ModuleRecord> moduleRecords = moduleRecordsFuture.get();
-        Map<String, CivilServant> civilServantMap = civilServantMapFuture.get();
-        Map<String, Module> moduleMap = moduleMapFuture.get();
+        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
+        List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
+        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+        Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
 
         for (ModuleRecord moduleRecord : moduleRecords) {
             if (civilServantMap.containsKey(moduleRecord.getLearner())) {
