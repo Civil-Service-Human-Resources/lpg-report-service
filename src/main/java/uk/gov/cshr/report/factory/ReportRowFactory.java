@@ -116,14 +116,9 @@ public class ReportRowFactory {
         reportRow.setModuleTitle(moduleRecord.getModuleTitle());
         reportRow.setModuleType(moduleRecord.getModuleType());
 
-//        reportRow.setCourseTopicId(module.getCourse().getTopicId());
-//        if (module.getAssociatedLearning() != null) {
-//            reportRow.setPaidFor(module.getAssociatedLearning());
-//        }
-
-        if (moduleRecord.getState() != null) {
+        //if (moduleRecord.getState() != null) {
             reportRow.setStatus(moduleRecord.getState());
-        }
+        //}
         reportRow.setUpdatedAt(moduleRecord.getStateChangeDate());
         reportRow.setCompletedAt(moduleRecord.getCompletedAt());
 
