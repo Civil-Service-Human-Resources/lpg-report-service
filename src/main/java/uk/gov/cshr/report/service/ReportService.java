@@ -77,17 +77,19 @@ public class ReportService {
                 .distinct()
                 .collect(Collectors.toList());
 
-        //5. Get email id of the moduleLearnerIdentityIds from the identity service.
+        //5. Get email id of the moduleLearnerIdentityIds from step 4.
         Map<String, Identity> identitiesMap = identityService.getIdentitiesMapForLearners(learnerIds);
 
         //6. Prepare the data to create CSV using the data retrieved above.
-        moduleRecords.forEach(m -> {
-            CivilServant civilServant = civilServantMap.get(m.getLearner());
-            Identity identity = identitiesMap.get(m.getLearner());
+        moduleRecords.forEach(moduleRecord -> {
+            CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+            Identity identity = identitiesMap.get(moduleRecord.getLearner());
             if (identity != null && civilServant != null) {
-                report.add(reportRowFactory.createModuleReportRowNew(civilServant, m, identity, isProfessionReporter));
+                report.add(reportRowFactory.createModuleReportRowNew(civilServant, moduleRecord, identity, isProfessionReporter));
             }
         });
+
+        //If the decision is made to decouple from Elasticsearch then remove the step 7, 8 and 9 below.
 
         //7. Retrieve unique courseIds from moduleRecords from step 3:
         List<String> courseIds = moduleRecords
