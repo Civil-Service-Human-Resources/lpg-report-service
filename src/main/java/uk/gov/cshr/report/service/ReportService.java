@@ -118,9 +118,7 @@ public class ReportService {
     }
 
     public List<ModuleReportRow> buildSupplierModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
-
         List<ModuleReportRow> report = new ArrayList<>();
-
         Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
         List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();

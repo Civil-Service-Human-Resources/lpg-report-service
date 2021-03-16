@@ -73,4 +73,14 @@ public class LearnerRecordService {
 
         return httpService.getList(uri, ModuleRecord.class);
     }
+
+    public List<ModuleRecord> getModulesForLearners(LocalDate from, LocalDate to, List<String> learnerIds) {
+        URI uri = uriBuilderFactory.builder(moduleRecordUri)
+                .queryParam("from", from)
+                .queryParam("to", to)
+                .queryParam("learnerIds", learnerIds)
+                .build(new HashMap<>());
+
+        return httpService.getList(uri, ModuleRecord.class);
+    }
 }

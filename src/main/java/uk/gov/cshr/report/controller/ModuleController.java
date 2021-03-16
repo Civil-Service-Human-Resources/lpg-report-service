@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
-
 import uk.gov.cshr.report.reports.ModuleReportRow;
 import uk.gov.cshr.report.service.ReportService;
 
