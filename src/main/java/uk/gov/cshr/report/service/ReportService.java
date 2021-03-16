@@ -89,28 +89,27 @@ public class ReportService {
             }
         });
 
-        /*
-        7. Call learning catalogue to get the course map rather then the module map to get the missing data (paidFor, topicId and latest course title). Ensure that the max pagination size of 10000 is taken care.
-            7.a. Retrieve unique course ids from moduleRecords from step 3:
-                Set<String> courseIds =  moduleRecords.getCourseIds;
-            7.b. Get the courses for the given courseIds from learning catalogue.
-                This requires two new method implementation in learning-catalogue service.
-        */
-        //Map<String, Course> courseMap = learningCatalogueService.getCourseMapForCourseIds(List<String> courseIds)
-        //Map<String, Module> moduleMap = learningCatalogueService.getModuleMapForModuleIds();
+        //7. Retrieve unique courseIds from moduleRecords from step 3:
+        List<String> courseIds = moduleRecords
+                .stream()
+                .map(ModuleRecord::getCourseId)
+                .distinct()
+                .collect(Collectors.toList());
 
-        /*
-        8. Populate the courseTitle, courseTopicId and paidFor using elastic data if the exists in elastic
+        //8. Get the courses for the given courseIds from learning catalogue.
+        //Call learning catalogue to get the course map rather then the module map to get the missing data (paidFor, topicId and latest courseTitle).
+        //Ensure that the max pagination size of 10000 is taken care.
+        Map<String, Module> moduleMap = learningCatalogueService.getModuleMapForCourseIds(courseIds);
+
+        //9. Populate the courseTitle, courseTopicId and paidFor using elastic data if the exists in elastic
         report.forEach(r -> {
-            Module module = moduleMap.get(r.getModuleId);
+            Module module = moduleMap.get(r.getModuleId());
             if (module != null) {
-                reportRow.setCourseTitle(module.getCourse().getCourseTitle);
-                reportRow.setCourseTopicId(module.getCourse().getTopicId());
-                reportRow.setPaidFor(module.getAssociatedLearning());
+                r.setCourseTitle(module.getCourse().getTitle());
+                r.setCourseTopicId(module.getCourse().getTopicId());
+                r.setPaidFor(module.getAssociatedLearning());
             }
         });
-
-        */
 
         return report;
     }
