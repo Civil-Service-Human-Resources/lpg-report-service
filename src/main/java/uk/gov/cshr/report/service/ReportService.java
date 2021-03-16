@@ -1,7 +1,6 @@
 package uk.gov.cshr.report.service;
 
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
@@ -16,7 +15,6 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class ReportService {
