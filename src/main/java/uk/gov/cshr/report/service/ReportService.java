@@ -1,6 +1,7 @@
 package uk.gov.cshr.report.service;
 
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.domain.identity.Identity;
@@ -13,10 +14,9 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ReportService {
@@ -60,6 +60,64 @@ public class ReportService {
     }
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
+
+        List<ModuleReportRow> report = new ArrayList<>();
+
+        //1. Get Map of CivilServants.
+        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+
+        //2. Retrieve the unique civilServantIdentityIds from the list of CivilServants from step 1.
+        List<String> civilServantIdentityIds = new ArrayList<>(civilServantMap.keySet());
+
+        //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
+        List<ModuleRecord> moduleRecords = learnerRecordService.getModulesForLearners(from, to, civilServantIdentityIds);
+
+        //4. Retrieve unique learnerIds from moduleRecords from step 3.
+        List<String> learnerIds = moduleRecords
+                .stream()
+                .map(ModuleRecord::getLearner)
+                .distinct()
+                .collect(Collectors.toList());
+
+        //5. Get email id of the moduleLearnerIdentityIds from the identity service.
+        Map<String, Identity> identitiesMap = identityService.getIdentitiesMapForLearners(learnerIds);
+
+        //6. Prepare the data to create CSV using the data retrieved above.
+        moduleRecords.forEach(m -> {
+            CivilServant civilServant = civilServantMap.get(m.getLearner());
+            Identity identity = identitiesMap.get(m.getLearner());
+            if (identity != null && civilServant != null) {
+                report.add(reportRowFactory.createModuleReportRowNew(civilServant, m, identity, isProfessionReporter));
+            }
+        });
+
+        /*
+        7. Call learning catalogue to get the course map rather then the module map to get the missing data (paidFor, topicId and latest course title). Ensure that the max pagination size of 10000 is taken care.
+            7.a. Retrieve unique course ids from moduleRecords from step 3:
+                Set<String> courseIds =  moduleRecords.getCourseIds;
+            7.b. Get the courses for the given courseIds from learning catalogue.
+                This requires two new method implementation in learning-catalogue service.
+        */
+        //Map<String, Course> courseMap = learningCatalogueService.getCourseMapForCourseIds(List<String> courseIds)
+        //Map<String, Module> moduleMap = learningCatalogueService.getModuleMapForModuleIds();
+
+        /*
+        8. Populate the courseTitle, courseTopicId and paidFor using elastic data if the exists in elastic
+        report.forEach(r -> {
+            Module module = moduleMap.get(r.getModuleId);
+            if (module != null) {
+                reportRow.setCourseTitle(module.getCourse().getCourseTitle);
+                reportRow.setCourseTopicId(module.getCourse().getTopicId());
+                reportRow.setPaidFor(module.getAssociatedLearning());
+            }
+        });
+
+        */
+
+        return report;
+    }
+
+    public List<ModuleReportRow> buildSupplierModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
 
         List<ModuleReportRow> report = new ArrayList<>();
 
