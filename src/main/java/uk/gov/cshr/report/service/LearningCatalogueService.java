@@ -18,16 +18,19 @@ public class LearningCatalogueService {
     private final UriBuilderFactory uriBuilderFactory;
     private final URI eventUri;
     private final URI moduleUri;
+    private final String modulesForCourseIdsUrl;
 
     public LearningCatalogueService(HttpService httpService,
                                     UriBuilderFactory uriBuilderFactory,
                                     @Value("${learningCatalogue.eventsUrl}") URI eventUri,
-                                    @Value("${learningCatalogue.modulesUrl}") URI moduleUri
+                                    @Value("${learningCatalogue.modulesUrl}") URI moduleUri,
+                                    @Value("${learningCatalogue.modulesForCourseIdsUrl}") String modulesForCourseIdsUrl
                                     ) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
         this.eventUri = eventUri;
         this.moduleUri = moduleUri;
+        this.modulesForCourseIdsUrl = modulesForCourseIdsUrl;
     }
 
     public Map<String, Event> getEventMap() {

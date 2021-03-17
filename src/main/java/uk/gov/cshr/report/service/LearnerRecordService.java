@@ -27,13 +27,15 @@ public class LearnerRecordService {
     private final URI learnerRecordEventsUrl;
     private final String bookingUri;
     private final String moduleRecordUri;
+    private final String moduleRecordsForLearnersUrl;
 
     public LearnerRecordService(HttpService httpService,
                                 UriBuilderFactory uriBuilderFactory,
                                 @Value("${learnerRecord.summariesUrl}") URI learnerRecordSummariesUrl,
                                 @Value("${learnerRecord.eventsUrl}") URI learnerRecordEventsUrl,
                                 @Value("${learnerRecord.bookingsUrl}") String bookingUri,
-                                @Value("${learnerRecord.moduleRecordsUrl}") String moduleRecordUri
+                                @Value("${learnerRecord.moduleRecordsUrl}") String moduleRecordUri,
+                                @Value("${learnerRecord.moduleRecordsForLearnersUrl}") String moduleRecordsForLearnersUrl
     ) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
@@ -41,6 +43,7 @@ public class LearnerRecordService {
         this.learnerRecordEventsUrl = learnerRecordEventsUrl;
         this.bookingUri = bookingUri;
         this.moduleRecordUri = moduleRecordUri;
+        this.moduleRecordsForLearnersUrl = moduleRecordsForLearnersUrl;
     }
 
     @PreAuthorize("hasAnyAuthority('ORGANISATION_REPORTER', 'PROFESSION_REPORTER', 'CSHR_REPORTER')")
@@ -75,7 +78,7 @@ public class LearnerRecordService {
     }
 
     public List<ModuleRecord> getModulesForLearners(LocalDate from, LocalDate to, List<String> learnerIds) {
-        URI uri = uriBuilderFactory.builder(moduleRecordUri)
+        URI uri = uriBuilderFactory.builder(moduleRecordsForLearnersUrl)
                 .queryParam("from", from)
                 .queryParam("to", to)
                 .queryParam("learnerIds", learnerIds)

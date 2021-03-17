@@ -21,14 +21,17 @@ public class IdentityService {
     private final HttpService httpService;
     private final UriBuilderFactory uriBuilderFactory;
     private final URI identitiesListUrl;
+    private final String identitiesMapForLearnersIdsUrl;
 
     public IdentityService(HttpService httpService,
                            UriBuilderFactory uriBuilderFactory,
-                           @Value("${oauth.identitiesListUrl}") URI identitiesListUrl
-    ) {
+                           @Value("${oauth.identitiesListUrl}") URI identitiesListUrl,
+                           @Value("${oauth.identitiesMapForLearnersIdsUrl}") String identitiesMapForLearnersIdsUrl
+                           ) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
         this.identitiesListUrl = identitiesListUrl;
+        this.identitiesMapForLearnersIdsUrl = identitiesMapForLearnersIdsUrl;
     }
 
     @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")
@@ -39,7 +42,7 @@ public class IdentityService {
 
     public Map<String, Identity> getIdentitiesMapForLearners(List<String> learnerIds) {
         LOGGER.debug("Listing identities for learnerIds: " + learnerIds);
-        URI uri = uriBuilderFactory.builder(identitiesListUrl.toString())
+        URI uri = uriBuilderFactory.builder(identitiesMapForLearnersIdsUrl)
                 .queryParam("learnerIds", learnerIds)
                 .build(new HashMap<>());
         return httpService.getMap(uri, Identity.class);
