@@ -24,6 +24,7 @@ oauth:
   checkTokenUrl: "${oauth.serviceUrl}/oauth/check_token"
   tokenUrl: "${oauth.serviceUrl}/oauth/token"
   identitiesListUrl: "${oauth.serviceUrl}/api/identities/map"
+  identitiesMapForLearnersIdsUrl: "${oauth.serviceUrl}/api/identities/map"
   jwtKey: ${jwt_key}
 
 learnerRecord:
@@ -32,6 +33,7 @@ learnerRecord:
   eventsUrl: "${learnerRecord.serviceUrl}/events"
   bookingsUrl: "${learnerRecord.serviceUrl}/reporting/bookings"
   moduleRecordsUrl: "${learnerRecord.serviceUrl}/reporting/module-records"
+  moduleRecordsForLearnersUrl: "${learnerRecord.serviceUrl}/reporting/module-records-for-learners"
 
 registryService:
   serviceUrl: ${REGISTRY_SERVICE_URL:http://localhost:9002}
@@ -41,6 +43,7 @@ learningCatalogue:
   serviceUrl: ${LEARNING_CATALOGUE_SERVICE_URL:http://localhost:9001}
   eventsUrl: "${learningCatalogue.serviceUrl}/reporting/events"
   modulesUrl: "${learningCatalogue.serviceUrl}/reporting/modules"
+  modulesForCourseIdsUrl: "${learningCatalogue.serviceUrl}/reporting/modules-for-course-ids"
 ---
 
 spring:
