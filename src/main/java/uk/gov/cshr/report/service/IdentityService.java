@@ -43,7 +43,7 @@ public class IdentityService {
     public Map<String, Identity> getIdentitiesMapForLearners(List<String> learnerIds) {
         LOGGER.debug("Listing identities for learnerIds: " + learnerIds);
         URI uri = uriBuilderFactory.builder(identitiesMapForLearnersIdsUrl)
-                .queryParam("learnerIds", learnerIds)
+                .queryParam("uids", learnerIds)
                 .build(new HashMap<>());
         return httpService.getMap(uri, Identity.class);
     }

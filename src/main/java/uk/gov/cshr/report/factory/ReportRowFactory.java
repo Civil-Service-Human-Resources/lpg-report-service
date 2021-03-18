@@ -116,9 +116,9 @@ public class ReportRowFactory {
         reportRow.setModuleTitle(moduleRecord.getModuleTitle());
         reportRow.setModuleType(moduleRecord.getModuleType());
 
-        //if (moduleRecord.getState() != null) {
+        if (moduleRecord.getState() != null) {
             reportRow.setStatus(moduleRecord.getState());
-        //}
+        }
         reportRow.setUpdatedAt(moduleRecord.getStateChangeDate());
         reportRow.setCompletedAt(moduleRecord.getCompletedAt());
 

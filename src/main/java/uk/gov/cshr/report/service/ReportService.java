@@ -109,7 +109,9 @@ public class ReportService {
             if (module != null) {
                 r.setCourseTitle(module.getCourse().getTitle());
                 r.setCourseTopicId(module.getCourse().getTopicId());
-                r.setPaidFor(module.getAssociatedLearning());
+                if (module.getAssociatedLearning() != null) {
+                    r.setPaidFor(module.getAssociatedLearning());
+                }
             }
         });
 
