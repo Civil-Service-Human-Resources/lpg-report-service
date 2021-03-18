@@ -24,7 +24,7 @@ oauth:
   checkTokenUrl: "${oauth.serviceUrl}/oauth/check_token"
   tokenUrl: "${oauth.serviceUrl}/oauth/token"
   identitiesListUrl: "${oauth.serviceUrl}/api/identities/map"
-  identitiesMapForLearnersIdsUrl: "${oauth.serviceUrl}/api/identities/map"
+  identitiesMapForLearnersIdsUrl: "${oauth.serviceUrl}/api/identities/map-for-uids"
   jwtKey: ${jwt_key}
 
 learnerRecord:
