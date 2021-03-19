@@ -77,50 +77,29 @@ public class ReportRowFactory {
         reportRow.setOtherAreasOfWork(civilServant.getOtherAreasOfWork());
         reportRow.setGrade(civilServant.getGrade());
 
-        reportRow.setCourseId(module.getCourse().getId());
-        reportRow.setCourseTitle(module.getCourse().getTitle());
-        reportRow.setCourseTopicId(module.getCourse().getTopicId());
-        reportRow.setModuleId(module.getId());
-        reportRow.setModuleTitle(module.getTitle());
-        reportRow.setModuleType(module.getType());
-        if (module.getAssociatedLearning() != null) {
-            reportRow.setPaidFor(module.getAssociatedLearning());
-        }
-
-        if (moduleRecord.getState() != null) {
-            reportRow.setStatus(moduleRecord.getState());
-        }
-        reportRow.setUpdatedAt(moduleRecord.getStateChangeDate());
-        reportRow.setCompletedAt(moduleRecord.getCompletedAt());
-
-        return reportRow;
-    }
-
-    public ModuleReportRow createModuleReportRowNew(CivilServant civilServant, ModuleRecord moduleRecord, Identity identity, boolean isProfessionReporter) {
-        ModuleReportRow reportRow = new ModuleReportRow();
-
-        if (!isProfessionReporter) {
-            reportRow.setEmail(identity.getUsername());
-            reportRow.setLearnerId(identity.getUid());
-            reportRow.setName(civilServant.getName());
-        }
-
-        reportRow.setDepartment(civilServant.getOrganisation());
-        reportRow.setProfession(civilServant.getProfession());
-        reportRow.setOtherAreasOfWork(civilServant.getOtherAreasOfWork());
-        reportRow.setGrade(civilServant.getGrade());
-
         reportRow.setCourseId(moduleRecord.getCourseId());
+
         reportRow.setCourseTitle(moduleRecord.getCourseTitle());
+
         reportRow.setModuleId(moduleRecord.getModuleId());
         reportRow.setModuleTitle(moduleRecord.getModuleTitle());
         reportRow.setModuleType(moduleRecord.getModuleType());
 
+        reportRow.setUpdatedAt(moduleRecord.getStateChangeDate());
+        reportRow.setCompletedAt(moduleRecord.getCompletedAt());
+
         if (moduleRecord.getState() != null) {
             reportRow.setStatus(moduleRecord.getState());
         }
-        reportRow.setUpdatedAt(moduleRecord.getStateChangeDate());
-        reportRow.setCompletedAt(moduleRecord.getCompletedAt());
+
+        if (module != null) {
+            reportRow.setModuleTitle(module.getTitle());
+            reportRow.setCourseTitle(module.getCourse().getTitle());
+            reportRow.setCourseTopicId(module.getCourse().getTopicId());
+            if (module.getAssociatedLearning() != null) {
+                reportRow.setPaidFor(module.getAssociatedLearning());
+            }
+        }
 
         return reportRow;
     }

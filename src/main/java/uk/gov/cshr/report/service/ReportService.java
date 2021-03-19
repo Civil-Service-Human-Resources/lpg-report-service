@@ -80,41 +80,37 @@ public class ReportService {
         //5. Get email id of the moduleLearnerIdentityIds from step 4.
         Map<String, Identity> identitiesMap = identityService.getIdentitiesMapForLearners(learnerIds);
 
-        //6. Prepare the data to create CSV using the data retrieved above.
-        moduleRecords.forEach(moduleRecord -> {
-            CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
-            Identity identity = identitiesMap.get(moduleRecord.getLearner());
-            if (identity != null && civilServant != null) {
-                report.add(reportRowFactory.createModuleReportRowNew(civilServant, moduleRecord, identity, isProfessionReporter));
-            }
-        });
-
-        //If the decision is made to decouple from Elasticsearch then remove the step 7, 8 and 9 below.
-
-        //7. Retrieve unique courseIds from moduleRecords from step 3:
+        //6. Retrieve unique courseIds from moduleRecords from step 3:
         List<String> courseIds = moduleRecords
                 .stream()
                 .map(ModuleRecord::getCourseId)
                 .distinct()
                 .collect(Collectors.toList());
 
-        //8. Get the courses for the given courseIds from learning catalogue.
+        //7. Get the courses for the given courseIds from learning catalogue.
         //Call learning catalogue to get the course map rather then the module map to get the missing data (paidFor, topicId and latest courseTitle).
-        //Ensure that the max pagination size of 10000 is taken care.
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMapForCourseIds(courseIds);
 
-        //9. Populate the courseTitle, courseTopicId and paidFor using elastic data if the exists in elastic
-        report.forEach(r -> {
-            Module module = moduleMap.get(r.getModuleId());
-            if (module != null) {
-                r.setCourseTitle(module.getCourse().getTitle());
-                r.setCourseTopicId(module.getCourse().getTopicId());
-                if (module.getAssociatedLearning() != null) {
-                    r.setPaidFor(module.getAssociatedLearning());
-                }
+        //8. Prepare the data to create CSV using the data retrieved above.
+        moduleRecords.forEach(moduleRecord -> {
+            CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+            Identity identity = identitiesMap.get(moduleRecord.getLearner());
+            Module module = moduleMap.get(moduleRecord.getModuleId());
+            if (identity != null && civilServant != null) {
+                report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
             }
         });
 
+        /*NOTE: If decision is made to de-couple the Elasticsearch then remove the steps 6, 7 and 8 above and enable the step 9 below
+        //9. Prepare the data to create CSV using the data retrieved above.
+        moduleRecords.forEach(moduleRecord -> {
+            CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+            Identity identity = identitiesMap.get(moduleRecord.getLearner());
+            if (identity != null && civilServant != null) {
+                report.add(reportRowFactory.createModuleReportRow(civilServant, null, moduleRecord, identity, isProfessionReporter));
+            }
+        });
+        */
         return report;
     }
 

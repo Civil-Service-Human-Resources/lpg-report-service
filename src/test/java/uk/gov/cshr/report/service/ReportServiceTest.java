@@ -167,15 +167,18 @@ public class ReportServiceTest {
         when(learningCatalogueService.getModuleMapForCourseIds(courseIds)).thenReturn(modules);
 
         ReportRowFactory reportRowFactory1 = new ReportRowFactory();
-        ModuleReportRow moduleReportRow1 = reportRowFactory1.createModuleReportRowNew(civilServant1, moduleRecord1, identity1, false);
-        when(reportRowFactory.createModuleReportRowNew(civilServant1, moduleRecord1, identity1, false)).thenReturn(moduleReportRow1);
-        ModuleReportRow moduleReportRow2 = reportRowFactory1.createModuleReportRowNew(civilServant2, moduleRecord2, identity2, false);
-        when(reportRowFactory.createModuleReportRowNew(civilServant2, moduleRecord2, identity2, false)).thenReturn(moduleReportRow2);
-        ModuleReportRow moduleReportRow3 = reportRowFactory1.createModuleReportRowNew(civilServant3, moduleRecord3, identity3, false);
-        when(reportRowFactory.createModuleReportRowNew(civilServant3, moduleRecord3, identity3, false)).thenReturn(moduleReportRow3);
+
+        ModuleReportRow moduleReportRow1 = reportRowFactory1.createModuleReportRow(civilServant1, module1, moduleRecord1, identity1, false);
+        when(reportRowFactory.createModuleReportRow(civilServant1, module1, moduleRecord1, identity1, false)).thenReturn(moduleReportRow1);
+        ModuleReportRow moduleReportRow2 = reportRowFactory1.createModuleReportRow(civilServant2, module2, moduleRecord2, identity2, false);
+        when(reportRowFactory.createModuleReportRow(civilServant2, module2, moduleRecord2, identity2, false)).thenReturn(moduleReportRow2);
+        ModuleReportRow moduleReportRow3 = reportRowFactory1.createModuleReportRow(civilServant3, module3, moduleRecord3, identity3, false);
+        when(reportRowFactory.createModuleReportRow(civilServant3, module3, moduleRecord3, identity3, false)).thenReturn(moduleReportRow3);
+
+        List<ModuleReportRow> moduleReportRows = Arrays.asList(moduleReportRow1, moduleReportRow2, moduleReportRow3);
 
         List<ModuleReportRow> result = reportService.buildModuleReport(from, to, false);
-        List<ModuleReportRow> moduleReportRows = Arrays.asList(moduleReportRow1, moduleReportRow2, moduleReportRow3);
+
         assertEquals(moduleReportRows, result);
     }
 }
