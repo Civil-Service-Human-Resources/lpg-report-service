@@ -41,8 +41,8 @@ public class LearningCatalogueService {
         return httpService.getMap(moduleUri, Module.class);
     }
 
-    public Map<String, Module> getModuleMapForCourseIds(List<String> courseIds) {
-        URI uri = uriBuilderFactory.builder(moduleUri.toString())
+    public Map<String, Module> getModuleMapForCourseIds(String courseIds) {
+        URI uri = uriBuilderFactory.builder(modulesForCourseIdsUrl)
                 .queryParam("courseIds", courseIds)
                 .build(new HashMap<>());
         return httpService.getMap(uri, Module.class);

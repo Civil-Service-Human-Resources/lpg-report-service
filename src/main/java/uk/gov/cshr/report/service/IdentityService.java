@@ -10,7 +10,6 @@ import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -40,7 +39,7 @@ public class IdentityService {
         return httpService.getMap(identitiesListUrl, Identity.class);
     }
 
-    public Map<String, Identity> getIdentitiesMapForLearners(List<String> learnerIds) {
+    public Map<String, Identity> getIdentitiesMapForLearners(String learnerIds) {
         LOGGER.debug("Listing identities for learnerIds: " + learnerIds);
         URI uri = uriBuilderFactory.builder(identitiesMapForLearnersIdsUrl)
                 .queryParam("uids", learnerIds)

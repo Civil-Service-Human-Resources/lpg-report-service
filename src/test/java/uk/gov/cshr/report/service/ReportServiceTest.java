@@ -94,8 +94,8 @@ public class ReportServiceTest {
     @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
     public void shouldReturnModuleReport() {
 
-        List<String> learners = Arrays.asList("learner1", "learner2", "learner3");
-        List<String> courseIds = Arrays.asList("courseId1", "courseId2", "courseId3");
+        String learners = "learner1,learner2,learner3";
+        String courseIds = "courseId1,courseId2,courseId3";
 
         CivilServant civilServant1 = new CivilServant();
         civilServant1.setId("learner1");

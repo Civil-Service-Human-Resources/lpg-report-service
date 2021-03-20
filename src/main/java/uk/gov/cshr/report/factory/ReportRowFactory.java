@@ -92,6 +92,7 @@ public class ReportRowFactory {
             reportRow.setStatus(moduleRecord.getState());
         }
 
+        //This is to use the latest module title, course title and missing information from Elasticsearch
         if (module != null) {
             reportRow.setModuleTitle(module.getTitle());
             reportRow.setCourseTitle(module.getCourse().getTitle());

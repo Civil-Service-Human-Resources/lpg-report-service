@@ -65,27 +65,27 @@ public class ReportService {
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
 
         //2. Retrieve the unique civilServantIdentityIds from the list of CivilServants from step 1.
-        List<String> civilServantIdentityIds = new ArrayList<>(civilServantMap.keySet());
+        String civilServantIdentityIds = String.join(",", civilServantMap.keySet());
 
         //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
         List<ModuleRecord> moduleRecords = learnerRecordService.getModulesForLearners(from, to, civilServantIdentityIds);
 
         //4. Retrieve unique learnerIds from moduleRecords from step 3.
-        List<String> learnerIds = moduleRecords
+        String learnerIds = moduleRecords
                 .stream()
                 .map(ModuleRecord::getLearner)
                 .distinct()
-                .collect(Collectors.toList());
+                .collect(Collectors.joining(","));
 
         //5. Get email id of the moduleLearnerIdentityIds from step 4.
         Map<String, Identity> identitiesMap = identityService.getIdentitiesMapForLearners(learnerIds);
 
         //6. Retrieve unique courseIds from moduleRecords from step 3:
-        List<String> courseIds = moduleRecords
+        String courseIds = moduleRecords
                 .stream()
                 .map(ModuleRecord::getCourseId)
                 .distinct()
-                .collect(Collectors.toList());
+                .collect(Collectors.joining(","));
 
         //7. Get the courses for the given courseIds from learning catalogue.
         //Call learning catalogue to get the course map rather then the module map to get the missing data (paidFor, topicId and latest courseTitle).
