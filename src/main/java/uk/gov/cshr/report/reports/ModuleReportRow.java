@@ -22,7 +22,7 @@ public class ModuleReportRow {
     private String moduleTitle;
     private String moduleType;
     private boolean required;
-    private Boolean paidFor;
+    private boolean paidFor;
 
     private String status;
     private String updatedAt;
@@ -142,7 +142,7 @@ public class ModuleReportRow {
 
     public boolean isPaidFor() { return paidFor; }
 
-    public void setPaidFor(Boolean associateLearning) { this.paidFor = associateLearning; }
+    public void setPaidFor(boolean associateLearning) { this.paidFor = associateLearning; }
 
     public String getStatus() {
         return status;
