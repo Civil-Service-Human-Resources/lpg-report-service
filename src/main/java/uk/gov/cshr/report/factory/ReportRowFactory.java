@@ -99,6 +99,8 @@ public class ReportRowFactory {
             reportRow.setCourseTopicId(module.getCourse().getTopicId());
             if (module.getAssociatedLearning() != null) {
                 reportRow.setPaidFor(module.getAssociatedLearning());
+            } else {
+                reportRow.setPaidFor(null);
             }
         }
 
