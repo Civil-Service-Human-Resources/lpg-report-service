@@ -8,13 +8,13 @@ import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class LearningCatalogueService {
 
     private final HttpService httpService;
+
     private final UriBuilderFactory uriBuilderFactory;
     private final URI eventUri;
     private final URI moduleUri;
