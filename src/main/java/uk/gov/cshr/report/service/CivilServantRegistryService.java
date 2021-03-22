@@ -2,15 +2,11 @@ package uk.gov.cshr.report.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.identity.Identity;
-import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
