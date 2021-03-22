@@ -13,10 +13,8 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
@@ -63,6 +61,61 @@ public class ReportService {
 
         List<ModuleReportRow> report = new ArrayList<>();
 
+        //1. Get Map of CivilServants.
+        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+
+        //2. Retrieve the unique civilServantIdentityIds from the list of CivilServants from step 1.
+        String civilServantIdentityIds = String.join(",", civilServantMap.keySet());
+
+        //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
+        List<ModuleRecord> moduleRecords = learnerRecordService.getModulesForLearners(from, to, civilServantIdentityIds);
+
+        //4. Retrieve unique learnerIds from moduleRecords from step 3.
+        String learnerIds = moduleRecords
+                .stream()
+                .map(ModuleRecord::getLearner)
+                .distinct()
+                .collect(Collectors.joining(","));
+
+        //5. Get email id of the moduleLearnerIdentityIds from step 4.
+        Map<String, Identity> identitiesMap = identityService.getIdentitiesMapForLearners(learnerIds);
+
+        //6. Retrieve unique courseIds from moduleRecords from step 3:
+        String courseIds = moduleRecords
+                .stream()
+                .map(ModuleRecord::getCourseId)
+                .distinct()
+                .collect(Collectors.joining(","));
+
+        //7. Get the courses for the given courseIds from learning catalogue.
+        //Call learning catalogue to get the course map rather then the module map to get the missing data (paidFor, topicId and latest courseTitle).
+        Map<String, Module> moduleMap = learningCatalogueService.getModuleMapForCourseIds(courseIds);
+
+        //8. Prepare the data to create CSV using the data retrieved above.
+        moduleRecords.forEach(moduleRecord -> {
+            CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+            Identity identity = identitiesMap.get(moduleRecord.getLearner());
+            Module module = moduleMap.get(moduleRecord.getModuleId());
+            if (identity != null && civilServant != null) {
+                report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
+            }
+        });
+
+        /*NOTE: If decision is made to de-couple the Elasticsearch then remove the steps 6, 7 and 8 above and enable the step 9 below
+        //9. Prepare the data to create CSV using the data retrieved above.
+        moduleRecords.forEach(moduleRecord -> {
+            CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+            Identity identity = identitiesMap.get(moduleRecord.getLearner());
+            if (identity != null && civilServant != null) {
+                report.add(reportRowFactory.createModuleReportRow(civilServant, null, moduleRecord, identity, isProfessionReporter));
+            }
+        });
+        */
+        return report;
+    }
+
+    public List<ModuleReportRow> buildSupplierModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
+        List<ModuleReportRow> report = new ArrayList<>();
         Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
         List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();

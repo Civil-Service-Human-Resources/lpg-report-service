@@ -77,21 +77,30 @@ public class ReportRowFactory {
         reportRow.setOtherAreasOfWork(civilServant.getOtherAreasOfWork());
         reportRow.setGrade(civilServant.getGrade());
 
-        reportRow.setCourseId(module.getCourse().getId());
-        reportRow.setCourseTitle(module.getCourse().getTitle());
-        reportRow.setCourseTopicId(module.getCourse().getTopicId());
-        reportRow.setModuleId(module.getId());
-        reportRow.setModuleTitle(module.getTitle());
-        reportRow.setModuleType(module.getType());
-        if (module.getAssociatedLearning() != null) {
-            reportRow.setPaidFor(module.getAssociatedLearning());
-        }
+        reportRow.setCourseId(moduleRecord.getCourseId());
+
+        reportRow.setCourseTitle(moduleRecord.getCourseTitle());
+
+        reportRow.setModuleId(moduleRecord.getModuleId());
+        reportRow.setModuleTitle(moduleRecord.getModuleTitle());
+        reportRow.setModuleType(moduleRecord.getModuleType());
+
+        reportRow.setUpdatedAt(moduleRecord.getStateChangeDate());
+        reportRow.setCompletedAt(moduleRecord.getCompletedAt());
 
         if (moduleRecord.getState() != null) {
             reportRow.setStatus(moduleRecord.getState());
         }
-        reportRow.setUpdatedAt(moduleRecord.getStateChangeDate());
-        reportRow.setCompletedAt(moduleRecord.getCompletedAt());
+
+        //This is to use the latest module title, course title and missing information from Elasticsearch
+        if (module != null) {
+            reportRow.setModuleTitle(module.getTitle());
+            reportRow.setCourseTitle(module.getCourse().getTitle());
+            reportRow.setCourseTopicId(module.getCourse().getTopicId());
+            if (module.getAssociatedLearning() != null) {
+                reportRow.setPaidFor(module.getAssociatedLearning());
+            }
+        }
 
         return reportRow;
     }

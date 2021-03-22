@@ -9,4 +9,8 @@ public class ModuleRecord {
     private String learner;
     private String stateChangeDate;
     private String completedAt;
+    private String moduleTitle;
+    private String moduleType;
+    private String courseId;
+    private String courseTitle;
 }
