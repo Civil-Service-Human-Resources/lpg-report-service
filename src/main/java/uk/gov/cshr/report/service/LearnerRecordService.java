@@ -77,11 +77,20 @@ public class LearnerRecordService {
         return httpService.getList(uri, ModuleRecord.class);
     }
 
-    public List<ModuleRecord> getModulesForLearners(LocalDate from, LocalDate to, String learnerIds) {
+    public List<ModuleRecord> getModuleRecordsForLearners(LocalDate from, LocalDate to, String learnerIds) {
         URI uri = uriBuilderFactory.builder(moduleRecordsForLearnersUrl)
                 .queryParam("from", from)
                 .queryParam("to", to)
                 .queryParam("learnerIds", learnerIds)
+                .build(new HashMap<>());
+        return httpService.getList(uri, ModuleRecord.class);
+    }
+
+    public List<ModuleRecord> getModulesRecordsForCourseIds(LocalDate from, LocalDate to, String courseIds) {
+        URI uri = uriBuilderFactory.builder(moduleRecordsForCourseIdsUrl)
+                .queryParam("from", from)
+                .queryParam("to", to)
+                .queryParam("courseIds", courseIds)
                 .build(new HashMap<>());
         return httpService.getList(uri, ModuleRecord.class);
     }

@@ -126,7 +126,7 @@ public class ReportServiceTest {
         moduleRecord3.setLearner("learner3");
         moduleRecord3.setCourseId("courseId3");
         List<ModuleRecord> moduleRecords = Arrays.asList(moduleRecord1, moduleRecord2, moduleRecord3);
-        when(learnerRecordService.getModulesForLearners(from, to, learners)).thenReturn(moduleRecords);
+        when(learnerRecordService.getModuleRecordsForLearners(from, to, learners)).thenReturn(moduleRecords);
 
         Identity identity1 = new Identity();
         identity1.setUid("learner1");
