@@ -20,7 +20,7 @@ public class CivilServantRegistryService {
     public CivilServantRegistryService(HttpService httpService,
                                        UriBuilderFactory uriBuilderFactory,
                                        @Value("${registryService.civilServantsUrl}") URI civilServantUri,
-                                       @Value("${learnerRecord.civilServantsForUidsUrl}") String civilServantsForUidsUrl) {
+                                       @Value("${registryService.civilServantsForUidsUrl}") String civilServantsForUidsUrl) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
         this.civilServantUri = civilServantUri;
