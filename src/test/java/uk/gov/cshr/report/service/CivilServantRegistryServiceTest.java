@@ -18,12 +18,14 @@ public class CivilServantRegistryServiceTest {
     private HttpService httpService;
     private CivilServantRegistryService civilServantRegistryService;
     private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
+    private String civilServantsForLearnerIdsUrl;
 
     @Before
     public void setUp() throws Exception {
         civilServantUri = new URI("http://example.org");
+        civilServantsForLearnerIdsUrl = "http://localhost/report/civil-servants-for-uids";
         httpService = mock(HttpService.class);
-        civilServantRegistryService = new CivilServantRegistryService(httpService, uriBuilderFactory, civilServantUri);
+        civilServantRegistryService = new CivilServantRegistryService(httpService, uriBuilderFactory, civilServantUri, civilServantsForLearnerIdsUrl);
     }
 
     @Test

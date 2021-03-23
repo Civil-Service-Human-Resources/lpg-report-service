@@ -15,13 +15,16 @@ public class CivilServantRegistryService {
     private final HttpService httpService;
     private final UriBuilderFactory uriBuilderFactory;
     private final URI civilServantUri;
+    private final String civilServantsForUidsUrl;
 
     public CivilServantRegistryService(HttpService httpService,
                                        UriBuilderFactory uriBuilderFactory,
-                                       @Value("${registryService.civilServantsUrl}") URI civilServantUri) {
+                                       @Value("${registryService.civilServantsUrl}") URI civilServantUri,
+                                       @Value("${learnerRecord.civilServantsForUidsUrl}") String civilServantsForUidsUrl) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
         this.civilServantUri = civilServantUri;
+        this.civilServantsForUidsUrl = civilServantsForUidsUrl;
     }
 
     public Map<String, CivilServant> getCivilServantMap() {
@@ -29,7 +32,7 @@ public class CivilServantRegistryService {
     }
 
     public Map<String, CivilServant> getCivilServantMapForLearnerIds(String learnerIds) {
-        URI uri = uriBuilderFactory.builder(civilServantsForLearnerIdsUrl)
+        URI uri = uriBuilderFactory.builder(civilServantsForUidsUrl)
                 .queryParam("learnerIds", learnerIds)
                 .build(new HashMap<>());
         return httpService.getMap(uri, CivilServant.class);

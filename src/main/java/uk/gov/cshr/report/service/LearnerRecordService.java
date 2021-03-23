@@ -28,6 +28,7 @@ public class LearnerRecordService {
     private final String bookingUri;
     private final String moduleRecordUri;
     private final String moduleRecordsForLearnersUrl;
+    private final String moduleRecordsForCourseIdsUrl;
 
     public LearnerRecordService(HttpService httpService,
                                 UriBuilderFactory uriBuilderFactory,
@@ -35,7 +36,8 @@ public class LearnerRecordService {
                                 @Value("${learnerRecord.eventsUrl}") URI learnerRecordEventsUrl,
                                 @Value("${learnerRecord.bookingsUrl}") String bookingUri,
                                 @Value("${learnerRecord.moduleRecordsUrl}") String moduleRecordUri,
-                                @Value("${learnerRecord.moduleRecordsForLearnersUrl}") String moduleRecordsForLearnersUrl
+                                @Value("${learnerRecord.moduleRecordsForLearnersUrl}") String moduleRecordsForLearnersUrl,
+                                @Value("${learnerRecord.moduleRecordsForCourseIdsUrl}") String moduleRecordsForCourseIdsUrl
     ) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
@@ -44,6 +46,7 @@ public class LearnerRecordService {
         this.bookingUri = bookingUri;
         this.moduleRecordUri = moduleRecordUri;
         this.moduleRecordsForLearnersUrl = moduleRecordsForLearnersUrl;
+        this.moduleRecordsForCourseIdsUrl = moduleRecordsForCourseIdsUrl;
     }
 
     @PreAuthorize("hasAnyAuthority('ORGANISATION_REPORTER', 'PROFESSION_REPORTER', 'CSHR_REPORTER')")
