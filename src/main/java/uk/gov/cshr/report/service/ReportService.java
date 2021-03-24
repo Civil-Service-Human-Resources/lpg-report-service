@@ -71,7 +71,7 @@ public class ReportService {
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.joining(","));
 
-        if(!civilServantIdentityIds.trim().isEmpty()) {
+        if(!civilServantIdentityIds.isEmpty()) {
             //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
             List<ModuleRecord> moduleRecords = learnerRecordService.getModuleRecordsForLearners(from, to, civilServantIdentityIds);
 
