@@ -145,12 +145,6 @@ public class ReportService {
             //3. Get the ModuleRecords for the courseIds in step 2 from learner-record Database
             List<ModuleRecord> moduleRecords = learnerRecordService.getModulesRecordsForCourseIds(from, to, courseIds);
 
-            //DELETE IT LATER - 2. Retrieve unique moduleIds from moduleMap from step 1.
-            //String moduleIds = String.join(",", moduleMap.keySet());
-
-            //DELETE IT LATER - 3. Get the learner records for the moduleIds from step 1 and for the given duration.
-            //List<ModuleRecord> moduleRecords = learnerRecordService.getModulesForModuleIds(from, to, moduleIds);
-
             //4. Retrieve unique learnerIds from moduleRecords from step 3.
             String learnerIds = moduleRecords
                     .stream()
