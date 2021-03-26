@@ -29,6 +29,7 @@ public class LearnerRecordServiceTest {
     private HttpService httpService = mock(HttpService.class);
     private LearnerRecordService learnerRecordService;
     private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
+    private String moduleRecordsForCourseIdsUrl = "http://localhost/module-records-for-course-ids";
 
     @Before
     public void setUp() throws Exception {
@@ -37,7 +38,7 @@ public class LearnerRecordServiceTest {
         bookingUri = "http://localhost/bookings";
 
         learnerRecordService = new LearnerRecordService(httpService, uriBuilderFactory, learnerRecordSummariesUrl,
-                learnerRecordEventsUri, bookingUri, moduleRecordUri, moduleRecordsForLearnersUrl);
+                learnerRecordEventsUri, bookingUri, moduleRecordUri, moduleRecordsForLearnersUrl, moduleRecordsForCourseIdsUrl);
     }
 
     @Test

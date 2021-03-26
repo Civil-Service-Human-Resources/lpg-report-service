@@ -34,10 +34,12 @@ learnerRecord:
   bookingsUrl: "${learnerRecord.serviceUrl}/reporting/bookings"
   moduleRecordsUrl: "${learnerRecord.serviceUrl}/reporting/module-records"
   moduleRecordsForLearnersUrl: "${learnerRecord.serviceUrl}/reporting/module-records-for-learners"
+  moduleRecordsForCourseIdsUrl: "${learnerRecord.serviceUrl}/reporting/module-records-for-course-ids"
 
 registryService:
   serviceUrl: ${REGISTRY_SERVICE_URL:http://localhost:9002}
   civilServantsUrl: "${registryService.serviceUrl}/report/civilServants"
+  civilServantsForUidsUrl: "${registryService.serviceUrl}/report/civil-servants-for-uids"
 
 learningCatalogue:
   serviceUrl: ${LEARNING_CATALOGUE_SERVICE_URL:http://localhost:9001}

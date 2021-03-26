@@ -65,74 +65,111 @@ public class ReportService {
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
 
         //2. Retrieve the unique civilServantIdentityIds from the list of CivilServants from step 1.
-        String civilServantIdentityIds = String.join(",", civilServantMap.keySet());
-
-        //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
-        List<ModuleRecord> moduleRecords = learnerRecordService.getModulesForLearners(from, to, civilServantIdentityIds);
-
-        //4. Retrieve unique learnerIds from moduleRecords from step 3.
-        String learnerIds = moduleRecords
+        String civilServantIdentityIds = civilServantMap.keySet()
                 .stream()
-                .map(ModuleRecord::getLearner)
-                .distinct()
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
                 .collect(Collectors.joining(","));
 
-        //5. Get email id of the moduleLearnerIdentityIds from step 4.
-        Map<String, Identity> identitiesMap = identityService.getIdentitiesMapForLearners(learnerIds);
+        if(!civilServantIdentityIds.isEmpty()) {
+            //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
+            List<ModuleRecord> moduleRecords = learnerRecordService.getModuleRecordsForLearners(from, to, civilServantIdentityIds);
 
-        //6. Retrieve unique courseIds from moduleRecords from step 3:
-        String courseIds = moduleRecords
-                .stream()
-                .map(ModuleRecord::getCourseId)
-                .distinct()
-                .collect(Collectors.joining(","));
+            //4. Retrieve unique learnerIds from moduleRecords from step 3.
+            String learnerIds = moduleRecords
+                    .stream()
+                    .map(ModuleRecord::getLearner)
+                    .filter(s -> s != null && !s.isEmpty())
+                    .map(String::trim)
+                    .distinct()
+                    .collect(Collectors.joining(","));
 
-        //7. Get the courses for the given courseIds from learning catalogue.
-        //Call learning catalogue to get the course map rather then the module map to get the missing data (paidFor, topicId and latest courseTitle).
-        Map<String, Module> moduleMap = learningCatalogueService.getModuleMapForCourseIds(courseIds);
+            if(!learnerIds.isEmpty()) {
+                //5. Get emailId map for the learnerIds from step 4.
+                Map<String, Identity> identitiesMap = identityService.getIdentitiesMapForLearners(learnerIds);
 
-        //8. Prepare the data to create CSV using the data retrieved above.
-        moduleRecords.forEach(moduleRecord -> {
-            CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
-            Identity identity = identitiesMap.get(moduleRecord.getLearner());
-            Module module = moduleMap.get(moduleRecord.getModuleId());
-            if (identity != null && civilServant != null) {
-                report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
+                //6. Retrieve unique courseIds from moduleRecords from step 3.
+                String courseIds = moduleRecords
+                        .stream()
+                        .map(ModuleRecord::getCourseId)
+                        .map(String::trim)
+                        .filter(s -> !s.isEmpty())
+                        .distinct()
+                        .collect(Collectors.joining(","));
+
+                //7. Get the Module map for the given courseIds from learning catalogue to get the missing data (paidFor, topicId)
+                // and latest module title and courseTitle.
+                Map<String, Module> moduleMap = learningCatalogueService.getModuleMapForCourseIds(courseIds);
+
+                //8. Prepare the data to create CSV using the data retrieved above.
+                moduleRecords.forEach(moduleRecord -> {
+                    CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+                    Identity identity = identitiesMap.get(moduleRecord.getLearner());
+                    Module module = moduleMap.get(moduleRecord.getModuleId());
+                    if (identity != null && civilServant != null) {
+                        report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
+                    }
+                });
+
+                /*NOTE: If decision is made to de-couple the Elasticsearch then remove the steps 6, 7 and 8 above and enable the step 9 below
+                //9. Prepare the data to create CSV using the data retrieved above.
+                moduleRecords.forEach(moduleRecord -> {
+                    CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+                    Identity identity = identitiesMap.get(moduleRecord.getLearner());
+                    if (identity != null && civilServant != null) {
+                        report.add(reportRowFactory.createModuleReportRow(civilServant, null, moduleRecord, identity, isProfessionReporter));
+                    }
+                });
+                */
             }
-        });
-
-        /*NOTE: If decision is made to de-couple the Elasticsearch then remove the steps 6, 7 and 8 above and enable the step 9 below
-        //9. Prepare the data to create CSV using the data retrieved above.
-        moduleRecords.forEach(moduleRecord -> {
-            CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
-            Identity identity = identitiesMap.get(moduleRecord.getLearner());
-            if (identity != null && civilServant != null) {
-                report.add(reportRowFactory.createModuleReportRow(civilServant, null, moduleRecord, identity, isProfessionReporter));
-            }
-        });
-        */
+        }
         return report;
     }
 
     public List<ModuleReportRow> buildSupplierModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
         List<ModuleReportRow> report = new ArrayList<>();
-        Map<String, Identity> identitiesMap = identityService.getIdentitiesMap();
-        List<ModuleRecord> moduleRecords = learnerRecordService.getModules(from, to);
-        Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
+
+        //1. Get the Module map for the supplier user from learning catalogue.
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
 
-        for (ModuleRecord moduleRecord : moduleRecords) {
-            if (civilServantMap.containsKey(moduleRecord.getLearner())) {
+        //2. Get the unique courseIds from moduleMap in step 1
+        String courseIds = moduleMap.values()
+                .stream()
+                .map(m -> m.getCourse().getId())
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .distinct()
+                .collect(Collectors.joining(","));
 
-                CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
-                Identity identity = identitiesMap.get(moduleRecord.getLearner());
+        if(!courseIds.isEmpty()) {
+            //3. Get the ModuleRecords for the courseIds in step 2 from learner-record Database
+            List<ModuleRecord> moduleRecords = learnerRecordService.getModulesRecordsForCourseIds(from, to, courseIds);
 
-                if (moduleMap.containsKey(moduleRecord.getModuleId())) {
+            //4. Retrieve unique learnerIds from moduleRecords from step 3.
+            String learnerIds = moduleRecords
+                    .stream()
+                    .map(ModuleRecord::getLearner)
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .distinct()
+                    .collect(Collectors.joining(","));
+
+            if(!learnerIds.isEmpty()) {
+                //5. Get the civil servants for the learnerId in step 4
+                Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMapForLearnerIds(learnerIds);
+
+                //6. Get emailId map for the learnerIds from step 4.
+                Map<String, Identity> identitiesMap = identityService.getIdentitiesMapForLearners(learnerIds);
+
+                //7. Prepare the data to create CSV using the data retrieved above.
+                moduleRecords.forEach(moduleRecord -> {
+                    CivilServant civilServant = civilServantMap.get(moduleRecord.getLearner());
+                    Identity identity = identitiesMap.get(moduleRecord.getLearner());
                     Module module = moduleMap.get(moduleRecord.getModuleId());
-                    if (module != null && identity != null && civilServant != null) {
+                    if (identity != null && civilServant != null) {
                         report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
                     }
-                }
+                });
             }
         }
         return report;

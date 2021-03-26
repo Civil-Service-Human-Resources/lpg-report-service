@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import uk.gov.cshr.report.domain.registry.CivilServant;
+import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
 import java.util.Map;
@@ -16,12 +17,15 @@ public class CivilServantRegistryServiceTest {
     private URI civilServantUri;
     private HttpService httpService;
     private CivilServantRegistryService civilServantRegistryService;
+    private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
+    private String civilServantsForLearnerIdsUrl;
 
     @Before
     public void setUp() throws Exception {
         civilServantUri = new URI("http://example.org");
+        civilServantsForLearnerIdsUrl = "http://localhost/report/civil-servants-for-uids";
         httpService = mock(HttpService.class);
-        civilServantRegistryService = new CivilServantRegistryService(httpService, civilServantUri);
+        civilServantRegistryService = new CivilServantRegistryService(httpService, uriBuilderFactory, civilServantUri, civilServantsForLearnerIdsUrl);
     }
 
     @Test
