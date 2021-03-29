@@ -89,7 +89,6 @@ public class ReportService {
                         .filter(s -> !s.isEmpty())
                         .collect(Collectors.joining(","));
                 //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
-                log.info("ReportService.buildModuleReport.civilServantIdentityIds: " + civilServantIdentityIds);
                 log.info("ReportService.buildModuleReport.Calling learnerRecordService.getModuleRecordsForLearners(from, to, civilServantIdentityIds)");
                 List<ModuleRecord> subListModuleRecords = learnerRecordService.getModuleRecordsForLearners(from, to, civilServantIdentityIds);
                 moduleRecords.addAll(subListModuleRecords);
@@ -125,7 +124,6 @@ public class ReportService {
                             .distinct()
                             .collect(Collectors.joining(","));
                     //5. Get emailId map for the learnerIds from step 4.
-                    log.info("ReportService.buildModuleReport.learnerIds: " + learnerIds);
                     log.info("ReportService.buildModuleReport.Calling identityService.getIdentitiesMapForLearners(learnerIds)");
                     Map<String, Identity> identitiesMapFetched = identityService.getIdentitiesMapForLearners(learnerIds);
                     identitiesMap.putAll(identitiesMapFetched);
@@ -161,7 +159,6 @@ public class ReportService {
                             .collect(Collectors.joining(","));
                     //7. Get the Module map for the given courseIds from learning catalogue to get the missing data (paidFor, topicId)
                     // and latest module title and courseTitle.
-                    log.info("ReportService.buildModuleReport.courseIds: " + courseIds);
                     log.info("ReportService.buildModuleReport.Calling learningCatalogueService.getModuleMapForCourseIds(courseIds)");
                     Map<String, Module> moduleMapFetched = learningCatalogueService.getModuleMapForCourseIds(courseIds);
                     moduleMap.putAll(moduleMapFetched);
@@ -228,7 +225,6 @@ public class ReportService {
                         .filter(s -> !s.isEmpty())
                         .collect(Collectors.joining(","));
                 //3. Get the ModuleRecords for the courseIds in step 2 from learner-record Database
-                log.info("ReportService.buildModuleReport.courseIds: " + courseIds);
                 log.info("ReportService.buildSupplierModuleReport.Calling learnerRecordService.getModulesRecordsForCourseIds(from, to, courseIds)");
                 List<ModuleRecord> moduleRecordsFetched = learnerRecordService.getModulesRecordsForCourseIds(from, to, courseIds);
                 moduleRecords.addAll(moduleRecordsFetched);
@@ -263,7 +259,6 @@ public class ReportService {
                             .filter(s -> !s.isEmpty())
                             .collect(Collectors.joining(","));
                     //5. Get the civil servants for the learnerId in step 4
-                    log.info("ReportService.buildModuleReport.learnerIds: " + learnerIds);
                     log.info("ReportService.buildSupplierModuleReport.Calling civilServantRegistryService.getCivilServantMapForLearnerIds(learnerIds)");
                     Map<String, CivilServant> civilServantMapFetched = civilServantRegistryService.getCivilServantMapForLearnerIds(learnerIds);
                     civilServantMap.putAll(civilServantMapFetched);
@@ -290,7 +285,6 @@ public class ReportService {
                             .distinct()
                             .collect(Collectors.joining(","));
                     //6. Get emailId map for the learnerIds from step 4.
-                    log.info("ReportService.buildModuleReport.learnerIds: " + learnerIds);
                     log.info("ReportService.buildSupplierModuleReport.Calling identityService.getIdentitiesMapForLearners(learnerIds)");
                     Map<String, Identity> identitiesMapFetched = identityService.getIdentitiesMapForLearners(learnerIds);
                     identitiesMap.putAll(identitiesMapFetched);
