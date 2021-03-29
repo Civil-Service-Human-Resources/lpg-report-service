@@ -262,10 +262,6 @@ public class ReportService {
                     startSize = endSize;
                 } while (remaining > 0);
 
-
-                ///////
-
-
                 totalItems = learnerIdsList.size();
                 remaining = totalItems;
                 batchSize = 100;
