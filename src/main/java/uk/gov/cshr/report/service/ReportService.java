@@ -63,25 +63,23 @@ public class ReportService {
 
         //1. Get Map of CivilServants.
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
-
         if(civilServantMap.keySet().size() > 0) {
+            //2. Retrieve the unique civilServantIdentityIds from the list of CivilServants from step 1.
             List<String> allCivilServantIdsList = new ArrayList<>(civilServantMap.keySet());
-            int totalNumberOfCivilServants = allCivilServantIdsList.size();
+            int totalItems = allCivilServantIdsList.size();
+            int remaining = totalItems;
             int batchSize = 100; //value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*100=3700
             int startSize = 0;
-            int endSize = batchSize;
-            int remainingCivilServants = totalNumberOfCivilServants;
-            int totalCivilServantFetched = 0;
+            int endSize;
+            int totalFetched;
             List<ModuleRecord> moduleRecords = new ArrayList<>();
-
             do {
-                if (remainingCivilServants > batchSize) {
+                if (remaining > batchSize) {
                     endSize = startSize + batchSize;
                 } else {
-                    endSize = startSize + remainingCivilServants;
+                    endSize = startSize + remaining;
                 }
-                List<String> subListOfCivilServantIdsList = allCivilServantIdsList.subList(startSize, endSize); //Get first batch elements
-                //2. Retrieve the unique civilServantIdentityIds from the list of CivilServants from step 1.
+                List<String> subListOfCivilServantIdsList = allCivilServantIdsList.subList(startSize, endSize);
                 String civilServantIdentityIds = subListOfCivilServantIdsList
                         .stream()
                         .map(String::trim)
@@ -90,36 +88,80 @@ public class ReportService {
                 //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
                 List<ModuleRecord> subListModuleRecords = learnerRecordService.getModuleRecordsForLearners(from, to, civilServantIdentityIds);
                 moduleRecords.addAll(subListModuleRecords);
-                totalCivilServantFetched = endSize;
-                remainingCivilServants = totalNumberOfCivilServants - totalCivilServantFetched;
+                totalFetched = endSize;
+                remaining = totalItems - totalFetched;
                 startSize = endSize;
-            } while(remainingCivilServants > 0);
+            } while (remaining > 0);
 
-            //4. Retrieve unique learnerIds from moduleRecords from step 3.
-            String learnerIds = moduleRecords
-                    .stream()
-                    .map(ModuleRecord::getLearner)
-                    .filter(s -> s != null && !s.isEmpty())
-                    .map(String::trim)
-                    .distinct()
-                    .collect(Collectors.joining(","));
-
-            if(!learnerIds.isEmpty()) {
-                //5. Get emailId map for the learnerIds from step 4.
-                Map<String, Identity> identitiesMap = identityService.getIdentitiesMapForLearners(learnerIds);
+            if (moduleRecords.size() > 0) {
+                //4. Retrieve unique learnerIds from moduleRecords from step 3.
+                List<String> learnerIdsList = moduleRecords
+                        .stream()
+                        .map(ModuleRecord::getLearner)
+                        .filter(s -> s != null && !s.isEmpty())
+                        .map(String::trim)
+                        .distinct()
+                        .collect(Collectors.toList());
+                totalItems = learnerIdsList.size();
+                remaining = totalItems;
+                batchSize = 100;
+                startSize = 0;
+                Map<String, Identity> identitiesMap = new HashMap<>();
+                do {
+                    if (remaining > batchSize) {
+                        endSize = startSize + batchSize;
+                    } else {
+                        endSize = startSize + remaining;
+                    }
+                    List<String> subListOfLearnerIdsList = learnerIdsList.subList(startSize, endSize);
+                    String learnerIds = subListOfLearnerIdsList
+                            .stream()
+                            .filter(s -> s != null && !s.isEmpty())
+                            .map(String::trim)
+                            .distinct()
+                            .collect(Collectors.joining(","));
+                    //5. Get emailId map for the learnerIds from step 4.
+                    Map<String, Identity> identitiesMapFetched = identityService.getIdentitiesMapForLearners(learnerIds);
+                    identitiesMap.putAll(identitiesMapFetched);
+                    totalFetched = endSize;
+                    remaining = totalItems - totalFetched;
+                    startSize = endSize;
+                } while (remaining > 0);
 
                 //6. Retrieve unique courseIds from moduleRecords from step 3.
-                String courseIds = moduleRecords
+                List<String> courseIdsList = moduleRecords
                         .stream()
                         .map(ModuleRecord::getCourseId)
                         .map(String::trim)
                         .filter(s -> !s.isEmpty())
                         .distinct()
-                        .collect(Collectors.joining(","));
-
-                //7. Get the Module map for the given courseIds from learning catalogue to get the missing data (paidFor, topicId)
-                // and latest module title and courseTitle.
-                Map<String, Module> moduleMap = learningCatalogueService.getModuleMapForCourseIds(courseIds);
+                        .collect(Collectors.toList());
+                totalItems = courseIdsList.size();
+                remaining = totalItems;
+                batchSize = 100;
+                startSize = 0;
+                Map<String, Module> moduleMap = new HashMap<>();
+                do {
+                    if (remaining > batchSize) {
+                        endSize = startSize + batchSize;
+                    } else {
+                        endSize = startSize + remaining;
+                    }
+                    List<String> subListOfCourseIdsList = courseIdsList.subList(startSize, endSize);
+                    String courseIds = subListOfCourseIdsList
+                            .stream()
+                            .map(String::trim)
+                            .filter(s -> !s.isEmpty())
+                            .distinct()
+                            .collect(Collectors.joining(","));
+                    //7. Get the Module map for the given courseIds from learning catalogue to get the missing data (paidFor, topicId)
+                    // and latest module title and courseTitle.
+                    Map<String, Module> moduleMapFetched = learningCatalogueService.getModuleMapForCourseIds(courseIds);
+                    moduleMap.putAll(moduleMapFetched);
+                    totalFetched = endSize;
+                    remaining = totalItems - totalFetched;
+                    startSize = endSize;
+                } while (remaining > 0);
 
                 //8. Prepare the data to create CSV using the data retrieved above.
                 moduleRecords.forEach(moduleRecord -> {
