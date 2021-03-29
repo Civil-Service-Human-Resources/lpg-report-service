@@ -64,16 +64,36 @@ public class ReportService {
         //1. Get Map of CivilServants.
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
 
-        //2. Retrieve the unique civilServantIdentityIds from the list of CivilServants from step 1.
-        String civilServantIdentityIds = civilServantMap.keySet()
-                .stream()
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.joining(","));
+        if(civilServantMap.keySet().size() > 0) {
+            List<String> allCivilServantIdsList = new ArrayList<>(civilServantMap.keySet());
+            int totalNumberOfCivilServants = allCivilServantIdsList.size();
+            int batchSize = 100; //value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*100=3700
+            int startSize = 0;
+            int endSize = batchSize;
+            int remainingCivilServants = totalNumberOfCivilServants;
+            int totalCivilServantFetched = 0;
+            List<ModuleRecord> moduleRecords = new ArrayList<>();
 
-        if(!civilServantIdentityIds.isEmpty()) {
-            //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
-            List<ModuleRecord> moduleRecords = learnerRecordService.getModuleRecordsForLearners(from, to, civilServantIdentityIds);
+            do {
+                if (remainingCivilServants > batchSize) {
+                    endSize = startSize + batchSize;
+                } else {
+                    endSize = startSize + remainingCivilServants;
+                }
+                List<String> subListOfCivilServantIdsList = allCivilServantIdsList.subList(startSize, endSize); //Get first batch elements
+                //2. Retrieve the unique civilServantIdentityIds from the list of CivilServants from step 1.
+                String civilServantIdentityIds = subListOfCivilServantIdsList
+                        .stream()
+                        .map(String::trim)
+                        .filter(s -> !s.isEmpty())
+                        .collect(Collectors.joining(","));
+                //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
+                List<ModuleRecord> subListModuleRecords = learnerRecordService.getModuleRecordsForLearners(from, to, civilServantIdentityIds);
+                moduleRecords.addAll(subListModuleRecords);
+                totalCivilServantFetched = endSize;
+                remainingCivilServants = totalNumberOfCivilServants - totalCivilServantFetched;
+                startSize = endSize;
+            } while(remainingCivilServants > 0);
 
             //4. Retrieve unique learnerIds from moduleRecords from step 3.
             String learnerIds = moduleRecords
