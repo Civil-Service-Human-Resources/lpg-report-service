@@ -25,6 +25,7 @@ public class ReportService {
     private final LearningCatalogueService learningCatalogueService;
     private final ReportRowFactory reportRowFactory;
     private final IdentityService identityService;
+    private final int backEndCallBatchSize;//value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*50=1850
 
     public ReportService(LearnerRecordService learnerRecordService, CivilServantRegistryService civilServantRegistryService, LearningCatalogueService learningCatalogueService, ReportRowFactory reportRowFactory, IdentityService identityService) {
         this.learnerRecordService = learnerRecordService;
@@ -32,6 +33,7 @@ public class ReportService {
         this.learningCatalogueService = learningCatalogueService;
         this.reportRowFactory = reportRowFactory;
         this.identityService = identityService;
+        this.backEndCallBatchSize = 50;
     }
 
     public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
@@ -60,7 +62,6 @@ public class ReportService {
     }
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
-        int batchSize = 100; //value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*100=3700
         List<ModuleReportRow> report = new ArrayList<>();
 
         //1. Get Map of CivilServants.
@@ -76,8 +77,8 @@ public class ReportService {
             int totalFetched;
             List<ModuleRecord> moduleRecords = new ArrayList<>();
             do {
-                if (remaining > batchSize) {
-                    endSize = startSize + batchSize;
+                if (remaining > backEndCallBatchSize) {
+                    endSize = startSize + backEndCallBatchSize;
                 } else {
                     endSize = startSize + remaining;
                 }
@@ -111,8 +112,8 @@ public class ReportService {
                 startSize = 0;
                 Map<String, Identity> identitiesMap = new HashMap<>();
                 do {
-                    if (remaining > batchSize) {
-                        endSize = startSize + batchSize;
+                    if (remaining > backEndCallBatchSize) {
+                        endSize = startSize + backEndCallBatchSize;
                     } else {
                         endSize = startSize + remaining;
                     }
@@ -146,8 +147,8 @@ public class ReportService {
                 startSize = 0;
                 Map<String, Module> moduleMap = new HashMap<>();
                 do {
-                    if (remaining > batchSize) {
-                        endSize = startSize + batchSize;
+                    if (remaining > backEndCallBatchSize) {
+                        endSize = startSize + backEndCallBatchSize;
                     } else {
                         endSize = startSize + remaining;
                     }
@@ -195,7 +196,6 @@ public class ReportService {
     }
 
     public List<ModuleReportRow> buildSupplierModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
-        int batchSize = 100; //value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*100=3700
         List<ModuleReportRow> report = new ArrayList<>();
         //1. Get the Module map for the supplier user from learning catalogue.
         log.info("ReportService.buildSupplierModuleReport.Calling learningCatalogueService.getModuleMap()");
@@ -216,8 +216,8 @@ public class ReportService {
             int totalFetched;
             List<ModuleRecord> moduleRecords = new ArrayList<>();
             do {
-                if (remaining > batchSize) {
-                    endSize = startSize + batchSize;
+                if (remaining > backEndCallBatchSize) {
+                    endSize = startSize + backEndCallBatchSize;
                 } else {
                     endSize = startSize + remaining;
                 }
@@ -251,8 +251,8 @@ public class ReportService {
                 startSize = 0;
                 Map<String, CivilServant> civilServantMap = new HashMap<>();
                 do {
-                    if (remaining > batchSize) {
-                        endSize = startSize + batchSize;
+                    if (remaining > backEndCallBatchSize) {
+                        endSize = startSize + backEndCallBatchSize;
                     } else {
                         endSize = startSize + remaining;
                     }
@@ -277,8 +277,8 @@ public class ReportService {
                 startSize = 0;
                 Map<String, Identity> identitiesMap = new HashMap<>();
                 do {
-                    if (remaining > batchSize) {
-                        endSize = startSize + batchSize;
+                    if (remaining > backEndCallBatchSize) {
+                        endSize = startSize + backEndCallBatchSize;
                     } else {
                         endSize = startSize + remaining;
                     }
