@@ -1,5 +1,6 @@
 package uk.gov.cshr.report.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ReportService {
     private final LearnerRecordService learnerRecordService;
@@ -58,7 +60,7 @@ public class ReportService {
     }
 
     public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
-
+        int batchSize = 50; //value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*100=3700
         List<ModuleReportRow> report = new ArrayList<>();
 
         //1. Get Map of CivilServants.
@@ -68,7 +70,6 @@ public class ReportService {
             List<String> allCivilServantIdsList = new ArrayList<>(civilServantMap.keySet());
             int totalItems = allCivilServantIdsList.size();
             int remaining = totalItems;
-            int batchSize = 100; //value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*100=3700
             int startSize = 0;
             int endSize;
             int totalFetched;
@@ -85,6 +86,7 @@ public class ReportService {
                         .map(String::trim)
                         .filter(s -> !s.isEmpty())
                         .collect(Collectors.joining(","));
+                log.info("ReportService.buildModuleReport.civilServantIdentityIds: " + civilServantIdentityIds);
                 //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
                 List<ModuleRecord> subListModuleRecords = learnerRecordService.getModuleRecordsForLearners(from, to, civilServantIdentityIds);
                 moduleRecords.addAll(subListModuleRecords);
@@ -104,7 +106,6 @@ public class ReportService {
                         .collect(Collectors.toList());
                 totalItems = learnerIdsList.size();
                 remaining = totalItems;
-                batchSize = 100;
                 startSize = 0;
                 Map<String, Identity> identitiesMap = new HashMap<>();
                 do {
@@ -120,6 +121,7 @@ public class ReportService {
                             .map(String::trim)
                             .distinct()
                             .collect(Collectors.joining(","));
+                    log.info("ReportService.buildModuleReport.learnerIds: " + learnerIds);
                     //5. Get emailId map for the learnerIds from step 4.
                     Map<String, Identity> identitiesMapFetched = identityService.getIdentitiesMapForLearners(learnerIds);
                     identitiesMap.putAll(identitiesMapFetched);
@@ -138,7 +140,6 @@ public class ReportService {
                         .collect(Collectors.toList());
                 totalItems = courseIdsList.size();
                 remaining = totalItems;
-                batchSize = 100;
                 startSize = 0;
                 Map<String, Module> moduleMap = new HashMap<>();
                 do {
@@ -154,6 +155,7 @@ public class ReportService {
                             .filter(s -> !s.isEmpty())
                             .distinct()
                             .collect(Collectors.joining(","));
+                    log.info("ReportService.buildModuleReport.courseIds: " + courseIds);
                     //7. Get the Module map for the given courseIds from learning catalogue to get the missing data (paidFor, topicId)
                     // and latest module title and courseTitle.
                     Map<String, Module> moduleMapFetched = learningCatalogueService.getModuleMapForCourseIds(courseIds);
@@ -189,6 +191,7 @@ public class ReportService {
     }
 
     public List<ModuleReportRow> buildSupplierModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
+        int batchSize = 50; //value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*100=3700
         List<ModuleReportRow> report = new ArrayList<>();
         //1. Get the Module map for the supplier user from learning catalogue.
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
@@ -203,7 +206,6 @@ public class ReportService {
         if (courseIdsList.size() > 0) {
             int totalItems = courseIdsList.size();
             int remaining = totalItems;
-            int batchSize = 100; //value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*100=3700
             int startSize = 0;
             int endSize;
             int totalFetched;
@@ -220,6 +222,7 @@ public class ReportService {
                         .map(String::trim)
                         .filter(s -> !s.isEmpty())
                         .collect(Collectors.joining(","));
+                log.info("ReportService.buildModuleReport.courseIds: " + courseIds);
                 //3. Get the ModuleRecords for the courseIds in step 2 from learner-record Database
                 List<ModuleRecord> moduleRecordsFetched = learnerRecordService.getModulesRecordsForCourseIds(from, to, courseIds);
                 moduleRecords.addAll(moduleRecordsFetched);
@@ -239,7 +242,6 @@ public class ReportService {
                         .collect(Collectors.toList());
                 totalItems = learnerIdsList.size();
                 remaining = totalItems;
-                batchSize = 100;
                 startSize = 0;
                 Map<String, CivilServant> civilServantMap = new HashMap<>();
                 do {
@@ -254,6 +256,7 @@ public class ReportService {
                             .map(String::trim)
                             .filter(s -> !s.isEmpty())
                             .collect(Collectors.joining(","));
+                    log.info("ReportService.buildModuleReport.learnerIds: " + learnerIds);
                     //5. Get the civil servants for the learnerId in step 4
                     Map<String, CivilServant> civilServantMapFetched = civilServantRegistryService.getCivilServantMapForLearnerIds(learnerIds);
                     civilServantMap.putAll(civilServantMapFetched);
@@ -264,7 +267,6 @@ public class ReportService {
 
                 totalItems = learnerIdsList.size();
                 remaining = totalItems;
-                batchSize = 100;
                 startSize = 0;
                 Map<String, Identity> identitiesMap = new HashMap<>();
                 do {
@@ -280,6 +282,7 @@ public class ReportService {
                             .map(String::trim)
                             .distinct()
                             .collect(Collectors.joining(","));
+                    log.info("ReportService.buildModuleReport.learnerIds: " + learnerIds);
                     //6. Get emailId map for the learnerIds from step 4.
                     Map<String, Identity> identitiesMapFetched = identityService.getIdentitiesMapForLearners(learnerIds);
                     identitiesMap.putAll(identitiesMapFetched);
