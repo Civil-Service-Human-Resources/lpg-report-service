@@ -1,6 +1,7 @@
 package uk.gov.cshr.report.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
@@ -25,15 +26,17 @@ public class ReportService {
     private final LearningCatalogueService learningCatalogueService;
     private final ReportRowFactory reportRowFactory;
     private final IdentityService identityService;
-    private final int backEndCallBatchSize;//value of the civilServantIdentityId is 36 character long plus one comma for separation so total length os 37, total length is 37*50=1850
+    private final int backEndAPICallBatchSize;//value of the civilServantIdentityId is 36 character long plus one comma for separation so total length is 37, total length of the REST GET request params will be 37*50=1850
 
-    public ReportService(LearnerRecordService learnerRecordService, CivilServantRegistryService civilServantRegistryService, LearningCatalogueService learningCatalogueService, ReportRowFactory reportRowFactory, IdentityService identityService) {
+    public ReportService(LearnerRecordService learnerRecordService, CivilServantRegistryService civilServantRegistryService,
+                         LearningCatalogueService learningCatalogueService, ReportRowFactory reportRowFactory, IdentityService identityService,
+                         @Value("${report.backEndAPICallBatchSize}") int backEndAPICallBatchSize) {
         this.learnerRecordService = learnerRecordService;
         this.civilServantRegistryService = civilServantRegistryService;
         this.learningCatalogueService = learningCatalogueService;
         this.reportRowFactory = reportRowFactory;
         this.identityService = identityService;
-        this.backEndCallBatchSize = 50;
+        this.backEndAPICallBatchSize = backEndAPICallBatchSize;
     }
 
     public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
@@ -77,8 +80,8 @@ public class ReportService {
             int totalFetched;
             List<ModuleRecord> moduleRecords = new ArrayList<>();
             do {
-                if (remaining > backEndCallBatchSize) {
-                    endSize = startSize + backEndCallBatchSize;
+                if (remaining > backEndAPICallBatchSize) {
+                    endSize = startSize + backEndAPICallBatchSize;
                 } else {
                     endSize = startSize + remaining;
                 }
@@ -111,8 +114,8 @@ public class ReportService {
                 startSize = 0;
                 Map<String, Identity> identitiesMap = new HashMap<>();
                 do {
-                    if (remaining > backEndCallBatchSize) {
-                        endSize = startSize + backEndCallBatchSize;
+                    if (remaining > backEndAPICallBatchSize) {
+                        endSize = startSize + backEndAPICallBatchSize;
                     } else {
                         endSize = startSize + remaining;
                     }
@@ -145,8 +148,8 @@ public class ReportService {
                 startSize = 0;
                 Map<String, Module> moduleMap = new HashMap<>();
                 do {
-                    if (remaining > backEndCallBatchSize) {
-                        endSize = startSize + backEndCallBatchSize;
+                    if (remaining > backEndAPICallBatchSize) {
+                        endSize = startSize + backEndAPICallBatchSize;
                     } else {
                         endSize = startSize + remaining;
                     }
@@ -213,8 +216,8 @@ public class ReportService {
             int totalFetched;
             List<ModuleRecord> moduleRecords = new ArrayList<>();
             do {
-                if (remaining > backEndCallBatchSize) {
-                    endSize = startSize + backEndCallBatchSize;
+                if (remaining > backEndAPICallBatchSize) {
+                    endSize = startSize + backEndAPICallBatchSize;
                 } else {
                     endSize = startSize + remaining;
                 }
@@ -247,8 +250,8 @@ public class ReportService {
                 startSize = 0;
                 Map<String, CivilServant> civilServantMap = new HashMap<>();
                 do {
-                    if (remaining > backEndCallBatchSize) {
-                        endSize = startSize + backEndCallBatchSize;
+                    if (remaining > backEndAPICallBatchSize) {
+                        endSize = startSize + backEndAPICallBatchSize;
                     } else {
                         endSize = startSize + remaining;
                     }
@@ -272,8 +275,8 @@ public class ReportService {
                 startSize = 0;
                 Map<String, Identity> identitiesMap = new HashMap<>();
                 do {
-                    if (remaining > backEndCallBatchSize) {
-                        endSize = startSize + backEndCallBatchSize;
+                    if (remaining > backEndAPICallBatchSize) {
+                        endSize = startSize + backEndAPICallBatchSize;
                     } else {
                         endSize = startSize + remaining;
                     }
