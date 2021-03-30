@@ -1,9 +1,9 @@
 package uk.gov.cshr.report.service;
 
 import com.google.common.collect.ImmutableMap;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -41,8 +41,15 @@ public class ReportServiceTest {
     @Mock
     private ReportRowFactory reportRowFactory;
 
-    @InjectMocks
+    private final int backEndAPICallBatchSize = 50;
+
     private ReportService reportService;
+
+    @Before
+    public void setUp() throws Exception {
+        reportService = new ReportService(learnerRecordService, civilServantRegistryService, learningCatalogueService,
+                reportRowFactory, identityService, backEndAPICallBatchSize);
+    }
 
     @Test
     @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
