@@ -46,6 +46,10 @@ learningCatalogue:
   eventsUrl: "${learningCatalogue.serviceUrl}/reporting/events"
   modulesUrl: "${learningCatalogue.serviceUrl}/reporting/modules"
   modulesForCourseIdsUrl: "${learningCatalogue.serviceUrl}/reporting/modules-for-course-ids"
+
+report:
+  backEndAPICallBatchSize: ${BACKEND_API_CALL_BATCH_SIZE:50}
+
 ---
 
 spring:
