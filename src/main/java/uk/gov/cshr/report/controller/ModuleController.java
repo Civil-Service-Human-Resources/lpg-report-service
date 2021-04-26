@@ -2,7 +2,6 @@ package uk.gov.cshr.report.controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import lombok.extern.slf4j.Slf4j;
 import uk.gov.cshr.report.reports.ModuleReportRow;
@@ -11,6 +10,7 @@ import uk.gov.cshr.report.service.ReportService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +32,21 @@ public class ModuleController {
             @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
             Authentication authentication
-    ) throws ExecutionException, InterruptedException {
+    ) {
         log.info("Generating learner record report by user with ID \"{}\", from \"{}\" to \"{}\"", authentication.getPrincipal(), from, to);
         boolean isProfessionReporter = authentication.getAuthorities().contains(new SimpleGrantedAuthority("PROFESSION_REPORTER"));
-        List<ModuleReportRow> report = reportService.buildModuleReport(from, to, isProfessionReporter);
 
+        boolean supplierRole = authentication.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(a -> a.contains("SUPPLIER"));
+
+        List<ModuleReportRow> report;
+        if(supplierRole) {
+            report = reportService.buildSupplierModuleReport(from, to, isProfessionReporter);
+        } else {
+            report = reportService.buildModuleReport(from, to, isProfessionReporter);
+        }
         return ResponseEntity.ok(report);
     }
 }

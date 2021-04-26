@@ -3,7 +3,6 @@ package uk.gov.cshr.report.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.domain.LearnerRecordEvent;
@@ -16,7 +15,6 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class LearnerRecordService {
@@ -29,13 +27,17 @@ public class LearnerRecordService {
     private final URI learnerRecordEventsUrl;
     private final String bookingUri;
     private final String moduleRecordUri;
+    private final String moduleRecordsForLearnersUrl;
+    private final String moduleRecordsForCourseIdsUrl;
 
     public LearnerRecordService(HttpService httpService,
                                 UriBuilderFactory uriBuilderFactory,
                                 @Value("${learnerRecord.summariesUrl}") URI learnerRecordSummariesUrl,
                                 @Value("${learnerRecord.eventsUrl}") URI learnerRecordEventsUrl,
                                 @Value("${learnerRecord.bookingsUrl}") String bookingUri,
-                                @Value("${learnerRecord.moduleRecordsUrl}") String moduleRecordUri
+                                @Value("${learnerRecord.moduleRecordsUrl}") String moduleRecordUri,
+                                @Value("${learnerRecord.moduleRecordsForLearnersUrl}") String moduleRecordsForLearnersUrl,
+                                @Value("${learnerRecord.moduleRecordsForCourseIdsUrl}") String moduleRecordsForCourseIdsUrl
     ) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
@@ -43,6 +45,8 @@ public class LearnerRecordService {
         this.learnerRecordEventsUrl = learnerRecordEventsUrl;
         this.bookingUri = bookingUri;
         this.moduleRecordUri = moduleRecordUri;
+        this.moduleRecordsForLearnersUrl = moduleRecordsForLearnersUrl;
+        this.moduleRecordsForCourseIdsUrl = moduleRecordsForCourseIdsUrl;
     }
 
     @PreAuthorize("hasAnyAuthority('ORGANISATION_REPORTER', 'PROFESSION_REPORTER', 'CSHR_REPORTER')")
@@ -58,23 +62,39 @@ public class LearnerRecordService {
         return httpService.getList(learnerRecordEventsUrl, LearnerRecordEvent.class);
     }
 
-    @Async
-    public CompletableFuture<List<Booking>> getBookings(LocalDate from, LocalDate to) {
+    public List<Booking> getBookings(LocalDate from, LocalDate to) {
         URI uri = uriBuilderFactory.builder(bookingUri)
                 .queryParam("from", from)
                 .queryParam("to", to)
                 .build(new HashMap<>());
 
-        return CompletableFuture.completedFuture(httpService.getList(uri, Booking.class));
+        return httpService.getList(uri, Booking.class);
     }
 
-    @Async
-    public CompletableFuture<List<ModuleRecord>> getModules(LocalDate from, LocalDate to) {
+    public List<ModuleRecord> getModules(LocalDate from, LocalDate to) {
         URI uri = uriBuilderFactory.builder(moduleRecordUri)
                 .queryParam("from", from)
                 .queryParam("to", to)
                 .build(new HashMap<>());
 
-        return CompletableFuture.completedFuture(httpService.getList(uri, ModuleRecord.class));
+        return httpService.getList(uri, ModuleRecord.class);
+    }
+
+    public List<ModuleRecord> getModuleRecordsForLearners(LocalDate from, LocalDate to, String learnerIds) {
+        URI uri = uriBuilderFactory.builder(moduleRecordsForLearnersUrl)
+                .queryParam("from", from)
+                .queryParam("to", to)
+                .queryParam("learnerIds", learnerIds)
+                .build(new HashMap<>());
+        return httpService.getList(uri, ModuleRecord.class);
+    }
+
+    public List<ModuleRecord> getModulesRecordsForCourseIds(LocalDate from, LocalDate to, String courseIds) {
+        URI uri = uriBuilderFactory.builder(moduleRecordsForCourseIdsUrl)
+                .queryParam("from", from)
+                .queryParam("to", to)
+                .queryParam("courseIds", courseIds)
+                .build(new HashMap<>());
+        return httpService.getList(uri, ModuleRecord.class);
     }
 }

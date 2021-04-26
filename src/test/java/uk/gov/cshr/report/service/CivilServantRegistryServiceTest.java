@@ -4,10 +4,10 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import uk.gov.cshr.report.domain.registry.CivilServant;
+import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -17,21 +17,24 @@ public class CivilServantRegistryServiceTest {
     private URI civilServantUri;
     private HttpService httpService;
     private CivilServantRegistryService civilServantRegistryService;
+    private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
+    private String civilServantsForLearnerIdsUrl;
 
     @Before
     public void setUp() throws Exception {
         civilServantUri = new URI("http://example.org");
+        civilServantsForLearnerIdsUrl = "http://localhost/report/civil-servants-for-uids";
         httpService = mock(HttpService.class);
-        civilServantRegistryService = new CivilServantRegistryService(httpService, civilServantUri);
+        civilServantRegistryService = new CivilServantRegistryService(httpService, uriBuilderFactory, civilServantUri, civilServantsForLearnerIdsUrl);
     }
 
     @Test
-    public void shouldReturnMapOfCivilServantsByUid() throws ExecutionException, InterruptedException {
+    public void shouldReturnMapOfCivilServantsByUid() {
 
         Map<String, CivilServant> civilServantMap = ImmutableMap.of("civil-servant-uid", new CivilServant());
 
         when(httpService.getMap(civilServantUri, CivilServant.class)).thenReturn(civilServantMap);
 
-        assertEquals(civilServantMap, civilServantRegistryService.getCivilServantMap().get());
+        assertEquals(civilServantMap, civilServantRegistryService.getCivilServantMap());
     }
 }

@@ -185,6 +185,9 @@ public class ReportRowFactoryTest {
         moduleRecord.setModuleId(moduleId);
         moduleRecord.setState(moduleState);
         moduleRecord.setStateChangeDate(stateChangeDate);
+        moduleRecord.setModuleType(moduleType);
+        moduleRecord.setCourseId(courseId);
+        moduleRecord.setCourseTitle(courseTitle);
 
         CivilServant civilServant = new CivilServant();
         civilServant.setId(learnerUid);

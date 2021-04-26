@@ -5,10 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
+import uk.gov.cshr.report.factory.UriBuilderFactory;
 
 import java.net.URI;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -19,26 +19,28 @@ public class LearningCatalogueServiceTest {
     private URI moduleUri;
     private HttpService httpService;
     private LearningCatalogueService learningCatalogueService;
+    private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
+    String modulesForCourseIdsUrl;
 
     @Before
     public void setUp() throws Exception {
         eventUri = new URI("http://example.org");
         httpService = mock(HttpService.class);
-        learningCatalogueService = new LearningCatalogueService(httpService, eventUri, moduleUri);
+        learningCatalogueService = new LearningCatalogueService(httpService, uriBuilderFactory, eventUri, moduleUri, modulesForCourseIdsUrl);
     }
 
     @Test
-    public void shouldReturnMapOfEvents() throws ExecutionException, InterruptedException {
+    public void shouldReturnMapOfEvents() {
         Map<String, Event> eventMap = ImmutableMap.of("event-id", new Event());
         when(httpService.getMap(eventUri, Event.class)).thenReturn(eventMap);
-        assertEquals(eventMap, learningCatalogueService.getEventMap().get());
+        assertEquals(eventMap, learningCatalogueService.getEventMap());
     }
 
     @Test
-    public void shouldReturnMapOfModules() throws ExecutionException, InterruptedException {
+    public void shouldReturnMapOfModules() {
         Map<String, Module> moduleMap = ImmutableMap.of("module-id", new Module());
         when(httpService.getMap(moduleUri, Module.class)).thenReturn(moduleMap);
-        assertEquals(moduleMap, learningCatalogueService.getModuleMap().get());
+        assertEquals(moduleMap, learningCatalogueService.getModuleMap());
     }
 
 }
