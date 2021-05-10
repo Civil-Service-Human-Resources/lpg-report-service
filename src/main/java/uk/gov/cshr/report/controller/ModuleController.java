@@ -33,19 +33,20 @@ public class ModuleController {
             @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
             Authentication authentication
     ) {
-        log.info("Generating learner record report by user with ID \"{}\", from \"{}\" to \"{}\"", authentication.getPrincipal(), from, to);
         boolean isProfessionReporter = authentication.getAuthorities().contains(new SimpleGrantedAuthority("PROFESSION_REPORTER"));
-
         boolean supplierRole = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .anyMatch(a -> a.contains("SUPPLIER"));
-
         List<ModuleReportRow> report;
         if(supplierRole) {
+            log.info("Generating learner record module report for supplier reporting user ID \"{}\", from \"{}\" to \"{}\"", authentication.getPrincipal(), from, to);
             report = reportService.buildSupplierModuleReport(from, to, isProfessionReporter);
+            log.info("Learner record module report generated for supplier reporting user ID \"{}\", from \"{}\" to \"{}\"", authentication.getPrincipal(), from, to);
         } else {
+            log.info("Generating learner record module report for reporting user ID \"{}\", from \"{}\" to \"{}\"", authentication.getPrincipal(), from, to);
             report = reportService.buildModuleReport(from, to, isProfessionReporter);
+            log.info("Learner record module report generated for reporting user ID \"{}\", from \"{}\" to \"{}\"", authentication.getPrincipal(), from, to);
         }
         return ResponseEntity.ok(report);
     }
