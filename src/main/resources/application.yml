@@ -55,4 +55,6 @@ report:
 ---
 
 spring:
-  profiles: production
+  config:
+    activate:
+      on-profile: production
