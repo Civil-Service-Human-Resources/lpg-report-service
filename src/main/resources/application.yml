@@ -53,4 +53,10 @@ report:
 ---
 
 spring:
-  profiles: production
+  config:
+    activate:
+      on-profile: production
+#spring:
+#  profiles: production
+
+#  spring.config.activate.on-profile
