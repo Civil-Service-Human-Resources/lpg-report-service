@@ -14,7 +14,7 @@ FROM amazoncorretto:17.0.5-alpine3.16 as production
 
 ARG JAR_DIR=/workspace/app/target
 
-COPY --from=develop ${JAR_DIR}/csl-identity-service-0.0.1-SNAPSHOT.jar /data/app.jar
+COPY --from=develop ${JAR_DIR}/report-0.0.1-SNAPSHOT.jar /data/app.jar
 
 # Add AppInsights config and agent jar
 ADD lib/AI-Agent.xml /opt/appinsights/AI-Agent.xml
