@@ -24,7 +24,6 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class SecurityConfig {
-
     @Bean
     public SecurityFilterChain asSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests().anyRequest().permitAll();
