@@ -205,7 +205,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>org.uk.gov.cshr.report.Application</mainClass>
                     <additionalProperties>
                         <custom.additional-build-info>Additional build info here</custom.additional-build-info>
                     </additionalProperties>
