@@ -23,9 +23,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableResourceServer
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
