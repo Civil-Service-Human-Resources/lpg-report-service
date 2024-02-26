@@ -20,9 +20,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.cors().and().csrf().disable()
+        return httpSecurity
                 .oauth2ResourceServer().jwt(jwtSpec -> jwtSpec.decoder(jwtDecoder()))
-                .and().authorizeHttpRequests().anyRequest().permitAll()
                 .and().build();
     }
 
