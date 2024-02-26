@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccessTokenService {
     String getAccessToken() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
+        OAuth2AuthenticationDetailsWrapper oAuth2AuthenticationDetailsWrapper = new OAuth2AuthenticationDetailsWrapper();
+        return oAuth2AuthenticationDetailsWrapper.getTokenValue();
+    }
 
-        return details.getTokenValue();
+    String getAccessToken(OAuth2AuthenticationDetailsWrapper oAuth2AuthenticationDetailsWrapper){
+        return oAuth2AuthenticationDetailsWrapper.getTokenValue();
     }
 }

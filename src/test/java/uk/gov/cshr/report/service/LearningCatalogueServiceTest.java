@@ -1,8 +1,8 @@
 package uk.gov.cshr.report.service;
 
 import com.google.common.collect.ImmutableMap;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
@@ -10,7 +10,7 @@ import uk.gov.cshr.report.factory.UriBuilderFactory;
 import java.net.URI;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +22,7 @@ public class LearningCatalogueServiceTest {
     private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
     String modulesForCourseIdsUrl;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         eventUri = new URI("http://example.org");
         httpService = mock(HttpService.class);

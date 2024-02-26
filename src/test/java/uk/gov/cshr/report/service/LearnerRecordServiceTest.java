@@ -1,10 +1,10 @@
 package uk.gov.cshr.report.service;
 
 import org.assertj.core.util.Lists;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.util.UriBuilder;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
@@ -15,10 +15,10 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class LearnerRecordServiceTest {
 
     private URI learnerRecordSummariesUrl;
@@ -31,7 +31,7 @@ public class LearnerRecordServiceTest {
     private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
     private String moduleRecordsForCourseIdsUrl = "http://localhost/module-records-for-course-ids";
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         learnerRecordSummariesUrl = new URI("http://localhost/learner-record-summaries");
         learnerRecordEventsUri = new URI("http://localhost/learner-record-events");

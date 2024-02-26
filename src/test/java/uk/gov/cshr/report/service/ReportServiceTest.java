@@ -1,11 +1,11 @@
 package uk.gov.cshr.report.service;
 
 import com.google.common.collect.ImmutableMap;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.test.context.support.WithMockUser;
 import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
@@ -21,10 +21,10 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ReportServiceTest {
     @Mock
     private LearnerRecordService learnerRecordService;
@@ -45,7 +45,7 @@ public class ReportServiceTest {
 
     private ReportService reportService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         reportService = new ReportService(learnerRecordService, civilServantRegistryService, learningCatalogueService,
                 reportRowFactory, identityService, backEndAPICallBatchSize);

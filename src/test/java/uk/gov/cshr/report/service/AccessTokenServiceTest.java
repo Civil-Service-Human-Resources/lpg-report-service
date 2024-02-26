@@ -1,41 +1,24 @@
 package uk.gov.cshr.report.service;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 
-import static org.junit.Assert.assertEquals;
-import static org.powermock.api.mockito.PowerMockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(SecurityContextHolder.class)
-@PowerMockIgnore("javax.security.*")
 public class AccessTokenServiceTest {
 
-    private AccessTokenService accessTokenService = new AccessTokenService();
-
     @Test
-    public void shouldReturnAccessToken() {
+    public void testGetAccessTokenShouldReturnAccessTokenRetrievedFromOAuth2AuthenticationDetails(){
         String tokenValue = "token-value";
 
-        mockStatic(SecurityContextHolder.class);
+        OAuth2AuthenticationDetailsWrapper wrapper = mock(OAuth2AuthenticationDetailsWrapper.class);
+        when(wrapper.getTokenValue()).thenReturn(tokenValue);
 
-        SecurityContext securityContext = mock(SecurityContext.class);
-
-        when(SecurityContextHolder.getContext()).thenReturn(securityContext);
-        Authentication authentication = mock(Authentication.class);
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        OAuth2AuthenticationDetails oAuth2AuthenticationDetails = mock(OAuth2AuthenticationDetails.class);
-        when(authentication.getDetails()).thenReturn(oAuth2AuthenticationDetails);
-
-        when(oAuth2AuthenticationDetails.getTokenValue()).thenReturn(tokenValue);
-
-        assertEquals(tokenValue, accessTokenService.getAccessToken());
+        AccessTokenService accessTokenService = new AccessTokenService();
+        assertEquals(tokenValue, accessTokenService.getAccessToken(wrapper));
     }
 }
