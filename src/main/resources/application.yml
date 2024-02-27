@@ -58,3 +58,7 @@ spring:
   config:
     activate:
       on-profile: production
+  security:
+    user:
+      name: ${LPG_REPORT_SERVICE_SECURITY_USERNAME:ChangeMe}
+      password: ${LPG_REPORT_SERVICE_SECURITY_PASSWORD:ChangeMe}
