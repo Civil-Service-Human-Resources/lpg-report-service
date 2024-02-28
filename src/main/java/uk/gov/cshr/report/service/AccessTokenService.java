@@ -13,7 +13,7 @@ public class AccessTokenService {
     @Qualifier("identityHttpClient")
     private final IHttpClient client;
 
-    @Value("${oauth.tokenUrl}")
+    @Value("${oauth.tokenEndpoint}")
     private String tokenRetrievalUrl;
 
 
