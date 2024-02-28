@@ -31,7 +31,6 @@ public class AccessTokenService {
 
     OAuthToken getOAuthToken(){
         String url = String.format("%s?grant_type=client_credentials", tokenRetrievalUrl);
-        System.out.println(url);
         RequestEntity<Void> request = RequestEntity.post(url).build();
         OAuthToken response = client.executeRequest(request, OAuthToken.class);
         return response;
