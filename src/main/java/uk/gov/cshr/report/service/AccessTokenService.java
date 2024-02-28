@@ -1,18 +1,39 @@
 package uk.gov.cshr.report.service;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.client.IHttpClient;
+import uk.gov.cshr.report.domain.identity.OAuthToken;
+
 
 @Service
 public class AccessTokenService {
-    String getAccessToken() {
-        OAuth2AuthenticationDetailsWrapper oAuth2AuthenticationDetailsWrapper = new OAuth2AuthenticationDetailsWrapper();
-        return oAuth2AuthenticationDetailsWrapper.getTokenValue();
+    @Qualifier("identityHttpClient")
+    private final IHttpClient client;
+
+    @Value("${oauth.tokenUrl}")
+    private String tokenRetrievalUrl;
+
+
+    public AccessTokenService(@Qualifier("identityHttpClient") IHttpClient client) {
+        this.client = client;
     }
 
-    String getAccessToken(OAuth2AuthenticationDetailsWrapper oAuth2AuthenticationDetailsWrapper){
-        return oAuth2AuthenticationDetailsWrapper.getTokenValue();
+    String getAccessToken(){
+        OAuthToken oAuthToken = getOAuthToken();
+        if (oAuthToken == null) {
+            throw new RuntimeException("Service token response was null");
+        }
+        return oAuthToken.getAccessToken();
+    }
+
+    OAuthToken getOAuthToken(){
+        String url = String.format("%s?grant_type=client_credentials", tokenRetrievalUrl);
+        System.out.println(url);
+        RequestEntity<Void> request = RequestEntity.post(url).build();
+        OAuthToken response = client.executeRequest(request, OAuthToken.class);
+        return response;
     }
 }

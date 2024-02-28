@@ -6,10 +6,6 @@ spring:
     default-property-inclusion: non_null
   resources:
     add-mappings: false
-  security:
-    user:
-      name: ${LPG_REPORT_SERVICE_SECURITY_USERNAME:ChangeMe}
-      password: ${LPG_REPORT_SERVICE_SECURITY_PASSWORD:ChangeMe}
 
 server:
   port: 9004

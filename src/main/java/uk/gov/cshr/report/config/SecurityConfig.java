@@ -20,12 +20,6 @@ public class SecurityConfig {
     @Value("${oauth.jwtKey}")
     private String jwtKey;
 
-    private final CustomBasicAuthenticationProvider basicAuthenticationProvider;
-
-    public SecurityConfig(CustomBasicAuthenticationProvider basicAuthenticationProvider) {
-        this.basicAuthenticationProvider = basicAuthenticationProvider;
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.cors().and().csrf().disable()
@@ -33,21 +27,12 @@ public class SecurityConfig {
                 .and().oauth2ResourceServer().jwt(jwtSpec -> jwtSpec.decoder(jwtDecoder()))
                 .and().authorizeHttpRequests().anyRequest().permitAll()
                 .and().httpBasic()
-                .and().oauth2ResourceServer().jwt(jwtSpec -> jwtSpec.decoder(jwtDecoder()))
                 .and().build();
     }
 
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
-    }
-
-    @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(basicAuthenticationProvider);
-        return authenticationManagerBuilder.build();
     }
 
     @Bean
