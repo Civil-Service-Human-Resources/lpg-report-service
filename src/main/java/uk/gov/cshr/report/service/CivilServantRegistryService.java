@@ -38,9 +38,6 @@ public class CivilServantRegistryService {
     }
 
     public Map<String, CivilServant> getCivilServantMapForLearnerIds(String uids) {
-        URI uri = uriBuilderFactory.builder(civilServantsForUidsUrl)
-                .queryParam("uids", uids)
-                .build(new HashMap<>());
-        return httpService.getMap(uri, CivilServant.class);
+        return civilServantRegistryClient.getCivilServantMapForLearnerIds(uids);
     }
 }

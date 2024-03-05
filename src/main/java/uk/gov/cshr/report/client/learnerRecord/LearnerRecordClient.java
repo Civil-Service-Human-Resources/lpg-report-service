@@ -33,6 +33,9 @@ public class LearnerRecordClient implements ILearnerRecordClient{
     @Value("${learnerRecord.moduleRecordsForLearnersUrl}")
     private String moduleRecordsForDateRangeAndLearnersUrl;
 
+    @Value("${learnerRecord.moduleRecordsForCourseIdsUrl}")
+    String moduleRecordsForCourseIdsUrl;
+
     public LearnerRecordClient(@Qualifier("learnerRecordHttpClient") IHttpClient httpClient){
         this.httpClient = httpClient;
     }
@@ -45,11 +48,8 @@ public class LearnerRecordClient implements ILearnerRecordClient{
 
     @Override
     public List<LearnerRecordSummary> getLearnerRecordSummaries() {
-        System.out.println("Inside getLearnerRecordSummaries");
         RequestEntity<Void> request = RequestEntity.get(learnerRecordSummariesUrl).build();
-        System.out.println("After request");
         List<LearnerRecordSummary> list = httpClient.executeRequest(request, List.class);
-        System.out.println("After list. " + list.size());
         return list;
     }
 
@@ -62,6 +62,13 @@ public class LearnerRecordClient implements ILearnerRecordClient{
     @Override
     public List<ModuleRecord> getModuleRecordsForDateRangeAndLearnerIds(LocalDate from, LocalDate to, String commaSeparatedLearnerIds) {
         String url = String.format("%s?from=%s&to=%s&learnerIds=%s", moduleRecordsForDateRangeAndLearnersUrl, from, to, commaSeparatedLearnerIds);
+        RequestEntity<Void> request = RequestEntity.get(url).build();
+        return httpClient.executeRequest(request, List.class);
+    }
+
+    @Override
+    public List<ModuleRecord> getModuleRecordsForCourseIds(LocalDate from, LocalDate to, String commaSeparatedCourseIds) {
+        String url = String.format("%s?from=%s&to=%s&courseIds=%s", moduleRecordsForCourseIdsUrl, from, to, commaSeparatedCourseIds);
         RequestEntity<Void> request = RequestEntity.get(url).build();
         return httpClient.executeRequest(request, List.class);
     }

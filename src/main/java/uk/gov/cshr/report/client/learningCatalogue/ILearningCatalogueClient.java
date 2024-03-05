@@ -9,4 +9,6 @@ public interface ILearningCatalogueClient {
     public Map<String, Event> getEvents();
 
     public Map<String, Module> getModulesForCourseIds(String courseIds);
+
+    public Map<String, Module> getReportingModules();
 }

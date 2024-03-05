@@ -17,6 +17,9 @@ public class CivilServantRegistryClient implements ICivilServantRegistryClient{
     @Value("${registryService.civilServantsUrl}")
     private String civilServantsUrl;
 
+    @Value("${registryService.civilServantsForUidsUrl}")
+    private String civilServantsForUidsUrl;
+
     private IHttpClient httpClient;
 
     public CivilServantRegistryClient(@Qualifier("civilServantRegistryHttpClient") IHttpClient httpClient){
@@ -26,6 +29,13 @@ public class CivilServantRegistryClient implements ICivilServantRegistryClient{
     @Override
     public Map<String, CivilServant> getCivilServants() {
         RequestEntity<Void> request = RequestEntity.get(civilServantsUrl).build();
+        return httpClient.executeRequest(request, Map.class);
+    }
+
+    @Override
+    public Map<String, CivilServant> getCivilServantMapForLearnerIds(String commaSeparatedLearnerUids) {
+        String url = String.format("%s?uids=%s", civilServantsForUidsUrl, commaSeparatedLearnerUids);
+        RequestEntity<Void> request = RequestEntity.get(url).build();
         return httpClient.executeRequest(request, Map.class);
     }
 }

@@ -43,7 +43,7 @@ public class LearningCatalogueService {
     }
 
     public Map<String, Module> getModuleMap() {
-        return httpService.getMap(moduleUri, Module.class);
+        return learningCatalogueClient.getReportingModules();
     }
 
     public Map<String, Module> getModuleMapForCourseIds(String courseIds) {

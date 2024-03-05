@@ -6,4 +6,6 @@ import java.util.Map;
 
 public interface ICivilServantRegistryClient {
     Map<String, CivilServant> getCivilServants();
+
+    Map<String, CivilServant> getCivilServantMapForLearnerIds(String commaSeparatedLearnerUids);
 }

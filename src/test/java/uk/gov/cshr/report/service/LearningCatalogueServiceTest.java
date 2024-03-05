@@ -2,6 +2,7 @@ package uk.gov.cshr.report.service;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.collections4.map.HashedMap;
+import org.bouncycastle.math.raw.Mod;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.gov.cshr.report.client.learningCatalogue.ILearningCatalogueClient;
@@ -57,10 +58,23 @@ public class LearningCatalogueServiceTest {
     }
 
     @Test
-    public void shouldReturnMapOfModules() {
-        Map<String, Module> moduleMap = ImmutableMap.of("module-id", new Module());
-        when(httpService.getMap(moduleUri, Module.class)).thenReturn(moduleMap);
-        assertEquals(moduleMap, learningCatalogueService.getModuleMap());
+    public void getModuleMapShouldReturnModuleMapReturnedFromLearningCatalogueClient() {
+
+        Module module1 = new Module();
+        module1.setId("module1");
+        Module module2 = new Module();
+        module2.setId("module2");
+        Map<String, Module> fakeModules = new HashedMap<>();
+        fakeModules.put("m1", module1);
+        fakeModules.put("m2", module2);
+
+        when(learningCatalogueClient.getReportingModules()).thenReturn(fakeModules);
+
+        Map<String, Module> moduleMapFromLearningCatalogueService = learningCatalogueService.getModuleMap();
+
+        assertEquals(2, moduleMapFromLearningCatalogueService.size());
+        assertEquals("module1", moduleMapFromLearningCatalogueService.get("m1").getId());
+        assertEquals("module2", moduleMapFromLearningCatalogueService.get("m2").getId());
     }
 
 }

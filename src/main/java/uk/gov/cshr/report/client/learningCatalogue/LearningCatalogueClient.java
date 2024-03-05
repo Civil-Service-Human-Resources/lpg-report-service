@@ -9,6 +9,7 @@ import uk.gov.cshr.report.client.IHttpClient;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 
+import java.net.URI;
 import java.util.Map;
 
 @Slf4j
@@ -21,6 +22,9 @@ public class LearningCatalogueClient implements ILearningCatalogueClient{
 
     @Value("${learningCatalogue.modulesForCourseIdsUrl}")
     private String modulesForCourseIdsUrl;
+
+    @Value("${learningCatalogue.modulesUrl}")
+    private String learningCatalogueReportingModulesUrl;
 
     public LearningCatalogueClient(@Qualifier("learningCatalogueHttpClient") IHttpClient httpClient){
         this.httpClient = httpClient;
@@ -35,6 +39,12 @@ public class LearningCatalogueClient implements ILearningCatalogueClient{
     public Map<String, Module> getModulesForCourseIds(String courseIds) {
         String url = String.format("%s?courseIds=%s", modulesForCourseIdsUrl, courseIds);
         RequestEntity<Void> request = RequestEntity.get(url).build();
+        return httpClient.executeRequest(request, Map.class);
+    }
+
+    @Override
+    public Map<String, Module> getReportingModules() {
+        RequestEntity<Void> request = RequestEntity.get(learningCatalogueReportingModulesUrl).build();
         return httpClient.executeRequest(request, Map.class);
     }
 }

@@ -37,11 +37,8 @@ public class LearnerRecordController {
             throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 
         LOG.debug("Getting learner record events CSV report");
-        System.out.println("Inside /events");
 
         List<LearnerRecordEvent> events = learnerRecordService.listEvents();
-
-        System.out.println("events: " + events.size());
 
         try (Writer writer = response.getWriter()) {
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)

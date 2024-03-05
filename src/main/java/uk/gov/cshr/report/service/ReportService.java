@@ -269,7 +269,7 @@ public class ReportService {
                             .distinct()
                             .collect(Collectors.joining(","));
                     //6. Get emailId map for the learnerIds from step 4.
-                    Map<String, Identity> identitiesMapFetched = identityService.getIdentitiesMapForLearners(learnerIds);
+                    Map<String, Identity> identitiesMapFetched = identitiesService.getIdentitiesFromUids(learnerIds);
                     identitiesMap.putAll(identitiesMapFetched);
                     totalFetched = endSize;
                     remaining = totalItems - totalFetched;

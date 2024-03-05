@@ -61,7 +61,6 @@ public class LearnerRecordService {
 
     @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")
     public List<LearnerRecordEvent> listEvents() {
-        System.out.println("Inside listEvents");
         return learnerRecordClient.getLearnerRecordEvents();
     }
 
@@ -83,11 +82,6 @@ public class LearnerRecordService {
     }
 
     public List<ModuleRecord> getModulesRecordsForCourseIds(LocalDate from, LocalDate to, String courseIds) {
-        URI uri = uriBuilderFactory.builder(moduleRecordsForCourseIdsUrl)
-                .queryParam("from", from)
-                .queryParam("to", to)
-                .queryParam("courseIds", courseIds)
-                .build(new HashMap<>());
-        return httpService.getList(uri, ModuleRecord.class);
+        return learnerRecordClient.getModuleRecordsForCourseIds(from, to, courseIds);
     }
 }
