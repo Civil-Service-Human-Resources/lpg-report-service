@@ -39,6 +39,9 @@ public class ReportServiceTest {
     private IdentityService identityService;
 
     @Mock
+    private IdentitiesService identitiesService;
+
+    @Mock
     private ReportRowFactory reportRowFactory;
 
     private final int backEndAPICallBatchSize = 50;
@@ -48,7 +51,7 @@ public class ReportServiceTest {
     @BeforeEach
     public void setUp() throws Exception {
         reportService = new ReportService(learnerRecordService, civilServantRegistryService, learningCatalogueService,
-                reportRowFactory, identityService, backEndAPICallBatchSize);
+                reportRowFactory, identityService, identitiesService, backEndAPICallBatchSize);
     }
 
     @Test
@@ -86,7 +89,7 @@ public class ReportServiceTest {
                 "learner1", civilServant1,
                 "learner3", civilServant3
         ));
-        when(identityService.getIdentitiesMap()).thenReturn(ImmutableMap.of(identity.getUid(), identity));
+
         when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
 
         BookingReportRow reportRow = new BookingReportRow();
@@ -99,7 +102,7 @@ public class ReportServiceTest {
 
     @Test
     @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
-    public void shouldReturnModuleReport() {
+    public void testBuildModuleReportShouldReturnCorrectRowsForCSVReport() {
 
         String learners = "learner1,learner2,learner3";
         String courseIds = "courseId1,courseId2,courseId3";
@@ -149,7 +152,7 @@ public class ReportServiceTest {
                 identity2.getUid(), identity2,
                 identity3.getUid(), identity3
         );
-        when(identityService.getIdentitiesMapForLearners(learners)).thenReturn(identities);
+        when(identitiesService.getIdentitiesFromUids(learners)).thenReturn(identities);
 
         Module module1 = new Module();
         module1.setId("moduleId1");

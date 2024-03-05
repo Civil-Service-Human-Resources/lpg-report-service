@@ -32,34 +32,16 @@ public class LearnerRecordController {
     }
 
     @GetMapping(produces = "text/csv")
-    @RequestMapping("/summaries")
-    public void getLearnerRecordSummaryCSVReport(HttpServletResponse response)
-            throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-
-        LOG.debug("Getting learner record CSV report");
-
-        List<LearnerRecordSummary> summaries = learnerRecordService.listRecords();
-
-        try (
-                Writer writer = response.getWriter()
-        ) {
-            StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
-                    .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
-                    .build();
-
-            beanToCsv.write(summaries);
-            response.flushBuffer();
-        }
-    }
-
-    @GetMapping(produces = "text/csv")
     @RequestMapping("/events")
     public void getLearnerRecordEventsCSVReport(HttpServletResponse response)
             throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 
         LOG.debug("Getting learner record events CSV report");
+        System.out.println("Inside /events");
 
         List<LearnerRecordEvent> events = learnerRecordService.listEvents();
+
+        System.out.println("events: " + events.size());
 
         try (Writer writer = response.getWriter()) {
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)

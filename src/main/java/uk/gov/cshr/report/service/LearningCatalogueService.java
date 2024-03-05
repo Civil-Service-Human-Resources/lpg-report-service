@@ -2,6 +2,7 @@ package uk.gov.cshr.report.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.client.learningCatalogue.ILearningCatalogueClient;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
@@ -20,21 +21,25 @@ public class LearningCatalogueService {
     private final URI moduleUri;
     private final String modulesForCourseIdsUrl;
 
+    private final ILearningCatalogueClient learningCatalogueClient;
+
     public LearningCatalogueService(HttpService httpService,
                                     UriBuilderFactory uriBuilderFactory,
                                     @Value("${learningCatalogue.eventsUrl}") URI eventUri,
                                     @Value("${learningCatalogue.modulesUrl}") URI moduleUri,
-                                    @Value("${learningCatalogue.modulesForCourseIdsUrl}") String modulesForCourseIdsUrl
+                                    @Value("${learningCatalogue.modulesForCourseIdsUrl}") String modulesForCourseIdsUrl,
+                                    ILearningCatalogueClient learningCatalogueClient
                                     ) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
         this.eventUri = eventUri;
         this.moduleUri = moduleUri;
         this.modulesForCourseIdsUrl = modulesForCourseIdsUrl;
+        this.learningCatalogueClient = learningCatalogueClient;
     }
 
     public Map<String, Event> getEventMap() {
-        return httpService.getMap(eventUri, Event.class);
+        return learningCatalogueClient.getEvents();
     }
 
     public Map<String, Module> getModuleMap() {
@@ -42,9 +47,6 @@ public class LearningCatalogueService {
     }
 
     public Map<String, Module> getModuleMapForCourseIds(String courseIds) {
-        URI uri = uriBuilderFactory.builder(modulesForCourseIdsUrl)
-                .queryParam("courseIds", courseIds)
-                .build(new HashMap<>());
-        return httpService.getMap(uri, Module.class);
+        return learningCatalogueClient.getModulesForCourseIds(courseIds);
     }
 }

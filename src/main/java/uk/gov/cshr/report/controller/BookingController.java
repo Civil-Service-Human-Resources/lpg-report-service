@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.service.ReportService;
 

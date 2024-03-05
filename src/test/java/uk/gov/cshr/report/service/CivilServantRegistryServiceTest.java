@@ -1,8 +1,10 @@
 package uk.gov.cshr.report.service;
 
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.collections4.map.HashedMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.gov.cshr.report.client.civilServantRegistry.ICivilServantRegistryClient;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
 
@@ -20,21 +22,41 @@ public class CivilServantRegistryServiceTest {
     private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
     private String civilServantsForLearnerIdsUrl;
 
+    private ICivilServantRegistryClient civilServantRegistryClient;
+
     @BeforeEach
     public void setUp() throws Exception {
         civilServantUri = new URI("http://example.org");
         civilServantsForLearnerIdsUrl = "http://localhost/report/civil-servants-for-uids";
         httpService = mock(HttpService.class);
-        civilServantRegistryService = new CivilServantRegistryService(httpService, uriBuilderFactory, civilServantUri, civilServantsForLearnerIdsUrl);
+        civilServantRegistryClient = mock(ICivilServantRegistryClient.class);
+        civilServantRegistryService = new CivilServantRegistryService(httpService, uriBuilderFactory, civilServantUri, civilServantsForLearnerIdsUrl, civilServantRegistryClient);
     }
 
     @Test
-    public void shouldReturnMapOfCivilServantsByUid() {
+    public void testCivilServantRegistryServiceGetCivilServantMapReturnsCivilServantMapReturnedByClient() {
+        CivilServant cs1 = new CivilServant();
+        cs1.setId("abc");
+        cs1.setGrade("G7");
+        cs1.setName("Servant Name");
+        cs1.setEmail("test@email.com");
 
-        Map<String, CivilServant> civilServantMap = ImmutableMap.of("civil-servant-uid", new CivilServant());
+        CivilServant cs2 = new CivilServant();
+        cs2.setId("abc-2");
+        cs2.setGrade("SEO");
+        cs2.setName("Servant Name2");
+        cs2.setEmail("test2@email.com");
 
-        when(httpService.getMap(civilServantUri, CivilServant.class)).thenReturn(civilServantMap);
+        Map<String, CivilServant> fakeMap = new HashedMap<>();
+        fakeMap.put("abc", cs1);
+        fakeMap.put("abc-2", cs2);
 
-        assertEquals(civilServantMap, civilServantRegistryService.getCivilServantMap());
+        when(civilServantRegistryClient.getCivilServants()).thenReturn(fakeMap);
+
+        Map<String, CivilServant> civilServantMapFromService = civilServantRegistryService.getCivilServantMap();
+
+        assertEquals(2, civilServantMapFromService.size());
+        assertEquals("abc", civilServantMapFromService.get("abc").getId());
+        assertEquals("abc-2", civilServantMapFromService.get("abc-2").getId());
     }
 }

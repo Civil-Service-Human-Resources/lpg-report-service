@@ -2,6 +2,8 @@ package uk.gov.cshr.report.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.client.civilServantRegistry.CivilServantRegistryClient;
+import uk.gov.cshr.report.client.civilServantRegistry.ICivilServantRegistryClient;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.factory.UriBuilderFactory;
 
@@ -17,18 +19,22 @@ public class CivilServantRegistryService {
     private final URI civilServantUri;
     private final String civilServantsForUidsUrl;
 
+    private final ICivilServantRegistryClient civilServantRegistryClient;
+
     public CivilServantRegistryService(HttpService httpService,
                                        UriBuilderFactory uriBuilderFactory,
                                        @Value("${registryService.civilServantsUrl}") URI civilServantUri,
-                                       @Value("${registryService.civilServantsForUidsUrl}") String civilServantsForUidsUrl) {
+                                       @Value("${registryService.civilServantsForUidsUrl}") String civilServantsForUidsUrl,
+                                       ICivilServantRegistryClient civilServantRegistryClient) {
         this.httpService = httpService;
         this.uriBuilderFactory = uriBuilderFactory;
         this.civilServantUri = civilServantUri;
         this.civilServantsForUidsUrl = civilServantsForUidsUrl;
+        this.civilServantRegistryClient = civilServantRegistryClient;
     }
 
     public Map<String, CivilServant> getCivilServantMap() {
-        return httpService.getMap(civilServantUri, CivilServant.class);
+        return civilServantRegistryClient.getCivilServants();
     }
 
     public Map<String, CivilServant> getCivilServantMapForLearnerIds(String uids) {
