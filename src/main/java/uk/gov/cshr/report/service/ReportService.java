@@ -23,18 +23,16 @@ public class ReportService {
     private final CivilServantRegistryService civilServantRegistryService;
     private final LearningCatalogueService learningCatalogueService;
     private final ReportRowFactory reportRowFactory;
-    private final IdentityService identityService;
     private final IdentitiesService identitiesService;
     private final int backEndAPICallBatchSize;//value of the civilServantIdentityId is 36 character long plus one comma for separation so total length is 37, total length of the REST GET request params will be 37*50=1850
 
     public ReportService(LearnerRecordService learnerRecordService, CivilServantRegistryService civilServantRegistryService,
-                         LearningCatalogueService learningCatalogueService, ReportRowFactory reportRowFactory, IdentityService identityService, IdentitiesService identitiesService,
+                         LearningCatalogueService learningCatalogueService, ReportRowFactory reportRowFactory, IdentitiesService identitiesService,
                          @Value("${report.backEndAPICallBatchSize}") int backEndAPICallBatchSize) {
         this.learnerRecordService = learnerRecordService;
         this.civilServantRegistryService = civilServantRegistryService;
         this.learningCatalogueService = learningCatalogueService;
         this.reportRowFactory = reportRowFactory;
-        this.identityService = identityService;
         this.identitiesService = identitiesService;
 
         this.backEndAPICallBatchSize = backEndAPICallBatchSize;

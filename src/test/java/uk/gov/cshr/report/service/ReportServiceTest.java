@@ -36,9 +36,6 @@ public class ReportServiceTest {
     private LearningCatalogueService learningCatalogueService;
 
     @Mock
-    private IdentityService identityService;
-
-    @Mock
     private IdentitiesService identitiesService;
 
     @Mock
@@ -51,7 +48,7 @@ public class ReportServiceTest {
     @BeforeEach
     public void setUp() throws Exception {
         reportService = new ReportService(learnerRecordService, civilServantRegistryService, learningCatalogueService,
-                reportRowFactory, identityService, identitiesService, backEndAPICallBatchSize);
+                reportRowFactory, identitiesService, backEndAPICallBatchSize);
     }
 
     @Test

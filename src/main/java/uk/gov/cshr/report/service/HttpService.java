@@ -18,13 +18,15 @@ public class HttpService {
     private final RestTemplate restTemplate;
     private final HttpHeadersFactory httpHeadersFactory;
     private final RequestEntityFactory requestEntityFactory;
+    private final AccessTokenService accessTokenService;
     private final ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory;
 
-    public HttpService(RestTemplate restTemplate, HttpHeadersFactory httpHeadersFactory, RequestEntityFactory requestEntityFactory, ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory) {
+    public HttpService(RestTemplate restTemplate, HttpHeadersFactory httpHeadersFactory, RequestEntityFactory requestEntityFactory, AccessTokenService accessTokenService, ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory) {
         this.restTemplate = restTemplate;
         this.httpHeadersFactory = httpHeadersFactory;
         this.requestEntityFactory = requestEntityFactory;
         this.parameterizedTypeReferenceFactory = parameterizedTypeReferenceFactory;
+        this.accessTokenService = accessTokenService;
     }
 
     <T> List<T> getList(URI uri, Class<T> type) {
@@ -47,7 +49,7 @@ public class HttpService {
     }
 
     private RequestEntity buildRequest(URI uri) {
-        HttpHeaders headers = httpHeadersFactory.authorizationHeaders("ABC");
+        HttpHeaders headers = httpHeadersFactory.authorizationHeaders(accessTokenService.getAccessToken());
         return requestEntityFactory.createGetRequest(headers, uri);
     }
 }
