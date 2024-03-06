@@ -35,7 +35,7 @@ public class CivilServantRegistryClient implements ICivilServantRegistryClient{
     @Override
     public Map<String, CivilServant> getCivilServants() {
         RequestEntity<Void> request = RequestEntity.get(civilServantsUrl).build();
-        return httpClient.executeRequest(request, parameterizedTypeReferenceFactory.createMapReference(CivilServant.class));
+        return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(CivilServant.class));
     }
 
     @Override
@@ -43,6 +43,6 @@ public class CivilServantRegistryClient implements ICivilServantRegistryClient{
         String url = String.format("%s?uids=%s", civilServantsForUidsUrl, commaSeparatedLearnerUids);
         RequestEntity<Void> request = RequestEntity.get(url).build();
 
-        return httpClient.executeRequest(request, parameterizedTypeReferenceFactory.createMapReference(CivilServant.class));
+        return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(CivilServant.class));
     }
 }

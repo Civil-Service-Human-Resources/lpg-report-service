@@ -37,10 +37,29 @@ public class HttpClient implements IHttpClient {
         }
     }
 
-    public <T, R> Map<String, T> executeRequest(RequestEntity<R> request, ParameterizedTypeReference<Map<String, T>> ptr) {
+    public <T, R> Map<String, T> executeMapRequest(RequestEntity<R> request, ParameterizedTypeReference<Map<String, T>> ptr) {
         try {
             log.debug("Sending request: {}", request);
             ResponseEntity<Map<String, T>> response = restTemplate.exchange(request, ptr);
+
+            log.debug("Request response: {}", response);
+            return response.getBody();
+        } catch (RestClientResponseException e) {
+            String msg = String.format("Error sending '%s' request to endpoint", request.getMethod());
+            if (request.getBody() != null) {
+                msg = String.format("%s Body was: %s.", msg, request.getBody().toString());
+            }
+            msg = String.format("%s Error was: %s", msg, e.getMessage());
+            log.error(msg);
+            throw e;
+        }
+    }
+
+    @Override
+    public <T, R> List<T> executeListRequest(RequestEntity<R> request, ParameterizedTypeReference<List<T>> parameterizedTypeReference) {
+        try {
+            log.debug("Sending request: {}", request);
+            ResponseEntity<List<T>> response = restTemplate.exchange(request, parameterizedTypeReference);
 
             log.debug("Request response: {}", response);
             return response.getBody();

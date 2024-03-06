@@ -49,33 +49,33 @@ public class LearnerRecordClient implements ILearnerRecordClient{
     public List<Booking> getBookings(LocalDate from, LocalDate to) {
         String requestUrl = String.format("%s?from=%s&to=%s", learnerRecordBookingsEndpointUrl, from, to);
         RequestEntity<Void> request = RequestEntity.get(requestUrl).build();
-        return httpClient.executeRequest(request, List.class);
+        return httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(Booking.class));
     }
 
     @Override
     public List<LearnerRecordSummary> getLearnerRecordSummaries() {
         RequestEntity<Void> request = RequestEntity.get(learnerRecordSummariesUrl).build();
-        List<LearnerRecordSummary> list = httpClient.executeRequest(request, List.class);
+        List<LearnerRecordSummary> list = httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(LearnerRecordSummary.class));
         return list;
     }
 
     @Override
     public List<LearnerRecordEvent> getLearnerRecordEvents() {
         RequestEntity<Void> request = RequestEntity.get(learnerRecordEventsUrl).build();
-        return httpClient.executeRequest(request, List.class);
+        return httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(LearnerRecordEvent.class));
     }
 
     @Override
     public List<ModuleRecord> getModuleRecordsForDateRangeAndLearnerIds(LocalDate from, LocalDate to, String commaSeparatedLearnerIds) {
         String url = String.format("%s?from=%s&to=%s&learnerIds=%s", moduleRecordsForDateRangeAndLearnersUrl, from, to, commaSeparatedLearnerIds);
         RequestEntity<Void> request = RequestEntity.get(url).build();
-        return httpClient.executeRequest(request, List.class);
+        return httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(ModuleRecord.class));
     }
 
     @Override
     public List<ModuleRecord> getModuleRecordsForCourseIds(LocalDate from, LocalDate to, String commaSeparatedCourseIds) {
         String url = String.format("%s?from=%s&to=%s&courseIds=%s", moduleRecordsForCourseIdsUrl, from, to, commaSeparatedCourseIds);
         RequestEntity<Void> request = RequestEntity.get(url).build();
-        return httpClient.executeRequest(request, List.class);
+        return httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(ModuleRecord.class));
     }
 }

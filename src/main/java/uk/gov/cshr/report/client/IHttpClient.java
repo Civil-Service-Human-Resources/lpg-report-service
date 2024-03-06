@@ -8,5 +8,6 @@ import java.util.Map;
 
 public interface IHttpClient {
     <T, R> T executeRequest(RequestEntity<R> request, Class<T> responseClass);
-    <T, R> Map<String, T> executeRequest(RequestEntity<R> request, ParameterizedTypeReference<Map<String, T>> parameterizedTypeReference);
+    <T, R> Map<String, T> executeMapRequest(RequestEntity<R> request, ParameterizedTypeReference<Map<String, T>> parameterizedTypeReference);
+    <T, R> List<T> executeListRequest(RequestEntity<R> request, ParameterizedTypeReference<List<T>> parameterizedTypeReference);
 }

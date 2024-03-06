@@ -34,13 +34,13 @@ public class IdentitiesClient implements IIdentitiesClient{
     @Override
     public Map<String, Identity> getIdentities() {
         RequestEntity<Void> request = RequestEntity.get(identityIdentitiesListEndpointUrl).build();
-        return httpClient.executeRequest(request, parameterizedTypeReferenceFactory.createMapReference(Identity.class));
+        return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(Identity.class));
     }
 
     @Override
     public Map<String, Identity> getIdentitiesFromUids(String commaSeparatedIdentityUids){
         String url = String.format("%s?uids=%s", identitiesMapForLearnerUidsUrl, commaSeparatedIdentityUids);
         RequestEntity<Void> request = RequestEntity.get(url).build();
-        return httpClient.executeRequest(request, parameterizedTypeReferenceFactory.createMapReference(Identity.class));
+        return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(Identity.class));
     }
 }
