@@ -49,7 +49,6 @@ public class HttpService {
     }
 
     private RequestEntity buildRequest(URI uri) {
-        HttpHeaders headers = httpHeadersFactory.authorizationHeaders(accessTokenService.getAccessToken());
-        return requestEntityFactory.createGetRequest(headers, uri);
+        return RequestEntity.get(uri).build();
     }
 }

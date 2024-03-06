@@ -35,6 +35,7 @@ public class BookingController {
         log.info("Generating booking report for user ID \"{}\", from \"{}\" to \"{}\"", authentication.getPrincipal(), from, to);
         boolean isProfessionReporter = authentication.getAuthorities().contains(new SimpleGrantedAuthority("PROFESSION_REPORTER"));
         List<BookingReportRow> bookingReport = reportService.buildBookingReport(from, to, isProfessionReporter);
+        bookingReport.forEach(r -> r.getCourseId());
         log.info("Booking report generated for user ID \"{}\", from \"{}\" to \"{}\"", authentication.getPrincipal(), from, to);
         return ResponseEntity.ok(bookingReport);
     }

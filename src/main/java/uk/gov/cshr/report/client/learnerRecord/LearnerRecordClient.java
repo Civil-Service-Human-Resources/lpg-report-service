@@ -10,6 +10,7 @@ import uk.gov.cshr.report.domain.LearnerRecordEvent;
 import uk.gov.cshr.report.domain.LearnerRecordSummary;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
+import uk.gov.cshr.report.service.ParameterizedTypeReferenceFactory;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -36,8 +37,13 @@ public class LearnerRecordClient implements ILearnerRecordClient{
     @Value("${learnerRecord.moduleRecordsForCourseIdsUrl}")
     String moduleRecordsForCourseIdsUrl;
 
-    public LearnerRecordClient(@Qualifier("learnerRecordHttpClient") IHttpClient httpClient){
+    ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory;
+
+    public LearnerRecordClient(
+            @Qualifier("learnerRecordHttpClient") IHttpClient httpClient,
+            ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory){
         this.httpClient = httpClient;
+        this.parameterizedTypeReferenceFactory = parameterizedTypeReferenceFactory;
     }
     @Override
     public List<Booking> getBookings(LocalDate from, LocalDate to) {

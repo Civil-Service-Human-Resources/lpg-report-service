@@ -7,6 +7,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.client.IHttpClient;
 import uk.gov.cshr.report.domain.identity.Identity;
+import uk.gov.cshr.report.service.ParameterizedTypeReferenceFactory;
 
 import java.util.Map;
 
@@ -21,19 +22,25 @@ public class IdentitiesClient implements IIdentitiesClient{
     @Value("${oauth.identitiesMapForLearnersIdsUrl}")
     private String identitiesMapForLearnerUidsUrl;
 
-    public IdentitiesClient(@Qualifier("identitiesHttpClient") IHttpClient httpClient){
+    private ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory;
+
+    public IdentitiesClient(
+            @Qualifier("identitiesHttpClient") IHttpClient httpClient,
+            ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory
+    ){
         this.httpClient = httpClient;
+        this.parameterizedTypeReferenceFactory = parameterizedTypeReferenceFactory;
     }
     @Override
     public Map<String, Identity> getIdentities() {
         RequestEntity<Void> request = RequestEntity.get(identityIdentitiesListEndpointUrl).build();
-        return httpClient.executeRequest(request, Map.class);
+        return httpClient.executeRequest(request, parameterizedTypeReferenceFactory.createMapReference(Identity.class));
     }
 
     @Override
     public Map<String, Identity> getIdentitiesFromUids(String commaSeparatedIdentityUids){
         String url = String.format("%s?uids=%s", identitiesMapForLearnerUidsUrl, commaSeparatedIdentityUids);
         RequestEntity<Void> request = RequestEntity.get(url).build();
-        return httpClient.executeRequest(request, Map.class);
+        return httpClient.executeRequest(request, parameterizedTypeReferenceFactory.createMapReference(Identity.class));
     }
 }
