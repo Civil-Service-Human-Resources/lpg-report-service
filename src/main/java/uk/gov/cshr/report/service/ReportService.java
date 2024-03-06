@@ -68,8 +68,6 @@ public class ReportService {
         //1. Get Map of CivilServants.
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
 
-        civilServantMap.forEach((key, value) -> System.out.println(key + ": " + value.getName()));
-
         if(civilServantMap.keySet().size() > 0) {
             //2. Retrieve the unique civilServantIdentityIds from the list of CivilServants from step 1.
             List<String> allCivilServantIdsList = new ArrayList<>(civilServantMap.keySet());
