@@ -24,28 +24,19 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class LearnerRecordServiceTest {
-
-    private URI learnerRecordSummariesUrl;
-    private URI learnerRecordEventsUri;
-    private String bookingUri;
     private String moduleRecordUri = "http://localhost/modules";
-    private String moduleRecordsForLearnersUrl = "http://localhost/module-records-for-learners";
     private HttpService httpService = mock(HttpService.class);
     private LearnerRecordService learnerRecordService;
     private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
-    private String moduleRecordsForCourseIdsUrl = "http://localhost/module-records-for-course-ids";
 
     private ILearnerRecordClient learnerRecordClient;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        learnerRecordSummariesUrl = new URI("http://localhost/learner-record-summaries");
-        learnerRecordEventsUri = new URI("http://localhost/learner-record-events");
-        bookingUri = "http://localhost/bookings";
+    public void setUp() {
         learnerRecordClient = mock(ILearnerRecordClient.class);
 
-        learnerRecordService = new LearnerRecordService(httpService, uriBuilderFactory, learnerRecordSummariesUrl,
-                learnerRecordEventsUri, bookingUri, moduleRecordUri, moduleRecordsForLearnersUrl, moduleRecordsForCourseIdsUrl, learnerRecordClient);
+        learnerRecordService = new LearnerRecordService(httpService, uriBuilderFactory,
+            moduleRecordUri, learnerRecordClient);
     }
 
     @Test

@@ -18,21 +18,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class LearningCatalogueServiceTest {
-    private URI eventUri;
-    private URI moduleUri;
-    private HttpService httpService;
     private LearningCatalogueService learningCatalogueService;
-    private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
-    String modulesForCourseIdsUrl;
 
     ILearningCatalogueClient learningCatalogueClient;
 
     @BeforeEach
     public void setUp() throws Exception {
-        eventUri = new URI("http://example.org");
-        httpService = mock(HttpService.class);
         this.learningCatalogueClient = mock(ILearningCatalogueClient.class);
-        learningCatalogueService = new LearningCatalogueService(httpService, uriBuilderFactory, eventUri, moduleUri, modulesForCourseIdsUrl, learningCatalogueClient);
+        learningCatalogueService = new LearningCatalogueService(learningCatalogueClient);
     }
 
     @Test

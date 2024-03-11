@@ -13,9 +13,6 @@ public class UserAuthService implements IUserAuthService {
         this.securityContextService = securityContextService;
     }
 
-    public Authentication getAuthentication() {
-        return securityContextService.getSecurityContext().getAuthentication();
-    }
 
     @Override
     public Jwt getBearerTokenFromUserAuth() {
@@ -27,16 +24,7 @@ public class UserAuthService implements IUserAuthService {
         }
     }
 
-    @Override
-    public String getUsername() {
-        String username = "";
-        Jwt jwtPrincipal = getBearerTokenFromUserAuth();
-        if (jwtPrincipal != null) {
-            username = (String) jwtPrincipal.getClaims().get("user_name");
-        }
-        if (StringUtils.isBlank(username)) {
-            throw new RuntimeException("Learner Id is missing from authentication token");
-        }
-        return username;
+    private Authentication getAuthentication() {
+        return securityContextService.getSecurityContext().getAuthentication();
     }
 }

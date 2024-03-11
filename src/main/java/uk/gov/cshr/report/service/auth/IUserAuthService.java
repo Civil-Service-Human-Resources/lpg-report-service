@@ -5,9 +5,5 @@ import org.springframework.security.oauth2.jwt.Jwt;
 
 public interface IUserAuthService {
 
-    Authentication getAuthentication();
-
-    String getUsername();
-
     Jwt getBearerTokenFromUserAuth();
 }

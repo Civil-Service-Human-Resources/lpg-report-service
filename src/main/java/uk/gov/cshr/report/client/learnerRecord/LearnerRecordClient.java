@@ -7,12 +7,10 @@ import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.client.IHttpClient;
 import uk.gov.cshr.report.domain.LearnerRecordEvent;
-import uk.gov.cshr.report.domain.LearnerRecordSummary;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.service.ParameterizedTypeReferenceFactory;
 
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -50,13 +48,6 @@ public class LearnerRecordClient implements ILearnerRecordClient{
         String requestUrl = String.format("%s?from=%s&to=%s", learnerRecordBookingsEndpointUrl, from, to);
         RequestEntity<Void> request = RequestEntity.get(requestUrl).build();
         return httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(Booking.class));
-    }
-
-    @Override
-    public List<LearnerRecordSummary> getLearnerRecordSummaries() {
-        RequestEntity<Void> request = RequestEntity.get(learnerRecordSummariesUrl).build();
-        List<LearnerRecordSummary> list = httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(LearnerRecordSummary.class));
-        return list;
     }
 
     @Override

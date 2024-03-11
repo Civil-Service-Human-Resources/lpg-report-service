@@ -16,21 +16,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CivilServantRegistryServiceTest {
-    private URI civilServantUri;
-    private HttpService httpService;
     private CivilServantRegistryService civilServantRegistryService;
-    private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
-    private String civilServantsForLearnerIdsUrl;
 
     private ICivilServantRegistryClient civilServantRegistryClient;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        civilServantUri = new URI("http://example.org");
-        civilServantsForLearnerIdsUrl = "http://localhost/report/civil-servants-for-uids";
-        httpService = mock(HttpService.class);
+    public void setUp() {
         civilServantRegistryClient = mock(ICivilServantRegistryClient.class);
-        civilServantRegistryService = new CivilServantRegistryService(httpService, uriBuilderFactory, civilServantUri, civilServantsForLearnerIdsUrl, civilServantRegistryClient);
+        civilServantRegistryService = new CivilServantRegistryService(civilServantRegistryClient);
     }
 
     @Test

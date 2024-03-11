@@ -14,22 +14,9 @@ import java.util.Map;
 @Service
 public class CivilServantRegistryService {
 
-    private final HttpService httpService;
-    private final UriBuilderFactory uriBuilderFactory;
-    private final URI civilServantUri;
-    private final String civilServantsForUidsUrl;
-
     private final ICivilServantRegistryClient civilServantRegistryClient;
 
-    public CivilServantRegistryService(HttpService httpService,
-                                       UriBuilderFactory uriBuilderFactory,
-                                       @Value("${registryService.civilServantsUrl}") URI civilServantUri,
-                                       @Value("${registryService.civilServantsForUidsUrl}") String civilServantsForUidsUrl,
-                                       ICivilServantRegistryClient civilServantRegistryClient) {
-        this.httpService = httpService;
-        this.uriBuilderFactory = uriBuilderFactory;
-        this.civilServantUri = civilServantUri;
-        this.civilServantsForUidsUrl = civilServantsForUidsUrl;
+    public CivilServantRegistryService(ICivilServantRegistryClient civilServantRegistryClient) {
         this.civilServantRegistryClient = civilServantRegistryClient;
     }
 

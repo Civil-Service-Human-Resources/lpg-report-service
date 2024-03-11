@@ -14,27 +14,9 @@ import java.util.Map;
 @Service
 public class LearningCatalogueService {
 
-    private final HttpService httpService;
-
-    private final UriBuilderFactory uriBuilderFactory;
-    private final URI eventUri;
-    private final URI moduleUri;
-    private final String modulesForCourseIdsUrl;
-
     private final ILearningCatalogueClient learningCatalogueClient;
 
-    public LearningCatalogueService(HttpService httpService,
-                                    UriBuilderFactory uriBuilderFactory,
-                                    @Value("${learningCatalogue.eventsUrl}") URI eventUri,
-                                    @Value("${learningCatalogue.modulesUrl}") URI moduleUri,
-                                    @Value("${learningCatalogue.modulesForCourseIdsUrl}") String modulesForCourseIdsUrl,
-                                    ILearningCatalogueClient learningCatalogueClient
-                                    ) {
-        this.httpService = httpService;
-        this.uriBuilderFactory = uriBuilderFactory;
-        this.eventUri = eventUri;
-        this.moduleUri = moduleUri;
-        this.modulesForCourseIdsUrl = modulesForCourseIdsUrl;
+    public LearningCatalogueService(ILearningCatalogueClient learningCatalogueClient) {
         this.learningCatalogueClient = learningCatalogueClient;
     }
 
