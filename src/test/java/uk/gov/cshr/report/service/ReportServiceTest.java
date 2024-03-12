@@ -101,7 +101,7 @@ public class ReportServiceTest {
     @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
     public void testBuildModuleReportShouldReturnCorrectRowsForCSVReport() {
 
-        String learners = "learner1,learner2,learner3";
+        List<String> learners = Arrays.asList("learner1", "learner2", "learner3");
         String courseIds = "courseId1,courseId2,courseId3";
 
         CivilServant civilServant1 = new CivilServant();

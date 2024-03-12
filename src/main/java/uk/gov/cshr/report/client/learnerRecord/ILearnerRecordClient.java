@@ -12,7 +12,7 @@ public interface ILearnerRecordClient {
 
     public List<LearnerRecordEvent> getLearnerRecordEvents();
 
-    public List<ModuleRecord> getModuleRecordsForDateRangeAndLearnerIds(LocalDate from, LocalDate to, String commaSeparatedLearnerIds);
+    public List<ModuleRecord> getModuleRecordsForDateRangeAndLearnerIds(LocalDate from, LocalDate to, List<String> learnerIds);
 
-    public List<ModuleRecord> getModuleRecordsForCourseIds(LocalDate from, LocalDate to,String commaSeparatedCourseIds);
+    public List<ModuleRecord> getModuleRecordsForCourseIds(LocalDate from, LocalDate to, List<String> courseIds);
 }

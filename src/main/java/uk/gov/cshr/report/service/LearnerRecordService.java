@@ -52,11 +52,11 @@ public class LearnerRecordService {
         return httpService.getList(uri, ModuleRecord.class);
     }
 
-    public List<ModuleRecord> getModuleRecordsForLearners(LocalDate from, LocalDate to, String learnerIds) {
+    public List<ModuleRecord> getModuleRecordsForLearners(LocalDate from, LocalDate to, List<String> learnerIds) {
         return learnerRecordClient.getModuleRecordsForDateRangeAndLearnerIds(from, to, learnerIds);
     }
 
-    public List<ModuleRecord> getModulesRecordsForCourseIds(LocalDate from, LocalDate to, String courseIds) {
+    public List<ModuleRecord> getModulesRecordsForCourseIds(LocalDate from, LocalDate to, List<String> courseIds) {
         return learnerRecordClient.getModuleRecordsForCourseIds(from, to, courseIds);
     }
 }

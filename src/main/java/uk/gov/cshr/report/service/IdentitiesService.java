@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.client.identity.IIdentitiesClient;
 import uk.gov.cshr.report.domain.identity.Identity;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -20,7 +21,7 @@ public class IdentitiesService {
         return identitiesClient.getIdentities();
     }
 
-    public Map<String, Identity> getIdentitiesFromUids(String commaSeparatedUids){
-        return identitiesClient.getIdentitiesFromUids(commaSeparatedUids);
+    public Map<String, Identity> getIdentitiesFromUids(List<String> identityUids){
+        return identitiesClient.getIdentitiesFromUids(identityUids);
     }
 }

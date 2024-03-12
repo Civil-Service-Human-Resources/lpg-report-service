@@ -3,13 +3,13 @@ package uk.gov.cshr.report.client.civilServantRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.client.IHttpClient;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.service.ParameterizedTypeReferenceFactory;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -39,8 +39,8 @@ public class CivilServantRegistryClient implements ICivilServantRegistryClient{
     }
 
     @Override
-    public Map<String, CivilServant> getCivilServantMapForLearnerIds(String commaSeparatedLearnerUids) {
-        String url = String.format("%s?uids=%s", civilServantsForUidsUrl, commaSeparatedLearnerUids);
+    public Map<String, CivilServant> getCivilServantMapForLearnerIds(List<String> learnerUids) {
+        String url = String.format("%s?uids=%s", civilServantsForUidsUrl, String.join(",", learnerUids));
         RequestEntity<Void> request = RequestEntity.get(url).build();
 
         return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(CivilServant.class));

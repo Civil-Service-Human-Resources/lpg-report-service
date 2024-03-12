@@ -84,11 +84,11 @@ public class ReportService {
                     endSize = startSize + remaining;
                 }
                 List<String> subListOfCivilServantIdsList = allCivilServantIdsList.subList(startSize, endSize);
-                String civilServantIdentityIds = subListOfCivilServantIdsList
+                List<String> civilServantIdentityIds = subListOfCivilServantIdsList
                         .stream()
                         .map(String::trim)
                         .filter(s -> !s.isEmpty())
-                        .collect(Collectors.joining(","));
+                        .toList();
                 //3. Get the modules for civilServantIdentityIds from step 2 and the given duration.
                 List<ModuleRecord> subListModuleRecords = learnerRecordService.getModuleRecordsForLearners(from, to, civilServantIdentityIds);
                 moduleRecords.addAll(subListModuleRecords);
@@ -117,12 +117,12 @@ public class ReportService {
                         endSize = startSize + remaining;
                     }
                     List<String> subListOfLearnerIdsList = learnerIdsList.subList(startSize, endSize);
-                    String learnerIds = subListOfLearnerIdsList
+                    List<String> learnerIds = subListOfLearnerIdsList
                             .stream()
                             .filter(s -> s != null && !s.isEmpty())
                             .map(String::trim)
                             .distinct()
-                            .collect(Collectors.joining(","));
+                            .toList();
                     Map<String, Identity> identitiesMapFetched = identitiesService.getIdentitiesFromUids(learnerIds);
                     identitiesMap.putAll(identitiesMapFetched);
                     totalFetched = endSize;
@@ -204,11 +204,11 @@ public class ReportService {
                     endSize = startSize + remaining;
                 }
                 List<String> subListOfCourseIdsList = courseIdsList.subList(startSize, endSize);
-                String courseIds = subListOfCourseIdsList
+                List<String> courseIds = subListOfCourseIdsList
                         .stream()
                         .map(String::trim)
                         .filter(s -> !s.isEmpty())
-                        .collect(Collectors.joining(","));
+                        .toList();
                 //3. Get the ModuleRecords for the courseIds in step 2 from learner-record Database
                 List<ModuleRecord> moduleRecordsFetched = learnerRecordService.getModulesRecordsForCourseIds(from, to, courseIds);
                 moduleRecords.addAll(moduleRecordsFetched);
@@ -237,11 +237,11 @@ public class ReportService {
                         endSize = startSize + remaining;
                     }
                     List<String> subListOfLearnerIdsList = learnerIdsList.subList(startSize, endSize);
-                    String learnerIds = subListOfLearnerIdsList
+                    List<String> learnerIds = subListOfLearnerIdsList
                             .stream()
                             .map(String::trim)
                             .filter(s -> !s.isEmpty())
-                            .collect(Collectors.joining(","));
+                            .toList();
                     //5. Get the civil servants for the learnerId in step 4
                     Map<String, CivilServant> civilServantMapFetched = civilServantRegistryService.getCivilServantMapForLearnerIds(learnerIds);
                     civilServantMap.putAll(civilServantMapFetched);
@@ -261,12 +261,12 @@ public class ReportService {
                         endSize = startSize + remaining;
                     }
                     List<String> subListOfLearnerIdsList = learnerIdsList.subList(startSize, endSize);
-                    String learnerIds = subListOfLearnerIdsList
+                    List<String> learnerIds = subListOfLearnerIdsList
                             .stream()
                             .filter(s -> s != null && !s.isEmpty())
                             .map(String::trim)
                             .distinct()
-                            .collect(Collectors.joining(","));
+                            .toList();
                     //6. Get emailId map for the learnerIds from step 4.
                     Map<String, Identity> identitiesMapFetched = identitiesService.getIdentitiesFromUids(learnerIds);
                     identitiesMap.putAll(identitiesMapFetched);

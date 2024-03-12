@@ -9,6 +9,7 @@ import uk.gov.cshr.report.client.IHttpClient;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.service.ParameterizedTypeReferenceFactory;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -38,8 +39,8 @@ public class IdentitiesClient implements IIdentitiesClient{
     }
 
     @Override
-    public Map<String, Identity> getIdentitiesFromUids(String commaSeparatedIdentityUids){
-        String url = String.format("%s?uids=%s", identitiesMapForLearnerUidsUrl, commaSeparatedIdentityUids);
+    public Map<String, Identity> getIdentitiesFromUids(List<String> identityUids){
+        String url = String.format("%s?uids=%s", identitiesMapForLearnerUidsUrl, String.join(",", identityUids));
         RequestEntity<Void> request = RequestEntity.get(url).build();
         return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(Identity.class));
     }
