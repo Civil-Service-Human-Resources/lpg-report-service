@@ -23,16 +23,17 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  - task: Gradle@3
+  - task: Maven@4
     inputs:
-      gradleWrapperFile: 'gradlew'
-      jdkVersionOption: '1.8'
+      mavenPOMFile: 'pom.xml'
+      mavenVersionOption: 'Default'
+      jdkVersionOption: '1.17'
       javaHomeOption: 'JDKVersion'
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
-      testResultsFiles: 'build/test-results/**/TEST-*.xml'
-      tasks: 'clean build'
-    displayName: 'Install Gradle and Java 8 and build'
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'package'
+    displayName: 'Install Maven@4 and Java@17 and package'
 
   - task: Docker@2
     inputs:

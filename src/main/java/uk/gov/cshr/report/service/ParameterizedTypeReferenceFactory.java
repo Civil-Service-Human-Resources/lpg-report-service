@@ -36,7 +36,7 @@ public class ParameterizedTypeReferenceFactory {
     );
 
 
-    <T>  ParameterizedTypeReference<Map<String, T>> createMapReference(Class<T> type) {
+    public <T>  ParameterizedTypeReference<Map<String, T>> createMapReference(Class<T> type) {
         if (mapParameterizedTypeReferenceMap.containsKey(type.getName())) {
             return mapParameterizedTypeReferenceMap.get(type.getName());
         }
@@ -44,7 +44,7 @@ public class ParameterizedTypeReferenceFactory {
         throw new IllegalTypeException(type);
     }
 
-    <T> ParameterizedTypeReference<List<T>> createListReference(Class<T> type) {
+    public <T> ParameterizedTypeReference<List<T>> createListReference(Class<T> type) {
         if (listParameterizedTypeReferenceMap.containsKey(type.getName())) {
             return listParameterizedTypeReferenceMap.get(type.getName());
         }

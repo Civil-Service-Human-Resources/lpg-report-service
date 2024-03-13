@@ -27,7 +27,7 @@ oauth:
   tokenUrl: "${oauth.serviceUrl}${oauth.tokenEndpoint}"
   identitiesListUrl: "${oauth.serviceUrl}/api/identities/map"
   identitiesMapForLearnersIdsUrl: "${oauth.serviceUrl}/api/identities/map-for-uids"
-  jwtKey: ${jwt_key}
+  jwtKey: ${jwt_key:TONterOunSTRUcIenscaDiSHoUrPanti}
 
 learnerRecord:
   serviceUrl: ${LEARNER_RECORD_URL:http://localhost:9000}
@@ -37,6 +37,7 @@ learnerRecord:
   moduleRecordsUrl: "${learnerRecord.serviceUrl}/reporting/module-records"
   moduleRecordsForLearnersUrl: "${learnerRecord.serviceUrl}/reporting/module-records-for-learners"
   moduleRecordsForCourseIdsUrl: "${learnerRecord.serviceUrl}/reporting/module-records-for-course-ids"
+
 
 registryService:
   serviceUrl: ${REGISTRY_SERVICE_URL:http://localhost:9002}
@@ -55,4 +56,6 @@ report:
 ---
 
 spring:
-  profiles: production
+  config:
+    activate:
+      on-profile: production

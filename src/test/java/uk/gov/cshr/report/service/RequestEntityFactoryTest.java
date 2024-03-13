@@ -1,6 +1,6 @@
 package uk.gov.cshr.report.service;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -8,7 +8,7 @@ import org.springframework.http.RequestEntity;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RequestEntityFactoryTest {
     private RequestEntityFactory requestEntityFactory = new RequestEntityFactory();

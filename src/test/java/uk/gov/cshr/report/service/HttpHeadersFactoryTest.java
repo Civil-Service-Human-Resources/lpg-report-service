@@ -1,9 +1,9 @@
 package uk.gov.cshr.report.service;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HttpHeadersFactoryTest {
     private HttpHeadersFactory httpHeadersFactory = new HttpHeadersFactory();
