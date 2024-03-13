@@ -28,9 +28,6 @@ oauth:
   identitiesListUrl: "${oauth.serviceUrl}/api/identities/map"
   identitiesMapForLearnersIdsUrl: "${oauth.serviceUrl}/api/identities/map-for-uids"
   jwtKey: ${jwt_key:TONterOunSTRUcIenscaDiSHoUrPanti}
-  refresh:
-    serviceTokenCache:
-      beforeSecondsToExpire: ${REFRESH_SERVICETOKENCACHE_BEFORE_SECONDS_TOEXPIRE:0}
 
 learnerRecord:
   serviceUrl: ${LEARNER_RECORD_URL:http://localhost:9000}
