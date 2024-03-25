@@ -8,5 +8,5 @@ CREATE TABLE course_completion_events (
                                           event_timestamp TIMESTAMP NOT NULL,
                                           organisation_id INT NOT NULL,
                                           profession_id INT NOT NULL,
-                                          grade_id INT NOT NULL
+                                          grade_id INT
 ) PARTITION BY RANGE (event_timestamp);
