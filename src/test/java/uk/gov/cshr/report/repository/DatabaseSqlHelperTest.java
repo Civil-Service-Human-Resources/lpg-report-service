@@ -16,13 +16,13 @@ class DatabaseSqlHelperTest {
     public void testCreateTimeBoundPartitionStatement() {
         String statement = databaseSqlHelper.getCreateTimeBoundPartitionStatement("partitionName", "tableName",
                 "from", "to");
-        assertEquals("CREATE TABLE IF NOT EXISTS 'partitionName' PARTITION OF 'tableName' FOR VALUES FROM ('from') TO ('to')", statement);
+        assertEquals("CREATE TABLE IF NOT EXISTS partitionName PARTITION OF tableName FOR VALUES FROM ('from') TO ('to')", statement);
     }
 
     @Test
     public void testCreateIndexStatement() {
         String statement = databaseSqlHelper.getCreateIndexStatement("tableName", "column");
-        assertEquals("CREATE INDEX IF NOT EXISTS 'idx_column_tableName' ON 'tableName' ('column')", statement);
+        assertEquals("CREATE INDEX IF NOT EXISTS idx_column_tableName ON tableName (column)", statement);
     }
 
 }
