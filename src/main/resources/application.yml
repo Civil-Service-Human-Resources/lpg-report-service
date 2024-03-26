@@ -9,7 +9,7 @@ app:
       tableName: course_completion_events
       indexColumns: course_id,organisation_id,profession_id,grade_id,event_timestamp
       partitionLookaheadInDays: ${COURSE_COMPLETIONS_PARTITION_LOOKAHEAD_DAYS:7}
-      cronSchedule: ${COURSE_COMPLETIONS_PARTITION_CRON_SCHEDULE:10 * * * * *}
+      cronSchedule: ${COURSE_COMPLETIONS_PARTITION_CRON_SCHEDULE:0 0 0 * * *}
 spring:
   datasource:
     username: ${DATASOURCE_USERNAME:root}
