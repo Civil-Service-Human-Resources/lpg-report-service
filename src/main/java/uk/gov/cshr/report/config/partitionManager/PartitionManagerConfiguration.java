@@ -7,10 +7,8 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.config.AppConfig;
-import uk.gov.cshr.report.repository.databaseManager.DatabaseManager;
 import uk.gov.cshr.report.service.PartitionManager;
 
-import java.time.Clock;
 import java.util.List;
 
 @Component
@@ -20,8 +18,7 @@ import java.util.List;
 public class PartitionManagerConfiguration implements SchedulingConfigurer {
 
     private final AppConfig appConfig;
-    private final Clock clock;
-    private final DatabaseManager databaseManager;
+    private final PartitionManager partitionManager;
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
@@ -31,8 +28,7 @@ public class PartitionManagerConfiguration implements SchedulingConfigurer {
             if (partitionManagerProperties.isEnabled()) {
                 log.info("Creating '{}' partition manager", name);
                 log.debug(partitionManagerProperties.toString());
-                PartitionManager partitionManager = new PartitionManager(partitionManagerProperties, clock, databaseManager);
-                taskRegistrar.addCronTask(partitionManager::createPartitions, partitionManagerProperties.getCronSchedule());
+                taskRegistrar.addCronTask(() -> partitionManager.createPartitions(partitionManagerProperties), partitionManagerProperties.getCronSchedule());
             } else {
                 log.info("Partition manager '{}' is disabled; skipping initialisation", name);
             }

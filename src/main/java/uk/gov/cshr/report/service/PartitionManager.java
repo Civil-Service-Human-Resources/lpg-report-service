@@ -2,6 +2,7 @@ package uk.gov.cshr.report.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.config.partitionManager.PartitionManagerProperties;
 import uk.gov.cshr.report.repository.databaseManager.DatabaseManager;
 
@@ -10,14 +11,14 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @RequiredArgsConstructor
+@Service
 @Slf4j
 public class PartitionManager {
 
-    private final PartitionManagerProperties properties;
     private final Clock clock;
     private final DatabaseManager databaseManager;
 
-    public void createPartitions() {
+    public void createPartitions(PartitionManagerProperties properties) {
         Integer partitionLookaheadInDays = properties.getPartitionLookaheadInDays();
         String tableName = properties.getTableName();
         log.info(String.format("Creating partitions for today and the next %s days, if they don't already exist", partitionLookaheadInDays));
