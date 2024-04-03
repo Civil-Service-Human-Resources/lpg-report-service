@@ -23,6 +23,7 @@ app:
       indexColumns: course_id,organisation_id,profession_id,grade_id,event_timestamp
       partitionLookaheadInDays: ${COURSE_COMPLETIONS_PARTITION_LOOKAHEAD_DAYS:7}
       cronSchedule: ${COURSE_COMPLETIONS_PARTITION_CRON_SCHEDULE:0 0 0 * * *}
+      runOnStartup: ${COURSE_COMPLETIONS_PARTITION_RUN_ON_STARTUP:true}
 spring:
   datasource:
     username: ${DATASOURCE_USERNAME:root}
@@ -37,10 +38,11 @@ spring:
     servicebus:
       # We're using our own configuration so disable auto-configure
       enabled: false
-  resources:
-    add-mappings: false
   flyway:
     locations: classpath:db/migration/{vendor}
+  web:
+    resources:
+      add-mappings: false
 server:
   port: 9004
 

@@ -1,7 +1,8 @@
-package uk.gov.cshr.report.service.messaging.model;
+package uk.gov.cshr.report.service.messaging.coursecompletions;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import uk.gov.cshr.report.service.messaging.model.IMessageMetadata;
 
 import java.io.Serial;
 import java.io.Serializable;

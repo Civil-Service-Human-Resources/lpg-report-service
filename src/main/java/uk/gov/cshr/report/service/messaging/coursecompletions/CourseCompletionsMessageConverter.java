@@ -1,8 +1,8 @@
-package uk.gov.cshr.report.service.messaging;
+package uk.gov.cshr.report.service.messaging.coursecompletions;
 
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
-import uk.gov.cshr.report.service.messaging.model.CourseCompletionMessage;
+import uk.gov.cshr.report.service.messaging.MessageToEntityConverter;
 import uk.gov.cshr.report.service.messaging.model.Message;
 
 @Component
