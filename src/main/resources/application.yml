@@ -3,6 +3,19 @@ database:
   name: ${DATABASE_NAME:reporting}
   use-ssl: ${DATABASE_USESSL:false}
 app:
+  messaging:
+    queues:
+      course-completions:
+        name: coursecompletions
+    servicebus:
+      connection-string: ${SERVICEBUS_CONNECTION_STRING:}
+      idleTimeout: ${SERVICEBUS_CONNECTION_IDLE_TIMEOUT:60000}
+    activemq:
+      url: ${ACTIVEMQ_URL:tcp://localhost:61616}
+      username: ${ACTIVEMQ_USERNAME:artemis}
+      password: ${ACTIVEMQ_PASSWORD:artemis}
+    config:
+      preferred-connection: ${PREFERRED_JMS_CONNECTION:ACTIVEMQ}
   partition-manager:
     - name: coursecompletions
       enabled: ${COURSE_COMPLETIONS_PARTITION_ENABLED:true}
@@ -20,6 +33,10 @@ spring:
     serialization:
       write_dates_as_timestamps: false
     default-property-inclusion: non_null
+  jms:
+    servicebus:
+      # We're using our own configuration so disable auto-configure
+      enabled: false
   resources:
     add-mappings: false
   flyway:
