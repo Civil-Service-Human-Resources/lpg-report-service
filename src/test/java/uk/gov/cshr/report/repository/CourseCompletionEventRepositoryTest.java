@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.util.ResourceUtils;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.integration.IntegrationTestBase;
@@ -47,8 +48,8 @@ public class CourseCompletionEventRepositoryTest extends IntegrationTestBase {
 
     @Test
     public void testGetCourseAggregations() throws IOException {
-        Path path = Paths.get("src", "test", "resources", "data", "sample-completions.json");
-        List<CourseCompletionEvent> completionEvents = objectMapper.readValue(readString(path), new TypeReference<>() {});
+        File testFile = ResourceUtils.getFile(getClass().getResource("/data/sample-completions.json"));
+        List<CourseCompletionEvent> completionEvents = objectMapper.readValue(testFile, new TypeReference<>() {});
         courseCompletionEventRepository.saveAll(completionEvents);
 
         CourseCompletionAggregation[] completionsAggregationByCourse = courseCompletionEventRepository.getCompletionsAggregationByCourse("hour",
