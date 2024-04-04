@@ -1,12 +1,29 @@
-
+database:
+  host: ${DATABASE_HOST:jdbc:postgresql://localhost:5432}
+  name: ${DATABASE_NAME:reporting}
+  use-ssl: ${DATABASE_USESSL:false}
+app:
+  partition-manager:
+    - name: coursecompletions
+      enabled: ${COURSE_COMPLETIONS_PARTITION_ENABLED:true}
+      tableName: course_completion_events
+      indexColumns: course_id,organisation_id,profession_id,grade_id,event_timestamp
+      partitionLookaheadInDays: ${COURSE_COMPLETIONS_PARTITION_LOOKAHEAD_DAYS:7}
+      cronSchedule: ${COURSE_COMPLETIONS_PARTITION_CRON_SCHEDULE:0 0 0 * * *}
 spring:
+  datasource:
+    username: ${DATASOURCE_USERNAME:root}
+    password: ${DATASOURCE_PASSWORD:root-pw}
+    url: ${DATASOURCE_URL:${database.host}/${database.name}?useSSL=${database.use-ssl}&requireSSL=false}
+    driver-class-name: org.postgresql.Driver
   jackson:
     serialization:
       write_dates_as_timestamps: false
     default-property-inclusion: non_null
   resources:
     add-mappings: false
-
+  flyway:
+    locations: classpath:db/migration/{vendor}
 server:
   port: 9004
 
