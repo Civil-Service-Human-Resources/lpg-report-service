@@ -5,22 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 
 @Slf4j
 @Configuration
 public class JmsConfig {
 
-
     @Bean
-    @ConditionalOnProperty(value = "app.messaging.config.preferred-connection", havingValue = "ACTIVEMQ")
+    @Primary
+    @ConditionalOnProperty(value = "spring.jms.servicebus.enabled", havingValue = "false")
     public ConnectionFactory getActiveMQConnectionFactory(ActiveMQJmsConfigProperties properties) {
-        return properties.buildConnectionFactory();
-    }
-
-    @Bean
-    @ConditionalOnProperty(value = "app.messaging.config.preferred-connection", havingValue = "SERVICEBUS")
-    public ConnectionFactory getServiceBusConnectionFactory(ServiceBusJmsConfigProperties properties) {
+        log.info("Service bus is disabled; defaulting to activeMQ/Artemis");
         return properties.buildConnectionFactory();
     }
 

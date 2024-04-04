@@ -7,15 +7,10 @@ app:
     queues:
       course-completions:
         name: coursecompletions
-    servicebus:
-      connection-string: ${SERVICEBUS_CONNECTION_STRING:}
-      idleTimeout: ${SERVICEBUS_CONNECTION_IDLE_TIMEOUT:60000}
     activemq:
       url: ${ACTIVEMQ_URL:tcp://localhost:61616}
       username: ${ACTIVEMQ_USERNAME:artemis}
       password: ${ACTIVEMQ_PASSWORD:artemis}
-    config:
-      preferred-connection: ${PREFERRED_JMS_CONNECTION:ACTIVEMQ}
   partition-manager:
     - name: coursecompletions
       enabled: ${COURSE_COMPLETIONS_PARTITION_ENABLED:true}
@@ -36,8 +31,9 @@ spring:
     default-property-inclusion: non_null
   jms:
     servicebus:
-      # We're using our own configuration so disable auto-configure
-      enabled: false
+      enabled: ${JMS_USE_SERVICEBUS:false}
+      connection-string: ${SERVICEBUS_CONNECTION_STRING:}
+      pricing-tier: Premium
   flyway:
     locations: classpath:db/migration/{vendor}
   web:

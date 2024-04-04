@@ -25,10 +25,9 @@ public abstract class ObjectMapperQueueClient <MessageMetadata extends IMessageM
         this.typeReference = typeReference;
     }
 
-    @Transactional
     public void convertAndSave(String message){
         try {
-            log.info(String.format("Message received: '%s'", message));
+            log.debug(String.format("Message received: '%s'", message));
             Message<MessageMetadata> parsedMessage = objectMapper.readValue(message, typeReference);
             repository.save(this.converter.convert(parsedMessage));
         } catch (JsonProcessingException e) {
