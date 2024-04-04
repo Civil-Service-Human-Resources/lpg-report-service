@@ -47,8 +47,8 @@ public class CourseCompletionEventRepositoryTest extends IntegrationTestBase {
 
     @Test
     public void testGetCourseAggregations() throws IOException {
-        Path path = Paths.get("src/test/resources/data/sample-completions.json");
-        List<CourseCompletionEvent> completionEvents = objectMapper.readValue(readString(path), new TypeReference<>() {});
+        File file = new File("src/test/resources/data/sample-completions.json");
+        List<CourseCompletionEvent> completionEvents = objectMapper.readValue(file, new TypeReference<>() {});
         courseCompletionEventRepository.saveAll(completionEvents);
 
         CourseCompletionAggregation[] completionsAggregationByCourse = courseCompletionEventRepository.getCompletionsAggregationByCourse("hour",
