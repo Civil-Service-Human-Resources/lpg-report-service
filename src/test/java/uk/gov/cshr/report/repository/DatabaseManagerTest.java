@@ -36,9 +36,9 @@ class DatabaseManagerTest {
         List<String> columnsToIndex = List.of("column1", "column2");
         when(databaseSqlHelper.getCreateTimeBoundPartitionStatement(partitionName, tableName, "2024-01-01", "2025-01-01"))
                 .thenReturn("partitionStatement");
-        when(databaseSqlHelper.getCreateIndexStatement(tableName, "column1"))
+        when(databaseSqlHelper.getCreateIndexStatement(partitionName, "column1"))
                 .thenReturn("indexStatement");
-        when(databaseSqlHelper.getCreateIndexStatement(tableName, "column2"))
+        when(databaseSqlHelper.getCreateIndexStatement(partitionName, "column2"))
                 .thenReturn("indexStatement2");
         databaseManager.createTimePartition(partitionName, tableName, fromDate, period, columnsToIndex);
         verify(jdbcTemplate, atMostOnce()).execute("partitionStatement");

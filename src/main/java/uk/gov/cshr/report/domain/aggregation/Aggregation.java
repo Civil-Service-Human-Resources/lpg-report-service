@@ -1,8 +1,8 @@
 package uk.gov.cshr.report.domain.aggregation;
 
-import java.time.Instant;
+import java.time.ZonedDateTime;
 
 public interface Aggregation {
-    Instant getdateBin();
+    ZonedDateTime getdateBin();
     Integer getTotal();
 }

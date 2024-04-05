@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public interface CourseCompletionEventRepository extends JpaRepository<CourseCompletionEvent, Long> {
@@ -22,8 +22,8 @@ public interface CourseCompletionEventRepository extends JpaRepository<CourseCom
             group by 1, 2
             order by 1 asc, 2 asc""")
     List<CourseCompletionAggregation> getCompletionsAggregationByCourse(@Param("delimiter") String delimiter,
-                                                                        @Param("from") LocalDateTime from,
-                                                                        @Param("to") LocalDateTime to,
+                                                                        @Param("from") ZonedDateTime from,
+                                                                        @Param("to") ZonedDateTime to,
                                                                         @Param("courseIds") List<String> courseIds,
                                                                         @Param("organisationIds") List<Integer> organisationIds,
                                                                         @Param("gradeIds") List<Integer> gradeIds,
