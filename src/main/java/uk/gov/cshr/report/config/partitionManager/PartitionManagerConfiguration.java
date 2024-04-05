@@ -29,6 +29,10 @@ public class PartitionManagerConfiguration implements SchedulingConfigurer {
                 log.info("Creating '{}' partition manager", name);
                 log.debug(partitionManagerProperties.toString());
                 taskRegistrar.addCronTask(() -> partitionManager.createPartitions(partitionManagerProperties), partitionManagerProperties.getCronSchedule());
+                if (partitionManagerProperties.isRunOnStartup()) {
+                    log.info("Parition manager is set to run on startup. Running create partitions command...");
+                    partitionManager.createPartitions(partitionManagerProperties);
+                }
             } else {
                 log.info("Partition manager '{}' is disabled; skipping initialisation", name);
             }

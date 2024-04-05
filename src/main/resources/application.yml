@@ -3,6 +3,14 @@ database:
   name: ${DATABASE_NAME:reporting}
   use-ssl: ${DATABASE_USESSL:false}
 app:
+  messaging:
+    queues:
+      course-completions:
+        name: coursecompletions
+    activemq:
+      url: ${ACTIVEMQ_URL:tcp://localhost:61616}
+      username: ${ACTIVEMQ_USERNAME:artemis}
+      password: ${ACTIVEMQ_PASSWORD:artemis}
   partition-manager:
     - name: coursecompletions
       enabled: ${COURSE_COMPLETIONS_PARTITION_ENABLED:true}
@@ -10,6 +18,7 @@ app:
       indexColumns: course_id,organisation_id,profession_id,grade_id,event_timestamp
       partitionLookaheadInDays: ${COURSE_COMPLETIONS_PARTITION_LOOKAHEAD_DAYS:7}
       cronSchedule: ${COURSE_COMPLETIONS_PARTITION_CRON_SCHEDULE:0 0 0 * * *}
+      runOnStartup: ${COURSE_COMPLETIONS_PARTITION_RUN_ON_STARTUP:true}
 spring:
   datasource:
     username: ${DATASOURCE_USERNAME:root}
@@ -20,10 +29,16 @@ spring:
     serialization:
       write_dates_as_timestamps: false
     default-property-inclusion: non_null
-  resources:
-    add-mappings: false
+  jms:
+    servicebus:
+      enabled: ${JMS_USE_SERVICEBUS:false}
+      connection-string: ${SERVICEBUS_CONNECTION_STRING:}
+      pricing-tier: Premium
   flyway:
     locations: classpath:db/migration/{vendor}
+  web:
+    resources:
+      add-mappings: false
 server:
   port: 9004
 

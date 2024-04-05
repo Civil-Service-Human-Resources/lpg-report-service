@@ -26,7 +26,7 @@ class PartitionManagerTest {
     public void testCreatePartitions() {
         List<String> cols = List.of("testIndex1", "testIndex2");
         PartitionManagerProperties props = new PartitionManagerProperties("test", true, "test_table",
-                cols, 2, "* * * * * *");
+                cols, 2, "* * * * * *", true);
         partitionManager.createPartitions(props);
         InOrder inOrder = inOrder(databaseManager);
         inOrder.verify(databaseManager).createTimePartition("test_table_2024_1_1", "test_table",

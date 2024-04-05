@@ -15,4 +15,5 @@ public class PartitionManagerProperties {
     private List<String> indexColumns;
     private Integer partitionLookaheadInDays;
     private String cronSchedule;
+    private boolean runOnStartup;
 }
