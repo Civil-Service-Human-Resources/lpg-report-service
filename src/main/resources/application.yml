@@ -39,14 +39,17 @@ spring:
   web:
     resources:
       add-mappings: false
+  security:
+    user:
+      name: ${REPORT_SERVICE_BASIC_USERNAME:changeme}
+      password: ${REPORT_SERVICE_BASIC_PASSWORD:changeme}
 server:
   port: 9004
-
 logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
   level:
-    root: ${ROOT_LOGGING_LEVEL:INFO}
+    root: ${ROOT_LOGGING_LEVEL:DEBUG}
     org.apache.http: WARN
 
 oauth:
@@ -84,7 +87,9 @@ learningCatalogue:
 
 report:
   backEndAPICallBatchSize: ${BACKEND_API_CALL_BATCH_SIZE:50}
-
+info:
+  name: "Report service API"
+  description: "Provides reporting and management information data"
 ---
 
 spring:
