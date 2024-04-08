@@ -1,8 +1,11 @@
 package uk.gov.cshr.report.domain.aggregation;
 
-import java.time.Instant;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.ZonedDateTime;
 
 public interface Aggregation {
-    Instant getdateBin();
+    @JsonProperty("dateBin")
+    ZonedDateTime getdateBin();
     Integer getTotal();
 }

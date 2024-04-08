@@ -25,7 +25,7 @@ public class DatabaseManager {
         String toFormat = from.plus(period).format(DateTimeFormatter.ISO_DATE);
         List<String> statements = new ArrayList<>() {{
             add(databaseSqlHelper.getCreateTimeBoundPartitionStatement(partitionName, parentTableName, fromFormat, toFormat));
-            addAll(columnsToIndex.stream().map(columnName -> databaseSqlHelper.getCreateIndexStatement(parentTableName, columnName))
+            addAll(columnsToIndex.stream().map(columnName -> databaseSqlHelper.getCreateIndexStatement(partitionName, columnName))
                     .toList());
         }};
         statements.forEach(statement -> {

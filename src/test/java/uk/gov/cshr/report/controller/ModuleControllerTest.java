@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import uk.gov.cshr.report.controller.model.ErrorDtoFactory;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 import uk.gov.cshr.report.service.ReportService;
 
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ModuleController.class)
+@WebMvcTest({ModuleController.class, ApiExceptionHandler.class, ErrorDtoFactory.class})
 @ExtendWith(SpringExtension.class)
 @WithMockUser(username = "user")
 public class ModuleControllerTest {
