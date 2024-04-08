@@ -1,7 +1,7 @@
 package uk.gov.cshr.report.controller.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,18 +16,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetCourseCompletionsParams {
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    @NotEmpty
+    @Size(min = 1, max = 10)
+    @NotNull
     private List<String> courseIds;
 
-    @NotEmpty
+    @Size(min = 1)
+    @NotNull
     private List<Integer> organisationIds;
 
     private List<Integer> professionIds;
