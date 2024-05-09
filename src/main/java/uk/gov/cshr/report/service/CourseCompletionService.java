@@ -20,4 +20,8 @@ public class CourseCompletionService {
         return repository.getCompletionsAggregationByCourse(params.getBinDelimiter().getVal(), params.getStartDate(), params.getEndDate(),
                 params.getCourseIds(), params.getOrganisationIds(), params.getGradeIds(), params.getProfessionIds());
     }
+
+    public int removeUserDetails(List<String> uids) {
+        return repository.removeUserDetails(uids);
+    }
 }
