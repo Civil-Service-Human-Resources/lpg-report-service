@@ -27,7 +27,7 @@ public class CourseCompletionsController {
 
     @PostMapping("/aggregations/by-course")
     @ResponseBody
-    public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@Valid @RequestBody GetCourseCompletionsParams params) {
+    public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@RequestBody @Valid GetCourseCompletionsParams params) {
         List<CourseCompletionAggregation> results =  courseCompletionService.getCourseCompletions(params);
         return new AggregationResponse<>(params.getBinDelimiter().getVal(), results);
     }
