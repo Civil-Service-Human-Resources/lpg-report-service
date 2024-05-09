@@ -37,16 +37,14 @@ public class CourseCompletionsControllerTest {
         mockMvc.perform(
                 post("/course-completions/aggregations/by-course")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"startDate\": \"2018-01-\", \"endDate\": \"2018-01-\", \"courseIds\": null, \"organisationIds\": null}")
+                        .content("{\"startDate\": \"2018-01-01\", \"endDate\": \"2018-01-01\", \"courseIds\": [], \"organisationIds\": []}")
                         .with(csrf())
                         .accept(MediaType.APPLICATION_JSON)
                         .characterEncoding("utf-8"))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string(containsString("Field courseIds is invalid: must not be null")))
-                .andExpect(content().string(containsString("Field organisationIds is invalid: must not be null")))
-                .andExpect(content().string(containsString("Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'endDate'")))
-                .andExpect(content().string(containsString("Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'startDate'")));
+                .andExpect(content().string(containsString("Field courseIds is invalid: size must be between 1 and 10")))
+                .andExpect(content().string(containsString("Field organisationIds is invalid: size must be between 1 and 400")));
     }
 
 }

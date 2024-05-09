@@ -28,7 +28,7 @@ public class GetCourseCompletionsParams {
     @NotNull
     private List<String> courseIds;
 
-    @Size(min = 1)
+    @Size(min = 1, max = 400)
     @NotNull
     private List<Integer> organisationIds;
 
