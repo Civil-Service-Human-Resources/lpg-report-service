@@ -1,5 +1,6 @@
 package uk.gov.cshr.report.service;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
@@ -21,6 +22,7 @@ public class CourseCompletionService {
                 params.getCourseIds(), params.getOrganisationIds(), params.getGradeIds(), params.getProfessionIds());
     }
 
+    @PreAuthorize("hasAnyAuthority('IDENTITY_DELETE')")
     public int removeUserDetails(List<String> uids) {
         return repository.removeUserDetails(uids);
     }
