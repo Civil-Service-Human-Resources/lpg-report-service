@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -17,12 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 public class GetCourseCompletionsParams {
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm:ssZ")
+    private ZonedDateTime startDate;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm:ssZ")
+    private ZonedDateTime endDate;
 
     @Size(min = 1, max = 10)
     @NotNull
@@ -37,12 +35,4 @@ public class GetCourseCompletionsParams {
     private List<Integer> gradeIds;
 
     private AggregationBinDelimiter binDelimiter = AggregationBinDelimiter.DAY;
-
-    public ZonedDateTime getStartDate() {
-        return startDate.atStartOfDay(ZoneId.systemDefault());
-    }
-
-    public ZonedDateTime getEndDate() {
-        return endDate.atStartOfDay(ZoneId.systemDefault());
-    }
 }

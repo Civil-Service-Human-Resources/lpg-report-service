@@ -37,7 +37,7 @@ public class CourseCompletionsControllerTest {
         mockMvc.perform(
                 post("/course-completions/aggregations/by-course")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"startDate\": \"2018-01-01\", \"endDate\": \"2018-01-01\", \"courseIds\": [], \"organisationIds\": []}")
+                        .content("{\"startDate\": \"2018-01-01T00:00:00Z\", \"endDate\": \"2018-01-01T00:00:00Z\", \"courseIds\": [], \"organisationIds\": []}")
                         .with(csrf())
                         .accept(MediaType.APPLICATION_JSON)
                         .characterEncoding("utf-8"))
