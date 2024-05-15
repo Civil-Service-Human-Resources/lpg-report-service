@@ -43,7 +43,7 @@ public class CourseCompletionsControllerTest {
                         .characterEncoding("utf-8"))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string(containsString("Field courseIds is invalid: size must be between 1 and 10")))
+                .andExpect(content().string(containsString("Field courseIds is invalid: size must be between 1 and 30")))
                 .andExpect(content().string(containsString("Field organisationIds is invalid: size must be between 1 and 400")));
     }
 
