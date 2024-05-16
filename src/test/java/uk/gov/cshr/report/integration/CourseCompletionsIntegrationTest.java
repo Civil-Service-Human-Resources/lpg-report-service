@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
 import uk.gov.cshr.report.configuration.TestConfig;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -166,5 +168,29 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
                 .jsonPath("$.results[9].courseId").isEqualTo("c5")
                 .jsonPath("$.results[9].total").isEqualTo(1)
                 .jsonPath("$.results[9].dateBin").isEqualTo("2024-06-01T00:00:00Z");
+    }
+
+    @Test
+    public void testRemoveUserDetailsReturnsTheCorrectNumberUpdatedRows(){
+        String removeUserDetailsEndpoint = "/course-completions/remove-user-details";
+        String body = "{" +
+                "\"uids\": [\"user1\", \"user2\"]" +
+                "}";
+
+        int expectedNumberOfUpdatedRows = 7;
+
+        webTestClient
+                .put()
+                .uri(uriBuilder -> uriBuilder.path(removeUserDetailsEndpoint).build())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromObject(body))
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .consumeWith(System.out::println)
+                .jsonPath("$").isEqualTo(expectedNumberOfUpdatedRows);
+        ;
     }
 }
