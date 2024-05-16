@@ -1,5 +1,6 @@
 package uk.gov.cshr.report.controller;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -7,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import uk.gov.cshr.report.controller.model.AggregationResponse;
+import uk.gov.cshr.report.controller.model.DeleteUserDetailsParams;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.service.CourseCompletionService;
@@ -30,5 +33,12 @@ public class CourseCompletionsController {
     public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@RequestBody @Valid GetCourseCompletionsParams params) {
         List<CourseCompletionAggregation> results =  courseCompletionService.getCourseCompletions(params);
         return new AggregationResponse<>(params.getBinDelimiter().getVal(), results);
+    }
+
+    @Transactional
+    @PutMapping("/remove-user-details")
+    @ResponseBody
+    public int removeUserDetails(@RequestBody DeleteUserDetailsParams deleteUserDetailsParams) {
+        return courseCompletionService.removeUserDetails(deleteUserDetailsParams.getUids());
     }
 }

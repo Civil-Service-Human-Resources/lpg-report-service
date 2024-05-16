@@ -1,6 +1,7 @@
 package uk.gov.cshr.report.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
@@ -28,4 +29,13 @@ public interface CourseCompletionEventRepository extends JpaRepository<CourseCom
                                                                         @Param("organisationIds") List<Integer> organisationIds,
                                                                         @Param("gradeIds") List<Integer> gradeIds,
                                                                         @Param("professionIds") List<Integer> professionIds);
+
+
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("""
+    UPDATE CourseCompletionEvent cce
+    SET cce.userId = NULL, cce.userEmail = NULL
+    WHERE cce.userId in :uids
+""")
+    int removeUserDetails(List<String> uids);
 }

@@ -189,4 +189,28 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
                 .jsonPath("$.results[9].total").isEqualTo(1)
                 .jsonPath("$.results[9].dateBin").isEqualTo("2024-06-01T00:00:00Z");
     }
+
+    @Test
+    public void testRemoveUserDetailsReturnsTheCorrectNumberUpdatedRows(){
+        String removeUserDetailsEndpoint = "/course-completions/remove-user-details";
+        String body = "{" +
+                "\"uids\": [\"user1\", \"user2\"]" +
+                "}";
+
+        int expectedNumberOfUpdatedRows = 7;
+
+        webTestClient
+                .put()
+                .uri(uriBuilder -> uriBuilder.path(removeUserDetailsEndpoint).build())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromObject(body))
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .consumeWith(System.out::println)
+                .jsonPath("$").isEqualTo(expectedNumberOfUpdatedRows);
+        ;
+    }
 }
