@@ -20,7 +20,7 @@ public class CourseCompletionService {
     }
 
     public List<CourseCompletionAggregation> getCourseCompletions(GetCourseCompletionsParams params) {
-        return repository.getCompletionsAggregationByCourse(params.getBinDelimiter().getVal(), params.getStartDate(), params.getEndDate(),
+        return repository.getCompletionsAggregationByCourse(params.getBinDelimiter().getVal(), params.getStartDateTime(), params.getEndDateTime(),
                 params.getCourseIds(), params.getOrganisationIds(), params.getGradeIds(), params.getProfessionIds());
     }
 

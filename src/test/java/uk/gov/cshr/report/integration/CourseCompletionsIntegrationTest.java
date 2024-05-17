@@ -22,8 +22,8 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
     public void testGetAggregationsByHour() {
         String input = """
                 {
-                    "startDate": "2024-01-01T00:00:00Z",
-                    "endDate": "2024-01-02T00:00:00Z",
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-01-02",
                     "courseIds": ["c1", "c2"],
                     "organisationIds": [1],
                     "binDelimiter": "HOUR"
@@ -61,8 +61,8 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
     public void testGetAggregationsByDay() {
         String input = """
                 {
-                    "startDate": "2024-01-01T00:00:00Z",
-                    "endDate": "2024-02-04T00:00:00Z",
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-02-04",
                     "courseIds": ["c1", "c3"],
                     "organisationIds": [1],
                     "binDelimiter": "DAY"
@@ -91,8 +91,8 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
     public void testGetAggregationsByWeek() {
         String input = """
                 {
-                    "startDate": "2024-01-01T00:00:00Z",
-                    "endDate": "2024-03-21T00:00:00Z",
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-03-21",
                     "courseIds": ["c1", "c2", "c3"],
                     "organisationIds": [1],
                     "professionIds": [2, 4],
@@ -131,8 +131,8 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
     public void testGetAggregationsByMonth() {
         String input = """
                 {
-                    "startDate": "2024-01-01T00:00:00Z",
-                    "endDate": "2024-06-02T00:00:00Z",
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-06-02",
                     "courseIds": ["c1", "c2", "c3", "c4", "c5"],
                     "organisationIds": [1, 2, 3],
                     "binDelimiter": "MONTH"
