@@ -4,6 +4,10 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.cshr.report.controller.model.AggregationResponse;
 import uk.gov.cshr.report.controller.model.DeleteUserDetailsParams;
@@ -24,9 +28,9 @@ public class CourseCompletionsController {
         this.courseCompletionService = courseCompletionService;
     }
 
-    @GetMapping("/aggregations/by-course")
+    @PostMapping("/aggregations/by-course")
     @ResponseBody
-    public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@Valid GetCourseCompletionsParams params) {
+    public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@RequestBody @Valid GetCourseCompletionsParams params) {
         List<CourseCompletionAggregation> results =  courseCompletionService.getCourseCompletions(params);
         return new AggregationResponse<>(params.getBinDelimiter().getVal(), results);
     }

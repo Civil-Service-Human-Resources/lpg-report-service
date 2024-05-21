@@ -24,11 +24,11 @@ public class GetCourseCompletionsParams {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 30)
     @NotNull
     private List<String> courseIds;
 
-    @Size(min = 1)
+    @Size(min = 1, max = 400)
     @NotNull
     private List<Integer> organisationIds;
 
@@ -38,11 +38,11 @@ public class GetCourseCompletionsParams {
 
     private AggregationBinDelimiter binDelimiter = AggregationBinDelimiter.DAY;
 
-    public ZonedDateTime getStartDate() {
-        return startDate.atStartOfDay(ZoneId.systemDefault());
+    public ZonedDateTime getStartDateTime() {
+        return startDate.atStartOfDay(ZoneId.of("UTC"));
     }
 
-    public ZonedDateTime getEndDate() {
-        return endDate.atStartOfDay(ZoneId.systemDefault());
+    public ZonedDateTime getEndDateTime() {
+        return endDate.atStartOfDay(ZoneId.of("UTC"));
     }
 }

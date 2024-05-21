@@ -20,15 +20,20 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
 
     @Test
     public void testGetAggregationsByHour() {
+        String input = """
+                {
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-01-02",
+                    "courseIds": ["c1", "c2"],
+                    "organisationIds": [1],
+                    "binDelimiter": "HOUR"
+                }
+                """;
         webTestClient
-                .get()
-                .uri(uriBuilder -> uriBuilder.path( "/course-completions/aggregations/by-course")
-                        .queryParam("startDate", "2024-01-01")
-                        .queryParam("endDate", "2024-01-02")
-                        .queryParam("courseIds", "c1, c2")
-                        .queryParam("organisationIds", "1")
-                        .queryParam("binDelimiter", "HOUR")
-                        .build())
+                .post()
+                .uri("/course-completions/aggregations/by-course")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(input))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
@@ -54,15 +59,20 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
 
     @Test
     public void testGetAggregationsByDay() {
+        String input = """
+                {
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-02-04",
+                    "courseIds": ["c1", "c3"],
+                    "organisationIds": [1],
+                    "binDelimiter": "DAY"
+                }
+                """;
         webTestClient
-                .get()
-                .uri(uriBuilder -> uriBuilder.path( "/course-completions/aggregations/by-course")
-                        .queryParam("startDate", "2024-01-01")
-                        .queryParam("endDate", "2024-02-04")
-                        .queryParam("courseIds", "c1, c3")
-                        .queryParam("organisationIds", "1")
-                        .queryParam("binDelimiter", "DAY")
-                        .build())
+                .post()
+                .uri("/course-completions/aggregations/by-course")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(input))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
@@ -79,16 +89,21 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
 
     @Test
     public void testGetAggregationsByWeek() {
+        String input = """
+                {
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-03-21",
+                    "courseIds": ["c1", "c2", "c3"],
+                    "organisationIds": [1],
+                    "professionIds": [2, 4],
+                    "binDelimiter": "WEEK"
+                }
+                """;
         webTestClient
-                .get()
-                .uri(uriBuilder -> uriBuilder.path( "/course-completions/aggregations/by-course")
-                        .queryParam("startDate", "2024-01-01")
-                        .queryParam("endDate", "2024-03-21")
-                        .queryParam("courseIds", "c1, c2, c3")
-                        .queryParam("organisationIds", "1")
-                        .queryParam("professionIds", "2, 4")
-                        .queryParam("binDelimiter", "WEEK")
-                        .build())
+                .post()
+                .uri("/course-completions/aggregations/by-course")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(input))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
@@ -114,15 +129,20 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
 
     @Test
     public void testGetAggregationsByMonth() {
+        String input = """
+                {
+                    "startDate": "2024-01-01",
+                    "endDate": "2024-06-02",
+                    "courseIds": ["c1", "c2", "c3", "c4", "c5"],
+                    "organisationIds": [1, 2, 3],
+                    "binDelimiter": "MONTH"
+                }
+                """;
         webTestClient
-                .get()
-                .uri(uriBuilder -> uriBuilder.path( "/course-completions/aggregations/by-course")
-                        .queryParam("startDate", "2024-01-01")
-                        .queryParam("endDate", "2024-06-02")
-                        .queryParam("courseIds", "c1, c2, c3, c4, c5")
-                        .queryParam("organisationIds", "1, 2, 3")
-                        .queryParam("binDelimiter", "MONTH")
-                        .build())
+                .post()
+                .uri("/course-completions/aggregations/by-course")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(input))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
