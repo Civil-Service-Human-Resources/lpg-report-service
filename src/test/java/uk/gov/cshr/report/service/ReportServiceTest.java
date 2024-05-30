@@ -1,11 +1,11 @@
 package uk.gov.cshr.report.service;
 
 import com.google.common.collect.ImmutableMap;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.test.context.support.WithMockUser;
 import uk.gov.cshr.report.domain.catalogue.Course;
 import uk.gov.cshr.report.domain.catalogue.Event;
@@ -21,10 +21,10 @@ import uk.gov.cshr.report.reports.ModuleReportRow;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ReportServiceTest {
     @Mock
     private LearnerRecordService learnerRecordService;
@@ -36,7 +36,7 @@ public class ReportServiceTest {
     private LearningCatalogueService learningCatalogueService;
 
     @Mock
-    private IdentityService identityService;
+    private IdentitiesService identitiesService;
 
     @Mock
     private ReportRowFactory reportRowFactory;
@@ -45,10 +45,10 @@ public class ReportServiceTest {
 
     private ReportService reportService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         reportService = new ReportService(learnerRecordService, civilServantRegistryService, learningCatalogueService,
-                reportRowFactory, identityService, backEndAPICallBatchSize);
+                reportRowFactory, identitiesService, backEndAPICallBatchSize);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class ReportServiceTest {
                 "learner1", civilServant1,
                 "learner3", civilServant3
         ));
-        when(identityService.getIdentitiesMap()).thenReturn(ImmutableMap.of(identity.getUid(), identity));
+
         when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
 
         BookingReportRow reportRow = new BookingReportRow();
@@ -99,9 +99,9 @@ public class ReportServiceTest {
 
     @Test
     @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
-    public void shouldReturnModuleReport() {
+    public void testBuildModuleReportShouldReturnCorrectRowsForCSVReport() {
 
-        String learners = "learner1,learner2,learner3";
+        List<String> learners = Arrays.asList("learner1", "learner2", "learner3");
         String courseIds = "courseId1,courseId2,courseId3";
 
         CivilServant civilServant1 = new CivilServant();
@@ -149,7 +149,7 @@ public class ReportServiceTest {
                 identity2.getUid(), identity2,
                 identity3.getUid(), identity3
         );
-        when(identityService.getIdentitiesMapForLearners(learners)).thenReturn(identities);
+        when(identitiesService.getIdentitiesFromUids(learners)).thenReturn(identities);
 
         Module module1 = new Module();
         module1.setId("moduleId1");

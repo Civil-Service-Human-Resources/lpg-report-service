@@ -1,31 +1,68 @@
-
+database:
+  host: ${DATABASE_HOST:jdbc:postgresql://localhost:5432}
+  name: ${DATABASE_NAME:reporting}
+  use-ssl: ${DATABASE_USESSL:false}
+app:
+  messaging:
+    queues:
+      course-completions:
+        name: coursecompletions
+    activemq:
+      url: ${ACTIVEMQ_URL:tcp://localhost:61616}
+      username: ${ACTIVEMQ_USERNAME:artemis}
+      password: ${ACTIVEMQ_PASSWORD:artemis}
+  partition-manager:
+    - name: coursecompletions
+      enabled: ${COURSE_COMPLETIONS_PARTITION_ENABLED:true}
+      tableName: course_completion_events
+      indexColumns: course_id,organisation_id,profession_id,grade_id,event_timestamp
+      partitionLookaheadInDays: ${COURSE_COMPLETIONS_PARTITION_LOOKAHEAD_DAYS:7}
+      cronSchedule: ${COURSE_COMPLETIONS_PARTITION_CRON_SCHEDULE:0 0 0 * * *}
+      runOnStartup: ${COURSE_COMPLETIONS_PARTITION_RUN_ON_STARTUP:true}
 spring:
+  datasource:
+    username: ${DATASOURCE_USERNAME:root}
+    password: ${DATASOURCE_PASSWORD:root-pw}
+    url: ${DATASOURCE_URL:${database.host}/${database.name}?useSSL=${database.use-ssl}&requireSSL=false}
+    driver-class-name: org.postgresql.Driver
   jackson:
     serialization:
       write_dates_as_timestamps: false
     default-property-inclusion: non_null
-  resources:
-    add-mappings: false
-
+  jms:
+    servicebus:
+      enabled: ${JMS_USE_SERVICEBUS:false}
+      connection-string: ${SERVICEBUS_CONNECTION_STRING:}
+      pricing-tier: Premium
+  flyway:
+    locations: classpath:db/migration/{vendor}
+  web:
+    resources:
+      add-mappings: false
+  security:
+    user:
+      name: ${REPORT_SERVICE_BASIC_USERNAME:changeme}
+      password: ${REPORT_SERVICE_BASIC_PASSWORD:changeme}
 server:
   port: 9004
-
 logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
   level:
-    root: ${ROOT_LOGGING_LEVEL:INFO}
+    root: ${ROOT_LOGGING_LEVEL:DEBUG}
     org.apache.http: WARN
 
 oauth:
   serviceUrl: ${OAUTH_SERVICE_URL:http://localhost:8080}
   clientId: ${CLIENT_ID:9fbd4ae2-2db3-44c7-9544-88e80255b56e}
   clientSecret: ${CLIENT_SECRET:test}
-  checkTokenUrl: "${oauth.serviceUrl}/oauth/check_token"
-  tokenUrl: "${oauth.serviceUrl}/oauth/token"
+  checkTokenEndpoint: ${OAUTH_CHECK_TOKEN_ENDPOINT:/oauth/check_token}
+  checkTokenUrl: "${oauth.serviceUrl}${oauth.checkTokenEndpoint}"
+  tokenEndpoint: ${OAUTH_TOKEN_ENDPOINT:/oauth/token}
+  tokenUrl: "${oauth.serviceUrl}${oauth.tokenEndpoint}"
   identitiesListUrl: "${oauth.serviceUrl}/api/identities/map"
   identitiesMapForLearnersIdsUrl: "${oauth.serviceUrl}/api/identities/map-for-uids"
-  jwtKey: ${jwt_key}
+  jwtKey: ${jwt_key:TONterOunSTRUcIenscaDiSHoUrPanti}
 
 learnerRecord:
   serviceUrl: ${LEARNER_RECORD_URL:http://localhost:9000}
@@ -35,6 +72,7 @@ learnerRecord:
   moduleRecordsUrl: "${learnerRecord.serviceUrl}/reporting/module-records"
   moduleRecordsForLearnersUrl: "${learnerRecord.serviceUrl}/reporting/module-records-for-learners"
   moduleRecordsForCourseIdsUrl: "${learnerRecord.serviceUrl}/reporting/module-records-for-course-ids"
+
 
 registryService:
   serviceUrl: ${REGISTRY_SERVICE_URL:http://localhost:9002}
@@ -49,8 +87,12 @@ learningCatalogue:
 
 report:
   backEndAPICallBatchSize: ${BACKEND_API_CALL_BATCH_SIZE:50}
-
+info:
+  name: "Report service API"
+  description: "Provides reporting and management information data"
 ---
 
 spring:
-  profiles: production
+  config:
+    activate:
+      on-profile: production

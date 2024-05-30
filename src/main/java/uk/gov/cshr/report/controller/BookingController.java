@@ -1,23 +1,22 @@
 package uk.gov.cshr.report.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
-import uk.gov.cshr.report.reports.BookingReportRow;
-import uk.gov.cshr.report.service.ReportService;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import uk.gov.cshr.report.reports.BookingReportRow;
+import uk.gov.cshr.report.service.ReportService;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/bookings")
 public class BookingController {
     private final ReportService reportService;

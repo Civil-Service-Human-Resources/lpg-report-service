@@ -1,6 +1,6 @@
 package uk.gov.cshr.report.service;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
@@ -9,7 +9,7 @@ import uk.gov.cshr.report.exception.IllegalTypeException;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ParameterizedTypeReferenceFactoryTest {
 

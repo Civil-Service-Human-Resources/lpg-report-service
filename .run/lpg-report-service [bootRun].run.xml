@@ -1,0 +1,37 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="lpg-report-service [bootRun]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+    <ExternalSystemSettings>
+      <option name="env">
+        <map>
+          <entry key="CLIENT_ID" value="9fbd4ae2-2db3-44c7-9544-88e80255b56e" />
+          <entry key="CLIENT_SECRET" value="test" />
+          <entry key="jwt_key" value="key" />
+          <entry key="LEARNER_RECORD_URL" value="http://localhost:9000" />
+          <entry key="OAUTH_CHECK_TOKEN_ENDPOINT" value="/oauth2/introspect" />
+          <entry key="OAUTH_SERVICE_URL" value="http://localhost:9005" />
+          <entry key="OAUTH_TOKEN_ENDPOINT" value="/oauth2/token" />
+          <entry key="REGISTRY_SERVICE_URL" value="http://localhost:9002" />
+          <entry key="LEARNING_CATALOGUE_SERVICE_URL" value="http://localhost:9001" />
+        </map>
+      </option>
+      <option name="executionName" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$" />
+      <option name="externalSystemIdString" value="GRADLE" />
+      <option name="scriptParameters" value="" />
+      <option name="taskDescriptions">
+        <list />
+      </option>
+      <option name="taskNames">
+        <list>
+          <option value="bootRun" />
+        </list>
+      </option>
+      <option name="vmOptions" />
+    </ExternalSystemSettings>
+    <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+    <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+    <DebugAllEnabled>false</DebugAllEnabled>
+    <ForceTestExec>false</ForceTestExec>
+    <method v="2" />
+  </configuration>
+</component>

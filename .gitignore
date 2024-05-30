@@ -8,3 +8,5 @@ build
 out
 .project
 .settings/*
+target/
+data/
