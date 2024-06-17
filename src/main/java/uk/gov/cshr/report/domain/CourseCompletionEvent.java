@@ -37,14 +37,25 @@ public class CourseCompletionEvent {
     @Column(nullable = false)
     private Integer organisationId;
 
+    @Column
+    private String organisationAbbreviation;
+
     @Column(nullable = false)
     private Integer professionId;
 
     @Column
+    private String professionName;
+
+    @Column
     private Integer gradeId;
 
+    @Column
+    private String gradeCode;
+
+
+
     public CourseCompletionEvent(String externalId, String userId, String userEmail, String courseId, String courseTitle,
-                                 LocalDateTime eventTimestamp, Integer organisationId, Integer professionId, Integer gradeId) {
+                                 LocalDateTime eventTimestamp, Integer organisationId, String organisationAbbreviation, Integer professionId, String professionName, Integer gradeId, String gradeCode) {
         this.externalId = externalId;
         this.userId = userId;
         this.userEmail = userEmail;
@@ -52,8 +63,11 @@ public class CourseCompletionEvent {
         this.courseTitle = courseTitle;
         this.eventTimestamp = eventTimestamp.atZone(ZoneId.systemDefault());
         this.organisationId = organisationId;
+        this.organisationAbbreviation = organisationAbbreviation;
         this.professionId = professionId;
+        this.professionName = professionName;
         this.gradeId = gradeId;
+        this.gradeCode = gradeCode;
     }
 
     public CourseCompletionEvent() {
