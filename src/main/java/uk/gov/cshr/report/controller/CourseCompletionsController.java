@@ -3,6 +3,7 @@ package uk.gov.cshr.report.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import uk.gov.cshr.report.controller.model.AggregationResponse;
 import uk.gov.cshr.report.controller.model.DeleteUserDetailsParams;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
+import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.service.CourseCompletionService;
 
@@ -40,5 +42,17 @@ public class CourseCompletionsController {
     @ResponseBody
     public int removeUserDetails(@RequestBody DeleteUserDetailsParams deleteUserDetailsParams) {
         return courseCompletionService.removeUserDetails(deleteUserDetailsParams.getUids());
+    }
+
+    @PostMapping("/report-requests")
+    public ResponseEntity<CourseCompletionReportRequest> addReportRequest(@RequestBody CourseCompletionReportRequest reportRequest){
+        CourseCompletionReportRequest savedRequest = courseCompletionService.addReportRequest(reportRequest);
+        return ResponseEntity.ok(savedRequest);
+    }
+
+    @GetMapping("/report-requests")
+    @ResponseBody
+    public List<CourseCompletionReportRequest> getAllReportRequests(){
+        return courseCompletionService.findAllReportRequests();
     }
 }
