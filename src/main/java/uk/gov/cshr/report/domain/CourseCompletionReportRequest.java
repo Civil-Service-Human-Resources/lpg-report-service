@@ -1,7 +1,8 @@
 package uk.gov.cshr.report.domain;
-
+import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -10,7 +11,6 @@ import java.util.List;
 @Getter
 @Table(name = "course_completion_report_requests")
 @Setter
-@ToString
 public class CourseCompletionReportRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,21 +38,20 @@ public class CourseCompletionReportRequest {
     @Column(name = "to_date", nullable = false)
     private ZonedDateTime toDate;
 
-    @ElementCollection
-    @CollectionTable(name = "course_completion_report_requests_course_ids", joinColumns = @JoinColumn(name = "report_request_id"))
-    @Column(name = "course_ids", nullable = false)
+    @Type(ListArrayType.class)
+    @Column(name = "course_ids", nullable = false, columnDefinition = "text[]")
     private List<String> courseIds;
 
-    @ElementCollection
-    @Column(name = "organisation_ids", nullable = false)
+    @Type(ListArrayType.class)
+    @Column(name = "organisation_ids", nullable = false, columnDefinition = "int[]")
     private List<Integer> organisationIds;
 
-    @ElementCollection
-    @Column(name = "profession_ids")
+    @Type(ListArrayType.class)
+    @Column(name = "profession_ids", columnDefinition = "int[]")
     private List<Integer> professionIds;
 
-    @ElementCollection
-    @Column(name = "grade_ids")
+    @Type(ListArrayType.class)
+    @Column(name = "grade_ids", columnDefinition = "int[]")
     private List<Integer> gradeIds;
 
 
