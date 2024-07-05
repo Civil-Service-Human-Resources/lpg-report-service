@@ -51,7 +51,7 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsCorrect() throws Exception {
-        String requestBody = "{\"requesterId\": \"requester001\", \"requesterEmail\": \"learner@defra.org.uk\", \"requestedTimestamp\": \"2024-06-28T15:30:00.123456+00:00\", \"status\":\"REQUESTED\", \"fromDate\":\"2024-01-01T00:00:00.123456+00:00\", \"toDate\":\"2024-03-01T00:00:00.123456+00:00\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [1,2,3,4], \"gradeIds\": [1,2,3,4]}";
+        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01\", \"endDate\": \"2024-02-01\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8]}";
 
         mockMvc.perform(
                 post("/course-completions/report-requests")
@@ -62,6 +62,22 @@ public class CourseCompletionsControllerTest {
                     .characterEncoding("utf-8"))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "user")
+    public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsMissingRequiredFields() throws Exception {
+        String requestBody = "{\"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01\", \"endDate\": \"2024-02-01\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8]}";
+
+        mockMvc.perform(
+                        post("/course-completions/report-requests")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody)
+                                .with(csrf())
+                                .accept(MediaType.APPLICATION_JSON)
+                                .characterEncoding("utf-8"))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -79,16 +95,37 @@ public class CourseCompletionsControllerTest {
 
     @Test
     @WithMockUser(username = "user")
-    public void testGetReportRequestsEndpointReturnsOk() throws Exception {
-
+    public void testGetReportRequestsEndpointReturnsOkIfCorrectRequestBodyIsGiven() throws Exception {
+        String requestBody = "{\n" +
+                "    \"userId\": \"user003\",\n" +
+                "    \"status\": \"REQUESTED\"\n" +
+                "}";
         mockMvc.perform(
                         get("/course-completions/report-requests")
                                 .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody)
                                 .with(csrf())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .characterEncoding("utf-8"))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "user")
+    public void testGetReportRequestsEndpointReturnsBadRequestIfRequiredRequestBodyFieldIsMissing() throws Exception {
+        String requestBody = "{\n" +
+                "    \"userId\": \"user003\",\n" +
+                "}";
+        mockMvc.perform(
+                        get("/course-completions/report-requests")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody)
+                                .with(csrf())
+                                .accept(MediaType.APPLICATION_JSON)
+                                .characterEncoding("utf-8"))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
 

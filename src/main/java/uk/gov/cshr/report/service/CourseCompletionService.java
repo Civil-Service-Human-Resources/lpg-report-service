@@ -1,9 +1,11 @@
 package uk.gov.cshr.report.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
+import uk.gov.cshr.report.controller.model.GetCourseCompletionsReportRequestParams;
 import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
@@ -18,9 +20,15 @@ public class CourseCompletionService {
     private final CourseCompletionEventRepository repository;
     private final CourseCompletionReportRequestRepository courseCompletionReportRequestRepository;
 
-    public CourseCompletionService(CourseCompletionEventRepository repository, CourseCompletionReportRequestRepository courseCompletionReportRequestRepository) {
+    private int maxRequestsPerUser;
+
+    public CourseCompletionService(
+            CourseCompletionEventRepository repository,
+            CourseCompletionReportRequestRepository courseCompletionReportRequestRepository,
+            @Value("${courseCompletions.reports.maxRequestsPerUser}") int maxRequestsPerUser) {
         this.repository = repository;
         this.courseCompletionReportRequestRepository = courseCompletionReportRequestRepository;
+        this.maxRequestsPerUser = maxRequestsPerUser;
     }
 
     public List<CourseCompletionAggregation> getCourseCompletions(GetCourseCompletionsParams params) {
@@ -38,7 +46,13 @@ public class CourseCompletionService {
         return courseCompletionReportRequestRepository.save(reportRequest);
     }
 
-    public List<CourseCompletionReportRequest> findAllReportRequests(){
-        return courseCompletionReportRequestRepository.findAll();
+    public List<CourseCompletionReportRequest> findReportRequestsByUserIdAndStatus(GetCourseCompletionsReportRequestParams params){
+        return courseCompletionReportRequestRepository.findAllByUserIdAndStatus(params.getUserId(), params.getStatus());
+    }
+
+    public boolean userReachedMaxReportRequests(String userId){
+        GetCourseCompletionsReportRequestParams params = new GetCourseCompletionsReportRequestParams(userId, "REQUESTED");
+        List<CourseCompletionReportRequest> pendingRequests = findReportRequestsByUserIdAndStatus(params);
+        return pendingRequests.size() >= maxRequestsPerUser;
     }
 }

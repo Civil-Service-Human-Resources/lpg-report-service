@@ -12,7 +12,7 @@ CREATE TABLE course_completion_report_requests (
     report_request_id SERIAL,
     requester_id VARCHAR(36),
     requester_email VARCHAR(100),
-    requested_timestamp TIMESTAMPTZ NOT NULL,
+    requested_timestamp TIMESTAMPTZ NOT NULL DEFAULT now(),
     completed_timestamp TIMESTAMPTZ,
     status VARCHAR(20) NOT NULL,
     from_date TIMESTAMPTZ NOT NULL,
