@@ -45,7 +45,7 @@ public class CourseCompletionsController {
     }
 
     @PostMapping("/report-requests")
-    public ResponseEntity<CourseCompletionReportRequest> addReportRequest(@RequestBody CourseCompletionReportRequest reportRequest){
+    public ResponseEntity<CourseCompletionReportRequest> addReportRequest(@RequestBody @Valid CourseCompletionReportRequest reportRequest){
         CourseCompletionReportRequest savedRequest = courseCompletionService.addReportRequest(reportRequest);
         return ResponseEntity.ok(savedRequest);
     }

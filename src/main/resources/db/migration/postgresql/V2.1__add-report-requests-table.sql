@@ -26,8 +26,3 @@ CREATE TABLE course_completion_report_requests (
         FOREIGN KEY(status)
             REFERENCES report_requests_status(status)
 );
-
-CREATE TABLE course_completion_report_requests_course_ids (
-    report_request_id INTEGER NOT NULL,
-    course_id TEXT NOT NULL
-);
