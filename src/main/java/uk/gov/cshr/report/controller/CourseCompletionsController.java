@@ -3,7 +3,6 @@ package uk.gov.cshr.report.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +16,7 @@ import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -52,26 +49,19 @@ public class CourseCompletionsController {
 
     @PostMapping("/report-requests")
     @ResponseBody
-    public Map<String, Object> addReportRequest(@RequestBody @Valid PostCourseCompletionsReportRequestParams params){
-        Map<String, Object> response = new HashMap<>();
-
+    public AddCourseCompletionReportRequestResponse addReportRequest(@RequestBody @Valid PostCourseCompletionsReportRequestParams params){
         if(courseCompletionReportRequestService.userReachedMaxReportRequests(params.getUserId())){
-            response.put("addedSuccessfully", false);
-            response.put("reason", "User has reached the maximum allowed report requests");
-            return response;
+            return new AddCourseCompletionReportRequestResponse(false, "User has reached the maximum allowed report requests");
         }
         CourseCompletionReportRequest reportRequest = postCourseCompletionsReportRequestsParamsToReportRequestMapper.getRequestFromParams(params);
         courseCompletionReportRequestService.addReportRequest(reportRequest);
-        response.put("addedSuccessfully", true);
-        return response;
+        return new AddCourseCompletionReportRequestResponse(true);
     }
 
     @GetMapping("/report-requests")
     @ResponseBody
-    public Map<String, List<CourseCompletionReportRequest>> getAllReportRequests(@RequestBody @Valid GetCourseCompletionsReportRequestParams params){
+    public GetCourseCompletionReportRequestsResponse getAllReportRequests(@RequestBody @Valid GetCourseCompletionsReportRequestParams params){
         List<CourseCompletionReportRequest> reportRequests = courseCompletionReportRequestService.findReportRequestsByUserIdAndStatus(params);
-        Map<String, List<CourseCompletionReportRequest>> response = new HashMap<>();
-        response.put("requests", reportRequests);
-        return response;
+        return new GetCourseCompletionReportRequestsResponse(reportRequests);
     }
 }

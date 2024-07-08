@@ -33,4 +33,6 @@ public class PostCourseCompletionsReportRequestParams {
     private List<Integer> organisationIds;
 
     private List<Integer> professionIds;
+
+    private List<Integer> gradeIds;
 }

@@ -25,7 +25,7 @@ public class CourseCompletionReportRequestService {
     }
 
     public List<CourseCompletionReportRequest> findReportRequestsByUserIdAndStatus(GetCourseCompletionsReportRequestParams params){
-        return courseCompletionReportRequestRepository.findAllByUserIdAndStatus(params.getUserId(), params.getStatus());
+        return courseCompletionReportRequestRepository.findByRequesterIdAndStatus(params.getUserId(), params.getStatus());
     }
 
     public boolean userReachedMaxReportRequests(String userId){

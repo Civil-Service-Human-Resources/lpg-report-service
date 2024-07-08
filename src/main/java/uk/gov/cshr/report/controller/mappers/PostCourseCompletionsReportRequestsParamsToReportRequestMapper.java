@@ -18,6 +18,7 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper {
         reportRequest.setCourseIds(params.getCourseIds());
         reportRequest.setOrganisationIds(params.getOrganisationIds());
         reportRequest.setProfessionIds(params.getProfessionIds());
+        reportRequest.setGradeIds(params.getGradeIds());
 
         return reportRequest;
     }
