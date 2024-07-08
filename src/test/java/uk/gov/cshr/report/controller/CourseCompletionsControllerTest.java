@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import uk.gov.cshr.report.controller.model.ErrorDtoFactory;
+import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 
 import static org.hamcrest.Matchers.containsString;
@@ -30,6 +31,9 @@ public class CourseCompletionsControllerTest {
 
     @MockBean
     private CourseCompletionService courseCompletionService;
+
+    @MockBean
+    private CourseCompletionReportRequestService courseCompletionReportRequestService;
 
     @Test
     @WithMockUser(username = "user")

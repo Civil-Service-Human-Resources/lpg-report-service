@@ -14,6 +14,7 @@ import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequests
 import uk.gov.cshr.report.controller.model.*;
 import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
+import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 
 import java.util.HashMap;
@@ -26,10 +27,12 @@ import java.util.Map;
 public class CourseCompletionsController {
 
     private final CourseCompletionService courseCompletionService;
+    private final CourseCompletionReportRequestService courseCompletionReportRequestService;
     private final PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper;
 
-    public CourseCompletionsController(CourseCompletionService courseCompletionService) {
+    public CourseCompletionsController(CourseCompletionService courseCompletionService, CourseCompletionReportRequestService courseCompletionReportRequestService) {
         this.courseCompletionService = courseCompletionService;
+        this.courseCompletionReportRequestService = courseCompletionReportRequestService;
         this.postCourseCompletionsReportRequestsParamsToReportRequestMapper = new PostCourseCompletionsReportRequestsParamsToReportRequestMapper();
     }
 
@@ -52,13 +55,13 @@ public class CourseCompletionsController {
     public Map<String, Object> addReportRequest(@RequestBody @Valid PostCourseCompletionsReportRequestParams params){
         Map<String, Object> response = new HashMap<>();
 
-        if(courseCompletionService.userReachedMaxReportRequests(params.getUserId())){
+        if(courseCompletionReportRequestService.userReachedMaxReportRequests(params.getUserId())){
             response.put("addedSuccessfully", false);
             response.put("reason", "User has reached the maximum allowed report requests");
             return response;
         }
         CourseCompletionReportRequest reportRequest = postCourseCompletionsReportRequestsParamsToReportRequestMapper.getRequestFromParams(params);
-        courseCompletionService.addReportRequest(reportRequest);
+        courseCompletionReportRequestService.addReportRequest(reportRequest);
         response.put("addedSuccessfully", true);
         return response;
     }
@@ -66,7 +69,7 @@ public class CourseCompletionsController {
     @GetMapping("/report-requests")
     @ResponseBody
     public Map<String, List<CourseCompletionReportRequest>> getAllReportRequests(@RequestBody GetCourseCompletionsReportRequestParams params){
-        List<CourseCompletionReportRequest> reportRequests = courseCompletionService.findReportRequestsByUserIdAndStatus(params);
+        List<CourseCompletionReportRequest> reportRequests = courseCompletionReportRequestService.findReportRequestsByUserIdAndStatus(params);
         Map<String, List<CourseCompletionReportRequest>> response = new HashMap<>();
         response.put("requests", reportRequests);
         return response;

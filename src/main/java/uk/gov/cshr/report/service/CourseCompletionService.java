@@ -18,17 +18,10 @@ import java.util.List;
 public class CourseCompletionService {
 
     private final CourseCompletionEventRepository repository;
-    private final CourseCompletionReportRequestRepository courseCompletionReportRequestRepository;
-
-    private int maxRequestsPerUser;
 
     public CourseCompletionService(
-            CourseCompletionEventRepository repository,
-            CourseCompletionReportRequestRepository courseCompletionReportRequestRepository,
-            @Value("${courseCompletions.reports.maxRequestsPerUser}") int maxRequestsPerUser) {
+            CourseCompletionEventRepository repository) {
         this.repository = repository;
-        this.courseCompletionReportRequestRepository = courseCompletionReportRequestRepository;
-        this.maxRequestsPerUser = maxRequestsPerUser;
     }
 
     public List<CourseCompletionAggregation> getCourseCompletions(GetCourseCompletionsParams params) {
@@ -40,19 +33,5 @@ public class CourseCompletionService {
     public int removeUserDetails(List<String> uids) {
         log.info("Removing user details for UIDs: " + uids);
         return repository.removeUserDetails(uids);
-    }
-
-    public CourseCompletionReportRequest addReportRequest(CourseCompletionReportRequest reportRequest){
-        return courseCompletionReportRequestRepository.save(reportRequest);
-    }
-
-    public List<CourseCompletionReportRequest> findReportRequestsByUserIdAndStatus(GetCourseCompletionsReportRequestParams params){
-        return courseCompletionReportRequestRepository.findAllByUserIdAndStatus(params.getUserId(), params.getStatus());
-    }
-
-    public boolean userReachedMaxReportRequests(String userId){
-        GetCourseCompletionsReportRequestParams params = new GetCourseCompletionsReportRequestParams(userId, "REQUESTED");
-        List<CourseCompletionReportRequest> pendingRequests = findReportRequestsByUserIdAndStatus(params);
-        return pendingRequests.size() >= maxRequestsPerUser;
     }
 }
