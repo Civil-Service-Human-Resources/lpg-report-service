@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
-import uk.gov.cshr.report.controller.model.AggregationResponse;
-import uk.gov.cshr.report.controller.model.DeleteUserDetailsParams;
-import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
+import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequestsParamsToReportRequestMapper;
+import uk.gov.cshr.report.controller.model.*;
+import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
+import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 
 import java.util.List;
@@ -23,9 +24,13 @@ import java.util.List;
 public class CourseCompletionsController {
 
     private final CourseCompletionService courseCompletionService;
+    private final CourseCompletionReportRequestService courseCompletionReportRequestService;
+    private final PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper;
 
-    public CourseCompletionsController(CourseCompletionService courseCompletionService) {
+    public CourseCompletionsController(CourseCompletionService courseCompletionService, CourseCompletionReportRequestService courseCompletionReportRequestService) {
         this.courseCompletionService = courseCompletionService;
+        this.courseCompletionReportRequestService = courseCompletionReportRequestService;
+        this.postCourseCompletionsReportRequestsParamsToReportRequestMapper = new PostCourseCompletionsReportRequestsParamsToReportRequestMapper();
     }
 
     @PostMapping("/aggregations/by-course")
@@ -40,5 +45,23 @@ public class CourseCompletionsController {
     @ResponseBody
     public int removeUserDetails(@RequestBody DeleteUserDetailsParams deleteUserDetailsParams) {
         return courseCompletionService.removeUserDetails(deleteUserDetailsParams.getUids());
+    }
+
+    @PostMapping("/report-requests")
+    @ResponseBody
+    public AddCourseCompletionReportRequestResponse addReportRequest(@RequestBody @Valid PostCourseCompletionsReportRequestParams params){
+        if(courseCompletionReportRequestService.userReachedMaxReportRequests(params.getUserId())){
+            return new AddCourseCompletionReportRequestResponse(false, "User has reached the maximum allowed report requests");
+        }
+        CourseCompletionReportRequest reportRequest = postCourseCompletionsReportRequestsParamsToReportRequestMapper.getRequestFromParams(params);
+        courseCompletionReportRequestService.addReportRequest(reportRequest);
+        return new AddCourseCompletionReportRequestResponse(true);
+    }
+
+    @GetMapping("/report-requests")
+    @ResponseBody
+    public GetCourseCompletionReportRequestsResponse getAllReportRequests(@RequestBody @Valid GetCourseCompletionsReportRequestParams params){
+        List<CourseCompletionReportRequest> reportRequests = courseCompletionReportRequestService.findReportRequestsByUserIdAndStatus(params);
+        return new GetCourseCompletionReportRequestsResponse(reportRequests);
     }
 }

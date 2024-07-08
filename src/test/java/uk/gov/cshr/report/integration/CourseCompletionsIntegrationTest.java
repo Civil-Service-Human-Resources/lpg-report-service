@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -212,5 +213,143 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
                 .consumeWith(System.out::println)
                 .jsonPath("$").isEqualTo(expectedNumberOfUpdatedRows);
         ;
+    }
+
+    @Test
+    public void testPostReportRequestsReturnsAddedSuccessfullyTrueResponse(){
+        String postReportRequestsEndpoint = "/course-completions/report-requests";
+
+        String requestBody = "{\n" +
+                "    \"userId\": \"testUser01\",\n" +
+                "    \"userEmail\": \"user01@domain.com\",\n" +
+                "    \"startDate\": \"2024-01-01\",\n" +
+                "    \"endDate\": \"2024-02-01\",\n" +
+                "    \"courseIds\": [\"course1\", \"course2\"],\n" +
+                "    \"organisationIds\": [1,2,3,4],\n" +
+                "    \"professionIds\": [5,6,7,8],\n" +
+                "    \"gradeIds\": [4,3,2]\n" +
+                "}";
+
+        String expectedResponseKey = "addedSuccessfully";
+        Boolean expectedResponseValue = true;
+
+        webTestClient
+                .post()
+                .uri(uriBuilder -> uriBuilder.path(postReportRequestsEndpoint).build())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromObject(requestBody))
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .consumeWith(System.out::println)
+                .jsonPath(String.format("$.%s", expectedResponseKey)).isEqualTo(expectedResponseValue);
+    }
+
+    @Test
+    public void testPostReportRequestsReturnsReturnsAddedSuccessfullyFalseResponseWithDetailsIfMaxLimitReachedForUser(){
+        String postReportRequestsEndpoint = "/course-completions/report-requests";
+
+        String requestBody = "{\n" +
+                "    \"userId\": \"testUser02\",\n" +
+                "    \"userEmail\": \"user02@domain.com\",\n" +
+                "    \"startDate\": \"2024-01-01\",\n" +
+                "    \"endDate\": \"2024-02-01\",\n" +
+                "    \"courseIds\": [\"course1\", \"course2\"],\n" +
+                "    \"organisationIds\": [1,2,3,4],\n" +
+                "    \"professionIds\": [5,6,7,8],\n" +
+                "    \"gradeIds\": [4,3,2]\n" +
+                "}";
+
+        String expectedAddedSuccessfullyResponseKey = "addedSuccessfully";
+        Boolean expectedAddedSuccessfullyResponseValue = false;
+        String expectedDetailsResponseKey = "details";
+        String expectedDetailsResponseValue = "User has reached the maximum allowed report requests";
+
+        webTestClient
+                .post()
+                .uri(uriBuilder -> uriBuilder.path(postReportRequestsEndpoint).build())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromObject(requestBody))
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful();
+
+        webTestClient
+                .post()
+                .uri(uriBuilder -> uriBuilder.path(postReportRequestsEndpoint).build())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromObject(requestBody))
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .consumeWith(System.out::println)
+                .jsonPath(String.format("$.%s", expectedAddedSuccessfullyResponseKey)).isEqualTo(expectedAddedSuccessfullyResponseValue)
+                .jsonPath(String.format("$.%s", expectedDetailsResponseKey)).isEqualTo(expectedDetailsResponseValue);
+    }
+
+    @Test
+    public void testGetReportRequestsReturnsCorrectListOfReportRequests(){
+        String reportRequestsEndpoint = "/course-completions/report-requests";
+
+        String postRequestBody = "{\n" +
+                "    \"userId\": \"testUser03\",\n" +
+                "    \"userEmail\": \"user03@domain.com\",\n" +
+                "    \"startDate\": \"2024-01-01\",\n" +
+                "    \"endDate\": \"2024-02-01\",\n" +
+                "    \"courseIds\": [\"course1\", \"course2\"],\n" +
+                "    \"organisationIds\": [1,2,3,4],\n" +
+                "    \"professionIds\": [5,6,7,8],\n" +
+                "    \"gradeIds\": [4,3,2]\n" +
+                "}";
+
+        String getRequestBody = "{\n" +
+                "    \"userId\": \"testUser03\",\n" +
+                "    \"status\": \"REQUESTED\"\n" +
+                "}";
+
+        webTestClient
+                .post()
+                .uri(uriBuilder -> uriBuilder.path(reportRequestsEndpoint).build())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromObject(postRequestBody))
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful();
+
+        webTestClient
+                .method(HttpMethod.GET)
+                .uri(uriBuilder -> uriBuilder.path(reportRequestsEndpoint).build())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromObject(getRequestBody))
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .consumeWith(System.out::println)
+                .jsonPath("$.requests[0].requesterId").isEqualTo("testUser03")
+                .jsonPath("$.requests[0].requesterEmail").isEqualTo("user03@domain.com")
+                .jsonPath("$.requests[0].status").isEqualTo("REQUESTED")
+                .jsonPath("$.requests[0].fromDate").isEqualTo("2024-01-01T00:00:00Z")
+                .jsonPath("$.requests[0].toDate").isEqualTo("2024-02-01T00:00:00Z")
+                .jsonPath("$.requests[0].courseIds[0]").isEqualTo("course1")
+                .jsonPath("$.requests[0].courseIds[1]").isEqualTo("course2")
+                .jsonPath("$.requests[0].organisationIds[0]").isEqualTo(1)
+                .jsonPath("$.requests[0].organisationIds[1]").isEqualTo(2)
+                .jsonPath("$.requests[0].organisationIds[2]").isEqualTo(3)
+                .jsonPath("$.requests[0].organisationIds[3]").isEqualTo(4)
+                .jsonPath("$.requests[0].professionIds[0]").isEqualTo(5)
+                .jsonPath("$.requests[0].professionIds[1]").isEqualTo(6)
+                .jsonPath("$.requests[0].professionIds[2]").isEqualTo(7)
+                .jsonPath("$.requests[0].professionIds[3]").isEqualTo(8)
+                .jsonPath("$.requests[0].gradeIds[0]").isEqualTo(4)
+                .jsonPath("$.requests[0].gradeIds[1]").isEqualTo(3)
+                .jsonPath("$.requests[0].gradeIds[2]").isEqualTo(2);
     }
 }

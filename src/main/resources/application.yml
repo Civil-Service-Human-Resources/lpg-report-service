@@ -87,6 +87,11 @@ learningCatalogue:
 
 report:
   backEndAPICallBatchSize: ${BACKEND_API_CALL_BATCH_SIZE:50}
+
+courseCompletions:
+  reports:
+    maxRequestsPerUser: ${MAX_REQUESTS_PER_USER:1}
+
 info:
   name: "Report service API"
   description: "Provides reporting and management information data"
