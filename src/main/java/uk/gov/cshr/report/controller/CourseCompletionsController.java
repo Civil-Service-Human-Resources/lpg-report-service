@@ -68,7 +68,7 @@ public class CourseCompletionsController {
 
     @GetMapping("/report-requests")
     @ResponseBody
-    public Map<String, List<CourseCompletionReportRequest>> getAllReportRequests(@RequestBody GetCourseCompletionsReportRequestParams params){
+    public Map<String, List<CourseCompletionReportRequest>> getAllReportRequests(@RequestBody @Valid GetCourseCompletionsReportRequestParams params){
         List<CourseCompletionReportRequest> reportRequests = courseCompletionReportRequestService.findReportRequestsByUserIdAndStatus(params);
         Map<String, List<CourseCompletionReportRequest>> response = new HashMap<>();
         response.put("requests", reportRequests);
