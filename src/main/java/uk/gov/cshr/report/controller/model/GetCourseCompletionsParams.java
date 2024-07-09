@@ -7,9 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
-import uk.gov.cshr.report.validation.timezone.TimeZoneFormat;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Data
@@ -25,8 +25,7 @@ public class GetCourseCompletionsParams {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endDate;
 
-    @TimeZoneFormat
-    private String timezone = "UTC";
+    private ZoneId timezone = ZoneId.of("UTC");
 
     @Size(min = 1, max = 30)
     @NotNull

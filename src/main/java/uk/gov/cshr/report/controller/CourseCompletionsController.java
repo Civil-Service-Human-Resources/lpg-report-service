@@ -33,7 +33,7 @@ public class CourseCompletionsController {
     @ResponseBody
     public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@RequestBody @Valid GetCourseCompletionsParams params) {
         List<CourseCompletionAggregation> results =  courseCompletionService.getCourseCompletions(params);
-        return new AggregationResponse<>(params.getTimezone(), params.getBinDelimiter().getVal(), results);
+        return new AggregationResponse<>(params.getTimezone().toString(), params.getBinDelimiter().getVal(), results);
     }
 
     @Transactional

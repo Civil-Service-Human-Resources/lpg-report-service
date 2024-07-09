@@ -112,7 +112,7 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
                 .is2xxSuccessful()
                 .expectBody()
                 .consumeWith(System.out::println)
-                .jsonPath("$.timezone").isEqualTo("+1")
+                .jsonPath("$.timezone").isEqualTo("+01:00")
                 .jsonPath("$.delimiter").isEqualTo("day")
                 .jsonPath("$.results[0].courseId").isEqualTo("c1")
                 .jsonPath("$.results[0].total").isEqualTo(3)
