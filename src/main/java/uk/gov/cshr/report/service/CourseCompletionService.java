@@ -22,7 +22,7 @@ public class CourseCompletionService {
 
     public List<CourseCompletionAggregation> getCourseCompletions(GetCourseCompletionsParams params) {
         return repository.getCompletionsAggregationByCourse(params.getBinDelimiter().getVal(), params.getStartDate(), params.getEndDate(),
-                params.getTimezone(), params.getCourseIds(), params.getOrganisationIds(), params.getGradeIds(), params.getProfessionIds());
+                params.getTimezone().toString(), params.getCourseIds(), params.getOrganisationIds(), params.getGradeIds(), params.getProfessionIds());
     }
 
     @PreAuthorize("hasAnyAuthority('IDENTITY_DELETE')")
