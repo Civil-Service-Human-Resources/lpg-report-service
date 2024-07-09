@@ -3,7 +3,7 @@ INSERT INTO course_completion_events (external_id, user_id, organisation_id, pro
 VALUES
     ('MESSAGEID0', 'user1', 1, 2, 3, 'email', 'c1', 'c1', '2024-01-01 09:20:00'),
     ('MESSAGEID1', 'user1', 1, 2, 3, 'email', 'c2', 'c2', '2024-01-01 10:40:00'),
-    ('MESSAGEID2', 'user2', 1, 4, 3, 'email', 'c1', 'c1', '2024-01-01 15:15:00'),
+    ('MESSAGEID2', 'user2', 1, 4, 3, 'email', 'c1', 'c1', '2024-01-01 23:15:00'),
     ('MESSAGEID3', 'user2', 1, 4, 3, 'email', 'c2', 'c2', '2024-01-01 18:09:00'),
     ('MESSAGEID4', 'user3', 1, 2, 2, 'email', 'c1', 'c1', '2024-01-01 09:30:00'),
     ('MESSAGEID5', 'user4', 1, 1, 3, 'email', 'c1', 'c1', '2024-01-01 19:30:00');

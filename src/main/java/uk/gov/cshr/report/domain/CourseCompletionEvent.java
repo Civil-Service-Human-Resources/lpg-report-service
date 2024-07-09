@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 @Entity
 @Getter
@@ -32,7 +30,7 @@ public class CourseCompletionEvent {
     private String courseTitle;
 
     @Column(nullable = false)
-    private ZonedDateTime eventTimestamp;
+    private LocalDateTime eventTimestamp;
 
     @Column(nullable = false)
     private Integer organisationId;
@@ -61,7 +59,7 @@ public class CourseCompletionEvent {
         this.userEmail = userEmail;
         this.courseId = courseId;
         this.courseTitle = courseTitle;
-        this.eventTimestamp = eventTimestamp.atZone(ZoneId.systemDefault());
+        this.eventTimestamp = eventTimestamp;
         this.organisationId = organisationId;
         this.organisationAbbreviation = organisationAbbreviation;
         this.professionId = professionId;
