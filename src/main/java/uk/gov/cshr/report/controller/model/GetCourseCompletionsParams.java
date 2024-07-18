@@ -7,9 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
@@ -17,12 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 public class GetCourseCompletionsParams {
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime startDate;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime endDate;
+
+    private ZoneId timezone = ZoneId.of("UTC");
 
     @Size(min = 1, max = 30)
     @NotNull
@@ -38,11 +39,4 @@ public class GetCourseCompletionsParams {
 
     private AggregationBinDelimiter binDelimiter = AggregationBinDelimiter.DAY;
 
-    public ZonedDateTime getStartDateTime() {
-        return startDate.atStartOfDay(ZoneId.of("UTC"));
-    }
-
-    public ZonedDateTime getEndDateTime() {
-        return endDate.atStartOfDay(ZoneId.of("UTC"));
-    }
 }
