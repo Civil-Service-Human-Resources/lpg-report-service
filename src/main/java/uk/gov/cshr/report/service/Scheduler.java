@@ -85,8 +85,7 @@ public class Scheduler {
 
         zipService.createZipFile(zipFileName, csvFileName);
 
-        BlobClient blobClient = blobStorageService.uploadFile(zipFileName);
-        System.out.println("::: Blob URL: " + blobClient.getBlobUrl());
+        blobStorageService.uploadFile(zipFileName);
 
         LOG.debug(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
         courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.SUCCESS);
