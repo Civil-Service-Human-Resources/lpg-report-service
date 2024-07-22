@@ -40,7 +40,6 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     private static String directory = "temp-courseCompletionsJob";
     private String zipFileName = "course_completions_1_from_01_01_2024_to_01_02_2024.zip";
     private String csvFileName = "course_completions_1_from_01_01_2024_to_01_02_2024.csv";
-    private String blobStorageContainerName = "coursecompletionrequests";
 
     @Autowired
     private JdbcTemplate jdbcTemplate = new JdbcTemplate(new PGSimpleDataSource());
@@ -53,6 +52,9 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
 
     @Value("${spring.cloud.azure.storage.blob.connection-string}")
     private String azureBlobStorageConnectionString;
+
+    @Value("${spring.cloud.azure.storage.blob.container-name}")
+    private String blobStorageContainerName;
 
     private static GenericContainer<?> azuriteContainer;
 
