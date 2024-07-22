@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Table(name = "course_completion_report_requests")
 @Setter
+@ToString
 public class CourseCompletionReportRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

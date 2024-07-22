@@ -10,3 +10,4 @@ out
 .settings/*
 target/
 data/
+temp-*/

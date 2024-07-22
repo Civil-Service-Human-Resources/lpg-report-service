@@ -1,15 +1,11 @@
 package uk.gov.cshr.report.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
-import uk.gov.cshr.report.controller.model.GetCourseCompletionsReportRequestParams;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
-import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 
 import java.util.List;
 
