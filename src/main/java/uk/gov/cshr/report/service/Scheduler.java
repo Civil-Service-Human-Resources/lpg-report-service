@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
-import uk.gov.cshr.report.domain.CourseCompletionAggregationCsv;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequestStatus;
+import uk.gov.cshr.report.domain.*;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 
 import java.io.*;
@@ -79,7 +77,7 @@ public class Scheduler {
 
         LOG.debug(String.format("Processing request: %s", request));
 
-        List<CourseCompletionAggregation> courseCompletions = getCourseCompletionsForRequest(request);
+        List<CourseCompletionEvent> courseCompletions = getCourseCompletionsForRequest(request);
 
         createCsvFileFromCompletions(courseCompletions, csvFileName);
 
@@ -103,29 +101,43 @@ public class Scheduler {
         // TODO: Send failure email
     }
 
-    private List<CourseCompletionAggregation> getCourseCompletionsForRequest(CourseCompletionReportRequest request){
+    private List<CourseCompletionEvent> getCourseCompletionsForRequest(CourseCompletionReportRequest request){
         GetCourseCompletionsParams params = new GetCourseCompletionsParams();
         params.setCourseIds(request.getCourseIds());
         params.setOrganisationIds(request.getOrganisationIds());
-        params.setStartDate(request.getFromDate().toLocalDate());
-        params.setEndDate(request.getToDate().toLocalDate());
+        params.setStartDate(request.getFromDate().toLocalDateTime());
+        params.setEndDate(request.getToDate().toLocalDateTime());
 
-        return courseCompletionService.getCourseCompletions(params);
+        return courseCompletionService.getCourseCompletionEvents(params);
     }
 
-    private void createCsvFileFromCompletions(List<CourseCompletionAggregation> courseCompletions, String fileName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        List<CourseCompletionAggregationCsv> csvRows = getCsvRowsFromCourseCompletionAggregations(courseCompletions);
+    private void createCsvFileFromCompletions(List<CourseCompletionEvent> courseCompletions, String fileName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        List<CourseCompletionCsv> csvRows = getCsvRowsFromCourseCompletionAggregations(courseCompletions);
         courseCompletionsCsvService.createCsvFile(csvRows, fileName);
     }
 
-    private List<CourseCompletionAggregationCsv> getCsvRowsFromCourseCompletionAggregations(List<CourseCompletionAggregation> courseCompletions){
-        List<CourseCompletionAggregationCsv> aggregationCsvRows = new ArrayList<>();
+    private List<CourseCompletionCsv> getCsvRowsFromCourseCompletionAggregations(List<CourseCompletionEvent> courseCompletions){
+        List<CourseCompletionCsv> eventCsvRows = new ArrayList<>();
 
-        for (CourseCompletionAggregation a: courseCompletions){
-            aggregationCsvRows.add(new CourseCompletionAggregationCsv(a.getCourseId(), a.getdateBin(), a.getTotal()));
+        for (CourseCompletionEvent event: courseCompletions){
+            eventCsvRows.add(new CourseCompletionCsv(
+                    event.getEventId(),
+                    event.getExternalId(),
+                    event.getUserId(),
+                    event.getUserEmail(),
+                    event.getCourseId(),
+                    event.getCourseTitle(),
+                    event.getEventTimestamp(),
+                    event.getOrganisationId(),
+                    event.getOrganisationAbbreviation(),
+                    event.getProfessionId(),
+                    event.getProfessionName(),
+                    event.getGradeId(),
+                    event.getGradeCode()
+                    ));
         }
 
-        return aggregationCsvRows;
+        return eventCsvRows;
     }
 
     private String getFileName(Long requestId, ZonedDateTime fromDate, ZonedDateTime toDate){

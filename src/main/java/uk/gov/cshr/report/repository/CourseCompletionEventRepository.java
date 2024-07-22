@@ -31,6 +31,24 @@ public interface CourseCompletionEventRepository extends JpaRepository<CourseCom
                                                                         @Param("gradeIds") List<Integer> gradeIds,
                                                                         @Param("professionIds") List<Integer> professionIds);
 
+    @Query("""
+        select cce 
+        from CourseCompletionEvent cce
+        where cce.eventTimestamp >= :fromDate and cce.eventTimestamp <= :toDate
+        and cce.courseId in :courseIds
+        and cce.organisationId in :organisationIds
+        and (:gradeIds is null or cce.gradeId in :gradeIds)
+        and (:professionIds is null or cce.professionId in :professionIds)
+    """)
+    List<CourseCompletionEvent> getCourseCompletionEvents(
+            @Param("fromDate") LocalDateTime fromDate,
+            @Param("toDate") LocalDateTime toDate,
+            @Param("courseIds") List<String> courseIds,
+            @Param("organisationIds") List<Integer> organisationIds,
+            @Param("gradeIds") List<Integer> gradeIds,
+            @Param("professionIds") List<Integer> professionIds);
+
+
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""

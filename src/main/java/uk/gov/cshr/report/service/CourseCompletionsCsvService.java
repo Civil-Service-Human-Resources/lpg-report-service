@@ -7,7 +7,7 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.CourseCompletionAggregationCsv;
+import uk.gov.cshr.report.domain.CourseCompletionCsv;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,12 +15,12 @@ import java.util.List;
 
 @Service
 public class CourseCompletionsCsvService {
-    public void createCsvFile(List<CourseCompletionAggregationCsv> rows, String fileName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+    public void createCsvFile(List<CourseCompletionCsv> rows, String fileName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         FileWriter fileWriter = new FileWriter(fileName);
-        HeaderColumnNameMappingStrategy<CourseCompletionAggregationCsv> strategy = new HeaderColumnNameMappingStrategy<>();
-        strategy.setType(CourseCompletionAggregationCsv.class);
+        HeaderColumnNameMappingStrategy<CourseCompletionCsv> strategy = new HeaderColumnNameMappingStrategy<>();
+        strategy.setType(CourseCompletionCsv.class);
 
-        StatefulBeanToCsv<CourseCompletionAggregationCsv> beanToCsv = new StatefulBeanToCsvBuilder<CourseCompletionAggregationCsv>(fileWriter)
+        StatefulBeanToCsv<CourseCompletionCsv> beanToCsv = new StatefulBeanToCsvBuilder<CourseCompletionCsv>(fileWriter)
                 .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
                 .withMappingStrategy(strategy)
                 .build();
