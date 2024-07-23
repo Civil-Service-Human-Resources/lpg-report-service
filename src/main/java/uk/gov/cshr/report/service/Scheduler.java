@@ -59,6 +59,9 @@ public class Scheduler {
             catch (Exception e){
                 processFailure(e, request.getReportRequestId());
             }
+            finally {
+                courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now());
+            }
         }
     }
 

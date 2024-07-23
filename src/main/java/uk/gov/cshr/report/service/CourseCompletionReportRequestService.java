@@ -8,6 +8,7 @@ import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.CourseCompletionReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -32,6 +33,12 @@ public class CourseCompletionReportRequestService {
     public void setStatusForReportRequest(Long reportRequestId, CourseCompletionReportRequestStatus status){
         CourseCompletionReportRequest reportRequest = courseCompletionReportRequestRepository.findByReportRequestId(reportRequestId);
         reportRequest.setStatus(status.toString());
+        courseCompletionReportRequestRepository.save(reportRequest);
+    }
+
+    public void setCompletedDateForReportRequest(Long reportRequestId, ZonedDateTime completedDate){
+        CourseCompletionReportRequest reportRequest = courseCompletionReportRequestRepository.findByReportRequestId(reportRequestId);
+        reportRequest.setCompletedTimestamp(completedDate);
         courseCompletionReportRequestRepository.save(reportRequest);
     }
 
