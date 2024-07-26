@@ -1,6 +1,5 @@
 package uk.gov.cshr.report.service;
 
-import com.azure.storage.blob.BlobClient;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
 import uk.gov.cshr.report.domain.*;
-import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -66,7 +64,7 @@ public class Scheduler {
                 processFailure(e, request.getReportRequestId());
             }
             finally {
-                courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now());
+                courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
                 cleanUp();
             }
         }
