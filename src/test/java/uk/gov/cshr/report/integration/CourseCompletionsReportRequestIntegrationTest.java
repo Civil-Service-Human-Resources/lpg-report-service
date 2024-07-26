@@ -8,7 +8,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,6 +78,8 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
         if(azuriteContainer != null){
             azuriteContainer.stop();
         }
+
+        new File("temp-downloadedContent.zip").delete();
     }
 
     @Test
@@ -137,7 +138,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                 .blobName(zipFileName)
                 .buildClient();
 
-        String downloadZipFile = directory + "/downloadedContent.zip";
+        String downloadZipFile = "temp-downloadedContent.zip";
         new File(downloadZipFile).delete();
         blobClient.downloadToFile(downloadZipFile);
 

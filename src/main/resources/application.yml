@@ -98,6 +98,7 @@ courseCompletions:
   reports:
     maxRequestsPerUser: ${MAX_REQUESTS_PER_USER:1}
     jobCron: ${REPORT_REQUESTS_JOB_CRON:0 0 * * * *}
+    defaultTimezone: "${COURSE_COMPLETION_REPORTS_DEFAULT_TIMEZONE:Europe/London}"
 
 
 info:

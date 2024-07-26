@@ -55,5 +55,7 @@ public class CourseCompletionReportRequest {
     @Column(name = "grade_ids", columnDefinition = "int[]")
     private List<Integer> gradeIds;
 
+    @Column(name = "requester_timezone")
+    private String requesterTimezone;
 
 }

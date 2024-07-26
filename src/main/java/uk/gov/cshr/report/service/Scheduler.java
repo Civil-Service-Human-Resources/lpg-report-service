@@ -9,6 +9,7 @@ import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
@@ -16,6 +17,8 @@ import uk.gov.cshr.report.domain.*;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -39,6 +42,9 @@ public class Scheduler {
     @Autowired
     private ZipService zipService;
 
+    @Value("${courseCompletions.reports.defaultTimezone}")
+    private String defaultTimezone;
+
     String directory = "temp-courseCompletionsJob";
 
     private static final Logger LOG = LoggerFactory.getLogger(Scheduler.class);
@@ -61,6 +67,7 @@ public class Scheduler {
             }
             finally {
                 courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now());
+                cleanUp();
             }
         }
     }
@@ -82,7 +89,8 @@ public class Scheduler {
 
         List<CourseCompletionEvent> courseCompletions = getCourseCompletionsForRequest(request);
 
-        createCsvFileFromCompletions(courseCompletions, csvFileName);
+        String timezone = request.getRequesterTimezone() == null ? defaultTimezone : request.getRequesterTimezone();
+        createCsvFileFromCompletions(courseCompletions, csvFileName, timezone);
 
         zipService.createZipFile(zipFileName, csvFileName);
 
@@ -95,9 +103,7 @@ public class Scheduler {
     }
 
     public void processFailure(Exception e, Long requestId){
-        LOG.debug(String.format("Processing request %s has failed", requestId));
-        LOG.debug(e.getMessage());
-        e.printStackTrace();
+        LOG.debug(String.format("Processing request %s has failed", requestId), e);
 
         courseCompletionReportRequestService.setStatusForReportRequest(requestId, CourseCompletionReportRequestStatus.FAILED);
 
@@ -114,12 +120,12 @@ public class Scheduler {
         return courseCompletionService.getCourseCompletionEvents(params);
     }
 
-    private void createCsvFileFromCompletions(List<CourseCompletionEvent> courseCompletions, String fileName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        List<CourseCompletionCsv> csvRows = getCsvRowsFromCourseCompletionAggregations(courseCompletions);
+    private void createCsvFileFromCompletions(List<CourseCompletionEvent> courseCompletions, String fileName, String timezone) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        List<CourseCompletionCsv> csvRows = getCsvRowsFromCourseCompletions(courseCompletions, timezone);
         courseCompletionsCsvService.createCsvFile(csvRows, fileName);
     }
 
-    private List<CourseCompletionCsv> getCsvRowsFromCourseCompletionAggregations(List<CourseCompletionEvent> courseCompletions){
+    private List<CourseCompletionCsv> getCsvRowsFromCourseCompletions(List<CourseCompletionEvent> courseCompletions, String timezone){
         List<CourseCompletionCsv> eventCsvRows = new ArrayList<>();
 
         for (CourseCompletionEvent event: courseCompletions){
@@ -130,7 +136,7 @@ public class Scheduler {
                     event.getUserEmail(),
                     event.getCourseId(),
                     event.getCourseTitle(),
-                    event.getEventTimestamp(),
+                    convertZonedDateTimeToTimezone(event.getEventTimestamp(), timezone),
                     event.getOrganisationId(),
                     event.getOrganisationAbbreviation(),
                     event.getProfessionId(),
@@ -143,8 +149,24 @@ public class Scheduler {
         return eventCsvRows;
     }
 
+    private LocalDateTime convertZonedDateTimeToTimezone(LocalDateTime dateTime, String timezone){
+        ZonedDateTime zonedDateTime = dateTime.atZone(ZoneId.of("UTC"));
+
+        ZoneId targetZoneId = ZoneId.of(timezone);
+        ZonedDateTime targetZonedDateTime = zonedDateTime.withZoneSameInstant(targetZoneId);
+        return targetZonedDateTime.toLocalDateTime();
+    }
+
     private String getFileName(Long requestId, ZonedDateTime fromDate, ZonedDateTime toDate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
         return String.format("course_completions_%s_from_%s_to_%s", requestId, fromDate.format(formatter), toDate.format(formatter));
+    }
+
+    private void cleanUp(){
+        File tempDirectory = new File(directory);
+
+        if(!tempDirectory.exists()) {
+            tempDirectory.mkdirs();
+        }
     }
 }

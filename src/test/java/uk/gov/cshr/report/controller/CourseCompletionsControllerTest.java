@@ -70,6 +70,22 @@ public class CourseCompletionsControllerTest {
 
     @Test
     @WithMockUser(username = "user")
+    public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsCorrectWithTimezone() throws Exception {
+        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01\", \"endDate\": \"2024-02-01\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8], \"requesterTimezone\": \"Europe/London\"}";
+
+        mockMvc.perform(
+                        post("/course-completions/report-requests")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody)
+                                .with(csrf())
+                                .accept(MediaType.APPLICATION_JSON)
+                                .characterEncoding("utf-8"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsMissingRequiredFields() throws Exception {
         String requestBody = "{\"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01\", \"endDate\": \"2024-02-01\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8]}";
 
