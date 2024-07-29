@@ -56,7 +56,7 @@ public class CourseCompletionsController {
 
     @GetMapping("/report-requests")
     @ResponseBody
-    public GetCourseCompletionReportRequestsResponse getAllReportRequests(@RequestBody @Valid GetCourseCompletionsReportRequestParams params){
+    public GetCourseCompletionReportRequestsResponse getAllReportRequests(@Valid GetCourseCompletionsReportRequestParams params){
         List<CourseCompletionReportRequest> reportRequests = courseCompletionReportRequestService.findReportRequestsByUserIdAndStatus(params);
         return new GetCourseCompletionReportRequestsResponse(reportRequests);
     }

@@ -27,7 +27,7 @@ public class CourseCompletionReportRequestService {
     }
 
     public List<CourseCompletionReportRequest> findReportRequestsByUserIdAndStatus(GetCourseCompletionsReportRequestParams params){
-        return courseCompletionReportRequestRepository.findByRequesterIdAndStatus(params.getUserId(), params.getStatus());
+        return courseCompletionReportRequestRepository.findByRequesterIdAndStatusIn(params.getUserId(), params.getStatus());
     }
 
     public void setStatusForReportRequest(Long reportRequestId, CourseCompletionReportRequestStatus status){
@@ -47,7 +47,7 @@ public class CourseCompletionReportRequestService {
     }
 
     public boolean userReachedMaxReportRequests(String userId){
-        GetCourseCompletionsReportRequestParams params = new GetCourseCompletionsReportRequestParams(userId, "REQUESTED");
+        GetCourseCompletionsReportRequestParams params = new GetCourseCompletionsReportRequestParams(userId, List.of("REQUESTED"));
         List<CourseCompletionReportRequest> pendingRequests = findReportRequestsByUserIdAndStatus(params);
         return pendingRequests.size() >= maxRequestsPerUser;
     }

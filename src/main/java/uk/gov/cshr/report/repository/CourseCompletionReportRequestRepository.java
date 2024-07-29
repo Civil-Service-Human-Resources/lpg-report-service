@@ -6,7 +6,7 @@ import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import java.util.List;
 
 public interface CourseCompletionReportRequestRepository extends JpaRepository<CourseCompletionReportRequest, Long> {
-    List<CourseCompletionReportRequest> findByRequesterIdAndStatus(String requestedId, String status);
+    List<CourseCompletionReportRequest> findByRequesterIdAndStatusIn(String requestedId, List<String> status);
     CourseCompletionReportRequest findByReportRequestId(Long reportRequestId);
     List<CourseCompletionReportRequest> findByStatus(String status);
 }

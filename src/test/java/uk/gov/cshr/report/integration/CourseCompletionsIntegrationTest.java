@@ -346,11 +346,6 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
                 "    \"gradeIds\": [4,3,2]\n" +
                 "}";
 
-        String getRequestBody = "{\n" +
-                "    \"userId\": \"testUser03\",\n" +
-                "    \"status\": \"REQUESTED\"\n" +
-                "}";
-
         webTestClient
                 .post()
                 .uri(uriBuilder -> uriBuilder.path(reportRequestsEndpoint).build())
@@ -363,10 +358,11 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
 
         webTestClient
                 .method(HttpMethod.GET)
-                .uri(uriBuilder -> uriBuilder.path(reportRequestsEndpoint).build())
+                .uri(uriBuilder -> uriBuilder.path(reportRequestsEndpoint)
+                        .queryParam("userId", "testUser03")
+                        .queryParam("status", "REQUESTED").build())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromObject(getRequestBody))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
