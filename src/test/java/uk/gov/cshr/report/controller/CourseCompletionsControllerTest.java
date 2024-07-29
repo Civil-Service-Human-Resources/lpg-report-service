@@ -116,14 +116,9 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testGetReportRequestsEndpointReturnsOkIfCorrectRequestBodyIsGiven() throws Exception {
-        String requestBody = "{\n" +
-                "    \"userId\": \"user003\",\n" +
-                "    \"status\": \"REQUESTED\"\n" +
-                "}";
         mockMvc.perform(
-                        get("/course-completions/report-requests")
+                        get("/course-completions/report-requests?userId=user003&status=REQUESTED")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody)
                                 .with(csrf())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .characterEncoding("utf-8"))
