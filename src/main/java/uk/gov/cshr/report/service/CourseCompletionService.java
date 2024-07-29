@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
+import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
 
@@ -23,6 +24,17 @@ public class CourseCompletionService {
     public List<CourseCompletionAggregation> getCourseCompletions(GetCourseCompletionsParams params) {
         return repository.getCompletionsAggregationByCourse(params.getBinDelimiter().getVal(), params.getStartDate(), params.getEndDate(),
                 params.getTimezone().toString(), params.getCourseIds(), params.getOrganisationIds(), params.getGradeIds(), params.getProfessionIds());
+    }
+
+    public List<CourseCompletionEvent> getCourseCompletionEvents(GetCourseCompletionsParams params) {
+        return repository.getCourseCompletionEvents(
+                params.getStartDate(),
+                params.getEndDate(),
+                params.getCourseIds(),
+                params.getOrganisationIds(),
+                params.getGradeIds(),
+                params.getProfessionIds()
+        );
     }
 
     @PreAuthorize("hasAnyAuthority('IDENTITY_DELETE')")

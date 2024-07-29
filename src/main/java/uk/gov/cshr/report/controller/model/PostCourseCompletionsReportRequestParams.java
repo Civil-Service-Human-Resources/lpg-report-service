@@ -35,4 +35,6 @@ public class PostCourseCompletionsReportRequestParams {
     private List<Integer> professionIds;
 
     private List<Integer> gradeIds;
+
+    private String requesterTimezone;
 }

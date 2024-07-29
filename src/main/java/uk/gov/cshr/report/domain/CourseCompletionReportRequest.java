@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Table(name = "course_completion_report_requests")
 @Setter
+@ToString
 public class CourseCompletionReportRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,5 +55,7 @@ public class CourseCompletionReportRequest {
     @Column(name = "grade_ids", columnDefinition = "int[]")
     private List<Integer> gradeIds;
 
+    @Column(name = "requester_timezone")
+    private String requesterTimezone;
 
 }
