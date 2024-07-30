@@ -55,7 +55,8 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsCorrect() throws Exception {
-        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01T00:00:00\", \"endDate\": \"2024-02-01T00:00:00\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8]}";
+        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01T00:00:00\", \"endDate\": \"2024-02-01T00:00:00\"," +
+                "\"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8], \"timezone\": \"+1\"}";
 
         mockMvc.perform(
                 post("/course-completions/report-requests")
