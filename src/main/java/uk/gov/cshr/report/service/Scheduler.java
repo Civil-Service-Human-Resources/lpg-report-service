@@ -1,7 +1,9 @@
 package uk.gov.cshr.report.service;
 
+import com.azure.storage.blob.BlobClient;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.core.LockAssert;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
@@ -13,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
 import uk.gov.cshr.report.domain.*;
+import uk.gov.cshr.report.dto.MessageDto;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -20,10 +23,13 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Slf4j
+@Setter
 public class Scheduler {
     @Autowired
     private CourseCompletionReportRequestService courseCompletionReportRequestService;
@@ -39,6 +45,9 @@ public class Scheduler {
 
     @Autowired
     private ZipService zipService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @Value("${courseCompletions.reports.defaultTimezone}")
     private String defaultTimezone;
@@ -61,7 +70,7 @@ public class Scheduler {
                 processRequest(request);
             }
             catch (Exception e){
-                processFailure(e, request.getReportRequestId());
+                processFailure(e, request.getReportRequestId(), request.getRequesterEmail());
             }
             finally {
                 courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
@@ -92,20 +101,20 @@ public class Scheduler {
 
         zipService.createZipFile(zipFileName, csvFileName);
 
-        blobStorageService.uploadFile(zipFileName);
+        BlobClient blobClient = blobStorageService.uploadFile(zipFileName);
 
         LOG.debug(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
         courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.SUCCESS);
 
-        // TODO: Send success email
+        sendSuccessEmail(request.getRequesterEmail(), blobClient.getBlobUrl());
     }
 
-    public void processFailure(Exception e, Long requestId){
+    public void processFailure(Exception e, Long requestId, String requesterEmail){
         LOG.debug(String.format("Processing request %s has failed", requestId), e);
 
         courseCompletionReportRequestService.setStatusForReportRequest(requestId, CourseCompletionReportRequestStatus.FAILED);
 
-        // TODO: Send failure email
+        sendFailureEmail(requesterEmail);
     }
 
     private List<CourseCompletionEvent> getCourseCompletionsForRequest(CourseCompletionReportRequest request){
@@ -158,6 +167,21 @@ public class Scheduler {
     private String getFileName(Long requestId, ZonedDateTime fromDate, ZonedDateTime toDate){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
         return String.format("course_completions_%s_from_%s_to_%s", requestId, fromDate.format(formatter), toDate.format(formatter));
+    }
+
+    private void sendSuccessEmail(String email, String blobUrl){
+        MessageDto messageDto = new MessageDto();
+        messageDto.setRecipient(email);
+        Map<String, String> personalisation = new HashMap<>();
+        personalisation.put("reportUrl", blobUrl);
+        messageDto.setPersonalisation(personalisation);
+        notificationService.sendSuccessEmail(messageDto);
+    }
+
+    private void sendFailureEmail(String email){
+        MessageDto messageDto = new MessageDto();
+        messageDto.setRecipient(email);
+        notificationService.sendFailureEmail(messageDto);
     }
 
     private void cleanUp(){
