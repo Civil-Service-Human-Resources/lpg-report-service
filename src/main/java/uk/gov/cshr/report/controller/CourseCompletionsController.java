@@ -11,6 +11,7 @@ import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
+import uk.gov.cshr.report.service.Scheduler;
 
 import java.util.List;
 
@@ -22,11 +23,13 @@ public class CourseCompletionsController {
     private final CourseCompletionService courseCompletionService;
     private final CourseCompletionReportRequestService courseCompletionReportRequestService;
     private final PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper;
+    private final Scheduler scheduler;
 
-    public CourseCompletionsController(CourseCompletionService courseCompletionService, CourseCompletionReportRequestService courseCompletionReportRequestService) {
+    public CourseCompletionsController(CourseCompletionService courseCompletionService, CourseCompletionReportRequestService courseCompletionReportRequestService, Scheduler scheduler) {
         this.courseCompletionService = courseCompletionService;
         this.courseCompletionReportRequestService = courseCompletionReportRequestService;
         this.postCourseCompletionsReportRequestsParamsToReportRequestMapper = new PostCourseCompletionsReportRequestsParamsToReportRequestMapper();
+        this.scheduler = scheduler;
     }
 
     @PostMapping("/aggregations/by-course")
@@ -59,5 +62,12 @@ public class CourseCompletionsController {
     public GetCourseCompletionReportRequestsResponse getAllReportRequests(@RequestBody @Valid GetCourseCompletionsReportRequestParams params){
         List<CourseCompletionReportRequest> reportRequests = courseCompletionReportRequestService.findReportRequestsByUserIdAndStatus(params);
         return new GetCourseCompletionReportRequestsResponse(reportRequests);
+    }
+
+    @GetMapping("/tmp-job")
+    @ResponseBody
+    public String runJob(){
+        scheduler.generateReportsForCourseCompletionRequests();
+        return "Done";
     }
 }
