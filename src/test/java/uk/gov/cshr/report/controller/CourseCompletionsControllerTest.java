@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import uk.gov.cshr.report.controller.model.ErrorDtoFactory;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
+import uk.gov.cshr.report.service.Scheduler;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -31,6 +32,9 @@ public class CourseCompletionsControllerTest {
 
     @MockBean
     private CourseCompletionService courseCompletionService;
+
+    @MockBean
+    private Scheduler scheduler;
 
     @MockBean
     private CourseCompletionReportRequestService courseCompletionReportRequestService;
