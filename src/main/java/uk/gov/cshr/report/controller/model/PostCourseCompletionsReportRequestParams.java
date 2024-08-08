@@ -39,7 +39,4 @@ public class PostCourseCompletionsReportRequestParams {
     @NotNull
     private String timezone;
 
-    public String getRequesterTimezone() {
-        return this.timezone;
-    }
 }

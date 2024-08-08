@@ -20,7 +20,7 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper {
         reportRequest.setOrganisationIds(params.getOrganisationIds());
         reportRequest.setProfessionIds(params.getProfessionIds());
         reportRequest.setGradeIds(params.getGradeIds());
-        reportRequest.setRequesterTimezone(params.getRequesterTimezone());
+        reportRequest.setRequesterTimezone(params.getTimezone());
 
         return reportRequest;
     }
