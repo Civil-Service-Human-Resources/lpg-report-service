@@ -49,6 +49,9 @@ public class Scheduler {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private OAuthService oAuthService;
+
     @Value("${courseCompletions.reports.defaultTimezone}")
     private String defaultTimezone;
 
@@ -62,15 +65,18 @@ public class Scheduler {
         LockAssert.assertLocked();
         LOG.debug("Starting job for course completion report requests");
 
+        String accessToken = oAuthService.getAccessToken();
+
         List<CourseCompletionReportRequest> requests = courseCompletionReportRequestService.findAllRequestsByStatus(CourseCompletionReportRequestStatus.REQUESTED);
         LOG.debug(String.format("Found %d requests", requests.size()));
 
         for(CourseCompletionReportRequest request : requests) {
+            LOG.debug("Processing request {}", request.getRequesterId());
             try {
-                processRequest(request);
+                processRequest(request, accessToken);
             }
             catch (Exception e){
-                processFailure(e, request.getReportRequestId(), request.getRequesterEmail());
+                processFailure(e, request.getReportRequestId(), request.getRequesterEmail(), accessToken);
             }
             finally {
                 courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
@@ -79,7 +85,7 @@ public class Scheduler {
         }
     }
 
-    public void processRequest(CourseCompletionReportRequest request) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+    public void processRequest(CourseCompletionReportRequest request, String accessToken) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.PROCESSING);
 
         File tempDirectory = new File(directory);
@@ -106,15 +112,19 @@ public class Scheduler {
         LOG.debug(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
         courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.SUCCESS);
 
-        sendSuccessEmail(request.getRequesterEmail(), blobClient.getBlobUrl());
+        LOG.debug(String.format("Sending success email to %s", request.getRequesterEmail()));
+        sendSuccessEmail(accessToken, request.getRequesterEmail(), blobClient.getBlobUrl());
+        LOG.debug(String.format("Success email sent to %s", request.getRequesterEmail()));
     }
 
-    public void processFailure(Exception e, Long requestId, String requesterEmail){
+    public void processFailure(Exception e, Long requestId, String requesterEmail, String accessToken){
         LOG.debug(String.format("Processing request %s has failed", requestId), e);
 
         courseCompletionReportRequestService.setStatusForReportRequest(requestId, CourseCompletionReportRequestStatus.FAILED);
 
-        sendFailureEmail(requesterEmail);
+        LOG.debug(String.format("Sending failure email to %s", requesterEmail));
+        sendFailureEmail(accessToken, requesterEmail);
+        LOG.debug(String.format("Failure email sent to %s", requesterEmail));
     }
 
     private List<CourseCompletionEvent> getCourseCompletionsForRequest(CourseCompletionReportRequest request){
@@ -169,19 +179,19 @@ public class Scheduler {
         return String.format("course_completions_%s_from_%s_to_%s", requestId, fromDate.format(formatter), toDate.format(formatter));
     }
 
-    private void sendSuccessEmail(String email, String blobUrl){
+    private void sendSuccessEmail(String accessToken, String email, String blobUrl){
         MessageDto messageDto = new MessageDto();
         messageDto.setRecipient(email);
         Map<String, String> personalisation = new HashMap<>();
         personalisation.put("reportUrl", blobUrl);
         messageDto.setPersonalisation(personalisation);
-        notificationService.sendSuccessEmail(messageDto);
+        notificationService.sendSuccessEmail(accessToken, messageDto);
     }
 
-    private void sendFailureEmail(String email){
+    private void sendFailureEmail(String accessToken, String email){
         MessageDto messageDto = new MessageDto();
         messageDto.setRecipient(email);
-        notificationService.sendFailureEmail(messageDto);
+        notificationService.sendFailureEmail(accessToken, messageDto);
     }
 
     private void cleanUp(){

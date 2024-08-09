@@ -9,14 +9,14 @@ import uk.gov.cshr.report.client.HttpClient;
 import uk.gov.cshr.report.client.IHttpClient;
 
 @Configuration
-public class NotificationClientConfig {
-    @Value("${notification.serviceUrl}")
-    private String notificationServiceUrl;
+public class OAuthClientConfig {
+    @Value("${oauth.serviceUrl}")
+    private String oAuthServiceUrl;
 
-    @Bean(name = "notificationHttpClient")
-    IHttpClient notificationClient(RestTemplateBuilder restTemplateBuilder){
+    @Bean(name = "oAuthClient")
+    IHttpClient oAuthClient(RestTemplateBuilder restTemplateBuilder){
         RestTemplate restTemplate = restTemplateBuilder
-                .rootUri(notificationServiceUrl)
+                .rootUri(oAuthServiceUrl)
                 .build();
 
         return new HttpClient(restTemplate);

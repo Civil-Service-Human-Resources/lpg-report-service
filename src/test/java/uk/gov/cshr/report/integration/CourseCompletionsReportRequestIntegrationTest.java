@@ -25,6 +25,7 @@ import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import uk.gov.cshr.report.dto.MessageDto;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 import uk.gov.cshr.report.service.NotificationService;
+import uk.gov.cshr.report.service.OAuthService;
 import uk.gov.cshr.report.service.Scheduler;
 
 import java.io.File;
@@ -58,6 +59,9 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
 
     @Mock
     private NotificationService notificationService;
+
+    @Mock
+    private OAuthService oAuthService;
 
     @Value("${spring.cloud.azure.storage.blob.connection-string}")
     private String azureBlobStorageConnectionString;
@@ -100,6 +104,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
             VALUES(1, 'RequesterA', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}');
         """);
 
+        when(oAuthService.getAccessToken()).thenReturn("abc123");
         scheduler.generateReportsForCourseCompletionRequests();
 
         // Tests:
@@ -166,7 +171,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     }
 
     private void testSchedulerCallsSendSuccessEmail(){
-        verify(notificationService).sendSuccessEmail(any(MessageDto.class));
+        verify(notificationService).sendSuccessEmail(eq("abc123"), any(MessageDto.class));
     }
 
     @Test
@@ -178,7 +183,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
             VALUES(1, 'RequesterA', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}');
         """);
 
-        scheduler.processFailure(new Exception(), 1L, "RequesterA@domain.com");
+        scheduler.processFailure(new Exception(), 1L, "RequesterA@domain.com", "abc123");
 
         // Tests:
         testSchedulerSetsProcessedCourseCompletionReportRequestStatusToFailed();
@@ -191,6 +196,6 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     }
 
     private void testSchedulerCallsSendFailureEmail(){
-        verify(notificationService).sendFailureEmail(any(MessageDto.class));
+        verify(notificationService).sendFailureEmail(eq("abc123"), any(MessageDto.class));
     }
 }
