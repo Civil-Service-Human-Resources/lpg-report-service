@@ -65,22 +65,22 @@ public class Scheduler {
         LockAssert.assertLocked();
         LOG.debug("Starting job for course completion report requests");
 
-        String accessToken = oAuthService.getAccessToken();
-
         List<CourseCompletionReportRequest> requests = courseCompletionReportRequestService.findAllRequestsByStatus(CourseCompletionReportRequestStatus.REQUESTED);
         LOG.debug(String.format("Found %d requests", requests.size()));
 
-        for(CourseCompletionReportRequest request : requests) {
-            LOG.debug("Processing request {}", request.getRequesterId());
-            try {
-                processRequest(request, accessToken);
-            }
-            catch (Exception e){
-                processFailure(e, request.getReportRequestId(), request.getRequesterEmail(), accessToken);
-            }
-            finally {
-                courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
-                cleanUp();
+        if(!requests.isEmpty()) {
+            String accessToken = oAuthService.getAccessToken();
+
+            for (CourseCompletionReportRequest request : requests) {
+                LOG.debug("Processing request {}", request.getRequesterId());
+                try {
+                    processRequest(request, accessToken);
+                } catch (Exception e) {
+                    processFailure(e, request.getReportRequestId(), request.getRequesterEmail(), accessToken);
+                } finally {
+                    courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
+                    cleanUp();
+                }
             }
         }
     }
