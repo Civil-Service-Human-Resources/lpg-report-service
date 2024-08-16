@@ -55,7 +55,8 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsCorrect() throws Exception {
-        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01\", \"endDate\": \"2024-02-01\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8]}";
+        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01T00:00:00\", \"endDate\": \"2024-02-01T00:00:00\"," +
+                "\"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8], \"timezone\": \"+1\"}";
 
         mockMvc.perform(
                 post("/course-completions/report-requests")
@@ -71,7 +72,7 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsCorrectWithTimezone() throws Exception {
-        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01\", \"endDate\": \"2024-02-01\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8], \"requesterTimezone\": \"Europe/London\"}";
+        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01T00:00:00\", \"endDate\": \"2024-02-01T00:00:00\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8], \"timezone\": \"Europe/London\"}";
 
         mockMvc.perform(
                         post("/course-completions/report-requests")
@@ -87,7 +88,7 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsMissingRequiredFields() throws Exception {
-        String requestBody = "{\"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01\", \"endDate\": \"2024-02-01\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8]}";
+        String requestBody = "{\"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01T00:00:00\", \"endDate\": \"2024-02-01T00:00:00\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8]}";
 
         mockMvc.perform(
                         post("/course-completions/report-requests")
@@ -116,14 +117,9 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testGetReportRequestsEndpointReturnsOkIfCorrectRequestBodyIsGiven() throws Exception {
-        String requestBody = "{\n" +
-                "    \"userId\": \"user003\",\n" +
-                "    \"status\": \"REQUESTED\"\n" +
-                "}";
         mockMvc.perform(
-                        get("/course-completions/report-requests")
+                        get("/course-completions/report-requests?userId=user003&status=REQUESTED")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody)
                                 .with(csrf())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .characterEncoding("utf-8"))

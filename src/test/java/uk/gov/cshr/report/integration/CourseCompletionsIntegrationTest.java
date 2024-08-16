@@ -261,12 +261,13 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
         String requestBody = "{\n" +
                 "    \"userId\": \"testUser01\",\n" +
                 "    \"userEmail\": \"user01@domain.com\",\n" +
-                "    \"startDate\": \"2024-01-01\",\n" +
-                "    \"endDate\": \"2024-02-01\",\n" +
+                "    \"startDate\": \"2024-01-01T00:00:00\",\n" +
+                "    \"endDate\": \"2024-02-01T00:00:00\",\n" +
                 "    \"courseIds\": [\"course1\", \"course2\"],\n" +
                 "    \"organisationIds\": [1,2,3,4],\n" +
                 "    \"professionIds\": [5,6,7,8],\n" +
-                "    \"gradeIds\": [4,3,2]\n" +
+                "    \"gradeIds\": [4,3,2]\n," +
+                "    \"timezone\": \"+1\"\n" +
                 "}";
 
         String expectedResponseKey = "addedSuccessfully";
@@ -293,12 +294,13 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
         String requestBody = "{\n" +
                 "    \"userId\": \"testUser02\",\n" +
                 "    \"userEmail\": \"user02@domain.com\",\n" +
-                "    \"startDate\": \"2024-01-01\",\n" +
-                "    \"endDate\": \"2024-02-01\",\n" +
+                "    \"startDate\": \"2024-01-01T00:00:00\",\n" +
+                "    \"endDate\": \"2024-02-01T00:00:00\",\n" +
                 "    \"courseIds\": [\"course1\", \"course2\"],\n" +
                 "    \"organisationIds\": [1,2,3,4],\n" +
                 "    \"professionIds\": [5,6,7,8],\n" +
-                "    \"gradeIds\": [4,3,2]\n" +
+                "    \"gradeIds\": [4,3,2],\n" +
+                "    \"timezone\": \"+1\"\n" +
                 "}";
 
         String expectedAddedSuccessfullyResponseKey = "addedSuccessfully";
@@ -338,17 +340,13 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
         String postRequestBody = "{\n" +
                 "    \"userId\": \"testUser03\",\n" +
                 "    \"userEmail\": \"user03@domain.com\",\n" +
-                "    \"startDate\": \"2024-01-01\",\n" +
-                "    \"endDate\": \"2024-02-01\",\n" +
+                "    \"startDate\": \"2024-01-01T00:00:00\",\n" +
+                "    \"endDate\": \"2024-02-01T00:00:00\",\n" +
                 "    \"courseIds\": [\"course1\", \"course2\"],\n" +
                 "    \"organisationIds\": [1,2,3,4],\n" +
                 "    \"professionIds\": [5,6,7,8],\n" +
-                "    \"gradeIds\": [4,3,2]\n" +
-                "}";
-
-        String getRequestBody = "{\n" +
-                "    \"userId\": \"testUser03\",\n" +
-                "    \"status\": \"REQUESTED\"\n" +
+                "    \"gradeIds\": [4,3,2],\n" +
+                "    \"timezone\": \"+1\"\n" +
                 "}";
 
         webTestClient
@@ -363,10 +361,11 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
 
         webTestClient
                 .method(HttpMethod.GET)
-                .uri(uriBuilder -> uriBuilder.path(reportRequestsEndpoint).build())
+                .uri(uriBuilder -> uriBuilder.path(reportRequestsEndpoint)
+                        .queryParam("userId", "testUser03")
+                        .queryParam("status", "REQUESTED").build())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromObject(getRequestBody))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()

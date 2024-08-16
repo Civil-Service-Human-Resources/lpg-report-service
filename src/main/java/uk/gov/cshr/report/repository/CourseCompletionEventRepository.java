@@ -32,7 +32,7 @@ public interface CourseCompletionEventRepository extends JpaRepository<CourseCom
                                                                         @Param("professionIds") List<Integer> professionIds);
 
     @Query("""
-        select cce 
+        select cce
         from CourseCompletionEvent cce
         where cce.eventTimestamp >= :fromDate and cce.eventTimestamp <= :toDate
         and cce.courseId in :courseIds

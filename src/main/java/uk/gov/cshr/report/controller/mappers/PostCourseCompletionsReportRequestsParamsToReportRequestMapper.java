@@ -14,13 +14,13 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper {
         reportRequest.setRequesterEmail(params.getUserEmail());
         reportRequest.setStatus("REQUESTED");
         reportRequest.setRequestedTimestamp(ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
-        reportRequest.setFromDate(params.getStartDate().atStartOfDay(ZoneOffset.UTC));
-        reportRequest.setToDate(params.getEndDate().atStartOfDay(ZoneOffset.UTC));
+        reportRequest.setFromDate(params.getStartDate().atZone(ZoneOffset.UTC));
+        reportRequest.setToDate(params.getEndDate().atZone(ZoneOffset.UTC));
         reportRequest.setCourseIds(params.getCourseIds());
         reportRequest.setOrganisationIds(params.getOrganisationIds());
         reportRequest.setProfessionIds(params.getProfessionIds());
         reportRequest.setGradeIds(params.getGradeIds());
-        reportRequest.setRequesterTimezone(params.getRequesterTimezone());
+        reportRequest.setRequesterTimezone(params.getTimezone());
 
         return reportRequest;
     }

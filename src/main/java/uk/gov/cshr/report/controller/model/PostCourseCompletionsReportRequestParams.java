@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,12 +20,12 @@ public class PostCourseCompletionsReportRequestParams {
     private String userEmail;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime startDate;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime endDate;
 
     @NotNull
     private List<String> courseIds;
@@ -36,5 +36,7 @@ public class PostCourseCompletionsReportRequestParams {
 
     private List<Integer> gradeIds;
 
-    private String requesterTimezone;
+    @NotNull
+    private String timezone;
+
 }
