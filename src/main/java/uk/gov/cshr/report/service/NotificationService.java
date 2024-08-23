@@ -19,12 +19,12 @@ public class NotificationService {
         this.notificationClient = notificationClient;
     }
 
-    public void sendSuccessEmail(String accessToken, MessageDto messageDto){
-        notificationClient.sendEmail(accessToken, successEmailTemplateName, messageDto);
+    public void sendSuccessEmail(MessageDto messageDto){
+        notificationClient.sendEmail(successEmailTemplateName, messageDto);
     }
 
-    public void sendFailureEmail(String accessToken, MessageDto messageDto){
-        notificationClient.sendEmail(accessToken, failureEmailTemplateName, messageDto);
+    public void sendFailureEmail(MessageDto messageDto){
+        notificationClient.sendEmail(failureEmailTemplateName, messageDto);
     }
 
 }

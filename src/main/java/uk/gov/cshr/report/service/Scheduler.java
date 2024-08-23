@@ -1,23 +1,26 @@
 package uk.gov.cshr.report.service;
 
-import com.azure.storage.blob.BlobClient;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.core.LockAssert;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
-import uk.gov.cshr.report.domain.*;
+import uk.gov.cshr.report.domain.CourseCompletionCsv;
+import uk.gov.cshr.report.domain.CourseCompletionEvent;
+import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
+import uk.gov.cshr.report.domain.CourseCompletionReportRequestStatus;
 import uk.gov.cshr.report.dto.MessageDto;
+import uk.gov.cshr.report.service.blob.BlobStorageService;
+import uk.gov.cshr.report.service.blob.UploadResult;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -49,34 +52,30 @@ public class Scheduler {
     @Autowired
     private NotificationService notificationService;
 
-    @Autowired
-    private OAuthService oAuthService;
-
     @Value("${courseCompletions.reports.defaultTimezone}")
     private String defaultTimezone;
 
-    String directory = "temp-courseCompletionsJob";
+    @Value("${courseCompletions.reports.daysToKeepReportLinkActive}")
+    private Integer daysToKeepReportLinkActive;
 
-    private static final Logger LOG = LoggerFactory.getLogger(Scheduler.class);
+    String directory = "temp-courseCompletionsJob";
 
     @Scheduled(cron = "${courseCompletions.reports.jobCron}")
     @SchedulerLock(name = "reportRequestsJob", lockAtMostFor = "PT4H")
     public void generateReportsForCourseCompletionRequests() {
         LockAssert.assertLocked();
-        LOG.debug("Starting job for course completion report requests");
-
-        String accessToken = oAuthService.getAccessToken();
+        log.info("Starting job for course completion report requests");
 
         List<CourseCompletionReportRequest> requests = courseCompletionReportRequestService.findAllRequestsByStatus(CourseCompletionReportRequestStatus.REQUESTED);
-        LOG.debug(String.format("Found %d requests", requests.size()));
+        log.info(String.format("Found %d requests", requests.size()));
 
         for(CourseCompletionReportRequest request : requests) {
-            LOG.debug("Processing request {}", request.getRequesterId());
+            log.info("Processing request {}", request.getRequesterId());
             try {
-                processRequest(request, accessToken);
+                processRequest(request);
             }
             catch (Exception e){
-                processFailure(e, request.getReportRequestId(), request.getRequesterEmail(), accessToken);
+                processFailure(e, request.getReportRequestId(), request.getRequesterEmail());
             }
             finally {
                 courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
@@ -85,7 +84,7 @@ public class Scheduler {
         }
     }
 
-    public void processRequest(CourseCompletionReportRequest request, String accessToken) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+    public void processRequest(CourseCompletionReportRequest request) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.PROCESSING);
 
         File tempDirectory = new File(directory);
@@ -98,7 +97,7 @@ public class Scheduler {
         String csvFileName = String.format("%s/%s.csv", directory, fileName);
         String zipFileName = String.format("%s/%s.zip", directory, fileName);
 
-        LOG.debug(String.format("Processing request: %s", request));
+        log.debug(String.format("Processing request: %s", request));
 
         List<CourseCompletionEvent> courseCompletions = getCourseCompletionsForRequest(request);
 
@@ -107,24 +106,24 @@ public class Scheduler {
 
         zipService.createZipFile(zipFileName, csvFileName);
 
-        BlobClient blobClient = blobStorageService.uploadFile(zipFileName);
+        UploadResult uploadResult = blobStorageService.uploadFileAndGenerateDownloadLink(zipFileName, daysToKeepReportLinkActive);
 
-        LOG.debug(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
+        log.info(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
         courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.SUCCESS);
 
-        LOG.debug(String.format("Sending success email to %s", request.getRequesterEmail()));
-        sendSuccessEmail(accessToken, request.getRequesterEmail(), blobClient.getBlobUrl());
-        LOG.debug(String.format("Success email sent to %s", request.getRequesterEmail()));
+        log.info(String.format("Sending success email to %s", request.getRequesterEmail()));
+        sendSuccessEmail(request.getRequesterEmail(), uploadResult.getDownloadUrl());
+        log.info(String.format("Success email sent to %s", request.getRequesterEmail()));
     }
 
-    public void processFailure(Exception e, Long requestId, String requesterEmail, String accessToken){
-        LOG.debug(String.format("Processing request %s has failed", requestId), e);
+    public void processFailure(Exception e, Long requestId, String requesterEmail){
+        log.info(String.format("Processing request %s has failed", requestId), e);
 
         courseCompletionReportRequestService.setStatusForReportRequest(requestId, CourseCompletionReportRequestStatus.FAILED);
 
-        LOG.debug(String.format("Sending failure email to %s", requesterEmail));
-        sendFailureEmail(accessToken, requesterEmail);
-        LOG.debug(String.format("Failure email sent to %s", requesterEmail));
+        log.debug(String.format("Sending failure email to %s", requesterEmail));
+        sendFailureEmail(requesterEmail);
+        log.debug(String.format("Failure email sent to %s", requesterEmail));
     }
 
     private List<CourseCompletionEvent> getCourseCompletionsForRequest(CourseCompletionReportRequest request){
@@ -179,19 +178,19 @@ public class Scheduler {
         return String.format("course_completions_%s_from_%s_to_%s", requestId, fromDate.format(formatter), toDate.format(formatter));
     }
 
-    private void sendSuccessEmail(String accessToken, String email, String blobUrl){
+    private void sendSuccessEmail(String email, String blobUrl){
         MessageDto messageDto = new MessageDto();
         messageDto.setRecipient(email);
         Map<String, String> personalisation = new HashMap<>();
         personalisation.put("reportUrl", blobUrl);
         messageDto.setPersonalisation(personalisation);
-        notificationService.sendSuccessEmail(accessToken, messageDto);
+        notificationService.sendSuccessEmail(messageDto);
     }
 
-    private void sendFailureEmail(String accessToken, String email){
+    private void sendFailureEmail(String email){
         MessageDto messageDto = new MessageDto();
         messageDto.setRecipient(email);
-        notificationService.sendFailureEmail(accessToken, messageDto);
+        notificationService.sendFailureEmail(messageDto);
     }
 
     private void cleanUp(){
