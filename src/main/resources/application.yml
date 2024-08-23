@@ -49,6 +49,17 @@ spring:
         blob:
           connection-string: "${BLOB_STORAGE_CONNECTION_STRING:DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;}"
           container-name: "${BLOB_STORAGE_COURSE_COMPLETION_REQUESTS_CONTAINER_NAME:coursecompletionrequests}"
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:ChangeMe}
+  cache:
+    redis:
+      cache-null-values: false
+      key-prefix: ${REDIS_KEY_PREFIX:report_service_}
+      use-key-prefix: ${REDIS_USE_KEY_PREFIX:true}
+      time-to-live: ${REDIS_CACHE_DEFAULT_TTL:3600000}
 server:
   port: 9004
 logging:
@@ -69,6 +80,9 @@ oauth:
   identitiesListUrl: "${oauth.serviceUrl}/api/identities/map"
   identitiesMapForLearnersIdsUrl: "${oauth.serviceUrl}/api/identities/map-for-uids"
   jwtKey: ${jwt_key:TONterOunSTRUcIenscaDiSHoUrPanti}
+  refresh:
+    serviceTokenCache:
+      beforeSecondsToExpire: ${REFRESH_SERVICETOKENCACHE_BEFORE_SECONDS_TOEXPIRE:0}
 
 learnerRecord:
   serviceUrl: ${LEARNER_RECORD_URL:http://localhost:9000}
@@ -99,6 +113,7 @@ courseCompletions:
     maxRequestsPerUser: ${MAX_REQUESTS_PER_USER:1}
     jobCron: ${REPORT_REQUESTS_JOB_CRON:0 0 * * * *}
     defaultTimezone: "${COURSE_COMPLETION_REPORTS_DEFAULT_TIMEZONE:Europe/London}"
+    daysToKeepReportLinkActive: "${COURSE_COMPLETION_REPORTS_DAYS_TO_KEEP_LINK_ACTIVE:1}"
 
 notification:
   serviceUrl: ${NOTIFICATION_SERVICE_URL:http://localhost:9006}

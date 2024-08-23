@@ -27,4 +27,6 @@ public class OAuthToken implements Serializable {
 
     @JsonProperty("jti")
     private String jti;
+
+    private LocalDateTime expiryDateTime;
 }

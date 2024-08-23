@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CustomAzuriteContainer{
     public static GenericContainer<?> getInstance(){
-        GenericContainer<?> azuriteContainer = new GenericContainer<>(DockerImageName.parse("mcr.microsoft.com/azure-storage/azurite"))
+        GenericContainer<?> azuriteContainer = new GenericContainer<>(DockerImageName.parse("mcr.microsoft.com/azure-storage/azurite:3.30.0"))
                 .withExposedPorts(10000, 10001, 10002);
 
         List<String> portBindings = new ArrayList<>();

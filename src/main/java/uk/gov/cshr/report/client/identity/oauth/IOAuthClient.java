@@ -1,5 +1,7 @@
 package uk.gov.cshr.report.client.identity.oauth;
 
+import uk.gov.cshr.report.domain.identity.OAuthToken;
+
 public interface IOAuthClient {
-    String getAccessToken(String basicAuthClientId, String basicAuthClientSecret);
+    OAuthToken getAccessToken();
 }

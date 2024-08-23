@@ -3,6 +3,7 @@ package uk.gov.cshr.report.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.integration.IntegrationTestBase;
 
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
+@ActiveProfiles({"no-redis"})
 public class CourseCompletionEventRepositoryTest extends IntegrationTestBase {
 
     @Autowired
