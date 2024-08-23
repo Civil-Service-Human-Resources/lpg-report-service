@@ -28,7 +28,8 @@ public class BlobStorageService {
     public UploadResult uploadFileAndGenerateDownloadLink(String fileName, int daysToKeepLinkActive) {
         BlobClient blobClient = uploadFile(fileName);
         BlobServiceSasSignatureValues serviceSasSignatureValues = sasSignatureFactory.generateBlobServiceSasSignatureValues(daysToKeepLinkActive, ChronoUnit.DAYS);
-        String downloadUrl = blobClient.generateSas(serviceSasSignatureValues);
+        String sas = blobClient.generateSas(serviceSasSignatureValues);
+        String downloadUrl = String.format("%s?%s", blobClient.getBlobUrl(), sas);
         return new UploadResult(serviceSasSignatureValues.getStartTime(), serviceSasSignatureValues.getExpiryTime(),
                 daysToKeepLinkActive, downloadUrl);
     }
