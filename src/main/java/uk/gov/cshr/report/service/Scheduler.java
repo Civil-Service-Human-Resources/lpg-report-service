@@ -6,8 +6,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.core.LockAssert;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -62,19 +60,17 @@ public class Scheduler {
 
     String directory = "temp-courseCompletionsJob";
 
-    private static final Logger LOG = LoggerFactory.getLogger(Scheduler.class);
-
     @Scheduled(cron = "${courseCompletions.reports.jobCron}")
     @SchedulerLock(name = "reportRequestsJob", lockAtMostFor = "PT4H")
     public void generateReportsForCourseCompletionRequests() {
         LockAssert.assertLocked();
-        LOG.info("Starting job for course completion report requests");
+        log.info("Starting job for course completion report requests");
 
         List<CourseCompletionReportRequest> requests = courseCompletionReportRequestService.findAllRequestsByStatus(CourseCompletionReportRequestStatus.REQUESTED);
-        LOG.info(String.format("Found %d requests", requests.size()));
+        log.info(String.format("Found %d requests", requests.size()));
 
         for(CourseCompletionReportRequest request : requests) {
-            LOG.info("Processing request {}", request.getRequesterId());
+            log.info("Processing request {}", request.getRequesterId());
             try {
                 processRequest(request);
             }
@@ -101,7 +97,7 @@ public class Scheduler {
         String csvFileName = String.format("%s/%s.csv", directory, fileName);
         String zipFileName = String.format("%s/%s.zip", directory, fileName);
 
-        LOG.debug(String.format("Processing request: %s", request));
+        log.debug(String.format("Processing request: %s", request));
 
         List<CourseCompletionEvent> courseCompletions = getCourseCompletionsForRequest(request);
 
@@ -112,22 +108,22 @@ public class Scheduler {
 
         UploadResult uploadResult = blobStorageService.uploadFileAndGenerateDownloadLink(zipFileName, daysToKeepReportLinkActive);
 
-        LOG.info(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
+        log.info(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
         courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.SUCCESS);
 
-        LOG.info(String.format("Sending success email to %s", request.getRequesterEmail()));
+        log.info(String.format("Sending success email to %s", request.getRequesterEmail()));
         sendSuccessEmail(request.getRequesterEmail(), uploadResult.getDownloadUrl());
-        LOG.info(String.format("Success email sent to %s", request.getRequesterEmail()));
+        log.info(String.format("Success email sent to %s", request.getRequesterEmail()));
     }
 
     public void processFailure(Exception e, Long requestId, String requesterEmail){
-        LOG.info(String.format("Processing request %s has failed", requestId), e);
+        log.info(String.format("Processing request %s has failed", requestId), e);
 
         courseCompletionReportRequestService.setStatusForReportRequest(requestId, CourseCompletionReportRequestStatus.FAILED);
 
-        LOG.debug(String.format("Sending failure email to %s", requesterEmail));
+        log.debug(String.format("Sending failure email to %s", requesterEmail));
         sendFailureEmail(requesterEmail);
-        LOG.debug(String.format("Failure email sent to %s", requesterEmail));
+        log.debug(String.format("Failure email sent to %s", requesterEmail));
     }
 
     private List<CourseCompletionEvent> getCourseCompletionsForRequest(CourseCompletionReportRequest request){
