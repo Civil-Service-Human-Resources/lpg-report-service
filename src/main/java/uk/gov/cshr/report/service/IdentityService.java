@@ -23,6 +23,7 @@ public class IdentityService {
     public OAuthToken getCachedOAuthServiceToken() {
         OAuthToken oAuthToken = new OAuthToken();
         try {
+            log.info("Fetching OAuth client token from identity service");
             oAuthToken = oAuthClient.getAccessToken();
             oAuthToken.setExpiryDateTime(LocalDateTime.now().plusSeconds(oAuthToken.getExpiresIn()));
         } catch (Exception e) {

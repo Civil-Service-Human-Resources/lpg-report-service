@@ -68,13 +68,13 @@ public class Scheduler {
     @SchedulerLock(name = "reportRequestsJob", lockAtMostFor = "PT4H")
     public void generateReportsForCourseCompletionRequests() {
         LockAssert.assertLocked();
-        LOG.debug("Starting job for course completion report requests");
+        LOG.info("Starting job for course completion report requests");
 
         List<CourseCompletionReportRequest> requests = courseCompletionReportRequestService.findAllRequestsByStatus(CourseCompletionReportRequestStatus.REQUESTED);
-        LOG.debug(String.format("Found %d requests", requests.size()));
+        LOG.info(String.format("Found %d requests", requests.size()));
 
         for(CourseCompletionReportRequest request : requests) {
-            LOG.debug("Processing request {}", request.getRequesterId());
+            LOG.info("Processing request {}", request.getRequesterId());
             try {
                 processRequest(request);
             }
@@ -112,16 +112,16 @@ public class Scheduler {
 
         UploadResult uploadResult = blobStorageService.uploadFileAndGenerateDownloadLink(zipFileName, daysToKeepReportLinkActive);
 
-        LOG.debug(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
+        LOG.info(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
         courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.SUCCESS);
 
-        LOG.debug(String.format("Sending success email to %s", request.getRequesterEmail()));
+        LOG.info(String.format("Sending success email to %s", request.getRequesterEmail()));
         sendSuccessEmail(request.getRequesterEmail(), uploadResult.getDownloadUrl());
-        LOG.debug(String.format("Success email sent to %s", request.getRequesterEmail()));
+        LOG.info(String.format("Success email sent to %s", request.getRequesterEmail()));
     }
 
     public void processFailure(Exception e, Long requestId, String requesterEmail){
-        LOG.debug(String.format("Processing request %s has failed", requestId), e);
+        LOG.info(String.format("Processing request %s has failed", requestId), e);
 
         courseCompletionReportRequestService.setStatusForReportRequest(requestId, CourseCompletionReportRequestStatus.FAILED);
 
