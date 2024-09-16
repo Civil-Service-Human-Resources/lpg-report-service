@@ -19,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest({ApiController.class, ApiExceptionHandler.class, ErrorDtoFactory.class})
 @ExtendWith(SpringExtension.class)
-@WithMockUser(username = "user")
 public class ApiControllerTest {
 
     @Autowired
@@ -29,9 +28,9 @@ public class ApiControllerTest {
     private CourseCompletionService courseCompletionService;
 
     @Test
+    @WithMockUser(username = "user")
     public void testPutRemoveUserDetailsEndpointForOneUserReturnsOkWhenRequestBodyIsCorrect() throws Exception {
         String requestBody = "{\"uids\": [\"user1\"]}";
-
         mockMvc.perform(
                 put("/api/report/remove-user-details")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -44,9 +43,9 @@ public class ApiControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "user")
     public void testPutRemoveUserDetailsEndpointForMultipleUsersReturnsOkWhenRequestBodyIsCorrect() throws Exception {
         String requestBody = "{\"uids\": [\"user1\", \"user2\"]}";
-
         mockMvc.perform(
                         put("/api/report/remove-user-details")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -59,9 +58,9 @@ public class ApiControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "user")
     public void testPutRemoveUserDetailsEndpointForNoUserReturnsOkWhenRequestBodyIsCorrect() throws Exception {
         String requestBody = "{\"uids\": []}";
-
         mockMvc.perform(
                         put("/api/report/remove-user-details")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -74,9 +73,9 @@ public class ApiControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "user")
     public void testPutRemoveUserDetailsEndpointForEmptyBodyReturnsOkWhenRequestBodyIsCorrect() throws Exception {
         String requestBody = "{}";
-
         mockMvc.perform(
                         put("/api/report/remove-user-details")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -89,9 +88,9 @@ public class ApiControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "user")
     public void testPutRemoveUserDetailsEndpointReturnsBadRequestWhenRequestBodyIsEmpty() throws Exception {
         String requestBody = "";
-
         mockMvc.perform(
                         put("/api/report/remove-user-details")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -101,5 +100,19 @@ public class ApiControllerTest {
                                 .characterEncoding("utf-8"))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testPutRemoveUserDetailsEndpointReturnsUnauthorizedWhenRequestBodyIsCorrectButRequestIsNotAuthorized() throws Exception {
+        String requestBody = "{\"uids\": [\"user1\", \"user2\"]}";
+        mockMvc.perform(
+                        put("/api/report/remove-user-details")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody)
+                                .with(csrf())
+                                .accept(MediaType.APPLICATION_JSON)
+                                .characterEncoding("utf-8"))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
     }
 }
