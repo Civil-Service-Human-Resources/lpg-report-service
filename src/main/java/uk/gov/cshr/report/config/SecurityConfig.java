@@ -55,7 +55,7 @@ public class SecurityConfig {
     @Order(3)
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.securityMatcher("/bookings/**", "/course-completions/**",
-                        "/learner-record/**", "/modules/**", "/api/report/**")
+                        "/learner-record/**", "/modules/**", "/api/**")
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
