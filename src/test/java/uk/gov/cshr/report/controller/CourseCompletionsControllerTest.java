@@ -15,15 +15,13 @@ import uk.gov.cshr.report.service.CourseCompletionService;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest({CourseCompletionsController.class,  ApiExceptionHandler.class, ErrorDtoFactory.class})
+@WebMvcTest({CourseCompletionsController.class, ApiExceptionHandler.class, ErrorDtoFactory.class})
 @ExtendWith(SpringExtension.class)
-@WithMockUser(username = "user")
 public class CourseCompletionsControllerTest {
 
     @Autowired
@@ -144,5 +142,47 @@ public class CourseCompletionsControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    @WithMockUser(username = "user")
+    public void testPutRemoveUserDetailsEndpointReturnsOkWhenRequestBodyIsCorrect() throws Exception {
+        String requestBody = "{\"uids\": [\"user1\", \"user2\"]}";
+        mockMvc.perform(
+                        put("/course-completions/remove-user-details")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody)
+                                .with(csrf())
+                                .accept(MediaType.APPLICATION_JSON)
+                                .characterEncoding("utf-8"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 
+    @Test
+    @WithMockUser(username = "user")
+    public void testPutRemoveUserDetailsEndpointReturnsBadRequestWhenRequestBodyIsEmpty() throws Exception {
+        String requestBody = "";
+        mockMvc.perform(
+                        put("/course-completions/remove-user-details")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody)
+                                .with(csrf())
+                                .accept(MediaType.APPLICATION_JSON)
+                                .characterEncoding("utf-8"))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testPutRemoveUserDetailsEndpointReturnsUnauthorizedWhenRequestBodyIsCorrectButRequestIsNotAuthorized() throws Exception {
+        String requestBody = "{\"uids\": [\"user1\", \"user2\"]}";
+        mockMvc.perform(
+                        put("/course-completions/remove-user-details")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody)
+                                .with(csrf())
+                                .accept(MediaType.APPLICATION_JSON)
+                                .characterEncoding("utf-8"))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
 }
