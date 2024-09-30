@@ -3,6 +3,7 @@ package uk.gov.cshr.report.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequestsParamsToReportRequestMapper;
@@ -39,6 +40,7 @@ public class CourseCompletionsController {
     @Transactional
     @PutMapping("/remove-user-details")
     @ResponseBody
+    @PreAuthorize("hasAnyAuthority('IDENTITY_DELETE')")
     public int removeUserDetails(@RequestBody DeleteUserDetailsParams deleteUserDetailsParams) {
         return courseCompletionService.removeUserDetails(deleteUserDetailsParams.getUids());
     }
