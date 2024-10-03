@@ -2,7 +2,7 @@ package uk.gov.cshr.report.controller.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
+import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 
 import java.util.List;
 

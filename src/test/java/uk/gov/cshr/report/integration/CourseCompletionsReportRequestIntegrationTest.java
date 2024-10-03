@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.testcontainers.containers.GenericContainer;
 import uk.gov.cshr.report.configuration.TestConfig;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
+import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.dto.MessageDto;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 import uk.gov.cshr.report.service.NotificationService;

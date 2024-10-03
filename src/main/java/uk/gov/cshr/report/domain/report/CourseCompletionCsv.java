@@ -1,4 +1,4 @@
-package uk.gov.cshr.report.domain;
+package uk.gov.cshr.report.domain.report;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
@@ -12,55 +12,44 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseCompletionCsv {
-    @CsvBindByName(column = "event_id")
-    @CsvBindByPosition(position = 1)
-    private Long eventId;
-
-    @CsvBindByName(column = "external_id")
-    @CsvBindByPosition(position = 2)
-    private String externalId;
-
-    @CsvBindByName(column = "user_id")
-    @CsvBindByPosition(position = 3)
-    private String userId;
 
     @CsvBindByName(column = "user_email")
-    @CsvBindByPosition(position = 4)
+    @CsvBindByPosition(position = 1)
     private String userEmail;
 
     @CsvBindByName(column = "course_id")
-    @CsvBindByPosition(position = 5)
+    @CsvBindByPosition(position = 2)
     private String courseId;
 
     @CsvBindByName(column = "course_title")
-    @CsvBindByPosition(position = 6)
+    @CsvBindByPosition(position = 3)
     private String courseTitle;
 
     @CsvBindByName(column = "event_timestamp")
-    @CsvBindByPosition(position = 7)
+    @CsvBindByPosition(position = 4)
     private LocalDateTime eventTimestamp;
 
     @CsvBindByName(column = "organisation_id")
-    @CsvBindByPosition(position = 8)
+    @CsvBindByPosition(position = 5)
     private Integer organisationId;
 
-    @CsvBindByName(column = "organisation_abbreviation")
-    @CsvBindByPosition(position = 9)
-    private String organisationAbbreviation;
+    @CsvBindByName(column = "organisation_name")
+    @CsvBindByPosition(position = 6)
+    private String organisationName;
 
     @CsvBindByName(column = "profession_id")
-    @CsvBindByPosition(position = 10)
+    @CsvBindByPosition(position = 7)
     private Integer professionId;
 
     @CsvBindByName(column = "profession_name")
-    @CsvBindByPosition(position = 11)
+    @CsvBindByPosition(position = 8)
     private String professionName;
 
     @CsvBindByName(column = "grade_id")
-    @CsvBindByPosition(position = 12)
+    @CsvBindByPosition(position = 9)
     private Integer gradeId;
 
-    @CsvBindByName(column = "grade_code")
-    @CsvBindByPosition(position = 13)
-    private String gradeCode;
+    @CsvBindByName(column = "grade_name")
+    @CsvBindByPosition(position = 10)
+    private String gradeName;
 }

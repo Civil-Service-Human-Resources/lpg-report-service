@@ -7,7 +7,7 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.CourseCompletionCsv;
+import uk.gov.cshr.report.domain.report.CourseCompletionCsv;
 
 import java.io.FileWriter;
 import java.io.IOException;
