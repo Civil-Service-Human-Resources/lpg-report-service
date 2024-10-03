@@ -46,10 +46,10 @@ public class CourseCompletionCsv {
     private String professionName;
 
     @CsvBindByName(column = "grade_id")
-    @CsvBindByPosition(position = 10)
+    @CsvBindByPosition(position = 8)
     private Integer gradeId;
 
     @CsvBindByName(column = "grade_name")
-    @CsvBindByPosition(position = 11)
+    @CsvBindByPosition(position = 9)
     private String gradeName;
 }
