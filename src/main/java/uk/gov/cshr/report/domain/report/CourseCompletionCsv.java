@@ -14,42 +14,42 @@ import java.time.LocalDateTime;
 public class CourseCompletionCsv {
 
     @CsvBindByName(column = "user_email")
-    @CsvBindByPosition(position = 1)
+    @CsvBindByPosition(position = 0)
     private String userEmail;
 
     @CsvBindByName(column = "course_id")
-    @CsvBindByPosition(position = 2)
+    @CsvBindByPosition(position = 1)
     private String courseId;
 
     @CsvBindByName(column = "course_title")
-    @CsvBindByPosition(position = 3)
+    @CsvBindByPosition(position = 2)
     private String courseTitle;
 
     @CsvBindByName(column = "event_timestamp")
-    @CsvBindByPosition(position = 4)
+    @CsvBindByPosition(position = 3)
     private LocalDateTime eventTimestamp;
 
     @CsvBindByName(column = "organisation_id")
-    @CsvBindByPosition(position = 5)
+    @CsvBindByPosition(position = 4)
     private Integer organisationId;
 
     @CsvBindByName(column = "organisation_name")
-    @CsvBindByPosition(position = 6)
+    @CsvBindByPosition(position = 5)
     private String organisationName;
 
     @CsvBindByName(column = "profession_id")
-    @CsvBindByPosition(position = 7)
+    @CsvBindByPosition(position = 6)
     private Integer professionId;
 
     @CsvBindByName(column = "profession_name")
-    @CsvBindByPosition(position = 8)
+    @CsvBindByPosition(position = 7)
     private String professionName;
 
     @CsvBindByName(column = "grade_id")
-    @CsvBindByPosition(position = 9)
+    @CsvBindByPosition(position = 10)
     private Integer gradeId;
 
     @CsvBindByName(column = "grade_name")
-    @CsvBindByPosition(position = 10)
+    @CsvBindByPosition(position = 11)
     private String gradeName;
 }
