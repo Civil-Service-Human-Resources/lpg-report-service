@@ -1,7 +1,7 @@
 package uk.gov.cshr.report.controller.mappers;
 
 import uk.gov.cshr.report.controller.model.PostCourseCompletionsReportRequestParams;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
+import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;

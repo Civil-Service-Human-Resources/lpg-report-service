@@ -12,7 +12,7 @@ public class CourseCompletionsMessageConverter implements MessageToEntityConvert
         CourseCompletionMessage metadata = message.getMetadata();
         return new CourseCompletionEvent(message.getMessageId(), metadata.getUserId(), metadata.getUserEmail(),
                 metadata.getCourseId(), metadata.getCourseTitle(), metadata.getCompletionDate(), metadata.getOrganisationId(),
-                metadata.getOrganisationAbbreviation(),
-                metadata.getProfessionId(), metadata.getProfessionName(), metadata.getGradeId(), metadata.getGradeCode());
+                metadata.getOrganisationName(),
+                metadata.getProfessionId(), metadata.getProfessionName(), metadata.getGradeId(), metadata.getGradeName());
     }
 }

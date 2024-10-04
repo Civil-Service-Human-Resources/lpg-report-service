@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
-import uk.gov.cshr.report.domain.CourseCompletionCsv;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequestStatus;
+import uk.gov.cshr.report.domain.report.CourseCompletionCsv;
+import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
+import uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus;
 import uk.gov.cshr.report.dto.MessageDto;
 import uk.gov.cshr.report.service.blob.BlobStorageService;
 import uk.gov.cshr.report.service.blob.UploadResult;
@@ -146,19 +146,16 @@ public class Scheduler {
 
         for (CourseCompletionEvent event: courseCompletions){
             eventCsvRows.add(new CourseCompletionCsv(
-                    event.getEventId(),
-                    event.getExternalId(),
-                    event.getUserId(),
                     event.getUserEmail(),
                     event.getCourseId(),
                     event.getCourseTitle(),
                     convertZonedDateTimeToTimezone(event.getEventTimestamp(), timezone),
                     event.getOrganisationId(),
-                    event.getOrganisationAbbreviation(),
+                    event.getOrganisationName(),
                     event.getProfessionId(),
                     event.getProfessionName(),
                     event.getGradeId(),
-                    event.getGradeCode()
+                    event.getGradeName()
                     ));
         }
 
