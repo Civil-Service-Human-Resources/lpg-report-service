@@ -1,14 +1,16 @@
 package uk.gov.cshr.report.controller;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import uk.gov.cshr.report.controller.model.AggregationResponse;
-import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
+import org.springframework.web.bind.annotation.*;
+import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequestsParamsToReportRequestMapper;
+import uk.gov.cshr.report.controller.model.*;
+import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
+import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 
 import java.util.List;
@@ -19,15 +21,45 @@ import java.util.List;
 public class CourseCompletionsController {
 
     private final CourseCompletionService courseCompletionService;
+    private final CourseCompletionReportRequestService courseCompletionReportRequestService;
+    private final PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper;
 
-    public CourseCompletionsController(CourseCompletionService courseCompletionService) {
+    public CourseCompletionsController(CourseCompletionService courseCompletionService, CourseCompletionReportRequestService courseCompletionReportRequestService) {
         this.courseCompletionService = courseCompletionService;
+        this.courseCompletionReportRequestService = courseCompletionReportRequestService;
+        this.postCourseCompletionsReportRequestsParamsToReportRequestMapper = new PostCourseCompletionsReportRequestsParamsToReportRequestMapper();
     }
 
-    @GetMapping("/aggregations/by-course")
+    @PostMapping("/aggregations/by-course")
     @ResponseBody
-    public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@Valid GetCourseCompletionsParams params) {
+    public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@RequestBody @Valid GetCourseCompletionsParams params) {
         List<CourseCompletionAggregation> results =  courseCompletionService.getCourseCompletions(params);
-        return new AggregationResponse<>(params.getBinDelimiter().getVal(), results);
+        return new AggregationResponse<>(params.getTimezone().toString(), params.getBinDelimiter().getVal(), results);
+    }
+
+    @Transactional
+    @PutMapping("/remove-user-details")
+    @ResponseBody
+    @PreAuthorize("hasAnyAuthority('IDENTITY_DELETE')")
+    public int removeUserDetails(@RequestBody DeleteUserDetailsParams deleteUserDetailsParams) {
+        return courseCompletionService.removeUserDetails(deleteUserDetailsParams.getUids());
+    }
+
+    @PostMapping("/report-requests")
+    @ResponseBody
+    public AddCourseCompletionReportRequestResponse addReportRequest(@RequestBody @Valid PostCourseCompletionsReportRequestParams params){
+        if(courseCompletionReportRequestService.userReachedMaxReportRequests(params.getUserId())){
+            return new AddCourseCompletionReportRequestResponse(false, "User has reached the maximum allowed report requests");
+        }
+        CourseCompletionReportRequest reportRequest = postCourseCompletionsReportRequestsParamsToReportRequestMapper.getRequestFromParams(params);
+        courseCompletionReportRequestService.addReportRequest(reportRequest);
+        return new AddCourseCompletionReportRequestResponse(true);
+    }
+
+    @GetMapping("/report-requests")
+    @ResponseBody
+    public GetCourseCompletionReportRequestsResponse getAllReportRequests(@Valid GetCourseCompletionsReportRequestParams params){
+        List<CourseCompletionReportRequest> reportRequests = courseCompletionReportRequestService.findReportRequestsByUserIdAndStatus(params);
+        return new GetCourseCompletionReportRequestsResponse(reportRequests);
     }
 }

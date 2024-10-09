@@ -5,30 +5,33 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class GetCourseCompletionsParams {
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime startDate;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime endDate;
 
-    @Size(min = 1, max = 10)
+    private ZoneId timezone = ZoneId.of("UTC");
+
+    @Size(min = 1, max = 30)
     @NotNull
     private List<String> courseIds;
 
-    @Size(min = 1)
+    @Size(min = 1, max = 400)
     @NotNull
     private List<Integer> organisationIds;
 
@@ -38,11 +41,4 @@ public class GetCourseCompletionsParams {
 
     private AggregationBinDelimiter binDelimiter = AggregationBinDelimiter.DAY;
 
-    public ZonedDateTime getStartDate() {
-        return startDate.atStartOfDay(ZoneId.systemDefault());
-    }
-
-    public ZonedDateTime getEndDate() {
-        return endDate.atStartOfDay(ZoneId.systemDefault());
-    }
 }

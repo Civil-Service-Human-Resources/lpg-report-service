@@ -11,6 +11,6 @@ public class ClockConfig {
 
     @Bean
     public Clock getClock() {
-        return Clock.system(ZoneId.of("Europe/London"));
+        return Clock.system(ZoneId.of("UTC"));
     }
 }
