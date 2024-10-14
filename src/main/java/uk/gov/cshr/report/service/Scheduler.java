@@ -73,8 +73,7 @@ public class Scheduler {
         for(CourseCompletionReportRequest request : requests) {
             log.info("Processing request {}", request.getRequesterId());
             try {
-                throw new Exception();
-//                processRequest(request);
+                processRequest(request);
             }
             catch (Exception e){
                 processFailure(e, request);
