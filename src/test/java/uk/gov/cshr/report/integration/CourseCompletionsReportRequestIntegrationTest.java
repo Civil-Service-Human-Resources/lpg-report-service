@@ -177,7 +177,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
         jdbcTemplate.execute("""
         INSERT INTO course_completion_report_requests
             (report_request_id, requester_id, requester_email, requested_timestamp, completed_timestamp, status, from_date, to_date, course_ids, organisation_ids, requester_timezone, requester_full_name)
-            VALUES(1, 'RequesterA', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}', '+01:00', "Requester A");
+            VALUES(1, 'RequesterA', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}', '+01:00', 'Requester A');
         """);
 
         CourseCompletionReportRequest courseCompletionReportRequest = new CourseCompletionReportRequest();
