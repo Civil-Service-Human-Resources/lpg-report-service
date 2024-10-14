@@ -21,6 +21,7 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper {
         reportRequest.setProfessionIds(params.getProfessionIds());
         reportRequest.setGradeIds(params.getGradeIds());
         reportRequest.setRequesterTimezone(params.getTimezone());
+        reportRequest.setFullName(params.getFullName());
 
         return reportRequest;
     }

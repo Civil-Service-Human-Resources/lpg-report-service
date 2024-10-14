@@ -61,4 +61,7 @@ public class CourseCompletionReportRequest {
     @Column(name = "requester_timezone")
     private String requesterTimezone;
 
+    @Column(name = "requester_full_name")
+    private String fullName;
+
 }
