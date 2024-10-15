@@ -117,7 +117,7 @@ public class Scheduler {
         ZoneOffset targetZoneOffset = ZoneOffset.of(request.getRequesterTimezone());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
         String formattedDateTime = zonedDateTime.withZoneSameInstant(targetZoneOffset).format(formatter);
-        sendSuccessEmail(request.getRequesterEmail(), uploadResult.getDownloadUrl(), formattedDateTime);
+        sendSuccessEmail(request.getRequesterEmail(), request.getFullName(), uploadResult.getDownloadUrl(), formattedDateTime);
         log.info(String.format("Success email sent to %s", request.getRequesterEmail()));
     }
 
@@ -184,12 +184,12 @@ public class Scheduler {
         return String.format("course_completions_%s_from_%s_to_%s", requestId, fromDate.format(formatter), toDate.format(formatter));
     }
 
-    private void sendSuccessEmail(String email, String blobUrl, String time){
+    private void sendSuccessEmail(String email, String requesterFullName, String blobUrl, String time){
         MessageDto messageDto = new MessageDto();
         messageDto.setRecipient(email);
 
         Map<String, String> personalisation = new HashMap<>();
-        personalisation.put("userName", email);
+        personalisation.put("userName", requesterFullName);
         personalisation.put("exportDate", time);
         personalisation.put("reportUrl", blobUrl);
         personalisation.put("reportType", "Course completions");
