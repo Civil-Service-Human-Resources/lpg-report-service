@@ -131,7 +131,7 @@ public class Scheduler {
         ZoneOffset targetZoneOffset = ZoneOffset.of(request.getRequesterTimezone());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
         String formattedDateTime = zonedDateTime.withZoneSameInstant(targetZoneOffset).format(formatter);
-        sendFailureEmail(request.getRequesterEmail(), formattedDateTime);
+        sendFailureEmail(request.getRequesterEmail(), request.getFullName(), formattedDateTime);
         log.debug(String.format("Failure email sent to %s", request.getRequesterEmail()));
     }
 
@@ -198,12 +198,12 @@ public class Scheduler {
         notificationService.sendSuccessEmail(messageDto);
     }
 
-    private void sendFailureEmail(String email, String time){
+    private void sendFailureEmail(String email, String requesterFullName, String time){
         MessageDto messageDto = new MessageDto();
         messageDto.setRecipient(email);
 
         Map<String, String> personalisation = new HashMap<>();
-        personalisation.put("userName", email);
+        personalisation.put("userName", requesterFullName);
         personalisation.put("exportDate", time);
         personalisation.put("reportType", "Course completions");
 
