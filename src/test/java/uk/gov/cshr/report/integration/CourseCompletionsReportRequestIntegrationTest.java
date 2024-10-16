@@ -99,8 +99,8 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     public void testReportRequestsSchedulerProcessesJobCorrectlyWhenNoExceptionIsThrown() throws IOException {
         jdbcTemplate.execute("""
         INSERT INTO course_completion_report_requests
-            (report_request_id, requester_id, requester_email, requested_timestamp, completed_timestamp, status, from_date, to_date, course_ids, organisation_ids)
-            VALUES(1, 'RequesterA', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}');
+            (report_request_id, requester_id, requester_email, requested_timestamp, completed_timestamp, status, from_date, to_date, course_ids, organisation_ids, requester_timezone, requester_full_name)
+            VALUES(1, 'RequesterA', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}', '+01:00', 'Requester A');
         """);
         scheduler.generateReportsForCourseCompletionRequests();
 
@@ -176,11 +176,16 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
 
         jdbcTemplate.execute("""
         INSERT INTO course_completion_report_requests
-            (report_request_id, requester_id, requester_email, requested_timestamp, completed_timestamp, status, from_date, to_date, course_ids, organisation_ids)
-            VALUES(1, 'RequesterA', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}');
+            (report_request_id, requester_id, requester_email, requested_timestamp, completed_timestamp, status, from_date, to_date, course_ids, organisation_ids, requester_timezone, requester_full_name)
+            VALUES(1, 'RequesterA', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}', '+01:00', 'Requester A');
         """);
 
-        scheduler.processFailure(new Exception(), 1L, "RequesterA@domain.com");
+        CourseCompletionReportRequest courseCompletionReportRequest = new CourseCompletionReportRequest();
+        courseCompletionReportRequest.setReportRequestId(1L);
+        courseCompletionReportRequest.setRequesterEmail("RequesterA@domain.com");
+        courseCompletionReportRequest.setRequesterTimezone("+01:00");
+        courseCompletionReportRequest.setFullName("Requester A");
+        scheduler.processFailure(new Exception(), courseCompletionReportRequest);
 
         // Tests:
         testSchedulerSetsProcessedCourseCompletionReportRequestStatusToFailed();

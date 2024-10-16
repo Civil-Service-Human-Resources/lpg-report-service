@@ -39,4 +39,6 @@ public class PostCourseCompletionsReportRequestParams {
     @NotNull
     private String timezone;
 
+    private String fullName;
+
 }

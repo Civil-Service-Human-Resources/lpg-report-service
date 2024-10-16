@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class Scheduler {
                 processRequest(request);
             }
             catch (Exception e){
-                processFailure(e, request.getReportRequestId(), request.getRequesterEmail());
+                processFailure(e, request);
             }
             finally {
                 courseCompletionReportRequestService.setCompletedDateForReportRequest(request.getReportRequestId(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
@@ -112,18 +113,26 @@ public class Scheduler {
         courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.SUCCESS);
 
         log.info(String.format("Sending success email to %s", request.getRequesterEmail()));
-        sendSuccessEmail(request.getRequesterEmail(), uploadResult.getDownloadUrl());
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+        ZoneOffset targetZoneOffset = ZoneOffset.of(request.getRequesterTimezone());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
+        String formattedDateTime = zonedDateTime.withZoneSameInstant(targetZoneOffset).format(formatter);
+        sendSuccessEmail(request.getRequesterEmail(), request.getFullName(), uploadResult.getDownloadUrl(), formattedDateTime);
         log.info(String.format("Success email sent to %s", request.getRequesterEmail()));
     }
 
-    public void processFailure(Exception e, Long requestId, String requesterEmail){
-        log.info(String.format("Processing request %s has failed", requestId), e);
+    public void processFailure(Exception e, CourseCompletionReportRequest request){
+        log.info(String.format("Processing request %s has failed", request.getReportRequestId()), e);
 
-        courseCompletionReportRequestService.setStatusForReportRequest(requestId, CourseCompletionReportRequestStatus.FAILED);
+        courseCompletionReportRequestService.setStatusForReportRequest(request.getReportRequestId(), CourseCompletionReportRequestStatus.FAILED);
 
-        log.debug(String.format("Sending failure email to %s", requesterEmail));
-        sendFailureEmail(requesterEmail);
-        log.debug(String.format("Failure email sent to %s", requesterEmail));
+        log.debug(String.format("Sending failure email to %s", request.getRequesterEmail()));
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+        ZoneOffset targetZoneOffset = ZoneOffset.of(request.getRequesterTimezone());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
+        String formattedDateTime = zonedDateTime.withZoneSameInstant(targetZoneOffset).format(formatter);
+        sendFailureEmail(request.getRequesterEmail(), request.getFullName(), formattedDateTime);
+        log.debug(String.format("Failure email sent to %s", request.getRequesterEmail()));
     }
 
     private List<CourseCompletionEvent> getCourseCompletionsForRequest(CourseCompletionReportRequest request){
@@ -175,18 +184,30 @@ public class Scheduler {
         return String.format("course_completions_%s_from_%s_to_%s", requestId, fromDate.format(formatter), toDate.format(formatter));
     }
 
-    private void sendSuccessEmail(String email, String blobUrl){
+    private void sendSuccessEmail(String email, String requesterFullName, String blobUrl, String time){
         MessageDto messageDto = new MessageDto();
         messageDto.setRecipient(email);
+
         Map<String, String> personalisation = new HashMap<>();
+        personalisation.put("userName", requesterFullName);
+        personalisation.put("exportDate", time);
         personalisation.put("reportUrl", blobUrl);
+        personalisation.put("reportType", "Course completions");
+
         messageDto.setPersonalisation(personalisation);
         notificationService.sendSuccessEmail(messageDto);
     }
 
-    private void sendFailureEmail(String email){
+    private void sendFailureEmail(String email, String requesterFullName, String time){
         MessageDto messageDto = new MessageDto();
         messageDto.setRecipient(email);
+
+        Map<String, String> personalisation = new HashMap<>();
+        personalisation.put("userName", requesterFullName);
+        personalisation.put("exportDate", time);
+        personalisation.put("reportType", "Course completions");
+
+        messageDto.setPersonalisation(personalisation);
         notificationService.sendFailureEmail(messageDto);
     }
 
