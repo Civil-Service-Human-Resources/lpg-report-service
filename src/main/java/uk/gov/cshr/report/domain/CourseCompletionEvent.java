@@ -36,7 +36,7 @@ public class CourseCompletionEvent {
     private Integer organisationId;
 
     @Column
-    private String organisationAbbreviation;
+    private String organisationName;
 
     @Column(nullable = false)
     private Integer professionId;
@@ -48,12 +48,13 @@ public class CourseCompletionEvent {
     private Integer gradeId;
 
     @Column
-    private String gradeCode;
+    private String gradeName;
 
 
 
     public CourseCompletionEvent(String externalId, String userId, String userEmail, String courseId, String courseTitle,
-                                 LocalDateTime eventTimestamp, Integer organisationId, String organisationAbbreviation, Integer professionId, String professionName, Integer gradeId, String gradeCode) {
+                                 LocalDateTime eventTimestamp, Integer organisationId, String organisationName,
+                                 Integer professionId, String professionName, Integer gradeId, String gradeName) {
         this.externalId = externalId;
         this.userId = userId;
         this.userEmail = userEmail;
@@ -61,11 +62,11 @@ public class CourseCompletionEvent {
         this.courseTitle = courseTitle;
         this.eventTimestamp = eventTimestamp;
         this.organisationId = organisationId;
-        this.organisationAbbreviation = organisationAbbreviation;
+        this.organisationName = organisationName;
         this.professionId = professionId;
         this.professionName = professionName;
         this.gradeId = gradeId;
-        this.gradeCode = gradeCode;
+        this.gradeName = gradeName;
     }
 
     public CourseCompletionEvent() {

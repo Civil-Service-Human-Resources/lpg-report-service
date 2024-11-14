@@ -1,7 +1,7 @@
 package uk.gov.cshr.report.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
+import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 
 import java.util.List;
 

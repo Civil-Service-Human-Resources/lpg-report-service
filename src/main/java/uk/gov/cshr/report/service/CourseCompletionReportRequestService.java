@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsReportRequestParams;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequest;
-import uk.gov.cshr.report.domain.CourseCompletionReportRequestStatus;
+import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
+import uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 
 import java.time.ZonedDateTime;
