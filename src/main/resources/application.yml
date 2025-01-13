@@ -113,7 +113,7 @@ courseCompletions:
     maxRequestsPerUser: ${MAX_REQUESTS_PER_USER:1}
     jobCron: ${REPORT_REQUESTS_JOB_CRON:0 0 * * * *}
     defaultTimezone: "${COURSE_COMPLETION_REPORTS_DEFAULT_TIMEZONE:Europe/London}"
-    daysToKeepReportLinkActive: "${COURSE_COMPLETION_REPORTS_DAYS_TO_KEEP_LINK_ACTIVE:1}"
+    tempDir: "${COURSE_COMPLETION_REPORTS_DEFAULT_TEMP_DIR:temp-courseCompletionsJob}"
 
 notification:
   serviceUrl: ${NOTIFICATION_SERVICE_URL:http://localhost:9006}

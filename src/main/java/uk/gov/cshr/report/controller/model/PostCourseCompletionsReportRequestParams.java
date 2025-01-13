@@ -1,3 +1,4 @@
+
 package uk.gov.cshr.report.controller.model;
 
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,9 @@ public class PostCourseCompletionsReportRequestParams {
 
     @NotNull
     private String userEmail;
+
+    @NotNull
+    private String downloadBaseUrl;
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

@@ -1,8 +1,11 @@
 package uk.gov.cshr.report.service.auth;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
+import uk.gov.cshr.report.exception.ClientAuthenticationErrorException;
+
 @Component
 public class UserAuthService implements IUserAuthService {
 
@@ -24,6 +27,19 @@ public class UserAuthService implements IUserAuthService {
             }
         }
         return jwt;
+    }
+
+    @Override
+    public String getUsername() {
+        String username = "";
+        Jwt jwtPrincipal = getBearerTokenFromUserAuth();
+        if (jwtPrincipal != null) {
+            username = (String) jwtPrincipal.getClaims().get("user_name");
+        }
+        if (StringUtils.isBlank(username)) {
+            throw new ClientAuthenticationErrorException("Learner Id is missing from authentication token");
+        }
+        return username;
     }
 
     private Authentication getAuthentication() {
