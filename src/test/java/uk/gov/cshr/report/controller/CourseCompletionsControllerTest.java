@@ -78,7 +78,7 @@ public class CourseCompletionsControllerTest {
                         "organisationIds": [1,2,3,4],
                         "professionIds": [5,6,7,8],
                         "timezone": "+1",
-                        "downloadBaseUrl": "http://base.com"
+                        "downloadBaseUrl": "https://base.com"
                     }""";
 
         mockMvc.perform(
@@ -105,7 +105,7 @@ public class CourseCompletionsControllerTest {
                         "organisationIds": [1,2,3,4],
                         "professionIds": [5,6,7,8],
                         "timezone": "Europe/London",
-                        "downloadBaseUrl": "http://base.com"
+                        "downloadBaseUrl": "https://base.com"
                     }""";
 
         mockMvc.perform(

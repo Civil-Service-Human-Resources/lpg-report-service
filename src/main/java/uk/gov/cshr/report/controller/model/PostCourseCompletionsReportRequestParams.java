@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class PostCourseCompletionsReportRequestParams {
     private String userEmail;
 
     @NotNull
+    @URL(protocol = "https")
     private String downloadBaseUrl;
 
     @NotNull

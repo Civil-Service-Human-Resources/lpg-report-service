@@ -121,7 +121,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                     "professionIds": [5,6,7,8],
                     "gradeIds": [4,3,2],
                     "timezone": "+1",
-                    "downloadBaseUrl": "http://base.com"
+                    "downloadBaseUrl": "https://base.com"
                 }""";
 
         String expectedResponseKey = "addedSuccessfully";
@@ -149,7 +149,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                     "professionIds": [5,6,7,8],
                     "gradeIds": [4,3,2],
                     "timezone": "+1",
-                    "downloadBaseUrl": "http://base.com"
+                    "downloadBaseUrl": "https://base.com"
                 }""";
 
         String expectedAddedSuccessfullyResponseKey = "addedSuccessfully";
@@ -185,7 +185,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                     "professionIds": [5,6,7,8],
                     "gradeIds": [4,3,2],
                     "timezone": "+1",
-                    "downloadBaseUrl": "http://base.com"
+                    "downloadBaseUrl": "https://base.com"
                 }""";
 
         mockMvc.perform(post(reportRequestsEndpoint)
