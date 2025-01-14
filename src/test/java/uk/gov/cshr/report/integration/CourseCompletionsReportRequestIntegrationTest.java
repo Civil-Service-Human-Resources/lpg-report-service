@@ -242,7 +242,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
         """);
         mockMvc
                 .perform(MockMvcRequestBuilders.get("/course-completions/report-requests/downloads/slug"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isForbidden());
     }
 
     @Test

@@ -42,7 +42,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UnauthorisedReportDownloadException.class)
     protected ResponseEntity<ErrorDto> handleUnathorisedReportDownloadException(UnauthorisedReportDownloadException e) {
         return errorDtoFactory.create(
-                HttpStatus.UNAUTHORIZED, List.of("User is not authorised to download this report")
+                HttpStatus.FORBIDDEN, List.of("User is not authorised to download this report")
         ).getAsResponseEntity();
     }
 
