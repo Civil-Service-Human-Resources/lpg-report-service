@@ -75,6 +75,7 @@ public class IntegrationTestBase extends WireMockServer {
                 .defaultRequest(get("/").with(jwtPostProcessor))
                 .defaultRequest(post("/").with(jwtPostProcessor))
                 .defaultRequest(put("/").with(jwtPostProcessor))
+                .alwaysDo(result -> System.out.println(result.getResponse().getContentAsString()))
                 .build();
     }
 }
