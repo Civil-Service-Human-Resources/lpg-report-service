@@ -242,7 +242,8 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
         """);
         mockMvc
                 .perform(MockMvcRequestBuilders.get("/course-completions/report-requests/downloads/slug"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.errors[0]").value("User is not authorised to download this report"));
     }
 
     @Test
