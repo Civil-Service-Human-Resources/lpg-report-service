@@ -112,7 +112,4 @@ public class CourseCompletionReportRequest {
                 getFromDate().format(formatter), getToDate().format(formatter));
     }
 
-    public void setDownloadMetadata() {
-        setTimesDownloaded(timesDownloaded++);
-    }
 }

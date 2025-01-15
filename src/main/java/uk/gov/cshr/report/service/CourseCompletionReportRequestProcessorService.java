@@ -87,8 +87,10 @@ public class CourseCompletionReportRequestProcessorService {
             throw new UnauthorisedReportDownloadException(String.format("User %s attempted to download course completions report %s",
                     downloaderUid, courseCompletionReportRequest.getRequesterId()));
         }
-        courseCompletionReportRequest.setDownloadMetadata();
-        return courseCompletionsZipReportService.fetchBlobReport(courseCompletionReportRequest.getFileName());
+        courseCompletionReportRequest.setTimesDownloaded(courseCompletionReportRequest.getTimesDownloaded()+1);
+        DownloadableFile downloadableFile = courseCompletionsZipReportService.fetchBlobReport(courseCompletionReportRequest.getFileName());
+        courseCompletionReportRequestRepository.save(courseCompletionReportRequest);
+        return downloadableFile;
     }
 
 }

@@ -231,6 +231,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                 .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", zipFileName)))
                 .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM))
                 .andExpect(content().bytes(Files.readAllBytes(testZipFile.toPath())));
+        assertEquals(1, courseCompletionReportRequestRepository.findByUrlSlug("slug").get().getTimesDownloaded());
     }
 
     @Test
