@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
+import uk.gov.cshr.report.validation.validUrl.CustomUrl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +22,7 @@ public class PostCourseCompletionsReportRequestParams {
     private String userEmail;
 
     @NotNull
-    @URL(protocol = "https")
+    @CustomUrl
     private String downloadBaseUrl;
 
     @NotNull

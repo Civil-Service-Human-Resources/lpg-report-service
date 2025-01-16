@@ -19,6 +19,11 @@ app:
       partitionLookaheadInDays: ${COURSE_COMPLETIONS_PARTITION_LOOKAHEAD_DAYS:7}
       cronSchedule: ${COURSE_COMPLETIONS_PARTITION_CRON_SCHEDULE:0 0 0 * * *}
       runOnStartup: ${COURSE_COMPLETIONS_PARTITION_RUN_ON_STARTUP:true}
+  validation:
+    url:
+      protocols: ${URL_VALIDATION_VALID_PROTOCOL:http,https}
+      host: ${URL_VALIDATION_VALID_HOST:}
+      port: ${URL_VALIDATION_VALID_PORT:}
 spring:
   datasource:
     username: ${DATASOURCE_USERNAME:root}
