@@ -9,9 +9,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequestsParamsToReportRequestMapper;
 import uk.gov.cshr.report.controller.model.ErrorDtoFactory;
+import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
+import uk.gov.cshr.report.service.auth.IUserAuthService;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -33,6 +36,18 @@ public class CourseCompletionsControllerTest {
     @MockBean
     private CourseCompletionReportRequestService courseCompletionReportRequestService;
 
+    @MockBean
+    private CourseCompletionReportRequestProcessorService courseCompletionReportRequestProcessorService;
+
+    @MockBean
+    private PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper;
+
+    @MockBean
+    private IUserAuthService userAuthService;
+
+    @MockBean
+    private ControllerUtilities controllerUtilities;
+
     @Test
     @WithMockUser(username = "user")
     public void shouldValidateParams() throws Exception {
@@ -53,8 +68,18 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsCorrect() throws Exception {
-        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01T00:00:00\", \"endDate\": \"2024-02-01T00:00:00\"," +
-                "\"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8], \"timezone\": \"+1\"}";
+        String requestBody = """
+                    {
+                        "userId": "user003",
+                        "userEmail": "learner3@domain.com",
+                        "startDate": "2024-01-01T00:00:00",
+                        "endDate": "2024-02-01T00:00:00",
+                        "courseIds": ["course1", "course2"],
+                        "organisationIds": [1,2,3,4],
+                        "professionIds": [5,6,7,8],
+                        "timezone": "+1",
+                        "downloadBaseUrl": "https://base.com"
+                    }""";
 
         mockMvc.perform(
                 post("/course-completions/report-requests")
@@ -70,7 +95,18 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsCorrectWithTimezone() throws Exception {
-        String requestBody = "{\"userId\": \"user003\", \"userEmail\": \"learner3@domain.com\", \"startDate\": \"2024-01-01T00:00:00\", \"endDate\": \"2024-02-01T00:00:00\", \"courseIds\": [\"course1\", \"course2\"], \"organisationIds\": [1,2,3,4], \"professionIds\": [5,6,7,8], \"timezone\": \"Europe/London\"}";
+        String requestBody = """
+                    {
+                        "userId": "user003",
+                        "userEmail": "learner3@domain.com",
+                        "startDate": "2024-01-01T00:00:00",
+                        "endDate": "2024-02-01T00:00:00",
+                        "courseIds": ["course1", "course2"],
+                        "organisationIds": [1,2,3,4],
+                        "professionIds": [5,6,7,8],
+                        "timezone": "Europe/London",
+                        "downloadBaseUrl": "https://base.com"
+                    }""";
 
         mockMvc.perform(
                         post("/course-completions/report-requests")

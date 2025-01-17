@@ -3,6 +3,8 @@ package uk.gov.cshr.report.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +12,11 @@ import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequests
 import uk.gov.cshr.report.controller.model.*;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
+import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
+import uk.gov.cshr.report.service.auth.IUserAuthService;
+import uk.gov.cshr.report.service.blob.DownloadableFile;
 
 import java.util.List;
 
@@ -22,12 +27,19 @@ public class CourseCompletionsController {
 
     private final CourseCompletionService courseCompletionService;
     private final CourseCompletionReportRequestService courseCompletionReportRequestService;
+    private final CourseCompletionReportRequestProcessorService courseCompletionReportRequestProcessorService;
     private final PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper;
+    private final IUserAuthService userAuthService;
+    private final ControllerUtilities controllerUtilities;
 
-    public CourseCompletionsController(CourseCompletionService courseCompletionService, CourseCompletionReportRequestService courseCompletionReportRequestService) {
+    public CourseCompletionsController(CourseCompletionService courseCompletionService, CourseCompletionReportRequestService courseCompletionReportRequestService,
+                                       CourseCompletionReportRequestProcessorService courseCompletionReportRequestProcessorService, PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper, IUserAuthService userAuthService, ControllerUtilities controllerUtilities) {
         this.courseCompletionService = courseCompletionService;
         this.courseCompletionReportRequestService = courseCompletionReportRequestService;
-        this.postCourseCompletionsReportRequestsParamsToReportRequestMapper = new PostCourseCompletionsReportRequestsParamsToReportRequestMapper();
+        this.courseCompletionReportRequestProcessorService = courseCompletionReportRequestProcessorService;
+        this.postCourseCompletionsReportRequestsParamsToReportRequestMapper = postCourseCompletionsReportRequestsParamsToReportRequestMapper;
+        this.userAuthService = userAuthService;
+        this.controllerUtilities = controllerUtilities;
     }
 
     @PostMapping("/aggregations/by-course")
@@ -61,5 +73,13 @@ public class CourseCompletionsController {
     public GetCourseCompletionReportRequestsResponse getAllReportRequests(@Valid GetCourseCompletionsReportRequestParams params){
         List<CourseCompletionReportRequest> reportRequests = courseCompletionReportRequestService.findReportRequestsByUserIdAndStatus(params);
         return new GetCourseCompletionReportRequestsResponse(reportRequests);
+    }
+
+    @GetMapping("/report-requests/downloads/{urlSlug}")
+    @ResponseBody
+    public ResponseEntity<ByteArrayResource> downloadReport(@PathVariable String urlSlug){
+        String uid = userAuthService.getUsername();
+        DownloadableFile output = courseCompletionReportRequestProcessorService.downloadReport(urlSlug, uid);
+        return controllerUtilities.getByteStreamResponse(output.getFileName(), output.getBytes());
     }
 }

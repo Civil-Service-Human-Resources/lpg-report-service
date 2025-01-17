@@ -21,11 +21,13 @@ public class NotificationClient implements INotificationClient {
     }
 
     @Override
-    public void sendEmail(String templateName, MessageDto messageDto) {
-        String emailEndpoint = sendEmailEndpointTemplate.replace("{{TEMPLATE_NAME}}", templateName);
+    public void sendEmail(MessageDto messageDto) {
+        log.debug(String.format("Sending %s email to %s", messageDto.getTemplateName(), messageDto.getRecipient()));
+        String emailEndpoint = sendEmailEndpointTemplate.replace("{{TEMPLATE_NAME}}", messageDto.getTemplateName());
         RequestEntity<MessageDto> request = RequestEntity
                 .post(emailEndpoint)
                 .body(messageDto);
         httpClient.executeRequest(request, Void.class);
+        log.debug(String.format("Email sent to %s", messageDto.getRecipient()));
     }
 }
