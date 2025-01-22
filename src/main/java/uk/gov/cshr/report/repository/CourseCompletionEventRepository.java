@@ -53,7 +53,7 @@ public interface CourseCompletionEventRepository extends JpaRepository<CourseCom
         select cce
         from CourseCompletionEvent cce
         where cce.eventTimestamp >= :fromDate and cce.eventTimestamp <= :toDate
-        and cce.courseId in :courseIds
+        and (:courseIds is null or cce.courseId in :courseIds)
         and cce.organisationId in :organisationIds
         and (:gradeIds is null or cce.gradeId in :gradeIds)
         and (:professionIds is null or cce.professionId in :professionIds)
