@@ -1,13 +1,15 @@
-package uk.gov.cshr.report.service;
+package uk.gov.cshr.report.integration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
+import uk.gov.cshr.report.service.CourseCompletionService;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -16,6 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@ActiveProfiles({"no-redis"})
 class CourseCompletionServiceTest {
 
     @Autowired
