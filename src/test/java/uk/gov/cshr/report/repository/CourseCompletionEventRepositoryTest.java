@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.integration.IntegrationTestBase;
 
@@ -26,6 +27,15 @@ public class CourseCompletionEventRepositoryTest extends IntegrationTestBase {
         assertEquals(expTimestamp, aggregation.getdateBin());
         assertEquals(expCourseId, aggregation.getCourseId());
         assertEquals(expCount, aggregation.getTotal());
+    }
+
+    @Test
+    public void testGetCourseCompletionEvents() {
+        List<CourseCompletionEvent> events = courseCompletionEventRepository.getCourseCompletionEvents(
+                LocalDateTime.of(2024, 1, 1, 0, 0),
+                LocalDateTime.of(2024, 1, 1, 23, 59),
+                null, List.of(1), null, null);
+        assertEquals(6, events.size());
     }
 
     @Test
