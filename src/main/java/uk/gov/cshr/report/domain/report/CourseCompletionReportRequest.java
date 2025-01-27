@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
@@ -17,6 +18,7 @@ import java.util.List;
 @Table(name = "course_completion_report_requests")
 @Setter
 @ToString
+@NoArgsConstructor
 public class CourseCompletionReportRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,6 +78,9 @@ public class CourseCompletionReportRequest {
     @Column(name = "times_downloaded", nullable = false)
     private Integer timesDownloaded = 0;
 
+    @Column(name = "detailed_export")
+    private Boolean detailedExport = false;
+
     public CourseCompletionReportRequest(String requesterId, String requesterEmail, ZonedDateTime requestedTimestamp,
                                          CourseCompletionReportRequestStatus status, ZonedDateTime fromDate, ZonedDateTime toDate, List<String> courseIds,
                                          List<Integer> organisationIds, List<Integer> professionIds, List<Integer> gradeIds,
@@ -94,10 +99,6 @@ public class CourseCompletionReportRequest {
         this.fullName = fullName;
         this.urlSlug = urlSlug;
         this.downloadBaseUrl = downloadBaseUrl;
-    }
-
-    public CourseCompletionReportRequest() {
-
     }
 
     @JsonIgnore
