@@ -8,6 +8,7 @@ import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.report.CourseCompletionCsvDetailed;
 import uk.gov.cshr.report.domain.report.CourseCompletionCsvStandard;
 import uk.gov.cshr.report.domain.report.CourseCompletionCsvType;
+import uk.gov.cshr.report.exception.UnsupportedCourseCompletionCsvTypeException;
 import uk.gov.cshr.report.service.blob.BlobStorageService;
 import uk.gov.cshr.report.service.blob.DownloadableFile;
 
@@ -50,10 +51,13 @@ public class CourseCompletionsZipReportService {
             csvFileName = courseCompletionsCsvService.createCsvFile(csvData, fileName);
             zipFileName = zipService.createZipFile(fileName, csvFileName);
         }
-        else{
+        else if (courseCompletionCsvType.equals(CourseCompletionCsvType.STANDARD)){
             CsvData<CourseCompletionCsvStandard> csvData = courseCompletionCsvRowStandardFactory.getCsvData(completions);
             csvFileName = courseCompletionsCsvServiceStandard.createCsvFile(csvData, fileName);
             zipFileName = zipService.createZipFile(fileName, csvFileName);
+        }
+        else{
+            throw new UnsupportedCourseCompletionCsvTypeException("Unsupported course completion csv type: " + courseCompletionCsvType);
         }
 
         blobStorageService.uploadFile(zipFileName);
