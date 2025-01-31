@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
+import uk.gov.cshr.report.domain.report.CourseCompletionCsvType;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus;
 import uk.gov.cshr.report.dto.MessageDto;
@@ -63,7 +64,9 @@ public class CourseCompletionReportRequestProcessorService {
             log.debug(String.format("Processing request: %s", request));
             List<CourseCompletionEvent> courseCompletions = courseCompletionService.getCourseCompletionEvents(request);
             String fileName = String.format("%s/%s", directoryPath, request.getFileName());
-            courseCompletionsZipReportService.createAndUploadReport(courseCompletions, fileName);
+
+            CourseCompletionCsvType courseCompletionCsvType = request.getDetailedExport() ? CourseCompletionCsvType.DETAILED : CourseCompletionCsvType.STANDARD;
+            courseCompletionsZipReportService.createAndUploadReport(courseCompletions, fileName, courseCompletionCsvType);
             log.info(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
             request.setStatus(CourseCompletionReportRequestStatus.SUCCESS);
             ZonedDateTime completedDate = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));

@@ -21,6 +21,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.containers.GenericContainer;
 import uk.gov.cshr.report.configuration.TestConfig;
@@ -33,14 +36,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -101,12 +103,13 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     private void insertCourseCompletionRequest() {
         jdbcTemplate.execute("""
         INSERT INTO course_completion_report_requests
-            (report_request_id, requester_id, requester_email, requested_timestamp, completed_timestamp, status, from_date, to_date, course_ids, organisation_ids, requester_timezone, requester_full_name, url_slug, download_base_url)
-            VALUES(1, 'userId', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}', '+01:00', 'Requester A', 'slug', 'http://base.com');
+            (report_request_id, requester_id, requester_email, requested_timestamp, completed_timestamp, status, from_date, to_date, course_ids, organisation_ids, requester_timezone, requester_full_name, url_slug, download_base_url, detailed_export)
+            VALUES(1, 'userId', 'RequesterA@domain.com', '2024-07-08 09:15:27.352', NULL, 'REQUESTED', '2024-01-01 00:00:00.000', '2024-02-01 00:00:00.000', '{c1,c2}', '{1}', '+01:00', 'Requester A', 'slug', 'http://base.com', FALSE);
         """);
     }
 
     @Test
+    @WithMockUser(username = "user")
     public void testPostReportRequestsReturnsAddedSuccessfullyTrueResponse() throws Exception {
         String postReportRequestsEndpoint = "/course-completions/report-requests";
 
@@ -135,7 +138,9 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     }
 
     @Test
+    @WithMockUser(username = "user")
     public void testPostReportRequestsReturnsReturnsAddedSuccessfullyFalseResponseWithDetailsIfMaxLimitReachedForUser() throws Exception {
+
         String postReportRequestsEndpoint = "/course-completions/report-requests";
 
         String requestBody = """
@@ -171,7 +176,9 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     }
 
     @Test
+    @WithMockUser(username = "user")
     public void testGetReportRequestsReturnsCorrectListOfReportRequests() throws Exception {
+
         String reportRequestsEndpoint = "/course-completions/report-requests";
 
         String postRequestBody = """
@@ -215,11 +222,68 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                 .andExpect(jsonPath("$.requests[0].professionIds[3]").value(8))
                 .andExpect(jsonPath("$.requests[0].gradeIds[0]").value(4))
                 .andExpect(jsonPath("$.requests[0].gradeIds[1]").value(3))
-                .andExpect(jsonPath("$.requests[0].gradeIds[2]").value(2));
+                .andExpect(jsonPath("$.requests[0].gradeIds[2]").value(2))
+                .andExpect(jsonPath("$.requests[0].detailedExport").value(false));
+    }
+
+    @Test
+    public void testGetReportRequestsReturnsCorrectListOfReportRequestsWithDetailedExportSetToTrueForAppropriateRoles() throws Exception {
+
+        SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor detailedExportPostProcessor = jwt()
+                .jwt(getJwt())
+                .authorities(new SimpleGrantedAuthority("REPORT_EXPORT_DETAILED"));
+
+        String reportRequestsEndpoint = "/course-completions/report-requests";
+
+        String postRequestBody = """
+                {
+                    "userId": "testUser03",
+                    "userEmail": "user03@domain.com",
+                    "startDate": "2024-01-01T00:00:00",
+                    "endDate": "2024-02-01T00:00:00",
+                    "courseIds": ["course1", "course2"],
+                    "organisationIds": [1,2,3,4],
+                    "professionIds": [5,6,7,8],
+                    "gradeIds": [4,3,2],
+                    "timezone": "+1",
+                    "downloadBaseUrl": "https://base.com"
+                }""";
+
+        mockMvc.perform(post(reportRequestsEndpoint)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(postRequestBody)
+                        .with(detailedExportPostProcessor))
+                .andExpect(status().is2xxSuccessful());
+
+        mockMvc.perform(get(reportRequestsEndpoint)
+                        .queryParam("userId", "testUser03")
+                        .queryParam("status", "REQUESTED"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.requests[0].requesterId").value("testUser03"))
+                .andExpect(jsonPath("$.requests[0].requesterEmail").value("user03@domain.com"))
+                .andExpect(jsonPath("$.requests[0].status").value("REQUESTED"))
+                .andExpect(jsonPath("$.requests[0].fromDate").value("2024-01-01T00:00:00Z"))
+                .andExpect(jsonPath("$.requests[0].toDate").value("2024-02-01T00:00:00Z"))
+                .andExpect(jsonPath("$.requests[0].courseIds[0]").value("course1"))
+                .andExpect(jsonPath("$.requests[0].courseIds[1]").value("course2"))
+                .andExpect(jsonPath("$.requests[0].organisationIds[0]").value(1))
+                .andExpect(jsonPath("$.requests[0].organisationIds[1]").value(2))
+                .andExpect(jsonPath("$.requests[0].organisationIds[2]").value(3))
+                .andExpect(jsonPath("$.requests[0].organisationIds[3]").value(4))
+                .andExpect(jsonPath("$.requests[0].professionIds[0]").value(5))
+                .andExpect(jsonPath("$.requests[0].professionIds[1]").value(6))
+                .andExpect(jsonPath("$.requests[0].professionIds[2]").value(7))
+                .andExpect(jsonPath("$.requests[0].professionIds[3]").value(8))
+                .andExpect(jsonPath("$.requests[0].gradeIds[0]").value(4))
+                .andExpect(jsonPath("$.requests[0].gradeIds[1]").value(3))
+                .andExpect(jsonPath("$.requests[0].gradeIds[2]").value(2))
+                .andExpect(jsonPath("$.requests[0].detailedExport").value(true));
     }
 
     @Test
     public void testGetReportForValidUser() throws Exception {
+
         insertCourseCompletionRequest();
         File testZipFile = new File(String.format("src/test/resources/report/%s", zipFileName));
         BlobContainerClient blobContainerClient = getBlobServiceClient().getBlobContainerClient(blobStorageContainerName);

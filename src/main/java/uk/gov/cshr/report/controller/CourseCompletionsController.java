@@ -65,6 +65,7 @@ public class CourseCompletionsController {
         }
         CourseCompletionReportRequest reportRequest = postCourseCompletionsReportRequestsParamsToReportRequestMapper.getRequestFromParams(params);
         courseCompletionReportRequestService.addReportRequest(reportRequest);
+
         return new AddCourseCompletionReportRequestResponse(true);
     }
 

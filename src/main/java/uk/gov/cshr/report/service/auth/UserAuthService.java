@@ -2,9 +2,13 @@ package uk.gov.cshr.report.service.auth;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.exception.ClientAuthenticationErrorException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class UserAuthService implements IUserAuthService {
@@ -42,7 +46,22 @@ public class UserAuthService implements IUserAuthService {
         return username;
     }
 
+    @Override
+    public Boolean userHasRole(String role) {
+        return this.getAuthorities().contains(role);
+    }
+
     private Authentication getAuthentication() {
         return securityContextService.getSecurityContext().getAuthentication();
+    }
+
+    private List<String> getAuthorities() {
+        List<GrantedAuthority> authorities = List.copyOf(this.getAuthentication().getAuthorities());
+
+        if(authorities == null) {
+            return new ArrayList<>();
+        }
+        List<String> roles = authorities.stream().map(authority -> authority.getAuthority()).toList();
+        return roles;
     }
 }
