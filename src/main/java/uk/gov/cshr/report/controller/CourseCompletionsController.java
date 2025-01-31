@@ -64,13 +64,8 @@ public class CourseCompletionsController {
             return new AddCourseCompletionReportRequestResponse(false, "User has reached the maximum allowed report requests");
         }
         CourseCompletionReportRequest reportRequest = postCourseCompletionsReportRequestsParamsToReportRequestMapper.getRequestFromParams(params);
-
-        List<String> authorities = userAuthService.getBearerTokenFromUserAuth().getClaim("authorities");
-        if(authorities.contains("REPORT_EXPORT_DETAILED")){
-            reportRequest.setDetailedExport(true);
-        }
-
         courseCompletionReportRequestService.addReportRequest(reportRequest);
+
         return new AddCourseCompletionReportRequestResponse(true);
     }
 

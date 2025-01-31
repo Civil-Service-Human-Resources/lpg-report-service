@@ -46,18 +46,23 @@ public class CourseCompletionsZipReportService {
     public void createAndUploadReport(List<CourseCompletionEvent> completions, String fileName, CourseCompletionCsvType courseCompletionCsvType) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         String csvFileName;
         String zipFileName;
-        if(courseCompletionCsvType.equals(CourseCompletionCsvType.DETAILED)) {
-            CsvData<CourseCompletionCsvDetailed> csvData = courseCompletionCsvRowDetailedFactory.getCsvData(completions);
-            csvFileName = courseCompletionsCsvService.createCsvFile(csvData, fileName);
-            zipFileName = zipService.createZipFile(fileName, csvFileName);
-        }
-        else if (courseCompletionCsvType.equals(CourseCompletionCsvType.STANDARD)){
-            CsvData<CourseCompletionCsvStandard> csvData = courseCompletionCsvRowStandardFactory.getCsvData(completions);
-            csvFileName = courseCompletionsCsvServiceStandard.createCsvFile(csvData, fileName);
-            zipFileName = zipService.createZipFile(fileName, csvFileName);
-        }
-        else{
-            throw new UnsupportedCourseCompletionCsvTypeException("Unsupported course completion csv type: " + courseCompletionCsvType);
+
+        switch (courseCompletionCsvType){
+            case DETAILED -> {
+                CsvData<CourseCompletionCsvDetailed> csvData = courseCompletionCsvRowDetailedFactory.getCsvData(completions);
+                csvFileName = courseCompletionsCsvService.createCsvFile(csvData, fileName);
+                zipFileName = zipService.createZipFile(fileName, csvFileName);
+                break;
+            }
+            case STANDARD -> {
+                CsvData<CourseCompletionCsvStandard> csvData = courseCompletionCsvRowStandardFactory.getCsvData(completions);
+                csvFileName = courseCompletionsCsvServiceStandard.createCsvFile(csvData, fileName);
+                zipFileName = zipService.createZipFile(fileName, csvFileName);
+                break;
+            }
+            default -> {
+                throw new UnsupportedCourseCompletionCsvTypeException("Unsupported course completion csv type: " + courseCompletionCsvType);
+            }
         }
 
         blobStorageService.uploadFile(zipFileName);

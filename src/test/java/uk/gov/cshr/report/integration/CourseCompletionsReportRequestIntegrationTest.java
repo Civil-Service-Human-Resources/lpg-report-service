@@ -17,13 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.containers.GenericContainer;
 import uk.gov.cshr.report.configuration.TestConfig;
@@ -31,8 +31,6 @@ import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
-import uk.gov.cshr.report.service.auth.IUserAuthService;
-import uk.gov.cshr.report.service.auth.UserAuthService;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,8 +42,7 @@ import java.util.zip.ZipFile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -76,9 +73,6 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     private Path tempDirectory;
 
     private static GenericContainer<?> azuriteContainer;
-
-    @MockBean
-    IUserAuthService userAuthService;
 
     @BeforeAll
     public static void beforeAll() {
@@ -117,14 +111,6 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsReturnsAddedSuccessfullyTrueResponse() throws Exception {
-        List<String> fakeAuthorities = new ArrayList<>();
-        fakeAuthorities.add("AUTHORITY1");
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", fakeAuthorities);
-        Map<String, Object> headers = new HashMap<>();
-        headers.put("header1", "value1");
-        Jwt jwt = new Jwt("tokenValue", null, null, headers, claims);
-        when(userAuthService.getBearerTokenFromUserAuth()).thenReturn(jwt);
         String postReportRequestsEndpoint = "/course-completions/report-requests";
 
         String requestBody = """
@@ -154,14 +140,6 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsReturnsReturnsAddedSuccessfullyFalseResponseWithDetailsIfMaxLimitReachedForUser() throws Exception {
-        List<String> fakeAuthorities = new ArrayList<>();
-        fakeAuthorities.add("AUTHORITY1");
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", fakeAuthorities);
-        Map<String, Object> headers = new HashMap<>();
-        headers.put("header1", "value1");
-        Jwt jwt = new Jwt("tokenValue", null, null, headers, claims);
-        when(userAuthService.getBearerTokenFromUserAuth()).thenReturn(jwt);
 
         String postReportRequestsEndpoint = "/course-completions/report-requests";
 
@@ -200,14 +178,6 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Test
     @WithMockUser(username = "user")
     public void testGetReportRequestsReturnsCorrectListOfReportRequests() throws Exception {
-        List<String> fakeAuthorities = new ArrayList<>();
-        fakeAuthorities.add("AUTHORITY1");
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", fakeAuthorities);
-        Map<String, Object> headers = new HashMap<>();
-        headers.put("header1", "value1");
-        Jwt jwt = new Jwt("tokenValue", null, null, headers, claims);
-        when(userAuthService.getBearerTokenFromUserAuth()).thenReturn(jwt);
 
         String reportRequestsEndpoint = "/course-completions/report-requests";
 
@@ -257,16 +227,11 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     }
 
     @Test
-    @WithMockUser(username = "user")
     public void testGetReportRequestsReturnsCorrectListOfReportRequestsWithDetailedExportSetToTrueForAppropriateRoles() throws Exception {
-        List<String> fakeAuthorities = new ArrayList<>();
-        fakeAuthorities.add("REPORT_EXPORT_DETAILED");
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", fakeAuthorities);
-        Map<String, Object> headers = new HashMap<>();
-        headers.put("header1", "value1");
-        Jwt jwt = new Jwt("tokenValue", null, null, headers, claims);
-        when(userAuthService.getBearerTokenFromUserAuth()).thenReturn(jwt);
+
+        SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor detailedExportPostProcessor = jwt()
+                .jwt(getJwt())
+                .authorities(new SimpleGrantedAuthority("REPORT_EXPORT_DETAILED"));
 
         String reportRequestsEndpoint = "/course-completions/report-requests";
 
@@ -286,7 +251,8 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
 
         mockMvc.perform(post(reportRequestsEndpoint)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(postRequestBody))
+                        .content(postRequestBody)
+                        .with(detailedExportPostProcessor))
                 .andExpect(status().is2xxSuccessful());
 
         mockMvc.perform(get(reportRequestsEndpoint)
@@ -317,7 +283,6 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
 
     @Test
     public void testGetReportForValidUser() throws Exception {
-        when(userAuthService.getUsername()).thenReturn("userId");
 
         insertCourseCompletionRequest();
         File testZipFile = new File(String.format("src/test/resources/report/%s", zipFileName));
