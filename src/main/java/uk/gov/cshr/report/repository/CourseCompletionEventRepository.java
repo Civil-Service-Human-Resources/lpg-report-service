@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
+import uk.gov.cshr.report.domain.aggregation.Aggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 
 import java.time.LocalDateTime;
@@ -32,10 +33,27 @@ public interface CourseCompletionEventRepository extends JpaRepository<CourseCom
                                                                         @Param("professionIds") List<Integer> professionIds);
 
     @Query("""
+            select date_trunc_tz(:delimiter, cce.eventTimestamp, :timezone) as dateBin, count(cce) as total
+            from CourseCompletionEvent cce
+            where cce.eventTimestamp >= :from and cce.eventTimestamp <= :to
+            and (:organisationIds is null or cce.organisationId in :organisationIds)
+            and (:gradeIds is null or cce.gradeId in :gradeIds)
+            and (:professionIds is null or cce.professionId in :professionIds)
+            group by 1
+            order by 1 asc""")
+    List<Aggregation> getCompletionsAggregations(@Param("delimiter") String delimiter,
+                                                 @Param("from") LocalDateTime from,
+                                                 @Param("to") LocalDateTime to,
+                                                 @Param("timezone") String timezone,
+                                                 @Param("organisationIds") List<Integer> organisationIds,
+                                                 @Param("gradeIds") List<Integer> gradeIds,
+                                                 @Param("professionIds") List<Integer> professionIds);
+
+    @Query("""
         select cce
         from CourseCompletionEvent cce
         where cce.eventTimestamp >= :fromDate and cce.eventTimestamp <= :toDate
-        and cce.courseId in :courseIds
+        and (:courseIds is null or cce.courseId in :courseIds)
         and cce.organisationId in :organisationIds
         and (:gradeIds is null or cce.gradeId in :gradeIds)
         and (:professionIds is null or cce.professionId in :professionIds)

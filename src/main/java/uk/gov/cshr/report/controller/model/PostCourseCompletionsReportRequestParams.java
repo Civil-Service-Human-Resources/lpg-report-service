@@ -33,7 +33,6 @@ public class PostCourseCompletionsReportRequestParams {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endDate;
 
-    @NotNull
     private List<String> courseIds;
 
     private List<Integer> organisationIds;
