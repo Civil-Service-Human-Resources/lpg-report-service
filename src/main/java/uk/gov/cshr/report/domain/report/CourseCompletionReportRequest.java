@@ -1,5 +1,6 @@
 package uk.gov.cshr.report.domain.report;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -34,7 +36,8 @@ public class CourseCompletionReportRequest {
     private ZonedDateTime completedTimestamp;
 
     @Column(name = "status", length = 20, nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private CourseCompletionReportRequestStatus status;
 
     @Column(name = "from_date", nullable = false)
     private ZonedDateTime fromDate;
@@ -63,5 +66,50 @@ public class CourseCompletionReportRequest {
 
     @Column(name = "requester_full_name")
     private String fullName;
+
+    @Column(name = "url_slug", nullable = false)
+    private String urlSlug;
+
+    @Column(name = "download_base_url", nullable = false)
+    private String downloadBaseUrl;
+
+    @Column(name = "times_downloaded", nullable = false)
+    private Integer timesDownloaded = 0;
+
+    public CourseCompletionReportRequest(String requesterId, String requesterEmail, ZonedDateTime requestedTimestamp,
+                                         CourseCompletionReportRequestStatus status, ZonedDateTime fromDate, ZonedDateTime toDate, List<String> courseIds,
+                                         List<Integer> organisationIds, List<Integer> professionIds, List<Integer> gradeIds,
+                                         String requesterTimezone, String fullName, String urlSlug, String downloadBaseUrl) {
+        this.requesterId = requesterId;
+        this.requesterEmail = requesterEmail;
+        this.requestedTimestamp = requestedTimestamp;
+        this.status = status;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.courseIds = courseIds;
+        this.organisationIds = organisationIds;
+        this.professionIds = professionIds;
+        this.gradeIds = gradeIds;
+        this.requesterTimezone = requesterTimezone;
+        this.fullName = fullName;
+        this.urlSlug = urlSlug;
+        this.downloadBaseUrl = downloadBaseUrl;
+    }
+
+    public CourseCompletionReportRequest() {
+
+    }
+
+    @JsonIgnore
+    public String getFullDownloadUrl() {
+        return String.format("%s/%s", downloadBaseUrl, urlSlug);
+    }
+
+    @JsonIgnore
+    public String getFileName() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
+        return String.format("course_completions_%s_from_%s_to_%s", getReportRequestId(),
+                getFromDate().format(formatter), getToDate().format(formatter));
+    }
 
 }

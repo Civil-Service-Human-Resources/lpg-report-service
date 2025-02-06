@@ -4,12 +4,12 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
-import com.azure.storage.blob.sas.BlobServiceSasSignatureValues;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.exception.ReportNotFoundException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.time.temporal.ChronoUnit;
 
 @Service
 public class BlobStorageService {
@@ -19,31 +19,26 @@ public class BlobStorageService {
     @Value("${spring.cloud.azure.storage.blob.container-name}")
     private String azureBlobStorageContainerName;
 
-    private final SasSignatureFactory sasSignatureFactory;
-
-    public BlobStorageService(SasSignatureFactory sasSignatureFactory) {
-        this.sasSignatureFactory = sasSignatureFactory;
+    public ByteArrayOutputStream downloadFile(String filename) {
+        BlobContainerClient blobContainerClient = getClient();
+        BlobClient blobClient = blobContainerClient.getBlobClient(filename);
+        if (!blobClient.exists()){
+            throw new ReportNotFoundException(String.format("Blob with filename '%s' was not found", filename));
+        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        blobClient.downloadStream(outputStream);
+        return outputStream;
     }
 
-    public UploadResult uploadFileAndGenerateDownloadLink(String fileName, int daysToKeepLinkActive) {
-        BlobClient blobClient = uploadFile(fileName);
-        BlobServiceSasSignatureValues serviceSasSignatureValues = sasSignatureFactory.generateBlobServiceSasSignatureValues(daysToKeepLinkActive, ChronoUnit.DAYS);
-        String sas = blobClient.generateSas(serviceSasSignatureValues);
-        String downloadUrl = String.format("%s?%s", blobClient.getBlobUrl(), sas);
-        return new UploadResult(serviceSasSignatureValues.getStartTime(), serviceSasSignatureValues.getExpiryTime(),
-                daysToKeepLinkActive, downloadUrl);
-    }
-
-    public BlobClient uploadFile(String fileName){
+    public void uploadFile(String fileName) {
         BlobContainerClient blobContainerClient = getClient();
 
-        if(!blobContainerClient.exists()){
+        if (!blobContainerClient.exists()){
             blobContainerClient.create();
         }
 
         BlobClient blobClient = blobContainerClient.getBlobClient(new File(fileName).getName());
         blobClient.uploadFromFile(fileName);
-        return blobClient;
     }
 
     private BlobContainerClient getClient(){

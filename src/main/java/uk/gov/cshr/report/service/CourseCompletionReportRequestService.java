@@ -8,16 +8,16 @@ import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 
-import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class CourseCompletionReportRequestService {
     private final CourseCompletionReportRequestRepository courseCompletionReportRequestRepository;
-    private int maxRequestsPerUser;
+    private final int maxRequestsPerUser;
 
-    public CourseCompletionReportRequestService(CourseCompletionReportRequestRepository courseCompletionReportRequestRepository, @Value("${courseCompletions.reports.maxRequestsPerUser}") int maxRequestsPerUser, ReportService reportService) {
+    public CourseCompletionReportRequestService(CourseCompletionReportRequestRepository courseCompletionReportRequestRepository, @Value("${courseCompletions.reports.maxRequestsPerUser}") int maxRequestsPerUser) {
         this.courseCompletionReportRequestRepository = courseCompletionReportRequestRepository;
         this.maxRequestsPerUser = maxRequestsPerUser;
     }
@@ -27,23 +27,7 @@ public class CourseCompletionReportRequestService {
     }
 
     public List<CourseCompletionReportRequest> findReportRequestsByUserIdAndStatus(GetCourseCompletionsReportRequestParams params){
-        return courseCompletionReportRequestRepository.findByRequesterIdAndStatusIn(params.getUserId(), params.getStatus());
-    }
-
-    public void setStatusForReportRequest(Long reportRequestId, CourseCompletionReportRequestStatus status){
-        CourseCompletionReportRequest reportRequest = courseCompletionReportRequestRepository.findByReportRequestId(reportRequestId);
-        reportRequest.setStatus(status.toString());
-        courseCompletionReportRequestRepository.save(reportRequest);
-    }
-
-    public void setCompletedDateForReportRequest(Long reportRequestId, ZonedDateTime completedDate){
-        CourseCompletionReportRequest reportRequest = courseCompletionReportRequestRepository.findByReportRequestId(reportRequestId);
-        reportRequest.setCompletedTimestamp(completedDate);
-        courseCompletionReportRequestRepository.save(reportRequest);
-    }
-
-    public List<CourseCompletionReportRequest> findAllRequestsByStatus(CourseCompletionReportRequestStatus status){
-        return courseCompletionReportRequestRepository.findByStatus(status.toString());
+        return courseCompletionReportRequestRepository.findByRequesterIdAndStatusIn(params.getUserId(), params.getStatus().stream().map(CourseCompletionReportRequestStatus::valueOf).collect(Collectors.toList()));
     }
 
     public boolean userReachedMaxReportRequests(String userId){

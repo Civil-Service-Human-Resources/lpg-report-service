@@ -1,20 +1,22 @@
 package uk.gov.cshr.report.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Map;
-import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class MessageDto {
 
-    private String recipient;
+    private final String recipient;
+    private final String templateName;
+    private final Map<String, String> personalisation;
+    private final String reference;
 
-    private Map<String, String> personalisation;
-
-    String reference = UUID.randomUUID().toString();
+    @JsonIgnore
+    public String getTemplateName() {
+        return templateName;
+    }
 }

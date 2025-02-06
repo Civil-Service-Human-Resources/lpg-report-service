@@ -1,3 +1,4 @@
+
 package uk.gov.cshr.report.controller.model;
 
 import jakarta.validation.constraints.NotNull;
@@ -5,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import uk.gov.cshr.report.validation.validUrl.CustomUrl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +20,10 @@ public class PostCourseCompletionsReportRequestParams {
 
     @NotNull
     private String userEmail;
+
+    @NotNull
+    @CustomUrl
+    private String downloadBaseUrl;
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

@@ -19,6 +19,11 @@ app:
       partitionLookaheadInDays: ${COURSE_COMPLETIONS_PARTITION_LOOKAHEAD_DAYS:7}
       cronSchedule: ${COURSE_COMPLETIONS_PARTITION_CRON_SCHEDULE:0 0 0 * * *}
       runOnStartup: ${COURSE_COMPLETIONS_PARTITION_RUN_ON_STARTUP:true}
+  validation:
+    url:
+      protocols: ${URL_VALIDATION_VALID_PROTOCOL:http,https}
+      host: ${URL_VALIDATION_VALID_HOST:}
+      port: ${URL_VALIDATION_VALID_PORT:}
 spring:
   datasource:
     username: ${DATASOURCE_USERNAME:root}
@@ -113,7 +118,7 @@ courseCompletions:
     maxRequestsPerUser: ${MAX_REQUESTS_PER_USER:1}
     jobCron: ${REPORT_REQUESTS_JOB_CRON:0 0 * * * *}
     defaultTimezone: "${COURSE_COMPLETION_REPORTS_DEFAULT_TIMEZONE:Europe/London}"
-    daysToKeepReportLinkActive: "${COURSE_COMPLETION_REPORTS_DAYS_TO_KEEP_LINK_ACTIVE:1}"
+    tempDir: "${COURSE_COMPLETION_REPORTS_DEFAULT_TEMP_DIR:temp-courseCompletionsJob}"
 
 notification:
   serviceUrl: ${NOTIFICATION_SERVICE_URL:http://localhost:9006}
