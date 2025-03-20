@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequestsParamsToReportRequestMapper;
 import uk.gov.cshr.report.controller.model.*;
+import uk.gov.cshr.report.domain.aggregation.Aggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
@@ -44,8 +45,15 @@ public class CourseCompletionsController {
 
     @PostMapping("/aggregations/by-course")
     @ResponseBody
-    public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@RequestBody @Valid GetCourseCompletionsParams params) {
-        List<CourseCompletionAggregation> results =  courseCompletionService.getCourseCompletions(params);
+    public AggregationResponse<CourseCompletionAggregation> getCompletionAggregationsByCourse(@RequestBody @Valid GetCourseCompletionsByCourseParams params) {
+        List<CourseCompletionAggregation> results =  courseCompletionService.getCourseCompletionAggregationsByCourse(params);
+        return new AggregationResponse<>(params.getTimezone().toString(), params.getBinDelimiter().getVal(), results);
+    }
+
+    @PostMapping("/aggregations")
+    @ResponseBody
+    public AggregationResponse<Aggregation> getCompletionAggregations(@RequestBody @Valid GetCourseCompletionsParams params) {
+        List<Aggregation> results =  courseCompletionService.getCourseCompletionAggregations(params);
         return new AggregationResponse<>(params.getTimezone().toString(), params.getBinDelimiter().getVal(), results);
     }
 
@@ -65,6 +73,7 @@ public class CourseCompletionsController {
         }
         CourseCompletionReportRequest reportRequest = postCourseCompletionsReportRequestsParamsToReportRequestMapper.getRequestFromParams(params);
         courseCompletionReportRequestService.addReportRequest(reportRequest);
+
         return new AddCourseCompletionReportRequestResponse(true);
     }
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,7 +17,14 @@ import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 import uk.gov.cshr.report.service.auth.IUserAuthService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -68,6 +76,15 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsCorrect() throws Exception {
+        List<String> fakeAuthorities = new ArrayList<>();
+        fakeAuthorities.add("LEARNER");
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("authorities", fakeAuthorities);
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("header1", "value1");
+        Jwt jwt = new Jwt("tokenValue", null, null, headers, claims);
+        when(userAuthService.getBearerTokenFromUserAuth()).thenReturn(jwt);
+
         String requestBody = """
                     {
                         "userId": "user003",
@@ -77,6 +94,7 @@ public class CourseCompletionsControllerTest {
                         "courseIds": ["course1", "course2"],
                         "organisationIds": [1,2,3,4],
                         "professionIds": [5,6,7,8],
+                        "fullName": "User",
                         "timezone": "+1",
                         "downloadBaseUrl": "https://base.com"
                     }""";
@@ -95,6 +113,15 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testPostReportRequestsEndpointReturnsOkWhenRequestBodyIsCorrectWithTimezone() throws Exception {
+        List<String> fakeAuthorities = new ArrayList<>();
+        fakeAuthorities.add("LEARNER");
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("authorities", fakeAuthorities);
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("header1", "value1");
+        Jwt jwt = new Jwt("tokenValue", null, null, headers, claims);
+        when(userAuthService.getBearerTokenFromUserAuth()).thenReturn(jwt);
+
         String requestBody = """
                     {
                         "userId": "user003",

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.integration.IntegrationTestBase;
 
@@ -29,7 +30,16 @@ public class CourseCompletionEventRepositoryTest extends IntegrationTestBase {
     }
 
     @Test
-    public void testGetCourseAggregations(){
+    public void testGetCourseCompletionEvents() {
+        List<CourseCompletionEvent> events = courseCompletionEventRepository.getCourseCompletionEvents(
+                LocalDateTime.of(2024, 1, 1, 0, 0),
+                LocalDateTime.of(2024, 1, 1, 23, 59),
+                null, List.of(1), null, null);
+        assertEquals(6, events.size());
+    }
+
+    @Test
+    public void testGetCourseAggregations() {
         CourseCompletionAggregation[] completionsAggregationByCourse = courseCompletionEventRepository.getCompletionsAggregationByCourse("hour",
                 LocalDateTime.of(2024, 1, 1, 0, 0),
                 LocalDateTime.of(2024, 1, 1, 23, 59), "UTC",
@@ -43,7 +53,7 @@ public class CourseCompletionEventRepositoryTest extends IntegrationTestBase {
     }
 
     @Test
-    public void testGetCourseAggregationsWithTimezone(){
+    public void testGetCourseAggregationsWithTimezone() {
         CourseCompletionAggregation[] completionsAggregationByCourse = courseCompletionEventRepository.getCompletionsAggregationByCourse("hour",
                 LocalDateTime.of(2024, 1, 1, 0, 0),
                 LocalDateTime.of(2024, 1, 1, 23, 59), "+01",
@@ -57,7 +67,7 @@ public class CourseCompletionEventRepositoryTest extends IntegrationTestBase {
     }
 
     @Test
-    public void testGetCourseAggregationsWithTimezoneAndDay(){
+    public void testGetCourseAggregationsWithTimezoneAndDay() {
         CourseCompletionAggregation[] completionsAggregationByCourse = courseCompletionEventRepository.getCompletionsAggregationByCourse("day",
                 LocalDateTime.of(2024, 1, 1, 0, 0),
                 LocalDateTime.of(2024, 1, 2, 23, 59), "+01",
