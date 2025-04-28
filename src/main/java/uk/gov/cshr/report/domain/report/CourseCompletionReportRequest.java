@@ -52,7 +52,7 @@ public class CourseCompletionReportRequest {
     private List<String> courseIds;
 
     @Type(ListArrayType.class)
-    @Column(name = "organisation_ids", nullable = false, columnDefinition = "int[]")
+    @Column(name = "organisation_ids", columnDefinition = "int[]")
     private List<Integer> organisationIds;
 
     @Type(ListArrayType.class)

@@ -68,6 +68,8 @@ public class CourseCompletionsController {
     @PostMapping("/report-requests")
     @ResponseBody
     public AddCourseCompletionReportRequestResponse addReportRequest(@RequestBody @Valid PostCourseCompletionsReportRequestParams params){
+        System.out.println("::: /report-requests params:");
+        System.out.println(params);
         if(courseCompletionReportRequestService.userReachedMaxReportRequests(params.getUserId())){
             return new AddCourseCompletionReportRequestResponse(false, "User has reached the maximum allowed report requests");
         }
