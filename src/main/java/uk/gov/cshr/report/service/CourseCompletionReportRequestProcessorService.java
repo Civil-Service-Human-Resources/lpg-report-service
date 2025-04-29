@@ -56,6 +56,9 @@ public class CourseCompletionReportRequestProcessorService {
     }
 
     public void processRequest(Path directoryPath, CourseCompletionReportRequest request) {
+        System.out.println("::: processRequest: request");
+        System.out.println(request);
+
         log.info(String.format("Attempting to Process request %s", request.getReportRequestId()));
         MessageDto message = messageDtoFactory.getCourseCompletionReportSuccessEmail(request);
         try {
