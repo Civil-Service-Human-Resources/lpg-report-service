@@ -20,7 +20,6 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper {
     private final StringUtils stringUtils;
     private final String defaultTimezone;
     private final IUserAuthService userAuthService;
-    private final CourseCompletionReportRequestService courseCompletionReportRequestService;
 
     public PostCourseCompletionsReportRequestsParamsToReportRequestMapper(StringUtils stringUtils,
                                                                           @Value("${courseCompletions.reports.defaultTimezone}") String defaultTimezone,
@@ -28,13 +27,12 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper {
         this.stringUtils = stringUtils;
         this.defaultTimezone = defaultTimezone;
         this.userAuthService = userAuthService;
-        this.courseCompletionReportRequestService = courseCompletionReportRequestService;
     }
 
     public CourseCompletionReportRequest getRequestFromParams(PostCourseCompletionsReportRequestParams params) {
         String timezone = params.getTimezone() == null ? defaultTimezone : params.getTimezone();
         String slug = stringUtils.generateRandomString(20);
-        Boolean hasDetailedExportRole = userAuthService.userHasRole("REPORT_EXPORT_DETAILED");
+
         CourseCompletionReportRequest courseCompletionReportRequest = new CourseCompletionReportRequest(
                 params.getUserId(), params.getUserEmail(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")),
                 REQUESTED, params.getStartDate().atZone(ZoneOffset.UTC), params.getEndDate().atZone(ZoneOffset.UTC),
@@ -42,7 +40,10 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper {
                 timezone, params.getFullName(), slug, params.getDownloadBaseUrl()
         );
 
-        courseCompletionReportRequest.setDetailedExport(hasDetailedExportRole);
+        Boolean hasDetailedExportRole = userAuthService.userHasRole("REPORT_EXPORT_DETAILED");
+        Boolean organisationIdsSelected = courseCompletionReportRequest.getOrganisationIds() != null;
+        Boolean userCanHaveDetailedExport = hasDetailedExportRole && organisationIdsSelected;
+        courseCompletionReportRequest.setDetailedExport(userCanHaveDetailedExport);
         return courseCompletionReportRequest;
     }
 }
