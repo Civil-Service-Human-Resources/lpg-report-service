@@ -19,7 +19,10 @@ import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -41,14 +44,13 @@ public class ReportServiceTest {
     @Mock
     private ReportRowFactory reportRowFactory;
 
-    private final int backEndAPICallBatchSize = 50;
 
     private ReportService reportService;
 
     @BeforeEach
     public void setUp() throws Exception {
         reportService = new ReportService(learnerRecordService, civilServantRegistryService, learningCatalogueService,
-                reportRowFactory, identitiesService, backEndAPICallBatchSize);
+                reportRowFactory, identitiesService);
     }
 
     @Test
@@ -102,7 +104,7 @@ public class ReportServiceTest {
     public void testBuildModuleReportShouldReturnCorrectRowsForCSVReport() {
 
         List<String> learners = Arrays.asList("learner1", "learner2", "learner3");
-        String courseIds = "courseId1,courseId2,courseId3";
+        List<String> courseIds = List.of("courseId1", "courseId2", "courseId3");
 
         CivilServant civilServant1 = new CivilServant();
         civilServant1.setId("learner1");
