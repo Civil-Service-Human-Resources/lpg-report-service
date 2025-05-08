@@ -84,6 +84,7 @@ oauth:
   tokenUrl: "${oauth.serviceUrl}${oauth.tokenEndpoint}"
   identitiesListUrl: "${oauth.serviceUrl}/api/identities/map"
   identitiesMapForLearnersIdsUrl: "${oauth.serviceUrl}/api/identities/map-for-uids"
+  identityMapMaxBatchSize: "${IDENTITIES_MAX_BATCH_SIZE:50}"
   jwtKey: ${jwt_key:TONterOunSTRUcIenscaDiSHoUrPanti}
   refresh:
     serviceTokenCache:
@@ -97,6 +98,7 @@ learnerRecord:
   moduleRecordsUrl: "${learnerRecord.serviceUrl}/reporting/module-records"
   moduleRecordsForLearnersUrl: "${learnerRecord.serviceUrl}/reporting/module-records-for-learners"
   moduleRecordsForCourseIdsUrl: "${learnerRecord.serviceUrl}/reporting/module-records-for-course-ids"
+  moduleRecordBatchSize: "${LEARNER_RECORD_BATCH_SIZE:100}"
 
 
 registryService:
@@ -109,6 +111,7 @@ learningCatalogue:
   eventsUrl: "${learningCatalogue.serviceUrl}/reporting/events"
   modulesUrl: "${learningCatalogue.serviceUrl}/reporting/modules"
   modulesForCourseIdsUrl: "${learningCatalogue.serviceUrl}/reporting/modules-for-course-ids"
+  modulesForCourseIdsBatchSize: "${LEARNING_CATALOGUE_BATCH_SIZE:50}"
 
 report:
   backEndAPICallBatchSize: ${BACKEND_API_CALL_BATCH_SIZE:50}
