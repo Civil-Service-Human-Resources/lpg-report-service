@@ -1,14 +1,11 @@
 package uk.gov.cshr.report.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.client.learningCatalogue.ILearningCatalogueClient;
 import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
-import uk.gov.cshr.report.factory.UriBuilderFactory;
 
-import java.net.URI;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -28,7 +25,7 @@ public class LearningCatalogueService {
         return learningCatalogueClient.getReportingModules();
     }
 
-    public Map<String, Module> getModuleMapForCourseIds(String courseIds) {
+    public Map<String, Module> getModuleMapForCourseIds(List<String> courseIds) {
         return learningCatalogueClient.getModulesForCourseIds(courseIds);
     }
 }
