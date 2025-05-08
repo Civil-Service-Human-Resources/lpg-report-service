@@ -50,7 +50,7 @@ public class LearningCatalogueClient implements ILearningCatalogueClient{
     public Map<String, Module> getModulesForCourseIds(List<String> courseIds) {
         Map<String, Module> moduleMap = new HashMap<>();
         batchList(modulesForCourseIdsBatchSize, courseIds).forEach(batch -> {
-            String url = String.format("%s?courseIds=%s", modulesForCourseIdsUrl, String.join(",", courseIds));
+            String url = String.format("%s?courseIds=%s", modulesForCourseIdsUrl, String.join(",", batch));
             RequestEntity<Void> request = RequestEntity.get(url).build();
             Map<String, Module> response = httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(Module.class));
             if (response != null) {

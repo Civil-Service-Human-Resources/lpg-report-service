@@ -48,7 +48,7 @@ public class IdentitiesClient implements IIdentitiesClient{
     public Map<String, Identity> getIdentitiesFromUids(List<String> identityUids){
         Map<String, Identity> identitiesMap = new HashMap<>();
         batchList(identityMapMaxBatchSize, identityUids).forEach(batch -> {
-            String url = String.format("%s?uids=%s", identitiesMapForLearnerUidsUrl, String.join(",", identityUids));
+            String url = String.format("%s?uids=%s", identitiesMapForLearnerUidsUrl, String.join(",", batch));
             RequestEntity<Void> request = RequestEntity.get(url).build();
             Map<String, Identity> identitiesFromUids = httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(Identity.class));
             if (identitiesFromUids != null) {
