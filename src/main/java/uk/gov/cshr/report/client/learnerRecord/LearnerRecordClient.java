@@ -8,11 +8,16 @@ import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.client.IHttpClient;
 import uk.gov.cshr.report.domain.LearnerRecordEvent;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
+import uk.gov.cshr.report.domain.learnerrecord.FromToParamsCourseIds;
+import uk.gov.cshr.report.domain.learnerrecord.FromToParamsUserIds;
 import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
 import uk.gov.cshr.report.service.ParameterizedTypeReferenceFactory;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import static uk.gov.cshr.report.service.util.HttpUtils.batchList;
 
 @Slf4j
 @Component
@@ -28,6 +33,9 @@ public class LearnerRecordClient implements ILearnerRecordClient{
 
     @Value("${learnerRecord.eventsUrl}")
     private String learnerRecordEventsUrl;
+
+    @Value("${learningCatalogue.modulesForCourseIdsBatchSize}")
+    private Integer moduleRecordBatchSize;
 
     @Value("${learnerRecord.moduleRecordsForLearnersUrl}")
     private String moduleRecordsForDateRangeAndLearnersUrl;
@@ -58,15 +66,29 @@ public class LearnerRecordClient implements ILearnerRecordClient{
 
     @Override
     public List<ModuleRecord> getModuleRecordsForDateRangeAndLearnerIds(LocalDate from, LocalDate to, List<String> learnerIds) {
-        String url = String.format("%s?from=%s&to=%s&learnerIds=%s", moduleRecordsForDateRangeAndLearnersUrl, from, to, String.join(",", learnerIds));
-        RequestEntity<Void> request = RequestEntity.get(url).build();
-        return httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(ModuleRecord.class));
+        List<ModuleRecord> moduleRecords = new ArrayList<>();
+        batchList(moduleRecordBatchSize, learnerIds).forEach(batch -> {
+            FromToParamsUserIds model = new FromToParamsUserIds(from, to, batch);
+            RequestEntity<FromToParamsUserIds> request = RequestEntity.post(moduleRecordsForDateRangeAndLearnersUrl).body(model);
+            List<ModuleRecord> response = httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(ModuleRecord.class));
+            if (response != null) {
+                moduleRecords.addAll(response);
+            }
+        });
+        return moduleRecords;
     }
 
     @Override
     public List<ModuleRecord> getModuleRecordsForCourseIds(LocalDate from, LocalDate to, List<String> courseIds) {
-        String url = String.format("%s?from=%s&to=%s&courseIds=%s", moduleRecordsForCourseIdsUrl, from, to, String.join(",", courseIds));
-        RequestEntity<Void> request = RequestEntity.get(url).build();
-        return httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(ModuleRecord.class));
+        List<ModuleRecord> moduleRecords = new ArrayList<>();
+        batchList(moduleRecordBatchSize, courseIds).forEach(batch -> {
+            FromToParamsCourseIds model = new FromToParamsCourseIds(from, to, batch);
+            RequestEntity<FromToParamsCourseIds> request = RequestEntity.post(moduleRecordsForCourseIdsUrl).body(model);
+            List<ModuleRecord> response = httpClient.executeListRequest(request, parameterizedTypeReferenceFactory.createListReference(ModuleRecord.class));
+            if (response != null) {
+                moduleRecords.addAll(response);
+            }
+        });
+        return moduleRecords;
     }
 }

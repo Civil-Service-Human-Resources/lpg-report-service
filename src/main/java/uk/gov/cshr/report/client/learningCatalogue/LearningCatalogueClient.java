@@ -10,8 +10,11 @@ import uk.gov.cshr.report.domain.catalogue.Event;
 import uk.gov.cshr.report.domain.catalogue.Module;
 import uk.gov.cshr.report.service.ParameterizedTypeReferenceFactory;
 
-import java.net.URI;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static uk.gov.cshr.report.service.util.HttpUtils.batchList;
 
 @Slf4j
 @Component
@@ -23,6 +26,9 @@ public class LearningCatalogueClient implements ILearningCatalogueClient{
 
     @Value("${learningCatalogue.modulesForCourseIdsUrl}")
     private String modulesForCourseIdsUrl;
+
+    @Value("${learningCatalogue.modulesForCourseIdsBatchSize}")
+    private Integer modulesForCourseIdsBatchSize;
 
     @Value("${learningCatalogue.modulesUrl}")
     private String learningCatalogueReportingModulesUrl;
@@ -41,10 +47,17 @@ public class LearningCatalogueClient implements ILearningCatalogueClient{
     }
 
     @Override
-    public Map<String, Module> getModulesForCourseIds(String courseIds) {
-        String url = String.format("%s?courseIds=%s", modulesForCourseIdsUrl, courseIds);
-        RequestEntity<Void> request = RequestEntity.get(url).build();
-        return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(Module.class));
+    public Map<String, Module> getModulesForCourseIds(List<String> courseIds) {
+        Map<String, Module> moduleMap = new HashMap<>();
+        batchList(modulesForCourseIdsBatchSize, courseIds).forEach(batch -> {
+            String url = String.format("%s?courseIds=%s", modulesForCourseIdsUrl, String.join(",", batch));
+            RequestEntity<Void> request = RequestEntity.get(url).build();
+            Map<String, Module> response = httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(Module.class));
+            if (response != null) {
+                moduleMap.putAll(response);
+            }
+        });
+        return moduleMap;
     }
 
     @Override

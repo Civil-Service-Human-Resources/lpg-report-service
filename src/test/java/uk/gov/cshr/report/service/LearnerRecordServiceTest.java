@@ -1,33 +1,24 @@
 package uk.gov.cshr.report.service;
 
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.util.UriBuilder;
 import uk.gov.cshr.report.client.learnerRecord.ILearnerRecordClient;
 import uk.gov.cshr.report.domain.learnerrecord.Booking;
 import uk.gov.cshr.report.domain.learnerrecord.BookingStatus;
-import uk.gov.cshr.report.domain.learnerrecord.ModuleRecord;
-import uk.gov.cshr.report.factory.UriBuilderFactory;
 
-import java.awt.print.Book;
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class LearnerRecordServiceTest {
-    private String moduleRecordUri = "http://localhost/modules";
-    private HttpService httpService = mock(HttpService.class);
     private LearnerRecordService learnerRecordService;
-    private UriBuilderFactory uriBuilderFactory = mock(UriBuilderFactory.class);
 
     private ILearnerRecordClient learnerRecordClient;
 
@@ -35,8 +26,7 @@ public class LearnerRecordServiceTest {
     public void setUp() {
         learnerRecordClient = mock(ILearnerRecordClient.class);
 
-        learnerRecordService = new LearnerRecordService(httpService, uriBuilderFactory,
-            moduleRecordUri, learnerRecordClient);
+        learnerRecordService = new LearnerRecordService(learnerRecordClient);
     }
 
     @Test
@@ -70,23 +60,4 @@ public class LearnerRecordServiceTest {
         assertEquals(BookingStatus.CANCELLED, bookingListFromLearnerRecordService.get(1).getStatus());
     }
 
-    @Test
-    public void shouldReturnListOfModuleRecords() {
-        LocalDate from = LocalDate.of(2018, 1, 1);
-        LocalDate to = LocalDate.of(2018, 1, 2);
-
-        UriBuilder uriBuilder = mock(UriBuilder.class);
-        URI uri = URI.create("http://locahost");
-
-        when(uriBuilderFactory.builder(moduleRecordUri)).thenReturn(uriBuilder);
-        when(uriBuilder.queryParam("from", from)).thenReturn(uriBuilder);
-        when(uriBuilder.queryParam("to", to)).thenReturn(uriBuilder);
-        when(uriBuilder.build(eq(new HashMap<>()))).thenReturn(uri);
-
-        List<ModuleRecord> moduleRecords = Lists.newArrayList(new ModuleRecord());
-        when(httpService.getList(uri, ModuleRecord.class)).thenReturn(moduleRecords);
-        assertEquals(moduleRecords, learnerRecordService.getModules(from, to));
-
-        verify(httpService).getList(uri, ModuleRecord.class);
-    }
 }
