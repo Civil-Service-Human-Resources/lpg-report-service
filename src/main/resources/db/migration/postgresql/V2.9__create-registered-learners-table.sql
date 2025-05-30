@@ -19,7 +19,7 @@ CREATE TABLE registered_learners_report_requests (
     requester_email VARCHAR(150) NOT NULL,
     requester_full_name VARCHAR(255) NOT NULL,
     organisation_ids INT[],
-    status VARCHAR(20) NOT NULL DEFAULT 'REQUESTED',
+    status VARCHAR(20) NOT NULL,
     url_slug VARCHAR(20) NOT NULL DEFAULT substr(md5(random()::text), 1, 20) UNIQUE,
     download_base_url VARCHAR(255) NOT NULL DEFAULT 'NULL',
     times_downloaded INT4 NOT NULL DEFAULT 0,
