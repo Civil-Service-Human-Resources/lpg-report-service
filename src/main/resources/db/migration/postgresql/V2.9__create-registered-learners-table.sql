@@ -13,6 +13,9 @@ CREATE TABLE registered_learners(
     updated_timestamp TIMESTAMPTZ NOT NULL
 );
 
+CREATE INDEX IF NOT EXISTS idx_organisation_id_registered_learners
+    ON registered_learners (organisation_id);
+
 CREATE TABLE registered_learners_report_requests (
     report_request_id SERIAL4 PRIMARY KEY,
     requester_id VARCHAR(36) NOT NULL,
