@@ -61,8 +61,8 @@ public class CourseCompletionsController {
     @PutMapping("/remove-user-details")
     @ResponseBody
     @PreAuthorize("hasAnyAuthority('IDENTITY_DELETE')")
-    public int removeUserDetails(@RequestBody DeleteUserDetailsParams deleteUserDetailsParams) {
-        return courseCompletionService.removeUserDetails(deleteUserDetailsParams.getUids());
+    public UpdateUserResult removeUserDetails(@RequestBody UpdateUserDetailsParams deleteUserDetailsParams) {
+        return new UpdateUserResult(courseCompletionService.removeUserDetails(deleteUserDetailsParams.getUids()));
     }
 
     @PostMapping("/report-requests")

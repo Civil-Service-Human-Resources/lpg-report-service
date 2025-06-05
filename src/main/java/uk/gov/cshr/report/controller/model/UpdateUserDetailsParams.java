@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class DeleteUserDetailsParams {
+public class UpdateUserDetailsParams {
     @Size(min = 1, max = 50)
     @NotNull
     private List<String> uids;

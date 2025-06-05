@@ -21,6 +21,7 @@ import uk.gov.cshr.report.util.WireMockServer;
 import uk.gov.cshr.report.util.stub.StubService;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Map;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
@@ -62,6 +63,12 @@ public class IntegrationTestBase extends WireMockServer {
                         JwtClaimNames.SUB, userUid,
                         "user_name", userUid
                 ));
+    }
+
+    protected SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor getCustomAuthPostProcessor(String... authorities) {
+        return jwt()
+                .jwt(getJwt())
+                .authorities(Arrays.stream(authorities).map(SimpleGrantedAuthority::new).toArray(SimpleGrantedAuthority[]::new));
     }
 
     @BeforeEach
