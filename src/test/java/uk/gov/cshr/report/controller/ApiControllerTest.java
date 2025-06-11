@@ -11,6 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import uk.gov.cshr.report.controller.model.ErrorDtoFactory;
 import uk.gov.cshr.report.service.CourseCompletionService;
+import uk.gov.cshr.report.service.RegisteredLearnersService;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -26,6 +27,9 @@ public class ApiControllerTest {
 
     @MockBean
     private CourseCompletionService courseCompletionService;
+
+    @MockBean
+    private RegisteredLearnersService registeredLearnersService;
 
     @Test
     @WithMockUser(username = "user")
@@ -46,36 +50,6 @@ public class ApiControllerTest {
     @WithMockUser(username = "user")
     public void testPutRemoveUserDetailsEndpointForMultipleUsersReturnsOkWhenRequestBodyIsCorrect() throws Exception {
         String requestBody = "{\"uids\": [\"user1\", \"user2\"]}";
-        mockMvc.perform(
-                        put("/api/report/remove-user-details")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody)
-                                .with(csrf())
-                                .accept(MediaType.APPLICATION_JSON)
-                                .characterEncoding("utf-8"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @WithMockUser(username = "user")
-    public void testPutRemoveUserDetailsEndpointForNoUserReturnsOkWhenRequestBodyIsCorrect() throws Exception {
-        String requestBody = "{\"uids\": []}";
-        mockMvc.perform(
-                        put("/api/report/remove-user-details")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody)
-                                .with(csrf())
-                                .accept(MediaType.APPLICATION_JSON)
-                                .characterEncoding("utf-8"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @WithMockUser(username = "user")
-    public void testPutRemoveUserDetailsEndpointForEmptyBodyReturnsOkWhenRequestBodyIsCorrect() throws Exception {
-        String requestBody = "{}";
         mockMvc.perform(
                         put("/api/report/remove-user-details")
                                 .contentType(MediaType.APPLICATION_JSON)

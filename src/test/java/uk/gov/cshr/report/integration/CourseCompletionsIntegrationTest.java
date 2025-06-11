@@ -246,7 +246,6 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
                         .content(body)
                         .with(getCustomAuthPostProcessor("IDENTITY_DELETE")))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.affectedRows").value(expectedNumberOfUpdatedRows));;
-        ;
+                .andExpect(jsonPath("$.affectedRows").value(expectedNumberOfUpdatedRows));
     }
 }

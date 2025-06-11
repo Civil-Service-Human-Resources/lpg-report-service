@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.gov.cshr.report.controller.model.DeleteUserResults;
 import uk.gov.cshr.report.controller.model.UpdateUserDetailsParams;
-import uk.gov.cshr.report.controller.model.UpdateUserResult;
 import uk.gov.cshr.report.service.CourseCompletionService;
 import uk.gov.cshr.report.service.RegisteredLearnersService;
 
@@ -31,13 +30,6 @@ public class ApiController {
     public DeleteUserResults removeUserDetails(@Valid @RequestBody UpdateUserDetailsParams deleteUserDetailsParams) {
         return new DeleteUserResults(courseCompletionService.removeUserDetails(deleteUserDetailsParams.getUids()),
         registeredLearnersService.deleteLearners(deleteUserDetailsParams.getUids()));
-    }
-
-    @Transactional
-    @PutMapping("/deactivate-users")
-    @ResponseBody
-    public UpdateUserResult deactivateUsers(@Valid @RequestBody UpdateUserDetailsParams deleteUserDetailsParams) {
-        return new UpdateUserResult(registeredLearnersService.deactivateLearners(deleteUserDetailsParams.getUids()));
     }
 
 }
