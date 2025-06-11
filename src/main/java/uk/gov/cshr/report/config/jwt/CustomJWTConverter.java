@@ -7,8 +7,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -19,17 +21,16 @@ public class CustomJWTConverter implements Converter<Jwt, Collection<GrantedAuth
     @Override
     public Collection<GrantedAuthority> convert(Jwt jwt) {
         log.debug("Extracting authorities from JWT");
-        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        Set<String> authoritiesSet = new HashSet<>();
         for (String authClaim : AUTH_CLAIMS) {
             log.debug("Looking for claim {}", authClaim);
             Collection<String> authorities = jwt.getClaim(authClaim);
             if (authorities != null && !authorities.isEmpty()) {
                 log.debug("claim {} found. Extracting authorities", authClaim);
-                authorities.forEach(a -> grantedAuthorities.add(new SimpleGrantedAuthority(a.toUpperCase())));
-                break;
+                authorities.forEach(a -> authoritiesSet.add(a.toUpperCase()));
             }
         }
-        return grantedAuthorities;
+        return authoritiesSet.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override

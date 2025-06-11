@@ -22,9 +22,6 @@ public class ApiIntegrationTest extends IntegrationTestBase {
         String body = "{" +
                 "\"uids\": [\"user1\", \"user2\"]" +
                 "}";
-
-        int expectedNumberOfUpdatedRows = 7;
-
         mockMvc.perform(put(removeUserDetailsEndpoint)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body)
