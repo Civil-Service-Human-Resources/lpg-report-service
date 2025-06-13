@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import uk.gov.cshr.report.util.WireMockServer;
 import uk.gov.cshr.report.util.stub.StubService;
@@ -32,12 +31,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ContextConfiguration(initializers = {IntegrationTestBase.Initializer.class})
 @ActiveProfiles({"wiremock"})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class IntegrationTestBase extends WireMockServer {
+public abstract class IntegrationTestBase extends WireMockServer {
 
     protected MockMvc mockMvc;
 
-    @Container
-    public static CustomPGContainer postgres = CustomPGContainer.getInstance();
+    static final CustomPGContainer postgres;
+
+    static {
+        postgres = CustomPGContainer.getInstance();
+        postgres.start();
+    }
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {

@@ -4,9 +4,9 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 public class CustomPGContainer extends PostgreSQLContainer<CustomPGContainer> {
     private static final String IMAGE_VERSION = "postgres:16-alpine";
-    private final static String pgDatabaseName = "test";
-    private final static String pgUsername = "it_user";
-    private final static String pgPassword = "it_pass";
+    private final static String pgDatabaseName = "reporting";
+    private final static String pgUsername = "root";
+    private final static String pgPassword = "root_pw";
     private static CustomPGContainer container;
 
     private CustomPGContainer() {

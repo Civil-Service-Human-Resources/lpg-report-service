@@ -1,13 +1,12 @@
 package uk.gov.cshr.report.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import uk.gov.cshr.report.configuration.TestConfig;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 
@@ -21,16 +20,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @Import(TestConfig.class)
+@Transactional
 public class RegisteredLearnersIntegrationTest extends IntegrationTestBase {
 
     @Autowired
     private RegisteredLearnerRepository registeredLearnerRepository;
 
     @Test
-    @Transactional
     public void testDeactivateUsers() throws Exception {
         String input = """
                 {
@@ -52,7 +50,6 @@ public class RegisteredLearnersIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
-    @Transactional
     public void testDeleteUsers() throws Exception {
         List<String> uids = List.of("uid10000-0000-0000-0000-000000000000",
                 "uid20000-0000-0000-0000-000000000000",

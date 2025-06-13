@@ -11,10 +11,10 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
-    UPDATE RegisteredLearner rl
-    SET rl.active = false
-    WHERE rl.uid in :uids
-""")
+        UPDATE RegisteredLearner rl
+        SET rl.active = false
+        WHERE rl.uid in :uids
+    """)
     int deactivate(Collection<String> uids);
 
     int deleteAllByUidIn(Collection<String> ids);
