@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
@@ -14,6 +16,8 @@ import java.time.ZonedDateTime;
 @Table(name = "registered_learners")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RegisteredLearner {
 
     @Id
@@ -53,4 +57,5 @@ public class RegisteredLearner {
 
     @Column(nullable = false)
     private ZonedDateTime updatedTimestamp;
+
 }

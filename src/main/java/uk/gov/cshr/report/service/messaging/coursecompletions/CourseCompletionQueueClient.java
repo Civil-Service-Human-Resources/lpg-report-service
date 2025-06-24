@@ -1,27 +1,29 @@
 package uk.gov.cshr.report.service.messaging.coursecompletions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.domain.CourseCompletionEvent;
-import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
+import uk.gov.cshr.report.service.CourseCompletionService;
+import uk.gov.cshr.report.service.messaging.MessageConverter;
 import uk.gov.cshr.report.service.messaging.ObjectMapperQueueClient;
+import uk.gov.cshr.report.service.messaging.model.Message;
 
 @Service
 @Slf4j
-public class CourseCompletionQueueClient extends ObjectMapperQueueClient<CourseCompletionMessage, CourseCompletionEvent> {
+public class CourseCompletionQueueClient extends ObjectMapperQueueClient {
 
-    protected CourseCompletionQueueClient(ObjectMapper objectMapper,
-                                          CourseCompletionsMessageConverter converter,
-                                          CourseCompletionEventRepository repository) {
-        super(objectMapper, converter, repository, new TypeReference<>() { });
+    private final CourseCompletionService courseCompletionService;
+
+    protected CourseCompletionQueueClient(MessageConverter converter, CourseCompletionService courseCompletionService) {
+        super(converter);
+        this.courseCompletionService = courseCompletionService;
     }
 
     @Override
     @JmsListener(destination = "${app.messaging.queues.course-completions.name}", containerFactory = "jmsListenerContainerFactory")
     public void receiveMessage (String message) {
-        this.convertAndSave(message);
+        Message<CourseCompletionMessage> courseCompletionMessage = super.converter.convert(message, new TypeReference<>() { });
+        courseCompletionService.saveCourseCompletionMessage(courseCompletionMessage);
     }
 }
