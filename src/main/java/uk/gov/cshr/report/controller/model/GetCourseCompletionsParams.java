@@ -28,7 +28,6 @@ public class GetCourseCompletionsParams {
     private ZoneId timezone = ZoneId.of("UTC");
 
     @Size(min = 1, max = 400)
-    @NotNull
     private List<Integer> organisationIds;
 
     private List<Integer> professionIds;
