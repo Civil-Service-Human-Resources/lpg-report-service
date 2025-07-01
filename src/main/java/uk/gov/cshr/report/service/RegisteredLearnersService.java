@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 
+import java.time.ZonedDateTime;
 import java.util.Collection;
 
 @Service
@@ -21,9 +22,9 @@ public class RegisteredLearnersService {
         return registeredLearnerRepository.deleteAllByUidIn(uids);
     }
 
-    public int activateLearners(Collection<String> uids) {
+    public int activateLearners(Collection<String> uids, ZonedDateTime updatedTimestamp) {
         log.debug("Deactivating learners with uids : {}", uids);
-        return registeredLearnerRepository.activate(uids);
+        return registeredLearnerRepository.activate(uids, updatedTimestamp);
     }
 
     public int deactivateLearners(Collection<String> uids) {
