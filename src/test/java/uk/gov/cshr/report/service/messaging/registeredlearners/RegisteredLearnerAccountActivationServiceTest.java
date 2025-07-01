@@ -35,6 +35,6 @@ class RegisteredLearnerAccountActivationServiceTest {
                 """;
         when(messageService.matches(RegisteredLearnerOperation.UPDATE, RegisteredLearnerDataType.ACCOUNT_ACTIVATE)).thenReturn(true);
         registeredLearnerConverterService.processMessage(message);
-        verify(messageService, atMostOnce()).process(message);
+        verify(messageService, times(1)).process(message);
     }
 }
