@@ -1,29 +1,28 @@
 package uk.gov.cshr.report.service.messaging.coursecompletions;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
-import uk.gov.cshr.report.service.CourseCompletionService;
-import uk.gov.cshr.report.service.messaging.MessageConverter;
-import uk.gov.cshr.report.service.messaging.ObjectMapperQueueClient;
-import uk.gov.cshr.report.service.messaging.model.Message;
+import uk.gov.cshr.report.domain.CourseCompletionEvent;
+import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
+import uk.gov.cshr.report.service.messaging.IMessageProcessor;
 
 @Service
 @Slf4j
-public class CourseCompletionQueueClient extends ObjectMapperQueueClient {
+public class CourseCompletionQueueClient implements IMessageProcessor {
 
-    private final CourseCompletionService courseCompletionService;
+    private final CourseCompletionEventRepository repository;
+    private final CourseCompletionsMessageConverter messageConverter;
 
-    protected CourseCompletionQueueClient(MessageConverter converter, CourseCompletionService courseCompletionService) {
-        super(converter);
-        this.courseCompletionService = courseCompletionService;
+    public CourseCompletionQueueClient(CourseCompletionEventRepository repository, CourseCompletionsMessageConverter messageConverter) {
+        this.repository = repository;
+        this.messageConverter = messageConverter;
     }
 
     @Override
     @JmsListener(destination = "${app.messaging.queues.course-completions.name}", containerFactory = "jmsListenerContainerFactory")
-    public void receiveMessage (String message) {
-        Message<CourseCompletionMessage> courseCompletionMessage = super.converter.convert(message, new TypeReference<>() { });
-        courseCompletionService.saveCourseCompletionMessage(courseCompletionMessage);
+    public void processMessage(String message) {
+        CourseCompletionEvent courseCompletionEvent = messageConverter.convert(message);
+        repository.save(courseCompletionEvent);
     }
 }

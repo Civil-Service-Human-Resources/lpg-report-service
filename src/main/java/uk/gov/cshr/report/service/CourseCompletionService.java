@@ -9,9 +9,6 @@ import uk.gov.cshr.report.domain.aggregation.Aggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
-import uk.gov.cshr.report.service.messaging.coursecompletions.CourseCompletionMessage;
-import uk.gov.cshr.report.service.messaging.coursecompletions.CourseCompletionsMessageConverter;
-import uk.gov.cshr.report.service.messaging.model.Message;
 import uk.gov.cshr.report.service.util.TimeUtils;
 
 import java.util.List;
@@ -21,14 +18,12 @@ import java.util.List;
 public class CourseCompletionService {
 
     private final CourseCompletionEventRepository repository;
-    private final CourseCompletionsMessageConverter messageConverter;
     private final CourseCompletionsParamsFactory paramsFactory;
     private final TimeUtils timeUtils;
 
     public CourseCompletionService(
-            CourseCompletionEventRepository repository, CourseCompletionsMessageConverter messageConverter, CourseCompletionsParamsFactory paramsFactory, TimeUtils timeUtils) {
+            CourseCompletionEventRepository repository, CourseCompletionsParamsFactory paramsFactory, TimeUtils timeUtils) {
         this.repository = repository;
-        this.messageConverter = messageConverter;
         this.paramsFactory = paramsFactory;
         this.timeUtils = timeUtils;
     }
@@ -70,7 +65,4 @@ public class CourseCompletionService {
         return repository.removeUserDetails(uids);
     }
 
-    public void saveCourseCompletionMessage(Message<CourseCompletionMessage> courseCompletionMessage) {
-        repository.save(messageConverter.convert(courseCompletionMessage));
-    }
 }
