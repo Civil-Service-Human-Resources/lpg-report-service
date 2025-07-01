@@ -21,6 +21,11 @@ public class RegisteredLearnersService {
         return registeredLearnerRepository.deleteAllByUidIn(uids);
     }
 
+    public int activateLearners(Collection<String> uids) {
+        log.debug("Deactivating learners with uids : {}", uids);
+        return registeredLearnerRepository.activate(uids);
+    }
+
     public int deactivateLearners(Collection<String> uids) {
         log.debug("Deactivating learners with uids : {}", uids);
         return registeredLearnerRepository.deactivate(uids);

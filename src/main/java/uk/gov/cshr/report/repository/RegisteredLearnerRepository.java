@@ -12,6 +12,14 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
         UPDATE RegisteredLearner rl
+        SET rl.active = true
+        WHERE rl.uid in :uids
+    """)
+    int activate(Collection<String> uids);
+
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("""
+        UPDATE RegisteredLearner rl
         SET rl.active = false
         WHERE rl.uid in :uids
     """)
