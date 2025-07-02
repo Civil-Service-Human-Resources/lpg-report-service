@@ -1,17 +1,21 @@
 package uk.gov.cshr.report.service.messaging.registeredlearners.models;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-@RequiredArgsConstructor
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class RegisteredLearnerMetadata<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = 0L;
-    private final RegisteredLearnerOperation operation;
-    private final RegisteredLearnerDataType dataType;
-    private final T data;
+    private RegisteredLearnerOperation operation;
+    private RegisteredLearnerDataType dataType;
+    private T data;
 }
