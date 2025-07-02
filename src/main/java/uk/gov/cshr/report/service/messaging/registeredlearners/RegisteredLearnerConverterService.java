@@ -26,8 +26,9 @@ public class RegisteredLearnerConverterService {
     public void processMessage(String message) {
         try {
             JsonNode messageJson = mapper.readTree(message);
-            RegisteredLearnerOperation op = RegisteredLearnerOperation.valueOf(messageJson.get("operation").asText());
-            RegisteredLearnerDataType dataType = RegisteredLearnerDataType.valueOf(messageJson.get("dataType").asText());
+
+            RegisteredLearnerOperation op = RegisteredLearnerOperation.valueOf(messageJson.get("metadata").get("operation").asText());
+            RegisteredLearnerDataType dataType = RegisteredLearnerDataType.valueOf(messageJson.get("metadata").get("dataType").asText());
             Optional<RegisteredLearnerMessageService<?>> serviceOptional = messageServices.stream().filter(ms -> ms.matches(op, dataType)).findFirst();
             if (serviceOptional.isPresent()) {
                 serviceOptional.get().process(message);

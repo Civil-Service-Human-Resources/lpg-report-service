@@ -25,9 +25,11 @@ class RegisteredLearnerConverterServiceTest {
     public void testProcessMessage() throws JsonProcessingException {
         String message = """
                 {
-                    "operation": "CREATE",
-                    "dataType": "LEARNER_PROFILE",
-                    "data": {}
+                    "metadata": {
+                        "operation": "CREATE",
+                        "dataType": "LEARNER_PROFILE",
+                        "data": {}
+                    }
                 }
                 """;
         when(messageService.matches(RegisteredLearnerOperation.CREATE, RegisteredLearnerDataType.LEARNER_PROFILE)).thenReturn(true);
