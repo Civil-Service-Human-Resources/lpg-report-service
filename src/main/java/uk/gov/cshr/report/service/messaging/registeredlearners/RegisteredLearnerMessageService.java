@@ -28,7 +28,7 @@ public abstract class RegisteredLearnerMessageService<T> {
     }
 
     void process(String message) throws JsonProcessingException {
-        log.debug("Attempting to convert message {} to type {}", message, dataType);
+        log.debug("Attempting to convert message {} to type {}", message, clazz);
         T convertedMessage = getObjectMapper().readValue(message, this.getClazz());
         processConvertedMessage(convertedMessage);
     }

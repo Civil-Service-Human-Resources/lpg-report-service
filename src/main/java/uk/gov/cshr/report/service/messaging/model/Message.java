@@ -2,17 +2,19 @@ package uk.gov.cshr.report.service.messaging.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Message<T> implements Serializable {
-    private final String messageId;
+    private String messageId;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private final LocalDateTime messageTimestamp;
-    private final T metadata;
+    private LocalDateTime messageTimestamp;
+    private T metadata;
 }

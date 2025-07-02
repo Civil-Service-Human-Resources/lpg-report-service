@@ -1,18 +1,24 @@
 package uk.gov.cshr.report.service.messaging.registeredlearners.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
+import java.io.Serializable;
+
 @Getter
-public class RegisteredLearnerProfile {
-    private final String uid;
-    private final String email;
-    private final String fullName;
-    private final Integer organisationId;
-    private final String organisationName;
-    private final Integer gradeId;
-    private final String gradeName;
-    private final Integer professionId;
-    private final String professionName;
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class RegisteredLearnerProfile implements Serializable {
+    private String uid;
+    private String email;
+    private String fullName;
+    private Integer organisationId;
+    private String organisationName;
+    private Integer gradeId;
+    private String gradeName;
+    private Integer professionId;
+    private String professionName;
 }
