@@ -18,8 +18,8 @@ import java.util.List;
 @Slf4j
 @Component
 @Getter
-public class RegisteredLearnerAccountActivateService
-        extends RegisteredLearnerMessageService<RegisteredLearnerAccountActivateMessage> {
+public class RegisteredLearnerAccountActivateService extends
+        RegisteredLearnerMessageService<RegisteredLearnerAccountActivateMessage> {
 
     private final RegisteredLearnersService registeredLearnersService;
     private final Clock clock;

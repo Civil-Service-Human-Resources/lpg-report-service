@@ -1,11 +1,12 @@
 package uk.gov.cshr.report.service.messaging.registeredlearners.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-@RequiredArgsConstructor
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisteredLearnerAccountActivate {
-    private final String uid;
-    private final Boolean active;
+    private String uid;
+    private Boolean active;
 }
