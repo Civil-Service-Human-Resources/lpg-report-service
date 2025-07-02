@@ -7,6 +7,8 @@ app:
     queues:
       course-completions:
         name: coursecompletions
+      registered-learners:
+        name: registeredlearners
     activemq:
       url: ${ACTIVEMQ_URL:tcp://localhost:61616}
       username: ${ACTIVEMQ_USERNAME:artemis}

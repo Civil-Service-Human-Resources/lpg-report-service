@@ -64,4 +64,5 @@ public class CourseCompletionService {
         log.info("Removing user details for UIDs: " + uids);
         return repository.removeUserDetails(uids);
     }
+
 }
