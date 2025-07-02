@@ -25,12 +25,16 @@ class RegisteredLearnerAccountActivationServiceTest {
     public void testProcessMessage() throws JsonProcessingException {
         String message = """
                 {
-                    "operation": "UPDATE",
-                    "dataType": "ACCOUNT_ACTIVATE",
-                    "data": {
-                                "uid": "uid-123",
-                                "active": "true"
-                             }
+                    "messageId": "messageId",
+                    "messageTimestamp": "2024-01-01T10:00:00.000Z",
+                    "metadata": {
+                        "operation": "UPDATE",
+                        "dataType": "ACCOUNT_ACTIVATE",
+                        "data": {
+                            "uid": "uid-123",
+                            "active": "true"
+                        }
+                    }
                 }
                 """;
         when(messageService.matches(RegisteredLearnerOperation.UPDATE, RegisteredLearnerDataType.ACCOUNT_ACTIVATE)).thenReturn(true);

@@ -23,7 +23,7 @@ public class RegisteredLearnersService {
     }
 
     public int activateLearners(Collection<String> uids, ZonedDateTime updatedTimestamp) {
-        log.debug("Deactivating learners with uids : {}", uids);
+        log.debug("activateLearners: Activating learners with uids : {}, updatedTimestamp: {}", uids, updatedTimestamp);
         return registeredLearnerRepository.activate(uids, updatedTimestamp);
     }
 

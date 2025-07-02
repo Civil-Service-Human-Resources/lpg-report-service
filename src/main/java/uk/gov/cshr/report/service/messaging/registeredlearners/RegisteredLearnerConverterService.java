@@ -25,6 +25,7 @@ public class RegisteredLearnerConverterService {
 
     public void processMessage(String message) {
         try {
+            log.debug("processMessage: message: {}", message);
             JsonNode messageJson = mapper.readTree(message);
 
             RegisteredLearnerOperation op = RegisteredLearnerOperation.valueOf(messageJson.get("metadata").get("operation").asText());
