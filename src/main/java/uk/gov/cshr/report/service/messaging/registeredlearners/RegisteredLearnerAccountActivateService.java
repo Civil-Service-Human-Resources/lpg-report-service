@@ -42,6 +42,7 @@ public class RegisteredLearnerAccountActivateService extends
         if(data.getActive()) {
             ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
             registeredLearnersService.activateLearners(List.of(uid), zonedDateTime);
+            log.info("processConvertedMessage: Activated learners with uid : {}, updatedTimestamp: {}", uid, zonedDateTime);
         } else {
             log.error("processConvertedMessage: Unexpected registered learner activation data for uid: {}", uid);
             throw new MessageProcessingException("Unexpected registered learner activation data: " + data);
