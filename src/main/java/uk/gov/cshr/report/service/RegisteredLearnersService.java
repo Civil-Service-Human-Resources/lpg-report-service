@@ -2,6 +2,7 @@ package uk.gov.cshr.report.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 
 import java.time.ZonedDateTime;
@@ -22,6 +23,7 @@ public class RegisteredLearnersService {
         return registeredLearnerRepository.deleteAllByUidIn(uids);
     }
 
+    @Transactional
     public int activateLearners(Collection<String> uids, ZonedDateTime updatedTimestamp) {
         log.debug("activateLearners: Activating learners with uids : {}, updatedTimestamp: {}", uids, updatedTimestamp);
         return registeredLearnerRepository.activate(uids, updatedTimestamp);
