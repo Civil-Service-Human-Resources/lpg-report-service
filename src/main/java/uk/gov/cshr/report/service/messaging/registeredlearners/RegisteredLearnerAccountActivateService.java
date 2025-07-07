@@ -13,7 +13,6 @@ import uk.gov.cshr.report.service.messaging.registeredlearners.models.Registered
 
 import java.time.Clock;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Slf4j
 @Component
@@ -41,8 +40,8 @@ public class RegisteredLearnerAccountActivateService extends
         String uid = data.getUid();
         if(data.getActive()) {
             ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
-            registeredLearnersService.activateLearners(List.of(uid), zonedDateTime);
-            log.info("processConvertedMessage: Activated learners with uid : {}, updatedTimestamp: {}", uid, zonedDateTime);
+            registeredLearnersService.activateLearners(uid, zonedDateTime);
+            log.info("processConvertedMessage: Activated learner with uid : {}, updatedTimestamp: {}", uid, zonedDateTime);
         } else {
             log.error("processConvertedMessage: Unexpected registered learner activation data for uid: {}", uid);
             throw new MessageProcessingException("Unexpected registered learner activation data: " + data);

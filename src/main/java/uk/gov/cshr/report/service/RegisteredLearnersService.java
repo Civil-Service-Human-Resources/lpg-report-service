@@ -7,6 +7,7 @@ import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -24,9 +25,9 @@ public class RegisteredLearnersService {
     }
 
     @Transactional
-    public int activateLearners(Collection<String> uids, ZonedDateTime updatedTimestamp) {
-        log.debug("activateLearners: Activating learners with uids : {}, updatedTimestamp: {}", uids, updatedTimestamp);
-        return registeredLearnerRepository.activate(uids, updatedTimestamp);
+    public int activateLearners(String uid, ZonedDateTime updatedTimestamp) {
+        log.info("activateLearners: Activating learner with uid : {}, updatedTimestamp: {}", uid, updatedTimestamp);
+        return registeredLearnerRepository.activate(List.of(uid), updatedTimestamp);
     }
 
     public int deactivateLearners(Collection<String> uids) {
