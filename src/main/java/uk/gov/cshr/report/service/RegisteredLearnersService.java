@@ -19,6 +19,12 @@ public class RegisteredLearnersService {
         this.registeredLearnerRepository = registeredLearnerRepository;
     }
 
+    @Transactional
+    public int updateEmail(String uid, String email, ZonedDateTime updatedTimestamp) {
+        log.info("updateEmail: Updating learner email with uid: {}, email: {}, updatedTimestamp: {}", uid, email, updatedTimestamp);
+        return registeredLearnerRepository.updateEmail(uid, email, updatedTimestamp);
+    }
+
     public int deleteLearners(Collection<String> uids) {
         log.debug("Deleting registered learners with uids : {}", uids);
         return registeredLearnerRepository.deleteAllByUidIn(uids);

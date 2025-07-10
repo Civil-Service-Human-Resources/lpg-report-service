@@ -16,6 +16,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Import(TestConfig.class)
@@ -77,6 +78,34 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         if(registeredLearnerOpt.isPresent()) {
             RegisteredLearner registeredLearner = registeredLearnerOpt.get();
             assertTrue(registeredLearner.isActive());
+            assertEquals("2025-01-01T11:00Z", registeredLearner.getUpdatedTimestamp().toString());
+        }
+    }
+
+    @Test
+    public void testEmailUpdate() {
+        createRegisteredLearner();
+
+        registeredLearnerQueueClient.processMessage("""
+                {
+                    "messageId": "ID-1",
+                    "messageTimestamp": "2025-01-01T11:00:00.0",
+                    "metadata": {
+                        "operation": "UPDATE",
+                        "dataType": "EMAIL_UPDATE",
+                        "data": {
+                            "uid": "uid10000-0000-0000-0000-000000000000",
+                            "email": "updated_email@test.com"
+                        }
+                    }
+                }
+                """);
+
+        Optional<RegisteredLearner> registeredLearnerOpt = registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000");
+        if(registeredLearnerOpt.isPresent()) {
+            RegisteredLearner registeredLearner = registeredLearnerOpt.get();
+            assertEquals("updated_email@test.com", registeredLearner.getEmail());
+            assertEquals("2025-01-01T11:00Z", registeredLearner.getUpdatedTimestamp().toString());
         }
     }
 
