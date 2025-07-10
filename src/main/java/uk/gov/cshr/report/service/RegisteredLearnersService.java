@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 
+import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.List;
 public class RegisteredLearnersService {
 
     private final RegisteredLearnerRepository registeredLearnerRepository;
+    private final Clock clock;
 
-    public RegisteredLearnersService(RegisteredLearnerRepository registeredLearnerRepository) {
+    public RegisteredLearnersService(RegisteredLearnerRepository registeredLearnerRepository, Clock clock) {
         this.registeredLearnerRepository = registeredLearnerRepository;
+        this.clock = clock;
     }
 
     @Transactional
@@ -38,6 +41,7 @@ public class RegisteredLearnersService {
 
     public int deactivateLearners(Collection<String> uids) {
         log.debug("Deactivating learners with uids : {}", uids);
-        return registeredLearnerRepository.deactivate(uids);
+        ZonedDateTime updatedTimestamp = ZonedDateTime.now(clock);
+        return registeredLearnerRepository.deactivate(uids, updatedTimestamp);
     }
 }
