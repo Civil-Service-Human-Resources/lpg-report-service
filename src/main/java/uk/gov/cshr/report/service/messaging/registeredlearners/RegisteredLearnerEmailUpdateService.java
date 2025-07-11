@@ -39,8 +39,9 @@ public class RegisteredLearnerEmailUpdateService extends
         String email = data.getEmail();
         if(StringUtils.isNotBlank(email)) {
             ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
-            registeredLearnersService.updateEmail(uid, email, zonedDateTime);
             log.info("processConvertedMessage: Updating learner email {} for uid : {}, updatedTimestamp: {}", email, uid, zonedDateTime);
+            registeredLearnersService.updateEmail(uid, email, zonedDateTime);
+            log.info("processConvertedMessage: Updated learner email {} for uid : {}, updatedTimestamp: {}", email, uid, zonedDateTime);
         } else {
             log.error("processConvertedMessage: Unexpected registered learner email update data for uid: {}", uid);
             throw new MessageProcessingException("Unexpected registered learner email update data: " + data);
