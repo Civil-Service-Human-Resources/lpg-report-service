@@ -39,20 +39,34 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
                         "operation":"CREATE",
                         "dataType":"LEARNER_PROFILE",
                         "data":{
-                            "uid":"CREATE_UID",
+                            "uid":"uid10000-0000-0000-0000-000000000000",
                             "email":"email@email.com",
-                            "full_name":"name",
-                            "organisation_id":1,
-                            "organisation_name":"Cabinet Office",
-                            "grade_id":1,
-                            "grade_name":"Grade 7",
-                            "profession_id":1,
-                            "profession_name":"Analysis"
+                            "fullName":"fullName",
+                            "gradeId":1,
+                            "gradeName":"Grade 7",
+                            "organisationId":1,
+                            "organisationName":"Cabinet Office",
+                            "professionId":1,
+                            "professionName":"Analysis"
                         }
                     }
                 }
                 """);
-        assertTrue(registeredLearnerRepository.findById("CREATE_UID").isPresent());
+        assertTrue(registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000").isPresent());
+        Optional<RegisteredLearner> registeredLearnerOpt = registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000");
+        if(registeredLearnerOpt.isPresent()) {
+            RegisteredLearner registeredLearner = registeredLearnerOpt.get();
+            assertEquals("email@email.com", registeredLearner.getEmail());
+            assertEquals("fullName", registeredLearner.getFullName());
+            assertEquals(1, registeredLearner.getGradeId());
+            assertEquals("Grade 7", registeredLearner.getGradeName());
+            assertEquals(1, registeredLearner.getOrganisationId());
+            assertEquals("Cabinet Office", registeredLearner.getOrganisationName());
+            assertEquals(1, registeredLearner.getProfessionId());
+            assertEquals("Analysis", registeredLearner.getProfessionName());
+            assertEquals("2025-01-01T10:00Z[UTC]", registeredLearner.getCreatedTimestamp().toString());
+            assertEquals("2025-01-01T10:00Z[UTC]", registeredLearner.getUpdatedTimestamp().toString());
+        }
     }
 
     @Test
@@ -109,12 +123,46 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         }
     }
 
+    @Test
+    public void testNameUpdate() {
+        createRegisteredLearner();
+
+        registeredLearnerQueueClient.processMessage("""
+                {
+                    "messageId":"ID",
+                    "messageTimestamp":"2025-01-01T11:00:00.0",
+                    "metadata": {
+                        "operation":"UPDATE",
+                        "dataType":"LEARNER_PROFILE",
+                        "data":{
+                            "uid": "uid10000-0000-0000-0000-000000000000",
+                            "email":"email@email.com",
+                            "fullName":"updated_fullName",
+                            "gradeId":1,
+                            "gradeName":"Grade 7",
+                            "organisationId":1,
+                            "organisationName":"Cabinet Office",
+                            "professionId":1,
+                            "professionName":"Analysis"
+                        }
+                    }
+                }
+                """);
+        assertTrue(registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000").isPresent());
+        Optional<RegisteredLearner> registeredLearnerOpt = registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000");
+        if(registeredLearnerOpt.isPresent()) {
+            RegisteredLearner registeredLearner = registeredLearnerOpt.get();
+            assertEquals("updated_fullName", registeredLearner.getFullName());
+            assertEquals("2025-01-01T11:00Z[UTC]", registeredLearner.getUpdatedTimestamp().toString());
+        }
+    }
+
     private void createRegisteredLearner() {
         RegisteredLearner registeredLearner = new RegisteredLearner();
         registeredLearner.setUid("uid10000-0000-0000-0000-000000000000");
         registeredLearner.setActive(false);
         registeredLearner.setEmail("email@email.com");
-        registeredLearner.setFullName("name");
+        registeredLearner.setFullName("fullName");
         registeredLearner.setGradeId(1);
         registeredLearner.setGradeName("Grade 7");
         registeredLearner.setOrganisationId(1);
@@ -122,7 +170,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         registeredLearner.setProfessionId(1);
         registeredLearner.setProfessionName("Analysis");
 
-        Clock clock = Clock.fixed(Instant.parse("2025-01-01T10:00:00.000Z"), ZoneId.of("Europe/London"));
+        Clock clock = Clock.fixed(Instant.parse("2025-01-01T10:00:00.000Z"), ZoneId.of("UTC"));
         ZonedDateTime zonedDateTime = clock.instant().atZone(clock.getZone());
 
         registeredLearner.setCreatedTimestamp(zonedDateTime);
