@@ -13,6 +13,14 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
         UPDATE RegisteredLearner rl
+        SET rl.email = :email, rl.updatedTimestamp = :updatedTimestamp
+        WHERE rl.uid = :uid
+    """)
+    int updateEmail(String uid, String email, ZonedDateTime updatedTimestamp);
+
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("""
+        UPDATE RegisteredLearner rl
         SET rl.active = true, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.uid in :uids
     """)
@@ -21,10 +29,10 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
         UPDATE RegisteredLearner rl
-        SET rl.active = false
+        SET rl.active = false, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.uid in :uids
     """)
-    int deactivate(Collection<String> uids);
+    int deactivate(Collection<String> uids, ZonedDateTime updatedTimestamp);
 
     int deleteAllByUidIn(Collection<String> ids);
 }

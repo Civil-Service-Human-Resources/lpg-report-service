@@ -40,6 +40,7 @@ public class RegisteredLearnerAccountActivateService extends
         String uid = data.getUid();
         if(data.getActive()) {
             ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
+            log.info("processConvertedMessage: Activating learner with uid : {}, updatedTimestamp: {}", uid, zonedDateTime);
             registeredLearnersService.activateLearners(uid, zonedDateTime);
             log.info("processConvertedMessage: Activated learner with uid : {}, updatedTimestamp: {}", uid, zonedDateTime);
         } else {
