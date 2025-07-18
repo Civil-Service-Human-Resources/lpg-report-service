@@ -1,5 +1,6 @@
 package uk.gov.cshr.report.service.messaging.registeredlearners;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.config.ClockConfig;
@@ -11,6 +12,7 @@ import uk.gov.cshr.report.service.messaging.registeredlearners.models.UpdateProf
 import java.time.Clock;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class UpdateRegisteredLearnersMessageConverter {
 
@@ -72,6 +74,7 @@ public class UpdateRegisteredLearnersMessageConverter {
         }
 
         registeredLearner.setUpdatedTimestamp(message.getMessageTimestamp().atZone(clock.getZone()));
+        log.debug("registeredLearner: {}", registeredLearner);
         return registeredLearner;
     }
 }
