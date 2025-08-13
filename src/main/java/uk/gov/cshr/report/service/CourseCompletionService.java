@@ -7,6 +7,7 @@ import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.aggregation.Aggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
+import uk.gov.cshr.report.domain.aggregation.CourseCompletionByOrganisationAggregation;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
 import uk.gov.cshr.report.service.util.TimeUtils;
@@ -35,6 +36,11 @@ public class CourseCompletionService {
 
     public List<CourseCompletionAggregation> getCourseCompletionAggregationsByCourse(GetCourseCompletionsByCourseParams params) {
         return repository.getCompletionsAggregationByCourse(params.getBinDelimiter().getVal(), params.getStartDate(), params.getEndDate(),
+                params.getTimezone().toString(), params.getCourseIds(), params.getOrganisationIds(), params.getGradeIds(), params.getProfessionIds());
+    }
+
+    public List<CourseCompletionByOrganisationAggregation> getCourseCompletionAggregationsByOrganisation(GetCourseCompletionsByCourseParams params) {
+        return repository.getCompletionsAggregationByOrganisation(params.getBinDelimiter().getVal(), params.getStartDate(), params.getEndDate(),
                 params.getTimezone().toString(), params.getCourseIds(), params.getOrganisationIds(), params.getGradeIds(), params.getProfessionIds());
     }
 
