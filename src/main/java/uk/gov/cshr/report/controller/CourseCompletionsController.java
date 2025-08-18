@@ -11,6 +11,7 @@ import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequests
 import uk.gov.cshr.report.controller.model.*;
 import uk.gov.cshr.report.domain.aggregation.Aggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
+import uk.gov.cshr.report.domain.aggregation.CourseCompletionByOrganisationAggregation;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
@@ -40,6 +41,13 @@ public class CourseCompletionsController {
         this.postCourseCompletionsReportRequestsParamsToReportRequestMapper = postCourseCompletionsReportRequestsParamsToReportRequestMapper;
         this.userAuthService = userAuthService;
         this.controllerUtilities = controllerUtilities;
+    }
+
+    @PostMapping("/aggregations/by-organisation")
+    @ResponseBody
+    public AggregationResponse<CourseCompletionByOrganisationAggregation> getCompletionAggregationsByOrganisation(@RequestBody @Valid GetCourseCompletionsByCourseParams params) {
+        List<CourseCompletionByOrganisationAggregation> results =  courseCompletionService.getCourseCompletionAggregationsByOrganisation(params);
+        return new AggregationResponse<>(params.getTimezone().toString(), params.getBinDelimiter().getVal(), results);
     }
 
     @PostMapping("/aggregations/by-course")
