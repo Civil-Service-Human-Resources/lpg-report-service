@@ -13,7 +13,7 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
         UPDATE RegisteredLearner rl
-        SET rl.email = :email, rl.updatedTimestamp = :updatedTimestamp
+        SET rl.email = :email, rl.organisationId = null, rl.organisationName = null, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.uid = :uid
     """)
     int updateEmail(String uid, String email, ZonedDateTime updatedTimestamp);

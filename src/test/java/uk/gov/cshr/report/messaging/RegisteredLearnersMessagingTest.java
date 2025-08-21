@@ -16,8 +16,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Import(TestConfig.class)
 @Transactional
@@ -118,6 +117,8 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         Optional<RegisteredLearner> registeredLearnerOpt = registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000");
         if(registeredLearnerOpt.isPresent()) {
             RegisteredLearner registeredLearner = registeredLearnerOpt.get();
+            assertNull(registeredLearner.getOrganisationId());
+            assertNull(registeredLearner.getOrganisationName());
             assertEquals("updated_email@test.com", registeredLearner.getEmail());
             assertEquals("2025-01-01T11:00Z", registeredLearner.getUpdatedTimestamp().toString());
         }
@@ -136,14 +137,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
                         "dataType":"LEARNER_PROFILE",
                         "data":{
                             "uid": "uid10000-0000-0000-0000-000000000000",
-                            "email":"email@email.com",
-                            "fullName":"updated_fullName",
-                            "gradeId":1,
-                            "gradeName":"Grade 7",
-                            "organisationId":1,
-                            "organisationName":"Cabinet Office",
-                            "professionId":1,
-                            "professionName":"Analysis"
+                            "fullName":"updated_fullName"
                         }
                     }
                 }
