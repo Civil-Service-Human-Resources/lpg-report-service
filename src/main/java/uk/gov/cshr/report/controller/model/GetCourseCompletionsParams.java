@@ -36,4 +36,12 @@ public class GetCourseCompletionsParams {
 
     private AggregationBinDelimiter binDelimiter = AggregationBinDelimiter.DAY;
 
+    public List<Integer> getOrganisationIds() {
+        if (this.organisationIds == null || this.organisationIds.isEmpty()) {
+            return null;
+        } else {
+            return organisationIds;
+        }
+    }
+
 }
