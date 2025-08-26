@@ -27,7 +27,7 @@ public class GetCourseCompletionsParams {
 
     private ZoneId timezone = ZoneId.of("UTC");
 
-    @Size(min = 1, max = 400)
+    @Size(max = 400)
     private List<Integer> organisationIds;
 
     private List<Integer> professionIds;
@@ -35,5 +35,13 @@ public class GetCourseCompletionsParams {
     private List<Integer> gradeIds;
 
     private AggregationBinDelimiter binDelimiter = AggregationBinDelimiter.DAY;
+
+    public List<Integer> getOrganisationIds() {
+        if (this.organisationIds == null || this.organisationIds.isEmpty()) {
+            return null;
+        } else {
+            return organisationIds;
+        }
+    }
 
 }
