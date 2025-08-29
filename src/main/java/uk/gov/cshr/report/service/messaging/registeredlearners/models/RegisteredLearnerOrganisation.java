@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class RegisteredLearnersOrganisationDelete {
+public class RegisteredLearnerOrganisation {
     private final Long organisationalUnitId;
+    private final String organisationalUnitName;
 }

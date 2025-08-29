@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 @Component
 @Getter
 public class RegisteredLearnerOrganisationDeleteService extends
-        RegisteredLearnerMessageService<RegisteredLearnersOrganisationDeleteMessage> {
+        RegisteredLearnerMessageService<RegisteredLearnerOrganisationDeleteMessage> {
 
     private final RegisteredLearnersService registeredLearnersService;
     private final Clock clock;
@@ -24,22 +24,23 @@ public class RegisteredLearnerOrganisationDeleteService extends
                                                       RegisteredLearnersService registeredLearnersService,
                                                       Clock clock) {
         super(objectMapper, RegisteredLearnerOperation.DELETE, RegisteredLearnerDataType.ORGANISATION,
-                RegisteredLearnersOrganisationDeleteMessage.class);
+                RegisteredLearnerOrganisationDeleteMessage.class);
         this.registeredLearnersService = registeredLearnersService;
         this.clock = clock;
     }
 
     @Override
-    public void processConvertedMessage(RegisteredLearnersOrganisationDeleteMessage message) {
+    public void processConvertedMessage(RegisteredLearnerOrganisationDeleteMessage message) {
         log.debug("processConvertedMessage: message: {}", message);
-        RegisteredLearnersOrganisationDelete data = message.getMetadata().getData();
+        RegisteredLearnerOrganisation data = message.getMetadata().getData();
         log.debug("processConvertedMessage: data: {}", data);
-        Long organisationalUnitId = data.getOrganisationalUnitId();
-        if(organisationalUnitId != null) {
+        if(data != null && data.getOrganisationalUnitId() != null) {
             ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
-            log.info("processConvertedMessage: Deleting learner's organisation for organisationalUnitId : {}, updatedTimestamp: {}", organisationalUnitId, zonedDateTime);
-            registeredLearnersService.deleteOrganisation(organisationalUnitId, zonedDateTime);
-            log.info("processConvertedMessage: Deleted learner's organisation for organisationalUnitId : {}, updatedTimestamp: {}", organisationalUnitId, zonedDateTime);
+            log.info("processConvertedMessage: Deleting learner's organisation for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
+                    data, zonedDateTime);
+            registeredLearnersService.deleteOrganisation(data, zonedDateTime);
+            log.info("processConvertedMessage: Deleted learner's organisation for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
+                    data, zonedDateTime);
         } else {
             log.error("processConvertedMessage: Unexpected learner organisation deletion data : {}", data);
             throw new MessageProcessingException("Unexpected registered learner organisation deletion data: " + data);

@@ -7,13 +7,13 @@ import java.io.Serial;
 import java.time.LocalDateTime;
 
 @Getter
-public final class RegisteredLearnersOrganisationDeleteMessage
+public final class RegisteredLearnerOrganisationDeleteMessage
         extends Message<RegisteredLearnerOrganisationDeleteMessageMetadata> {
     @Serial
     private static final long serialVersionUID = 0L;
 
-    public RegisteredLearnersOrganisationDeleteMessage(String messageId, LocalDateTime messageTimestamp,
-                                                       RegisteredLearnerOrganisationDeleteMessageMetadata metadata) {
+    public RegisteredLearnerOrganisationDeleteMessage(String messageId, LocalDateTime messageTimestamp,
+                                                      RegisteredLearnerOrganisationDeleteMessageMetadata metadata) {
         super(messageId, messageTimestamp, metadata);
     }
 }

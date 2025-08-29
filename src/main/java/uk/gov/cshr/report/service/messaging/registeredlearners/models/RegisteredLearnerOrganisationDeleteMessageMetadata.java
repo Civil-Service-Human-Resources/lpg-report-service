@@ -10,11 +10,11 @@ import java.io.Serial;
 @Setter
 @NoArgsConstructor
 public final class RegisteredLearnerOrganisationDeleteMessageMetadata extends
-        RegisteredLearnerMetadata<RegisteredLearnersOrganisationDelete> {
+        RegisteredLearnerMetadata<RegisteredLearnerOrganisation> {
     @Serial
     private static final long serialVersionUID = 0L;
 
-    public RegisteredLearnerOrganisationDeleteMessageMetadata(RegisteredLearnersOrganisationDelete data) {
+    public RegisteredLearnerOrganisationDeleteMessageMetadata(RegisteredLearnerOrganisation data) {
         super(RegisteredLearnerOperation.UPDATE, RegisteredLearnerDataType.EMAIL_UPDATE, data);
     }
 }

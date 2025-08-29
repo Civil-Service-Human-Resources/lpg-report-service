@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisation;
 
 import java.time.Clock;
 import java.time.ZonedDateTime;
@@ -29,9 +30,10 @@ public class RegisteredLearnersService {
     }
 
     @Transactional
-    public int deleteOrganisation(Long organisationalUnitId, ZonedDateTime updatedTimestamp) {
-        log.info("deleteOrganisation: Deleting learner's organisation for organisationalUnitId: {}, updatedTimestamp: {}", organisationalUnitId, updatedTimestamp);
-        return registeredLearnerRepository.deleteOrganisation(organisationalUnitId, updatedTimestamp);
+    public int deleteOrganisation(RegisteredLearnerOrganisation registeredLearnerOrganisation, ZonedDateTime updatedTimestamp) {
+        log.info("deleteOrganisation: Deleting learner's organisation for registeredLearnerOrganisation: {}, updatedTimestamp: {}",
+                registeredLearnerOrganisation, updatedTimestamp);
+        return registeredLearnerRepository.deleteOrganisation(registeredLearnerOrganisation.getOrganisationalUnitId(), updatedTimestamp);
     }
 
     public int deleteLearners(Collection<String> uids) {
