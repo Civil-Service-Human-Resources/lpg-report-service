@@ -28,6 +28,12 @@ public class RegisteredLearnersService {
         return registeredLearnerRepository.updateEmail(uid, email, updatedTimestamp);
     }
 
+    @Transactional
+    public int deleteOrganisation(Long organisationalUnitId, ZonedDateTime updatedTimestamp) {
+        log.info("deleteOrganisation: Deleting learner's organisation for organisationalUnitId: {}, updatedTimestamp: {}", organisationalUnitId, updatedTimestamp);
+        return registeredLearnerRepository.deleteOrganisation(organisationalUnitId, updatedTimestamp);
+    }
+
     public int deleteLearners(Collection<String> uids) {
         log.debug("Deleting registered learners with uids : {}", uids);
         return registeredLearnerRepository.deleteAllByUidIn(uids);
