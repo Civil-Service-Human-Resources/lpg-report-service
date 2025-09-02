@@ -7,6 +7,8 @@ app:
     queues:
       course-completions:
         name: coursecompletions
+      registered-learners:
+        name: registeredlearners
     activemq:
       url: ${ACTIVEMQ_URL:tcp://localhost:61616}
       username: ${ACTIVEMQ_USERNAME:artemis}
@@ -72,6 +74,7 @@ logging:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
   level:
     root: ${ROOT_LOGGING_LEVEL:INFO}
+    uk.gov.cshr.report: ${UK_GOV_CSHR_REPORT_LOGGING_LEVEL:INFO}
     org.apache.http: WARN
 
 oauth:

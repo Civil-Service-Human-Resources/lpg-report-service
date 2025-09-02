@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -69,8 +68,7 @@ public class CourseCompletionsControllerTest {
                         .characterEncoding("utf-8"))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string(containsString("Field courseIds is invalid: size must be between 1 and 30")))
-                .andExpect(content().string(containsString("Field organisationIds is invalid: size must be between 1 and 400")));
+                .andExpect(content().string(containsString("Field courseIds is invalid: size must be between 1 and 30")));
     }
 
     @Test

@@ -2,22 +2,19 @@ package uk.gov.cshr.report.integration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.transaction.annotation.Transactional;
 import uk.gov.cshr.report.configuration.TestConfig;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @Import(TestConfig.class)
+@Transactional
 public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
 
     @Test
@@ -52,6 +49,56 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
 
                 .andExpect(jsonPath("$.results[4].total").value(2))
                 .andExpect(jsonPath("$.results[4].dateBin").value("2024-03-18T00:00:00"));
+    }
+
+    @Test
+    public void testGetAggregationsByOrganisation() throws Exception {
+        String input = """
+                {
+                    "startDate": "2024-01-01T00:00:00",
+                    "endDate": "2024-03-21T00:00:00",
+                    "courseIds": ["c1", "c2"],
+                    "organisationIds": [1, 2, 3],
+                    "professionIds": [2, 4],
+                    "binDelimiter": "WEEK"
+                }
+                """;
+        mockMvc.perform(post("/course-completions/aggregations/by-organisation")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(input))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.timezone").value("UTC"))
+                .andExpect(jsonPath("$.delimiter").value("week"))
+                .andExpect(jsonPath("$.results[0].total").value(3))
+                .andExpect(jsonPath("$.results[0].courseId").value("c1"))
+                .andExpect(jsonPath("$.results[0].organisationId").value(1))
+                .andExpect(jsonPath("$.results[0].dateBin").value("2024-01-01T00:00:00"))
+
+                .andExpect(jsonPath("$.results[1].total").value(2))
+                .andExpect(jsonPath("$.results[1].courseId").value("c2"))
+                .andExpect(jsonPath("$.results[1].organisationId").value(1))
+                .andExpect(jsonPath("$.results[1].dateBin").value("2024-01-01T00:00:00"))
+
+                .andExpect(jsonPath("$.results[2].total").value(1))
+                .andExpect(jsonPath("$.results[2].courseId").value("c2"))
+                .andExpect(jsonPath("$.results[2].organisationId").value(1))
+                .andExpect(jsonPath("$.results[2].dateBin").value("2024-01-29T00:00:00"))
+
+                .andExpect(jsonPath("$.results[3].total").value(1))
+                .andExpect(jsonPath("$.results[3].courseId").value("c1"))
+                .andExpect(jsonPath("$.results[3].organisationId").value(2))
+                .andExpect(jsonPath("$.results[3].dateBin").value("2024-01-29T00:00:00"))
+
+                .andExpect(jsonPath("$.results[4].total").value(1))
+                .andExpect(jsonPath("$.results[4].courseId").value("c2"))
+                .andExpect(jsonPath("$.results[4].organisationId").value(1))
+                .andExpect(jsonPath("$.results[4].dateBin").value("2024-02-26T00:00:00"))
+
+                .andExpect(jsonPath("$.results[5].total").value(1))
+                .andExpect(jsonPath("$.results[5].courseId").value("c2"))
+                .andExpect(jsonPath("$.results[5].organisationId").value(2))
+                .andExpect(jsonPath("$.results[5].dateBin").value("2024-03-04T00:00:00"));
     }
 
     @Test
@@ -244,16 +291,11 @@ public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
 
         int expectedNumberOfUpdatedRows = 7;
 
-        SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor identityDeletePostProcessor = jwt()
-                .jwt(getJwt())
-                .authorities(new SimpleGrantedAuthority("IDENTITY_DELETE"));
-
         mockMvc.perform(put(removeUserDetailsEndpoint)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body)
-                        .with(identityDeletePostProcessor))
+                        .with(getCustomAuthPostProcessor("IDENTITY_DELETE")))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$").value(expectedNumberOfUpdatedRows));
-        ;
+                .andExpect(jsonPath("$.affectedRows").value(expectedNumberOfUpdatedRows));
     }
 }
