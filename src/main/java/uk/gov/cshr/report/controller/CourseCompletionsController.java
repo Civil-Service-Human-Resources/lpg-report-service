@@ -7,17 +7,16 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequestsParamsToReportRequestMapper;
 import uk.gov.cshr.report.controller.model.*;
 import uk.gov.cshr.report.domain.aggregation.Aggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionByOrganisationAggregation;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
-import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 import uk.gov.cshr.report.service.auth.IUserAuthService;
 import uk.gov.cshr.report.service.blob.DownloadableFile;
+import uk.gov.cshr.report.service.reportRequests.CourseCompletionReportRequestService;
 
 import java.util.List;
 
@@ -29,16 +28,15 @@ public class CourseCompletionsController {
     private final CourseCompletionService courseCompletionService;
     private final CourseCompletionReportRequestService courseCompletionReportRequestService;
     private final CourseCompletionReportRequestProcessorService courseCompletionReportRequestProcessorService;
-    private final PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper;
     private final IUserAuthService userAuthService;
     private final ControllerUtilities controllerUtilities;
 
     public CourseCompletionsController(CourseCompletionService courseCompletionService, CourseCompletionReportRequestService courseCompletionReportRequestService,
-                                       CourseCompletionReportRequestProcessorService courseCompletionReportRequestProcessorService, PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper, IUserAuthService userAuthService, ControllerUtilities controllerUtilities) {
+                                       CourseCompletionReportRequestProcessorService courseCompletionReportRequestProcessorService,
+                                       IUserAuthService userAuthService, ControllerUtilities controllerUtilities) {
         this.courseCompletionService = courseCompletionService;
         this.courseCompletionReportRequestService = courseCompletionReportRequestService;
         this.courseCompletionReportRequestProcessorService = courseCompletionReportRequestProcessorService;
-        this.postCourseCompletionsReportRequestsParamsToReportRequestMapper = postCourseCompletionsReportRequestsParamsToReportRequestMapper;
         this.userAuthService = userAuthService;
         this.controllerUtilities = controllerUtilities;
     }
@@ -73,21 +71,15 @@ public class CourseCompletionsController {
 
     @PostMapping("/report-requests")
     @ResponseBody
-    public AddCourseCompletionReportRequestResponse addReportRequest(@RequestBody @Valid PostCourseCompletionsReportRequestParams params){
-        if(courseCompletionReportRequestService.userReachedMaxReportRequests(params.getUserId())){
-            return new AddCourseCompletionReportRequestResponse(false, "User has reached the maximum allowed report requests");
-        }
-        CourseCompletionReportRequest reportRequest = postCourseCompletionsReportRequestsParamsToReportRequestMapper.getRequestFromParams(params);
-        courseCompletionReportRequestService.addReportRequest(reportRequest);
-
-        return new AddCourseCompletionReportRequestResponse(true);
+    public AddReportRequestResponse addReportRequest(@RequestBody @Valid PostCourseCompletionsReportRequestParams params){
+        return courseCompletionReportRequestService.addReportRequest(params);
     }
 
     @GetMapping("/report-requests")
     @ResponseBody
-    public GetCourseCompletionReportRequestsResponse getAllReportRequests(@Valid GetCourseCompletionsReportRequestParams params){
+    public GetReportRequestsResponse<CourseCompletionReportRequest> getAllReportRequests(@Valid GetReportRequestParams params){
         List<CourseCompletionReportRequest> reportRequests = courseCompletionReportRequestService.findReportRequestsByUserIdAndStatus(params);
-        return new GetCourseCompletionReportRequestsResponse(reportRequests);
+        return new GetReportRequestsResponse<>(reportRequests);
     }
 
     @GetMapping("/report-requests/downloads/{urlSlug}")

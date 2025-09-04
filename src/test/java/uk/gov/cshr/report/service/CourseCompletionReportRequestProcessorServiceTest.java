@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
-import uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus;
+import uk.gov.cshr.report.domain.report.ReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 import uk.gov.cshr.report.service.notification.MessageDtoFactory;
 
@@ -42,21 +42,21 @@ class CourseCompletionReportRequestProcessorServiceTest {
     @Test
     void testProcessRequestSuccess() {
         CourseCompletionReportRequest request = new CourseCompletionReportRequest(
-                "requesterId", "email", ZonedDateTime.now(), CourseCompletionReportRequestStatus.REQUESTED,
+                "requesterId", "email", ZonedDateTime.now(), ReportRequestStatus.REQUESTED,
                 ZonedDateTime.now(), ZonedDateTime.now(), List.of(), List.of(), List.of(), List.of(), "+1", "Name",
                 "URL", "http://base.com"
         );
         courseCompletionReportRequestProcessorService.processRequest(temp.toPath(), request);
 
         verify(messageDtoFactory, never()).getCourseCompletionReportFailureEmail(request);
-        assertEquals(CourseCompletionReportRequestStatus.SUCCESS, request.getStatus());
+        assertEquals(ReportRequestStatus.SUCCESS, request.getStatus());
         assertNotNull(request.getCompletedTimestamp());
     }
 
     @Test
     void testProcessRequestFail() {
         CourseCompletionReportRequest request = new CourseCompletionReportRequest(
-                "requesterId", "email", ZonedDateTime.now(), CourseCompletionReportRequestStatus.REQUESTED,
+                "requesterId", "email", ZonedDateTime.now(), ReportRequestStatus.REQUESTED,
                 ZonedDateTime.now(), ZonedDateTime.now(), List.of(), List.of(), List.of(), List.of(), "+1", "Name",
                 "URL", "http://base.com"
         );
@@ -64,7 +64,7 @@ class CourseCompletionReportRequestProcessorServiceTest {
         courseCompletionReportRequestProcessorService.processRequest(temp.toPath(), request);
 
         verify(messageDtoFactory, atMostOnce()).getCourseCompletionReportFailureEmail(request);
-        assertEquals(CourseCompletionReportRequestStatus.FAILED, request.getStatus());
+        assertEquals(ReportRequestStatus.FAILED, request.getStatus());
         assertNull(request.getCompletedTimestamp());
     }
 
