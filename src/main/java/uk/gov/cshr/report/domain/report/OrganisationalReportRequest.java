@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @MappedSuperclass
@@ -21,7 +21,7 @@ public class OrganisationalReportRequest extends ReportRequest {
     @Column(name = "organisation_ids", columnDefinition = "int[]")
     private List<Integer> organisationIds;
 
-    public OrganisationalReportRequest(String requesterId, String requesterEmail, ZonedDateTime requestedTimestamp, ReportRequestStatus status, String fullName, String urlSlug, String downloadBaseUrl, List<Integer> organisationIds) {
+    public OrganisationalReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp, ReportRequestStatus status, String fullName, String urlSlug, String downloadBaseUrl, List<Integer> organisationIds) {
         super(requesterId, requesterEmail, requestedTimestamp, status, fullName, urlSlug, downloadBaseUrl);
         this.organisationIds = organisationIds;
     }

@@ -16,8 +16,8 @@ public class CourseCompletionsParamsFactory {
         List<String> courseIds = request.getCourseIds();
         params.setCourseIds(isEmpty(courseIds) ? null : courseIds);
         params.setOrganisationIds(request.getOrganisationIds());
-        params.setStartDate(request.getFromDate().toLocalDateTime());
-        params.setEndDate(request.getToDate().toLocalDateTime());
+        params.setStartDate(request.getFromDate());
+        params.setEndDate(request.getToDate());
         return params;
     }
 

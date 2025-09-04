@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,10 +26,10 @@ public class ReportRequest {
     private String requesterEmail;
 
     @Column(name = "requested_timestamp", nullable = false)
-    private ZonedDateTime requestedTimestamp;
+    private LocalDateTime requestedTimestamp;
 
     @Column(name = "completed_timestamp")
-    private ZonedDateTime completedTimestamp;
+    private LocalDateTime completedTimestamp;
 
     @Column(name = "status", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
@@ -47,7 +47,7 @@ public class ReportRequest {
     @Column(name = "times_downloaded", nullable = false)
     private Integer timesDownloaded = 0;
 
-    public ReportRequest(String requesterId, String requesterEmail, ZonedDateTime requestedTimestamp,
+    public ReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
                          ReportRequestStatus status, String fullName, String urlSlug, String downloadBaseUrl) {
         this.requesterId = requesterId;
         this.requesterEmail = requesterEmail;

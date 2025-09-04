@@ -13,17 +13,17 @@ import uk.gov.cshr.report.exception.UnauthorisedReportDownloadException;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 import uk.gov.cshr.report.service.blob.DownloadableFile;
 import uk.gov.cshr.report.service.notification.MessageDtoFactory;
+import uk.gov.cshr.report.service.util.IUtilService;
 import uk.gov.cshr.report.service.util.TempDirectoryResource;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
 @Slf4j
 public class CourseCompletionReportRequestProcessorService {
+    private final IUtilService utilService;
     private final CourseCompletionReportRequestRepository courseCompletionReportRequestRepository;
     private final CourseCompletionService courseCompletionService;
     private final CourseCompletionsZipReportService courseCompletionsZipReportService;
@@ -31,10 +31,11 @@ public class CourseCompletionReportRequestProcessorService {
     private final MessageDtoFactory messageDtoFactory;
     private final CourseCompletionsReportConfig config;
 
-    public CourseCompletionReportRequestProcessorService(CourseCompletionReportRequestRepository courseCompletionReportRequestRepository,
+    public CourseCompletionReportRequestProcessorService(IUtilService utilService, CourseCompletionReportRequestRepository courseCompletionReportRequestRepository,
                                                          CourseCompletionService courseCompletionService,
                                                          CourseCompletionsZipReportService courseCompletionsZipReportService,
                                                          NotificationService notificationService, MessageDtoFactory messageDtoFactory, CourseCompletionsReportConfig config) {
+        this.utilService = utilService;
         this.courseCompletionReportRequestRepository = courseCompletionReportRequestRepository;
         this.courseCompletionService = courseCompletionService;
         this.courseCompletionsZipReportService = courseCompletionsZipReportService;
@@ -68,8 +69,7 @@ public class CourseCompletionReportRequestProcessorService {
             courseCompletionsZipReportService.createAndUploadReport(courseCompletions, fileName, courseCompletionCsvType);
             log.info(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
             request.setStatus(ReportRequestStatus.SUCCESS);
-            ZonedDateTime completedDate = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
-            request.setCompletedTimestamp(completedDate);
+            request.setCompletedTimestamp(utilService.getNow());
         }
         catch (Exception e) {
             log.error(String.format("Error encountered processing request: %s", e));

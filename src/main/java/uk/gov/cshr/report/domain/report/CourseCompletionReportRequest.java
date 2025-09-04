@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -24,10 +24,10 @@ import java.util.List;
 public class CourseCompletionReportRequest extends OrganisationalReportRequest {
 
     @Column(name = "from_date", nullable = false)
-    private ZonedDateTime fromDate;
+    private LocalDateTime fromDate;
 
     @Column(name = "to_date", nullable = false)
-    private ZonedDateTime toDate;
+    private LocalDateTime toDate;
 
     @Type(ListArrayType.class)
     @Column(name = "course_ids", nullable = false, columnDefinition = "text[]")
@@ -47,8 +47,8 @@ public class CourseCompletionReportRequest extends OrganisationalReportRequest {
     @Column(name = "detailed_export")
     private Boolean detailedExport = false;
 
-    public CourseCompletionReportRequest(String requesterId, String requesterEmail, ZonedDateTime requestedTimestamp,
-                                         ReportRequestStatus status, ZonedDateTime fromDate, ZonedDateTime toDate, List<String> courseIds,
+    public CourseCompletionReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
+                                         ReportRequestStatus status, LocalDateTime fromDate, LocalDateTime toDate, List<String> courseIds,
                                          List<Integer> organisationIds, List<Integer> professionIds, List<Integer> gradeIds,
                                          String requesterTimezone, String fullName, String urlSlug, String downloadBaseUrl) {
         super(requesterId, requesterEmail, requestedTimestamp, status, fullName, urlSlug, downloadBaseUrl, organisationIds);

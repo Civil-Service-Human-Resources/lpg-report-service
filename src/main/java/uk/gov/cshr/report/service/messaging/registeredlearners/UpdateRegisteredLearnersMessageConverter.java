@@ -3,7 +3,7 @@ package uk.gov.cshr.report.service.messaging.registeredlearners;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import uk.gov.cshr.report.config.ClockConfig;
+import uk.gov.cshr.report.config.utils.ClockConfig;
 import uk.gov.cshr.report.domain.RegisteredLearner;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerProfile;

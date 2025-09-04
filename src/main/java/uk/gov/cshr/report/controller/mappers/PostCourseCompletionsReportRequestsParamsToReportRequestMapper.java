@@ -5,25 +5,21 @@ import uk.gov.cshr.report.config.reports.CourseCompletionsReportConfig;
 import uk.gov.cshr.report.controller.model.PostCourseCompletionsReportRequestParams;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.service.auth.IUserAuthService;
-import uk.gov.cshr.report.service.util.StringUtils;
-
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import uk.gov.cshr.report.service.util.IUtilService;
 
 import static uk.gov.cshr.report.domain.report.ReportRequestStatus.REQUESTED;
 
 @Component
 public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper implements ReportParamsToRequestMapper<CourseCompletionReportRequest, PostCourseCompletionsReportRequestParams> {
 
-    private final StringUtils stringUtils;
+    private final IUtilService utilService;
     private final CourseCompletionsReportConfig config;
     private final IUserAuthService userAuthService;
 
-    public PostCourseCompletionsReportRequestsParamsToReportRequestMapper(StringUtils stringUtils,
+    public PostCourseCompletionsReportRequestsParamsToReportRequestMapper(IUtilService utilService,
                                                                           CourseCompletionsReportConfig config,
                                                                           IUserAuthService userAuthService) {
-        this.stringUtils = stringUtils;
+        this.utilService = utilService;
         this.config = config;
         this.userAuthService = userAuthService;
     }
@@ -31,11 +27,11 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper impl
     @Override
     public CourseCompletionReportRequest buildReportRequest(PostCourseCompletionsReportRequestParams params) {
         String timezone = params.getTimezone() == null ? config.getDefaultTimezone() : params.getTimezone();
-        String slug = stringUtils.generateRandomString(20);
+        String slug = utilService.generateRandomString(20);
 
         CourseCompletionReportRequest courseCompletionReportRequest = new CourseCompletionReportRequest(
-                params.getUserId(), params.getUserEmail(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")),
-                REQUESTED, params.getStartDate().atZone(ZoneOffset.UTC), params.getEndDate().atZone(ZoneOffset.UTC),
+                params.getUserId(), params.getUserEmail(), utilService.getNow(),
+                REQUESTED, params.getStartDate(), params.getEndDate(),
                 params.getCourseIds(), params.getOrganisationIds(), params.getProfessionIds(), params.getGradeIds(),
                 timezone, params.getFullName(), slug, params.getDownloadBaseUrl()
         );

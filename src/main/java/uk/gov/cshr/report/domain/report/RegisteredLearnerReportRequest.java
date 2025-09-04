@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 public class RegisteredLearnerReportRequest extends OrganisationalReportRequest {
 
-    public RegisteredLearnerReportRequest(String requesterId, String requesterEmail, ZonedDateTime requestedTimestamp,
+    public RegisteredLearnerReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
                                           ReportRequestStatus status, String fullName, String urlSlug, String downloadBaseUrl,
                                           List<Integer> organisationIds) {
         super(requesterId, requesterEmail, requestedTimestamp, status, fullName, urlSlug, downloadBaseUrl, organisationIds);

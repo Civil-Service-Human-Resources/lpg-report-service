@@ -10,9 +10,10 @@ import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.report.ReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 import uk.gov.cshr.report.service.notification.MessageDtoFactory;
+import uk.gov.cshr.report.service.util.IUtilService;
 
 import java.io.File;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,6 +33,8 @@ class CourseCompletionReportRequestProcessorServiceTest {
     private NotificationService notificationService;
     @Mock
     private MessageDtoFactory messageDtoFactory;
+    @Mock
+    private IUtilService utilService;
 
     @TempDir
     File temp;
@@ -41,13 +44,14 @@ class CourseCompletionReportRequestProcessorServiceTest {
 
     @Test
     void testProcessRequestSuccess() {
+        LocalDateTime now = LocalDateTime.now();
         CourseCompletionReportRequest request = new CourseCompletionReportRequest(
-                "requesterId", "email", ZonedDateTime.now(), ReportRequestStatus.REQUESTED,
-                ZonedDateTime.now(), ZonedDateTime.now(), List.of(), List.of(), List.of(), List.of(), "+1", "Name",
+                "requesterId", "email", now, ReportRequestStatus.REQUESTED,
+                now, now, List.of(), List.of(), List.of(), List.of(), "+1", "Name",
                 "URL", "http://base.com"
         );
+        when(utilService.getNow()).thenReturn(now);
         courseCompletionReportRequestProcessorService.processRequest(temp.toPath(), request);
-
         verify(messageDtoFactory, never()).getCourseCompletionReportFailureEmail(request);
         assertEquals(ReportRequestStatus.SUCCESS, request.getStatus());
         assertNotNull(request.getCompletedTimestamp());
@@ -56,8 +60,8 @@ class CourseCompletionReportRequestProcessorServiceTest {
     @Test
     void testProcessRequestFail() {
         CourseCompletionReportRequest request = new CourseCompletionReportRequest(
-                "requesterId", "email", ZonedDateTime.now(), ReportRequestStatus.REQUESTED,
-                ZonedDateTime.now(), ZonedDateTime.now(), List.of(), List.of(), List.of(), List.of(), "+1", "Name",
+                "requesterId", "email", LocalDateTime.now(), ReportRequestStatus.REQUESTED,
+                LocalDateTime.now(), LocalDateTime.now(), List.of(), List.of(), List.of(), List.of(), "+1", "Name",
                 "URL", "http://base.com"
         );
         when(courseCompletionService.getCourseCompletionEvents(request)).thenThrow(new RuntimeException("Ex"));
