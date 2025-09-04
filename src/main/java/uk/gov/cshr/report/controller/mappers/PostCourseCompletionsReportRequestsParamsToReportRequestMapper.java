@@ -2,7 +2,7 @@ package uk.gov.cshr.report.controller.mappers;
 
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.config.reports.CourseCompletionsReportConfig;
-import uk.gov.cshr.report.controller.model.PostCourseCompletionsReportRequestParams;
+import uk.gov.cshr.report.controller.model.reportRequest.PostCourseCompletionsReportRequestParams;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.service.auth.IUserAuthService;
 import uk.gov.cshr.report.service.util.IUtilService;

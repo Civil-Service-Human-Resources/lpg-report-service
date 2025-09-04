@@ -1,5 +1,5 @@
 
-package uk.gov.cshr.report.controller.model;
+package uk.gov.cshr.report.controller.model.reportRequest;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import uk.gov.cshr.report.controller.model.reportRequest.OrganisationalReportRequestParams;
 
 import java.time.LocalDateTime;
 import java.util.List;

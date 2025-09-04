@@ -1,4 +1,4 @@
-package uk.gov.cshr.report.controller.model;
+package uk.gov.cshr.report.controller.model.reportRequest;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
