@@ -1,7 +1,7 @@
 package uk.gov.cshr.report.service.messaging.registeredlearners;
 
 import org.springframework.stereotype.Component;
-import uk.gov.cshr.report.config.ClockConfig;
+import uk.gov.cshr.report.config.utils.ClockConfig;
 import uk.gov.cshr.report.domain.RegisteredLearner;
 import uk.gov.cshr.report.service.messaging.registeredlearners.models.CompleteProfileMessage;
 import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerProfile;

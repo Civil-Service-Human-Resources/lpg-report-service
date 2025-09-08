@@ -1,6 +1,6 @@
 package uk.gov.cshr.report.domain.report;
 
-public enum CourseCompletionReportRequestStatus {
+public enum ReportRequestStatus {
     REQUESTED,
     PROCESSING,
     SUCCESS,

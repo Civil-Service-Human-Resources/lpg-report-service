@@ -1,54 +1,54 @@
 package uk.gov.cshr.report.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.config.reports.CourseCompletionsReportConfig;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.report.CourseCompletionCsvType;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
-import uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus;
+import uk.gov.cshr.report.domain.report.ReportRequestStatus;
 import uk.gov.cshr.report.dto.MessageDto;
 import uk.gov.cshr.report.exception.ReportNotFoundException;
 import uk.gov.cshr.report.exception.UnauthorisedReportDownloadException;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 import uk.gov.cshr.report.service.blob.DownloadableFile;
 import uk.gov.cshr.report.service.notification.MessageDtoFactory;
+import uk.gov.cshr.report.service.util.IUtilService;
 import uk.gov.cshr.report.service.util.TempDirectoryResource;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
 @Slf4j
 public class CourseCompletionReportRequestProcessorService {
+    private final IUtilService utilService;
     private final CourseCompletionReportRequestRepository courseCompletionReportRequestRepository;
     private final CourseCompletionService courseCompletionService;
     private final CourseCompletionsZipReportService courseCompletionsZipReportService;
     private final NotificationService notificationService;
     private final MessageDtoFactory messageDtoFactory;
-    private final String tempDir;
+    private final CourseCompletionsReportConfig config;
 
-    public CourseCompletionReportRequestProcessorService(CourseCompletionReportRequestRepository courseCompletionReportRequestRepository,
+    public CourseCompletionReportRequestProcessorService(IUtilService utilService, CourseCompletionReportRequestRepository courseCompletionReportRequestRepository,
                                                          CourseCompletionService courseCompletionService,
                                                          CourseCompletionsZipReportService courseCompletionsZipReportService,
-                                                         NotificationService notificationService, MessageDtoFactory messageDtoFactory,
-                                                         @Value("${courseCompletions.reports.tempDir}") String tempDir) {
+                                                         NotificationService notificationService, MessageDtoFactory messageDtoFactory, CourseCompletionsReportConfig config) {
+        this.utilService = utilService;
         this.courseCompletionReportRequestRepository = courseCompletionReportRequestRepository;
         this.courseCompletionService = courseCompletionService;
         this.courseCompletionsZipReportService = courseCompletionsZipReportService;
         this.notificationService = notificationService;
         this.messageDtoFactory = messageDtoFactory;
-        this.tempDir = tempDir;
+        this.config = config;
     }
 
     public void processRequests() throws IOException {
-        List<CourseCompletionReportRequest> requests = courseCompletionReportRequestRepository.findByStatus(CourseCompletionReportRequestStatus.REQUESTED);
+        List<CourseCompletionReportRequest> requests = courseCompletionReportRequestRepository.findByStatus(ReportRequestStatus.REQUESTED);
         log.info(String.format("Found %d requests", requests.size()));
         if (!requests.isEmpty()) {
-            try (TempDirectoryResource tempDirectory = new TempDirectoryResource(tempDir)) {
+            try (TempDirectoryResource tempDirectory = config.getTempDirectoryResource()) {
                 requests.forEach(r -> processRequest(tempDirectory.getFile(), r));
             }
         }
@@ -59,7 +59,7 @@ public class CourseCompletionReportRequestProcessorService {
         log.info(String.format("Attempting to Process request %s", request.getReportRequestId()));
         MessageDto message = messageDtoFactory.getCourseCompletionReportSuccessEmail(request);
         try {
-            request.setStatus(CourseCompletionReportRequestStatus.PROCESSING);
+            request.setStatus(ReportRequestStatus.PROCESSING);
             courseCompletionReportRequestRepository.save(request);
             log.debug(String.format("Processing request: %s", request));
             List<CourseCompletionEvent> courseCompletions = courseCompletionService.getCourseCompletionEvents(request);
@@ -68,13 +68,12 @@ public class CourseCompletionReportRequestProcessorService {
             CourseCompletionCsvType courseCompletionCsvType = request.getDetailedExport() ? CourseCompletionCsvType.DETAILED : CourseCompletionCsvType.STANDARD;
             courseCompletionsZipReportService.createAndUploadReport(courseCompletions, fileName, courseCompletionCsvType);
             log.info(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
-            request.setStatus(CourseCompletionReportRequestStatus.SUCCESS);
-            ZonedDateTime completedDate = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"));
-            request.setCompletedTimestamp(completedDate);
+            request.setStatus(ReportRequestStatus.SUCCESS);
+            request.setCompletedTimestamp(utilService.getNow());
         }
         catch (Exception e) {
             log.error(String.format("Error encountered processing request: %s", e));
-            request.setStatus(CourseCompletionReportRequestStatus.FAILED);
+            request.setStatus(ReportRequestStatus.FAILED);
             message = messageDtoFactory.getCourseCompletionReportFailureEmail(request);
         }
         courseCompletionReportRequestRepository.save(request);

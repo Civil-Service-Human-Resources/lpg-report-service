@@ -10,7 +10,7 @@ import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionByOrganisationAggregation;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
-import uk.gov.cshr.report.service.util.TimeUtils;
+import uk.gov.cshr.report.service.util.ITimeUtils;
 
 import java.util.List;
 
@@ -20,10 +20,10 @@ public class CourseCompletionService {
 
     private final CourseCompletionEventRepository repository;
     private final CourseCompletionsParamsFactory paramsFactory;
-    private final TimeUtils timeUtils;
+    private final ITimeUtils timeUtils;
 
     public CourseCompletionService(
-            CourseCompletionEventRepository repository, CourseCompletionsParamsFactory paramsFactory, TimeUtils timeUtils) {
+            CourseCompletionEventRepository repository, CourseCompletionsParamsFactory paramsFactory, ITimeUtils timeUtils) {
         this.repository = repository;
         this.paramsFactory = paramsFactory;
         this.timeUtils = timeUtils;
