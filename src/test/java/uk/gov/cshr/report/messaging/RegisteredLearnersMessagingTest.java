@@ -107,7 +107,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
                         "operation": "DELETE",
                         "dataType": "ORGANISATION",
                         "data": {
-                            "organisationalUnitId": 1
+                            "organisationIds": [1,2,3]
                         }
                     }
                 }

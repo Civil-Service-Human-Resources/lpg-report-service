@@ -32,9 +32,9 @@ public class RegisteredLearnerOrganisationDeleteService extends
     @Override
     public void processConvertedMessage(RegisteredLearnerOrganisationDeleteMessage message) {
         log.debug("processConvertedMessage: message: {}", message);
-        RegisteredLearnerOrganisation data = message.getMetadata().getData();
+        RegisteredLearnerOrganisationDelete data = message.getMetadata().getData();
         log.debug("processConvertedMessage: data: {}", data);
-        if(data != null && data.getOrganisationalUnitId() != null) {
+        if(data != null && data.getOrganisationIds() != null && data.getOrganisationIds().size() != 0) {
             ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
             log.info("processConvertedMessage: Deleting learner's organisation for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
                     data, zonedDateTime);
