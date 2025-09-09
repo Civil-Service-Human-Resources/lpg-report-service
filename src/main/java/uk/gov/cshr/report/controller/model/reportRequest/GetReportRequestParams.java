@@ -1,4 +1,4 @@
-package uk.gov.cshr.report.controller.model;
+package uk.gov.cshr.report.controller.model.reportRequest;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetCourseCompletionsReportRequestParams {
+public class GetReportRequestParams {
     @NotNull
     private String userId;
 

@@ -1,4 +1,4 @@
-package uk.gov.cshr.report.config;
+package uk.gov.cshr.report.config.utils;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

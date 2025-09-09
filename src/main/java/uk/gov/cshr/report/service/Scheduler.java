@@ -20,7 +20,7 @@ public class Scheduler {
         this.courseCompletionReportRequestProcessorService = courseCompletionReportRequestProcessorService;
     }
 
-    @Scheduled(cron = "${courseCompletions.reports.jobCron}")
+    @Scheduled(cron = "${report-export.courseCompletions.jobCron}")
     @SchedulerLock(name = "reportRequestsJob", lockAtMostFor = "PT4H")
     public void generateReportsForCourseCompletionRequests() throws IOException {
         LockAssert.assertLocked();
