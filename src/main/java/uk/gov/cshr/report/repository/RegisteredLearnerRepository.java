@@ -7,6 +7,7 @@ import uk.gov.cshr.report.domain.RegisteredLearner;
 
 import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.List;
 
 public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLearner, String> {
 
@@ -17,6 +18,14 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
         WHERE rl.uid = :uid
     """)
     int updateEmail(String uid, String email, ZonedDateTime updatedTimestamp);
+
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("""
+        UPDATE RegisteredLearner rl
+        SET rl.organisationId = null, rl.organisationName = null, rl.updatedTimestamp = :updatedTimestamp
+        WHERE rl.organisationId in :organisationIds
+    """)
+    int deleteOrganisation(List<Long> organisationIds, ZonedDateTime updatedTimestamp);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationDelete;
 
 import java.time.Clock;
 import java.time.ZonedDateTime;
@@ -26,6 +27,13 @@ public class RegisteredLearnersService {
     public int updateEmail(String uid, String email, ZonedDateTime updatedTimestamp) {
         log.info("updateEmail: Updating learner email with uid: {}, email: {}, updatedTimestamp: {}", uid, email, updatedTimestamp);
         return registeredLearnerRepository.updateEmail(uid, email, updatedTimestamp);
+    }
+
+    @Transactional
+    public int deleteOrganisation(RegisteredLearnerOrganisationDelete registeredLearnerOrganisationDelete, ZonedDateTime updatedTimestamp) {
+        log.info("deleteOrganisation: Deleting learner's organisation ids: {}, updatedTimestamp: {}",
+                registeredLearnerOrganisationDelete.getOrganisationIds(), updatedTimestamp);
+        return registeredLearnerRepository.deleteOrganisation(registeredLearnerOrganisationDelete.getOrganisationIds(), updatedTimestamp);
     }
 
     public int deleteLearners(Collection<String> uids) {

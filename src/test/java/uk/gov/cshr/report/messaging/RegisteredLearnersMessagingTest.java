@@ -96,6 +96,33 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
     }
 
     @Test
+    public void testOrganisationDelete() {
+        createRegisteredLearner();
+
+        registeredLearnerQueueClient.processMessage("""
+                {
+                    "messageId": "ID-1",
+                    "messageTimestamp": "2025-01-01T11:00:00.0",
+                    "metadata": {
+                        "operation": "DELETE",
+                        "dataType": "ORGANISATION",
+                        "data": {
+                            "organisationIds": [1,2,3]
+                        }
+                    }
+                }
+                """);
+
+        Optional<RegisteredLearner> registeredLearnerOpt = registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000");
+        if(registeredLearnerOpt.isPresent()) {
+            RegisteredLearner registeredLearner = registeredLearnerOpt.get();
+            assertNull(registeredLearner.getOrganisationId());
+            assertNull(registeredLearner.getOrganisationName());
+            assertEquals("2025-01-01T11:00Z", registeredLearner.getUpdatedTimestamp().toString());
+        }
+    }
+
+    @Test
     public void testEmailUpdate() {
         createRegisteredLearner();
 
