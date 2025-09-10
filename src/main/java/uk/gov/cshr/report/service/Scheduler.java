@@ -6,6 +6,7 @@ import net.javacrumbs.shedlock.core.LockAssert;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionReportRequestProcessorService;
 
 import java.io.IOException;
 

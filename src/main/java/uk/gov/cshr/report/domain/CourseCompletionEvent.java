@@ -3,6 +3,7 @@ package uk.gov.cshr.report.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import uk.gov.cshr.report.domain.report.ReportableData;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "course_completion_events")
-public class CourseCompletionEvent {
+public class CourseCompletionEvent extends ReportableData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

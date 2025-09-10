@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
+import uk.gov.cshr.report.service.reportRequests.export.ExportCsvType;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +22,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class CourseCompletionReportRequest extends OrganisationalReportRequest {
+public class CourseCompletionReportRequest extends OrganisationalReportRequest implements IDownloadableReportRequest {
 
     @Column(name = "from_date", nullable = false)
     private LocalDateTime fromDate;
@@ -41,23 +42,19 @@ public class CourseCompletionReportRequest extends OrganisationalReportRequest {
     @Column(name = "grade_ids", columnDefinition = "int[]")
     private List<Integer> gradeIds;
 
-    @Column(name = "requester_timezone")
-    private String requesterTimezone;
-
     @Column(name = "detailed_export")
-    private Boolean detailedExport = false;
+    private boolean detailedExport = false;
 
     public CourseCompletionReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
                                          ReportRequestStatus status, LocalDateTime fromDate, LocalDateTime toDate, List<String> courseIds,
                                          List<Integer> organisationIds, List<Integer> professionIds, List<Integer> gradeIds,
                                          String requesterTimezone, String fullName, String urlSlug, String downloadBaseUrl) {
-        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, urlSlug, downloadBaseUrl, organisationIds);
+        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, requesterTimezone, urlSlug, downloadBaseUrl, organisationIds);
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.courseIds = courseIds;
         this.professionIds = professionIds;
         this.gradeIds = gradeIds;
-        this.requesterTimezone = requesterTimezone;
     }
 
     @JsonIgnore
@@ -67,4 +64,12 @@ public class CourseCompletionReportRequest extends OrganisationalReportRequest {
                 getFromDate().format(formatter), getToDate().format(formatter));
     }
 
+    @JsonIgnore
+    public ReportType getReportType() {
+        return ReportType.COURSE_COMPLETIONS;
+    }
+
+    public ExportCsvType getExportCsvType() {
+        return isDetailedExport() ? ExportCsvType.COURSE_COMPLETIONS_DETAILED : ExportCsvType.COURSE_COMPLETIONS;
+    }
 }

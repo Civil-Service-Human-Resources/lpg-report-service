@@ -40,6 +40,7 @@ public class RegisteredLearnerReportRequestIntegrationTest extends IntegrationTe
                     "userEmail": "user01@domain.com",
                     "fullName": "A test user",
                     "organisationIds": [1,2,3,4],
+                    "timezone": "+1",
                     "downloadBaseUrl": "https://base.com"
                 }""";
 
@@ -65,6 +66,7 @@ public class RegisteredLearnerReportRequestIntegrationTest extends IntegrationTe
                     "userEmail": "user02@domain.com",
                     "fullName": "A test user",
                     "organisationIds": [1,2,3,4],
+                    "timezone": "+1",
                     "downloadBaseUrl": "https://base.com"
                 }""";
 
@@ -98,6 +100,7 @@ public class RegisteredLearnerReportRequestIntegrationTest extends IntegrationTe
                     "userEmail": "user03@domain.com",
                     "fullName": "A test user",
                     "organisationIds": [1,2,3,4],
+                    "timezone": "+1",
                     "downloadBaseUrl": "https://base.com"
                 }""";
 

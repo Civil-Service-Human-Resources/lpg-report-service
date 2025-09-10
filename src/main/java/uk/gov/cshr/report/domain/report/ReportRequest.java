@@ -1,6 +1,5 @@
 package uk.gov.cshr.report.domain.report;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @MappedSuperclass
 @NoArgsConstructor
-public class ReportRequest {
+public class ReportRequest implements IReportRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +37,9 @@ public class ReportRequest {
     @Column(name = "requester_full_name")
     private String fullName;
 
+    @Column(name = "requester_timezone")
+    private String requesterTimezone;
+
     @Column(name = "url_slug", nullable = false)
     private String urlSlug;
 
@@ -48,18 +50,14 @@ public class ReportRequest {
     private Integer timesDownloaded = 0;
 
     public ReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
-                         ReportRequestStatus status, String fullName, String urlSlug, String downloadBaseUrl) {
+                         ReportRequestStatus status, String fullName, String requesterTimezone, String urlSlug, String downloadBaseUrl) {
         this.requesterId = requesterId;
         this.requesterEmail = requesterEmail;
         this.requestedTimestamp = requestedTimestamp;
         this.status = status;
         this.fullName = fullName;
+        this.requesterTimezone = requesterTimezone;
         this.urlSlug = urlSlug;
         this.downloadBaseUrl = downloadBaseUrl;
-    }
-
-    @JsonIgnore
-    public String getFullDownloadUrl() {
-        return String.format("%s/%s", downloadBaseUrl, urlSlug);
     }
 }

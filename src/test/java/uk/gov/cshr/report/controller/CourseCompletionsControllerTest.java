@@ -11,10 +11,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import uk.gov.cshr.report.controller.model.ErrorDtoFactory;
-import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 import uk.gov.cshr.report.service.auth.IUserAuthService;
 import uk.gov.cshr.report.service.reportRequests.CourseCompletionReportRequestService;
+import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionReportRequestProcessorService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

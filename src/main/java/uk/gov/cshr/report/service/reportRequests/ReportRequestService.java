@@ -6,7 +6,7 @@ import uk.gov.cshr.report.controller.mappers.ReportParamsToRequestMapper;
 import uk.gov.cshr.report.controller.model.reportRequest.AddReportRequestResponse;
 import uk.gov.cshr.report.controller.model.reportRequest.GetReportRequestParams;
 import uk.gov.cshr.report.controller.model.reportRequest.ReportRequestParams;
-import uk.gov.cshr.report.domain.report.ReportRequest;
+import uk.gov.cshr.report.domain.report.IDownloadableReportRequest;
 import uk.gov.cshr.report.domain.report.ReportRequestStatus;
 import uk.gov.cshr.report.repository.ReportRequestRepository;
 
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class ReportRequestService<T extends ReportRequest, R extends ReportRequestParams, C extends ReportExportConfig> {
+public class ReportRequestService<T extends IDownloadableReportRequest, R extends ReportRequestParams, C extends ReportExportConfig> {
     private final ReportRequestRepository<T> reportRequestRepository;
     private final C config;
     private final ReportParamsToRequestMapper<T, R> paramMapper;

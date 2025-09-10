@@ -10,6 +10,7 @@ import java.io.IOException;
 @Getter
 public class ReportExportConfig {
 
+    private final String defaultTimezone;
     private final Integer maxRequestsPerUser;
     private final String jobCron;
     private final String tempDir;
@@ -17,5 +18,4 @@ public class ReportExportConfig {
     public TempDirectoryResource getTempDirectoryResource() throws IOException {
         return new TempDirectoryResource(this.tempDir);
     }
-
 }

@@ -133,8 +133,8 @@ report-export:
 notification:
   serviceUrl: ${NOTIFICATION_SERVICE_URL:http://localhost:9006}
   sendEmailEndpointTemplate: "${notification.serviceUrl}/notifications/emails/{{TEMPLATE_NAME}}/send"
-  successEmailTemplateName: ${COURSE_COMPLETIONS_REPORT_SUCCESS_EMAIL_NAME:COURSE_COMPLETIONS_REPORT_SUCCESS}
-  failureEmailTemplateName: ${COURSE_COMPLETIONS_REPORT_FAILURE_EMAIL_NAME:COURSE_COMPLETIONS_REPORT_FAILURE}
+  successEmailTemplateName: ${REPORT_SUCCESS_EMAIL_NAME:REPORT_SUCCESS}
+  failureEmailTemplateName: ${REPORT_FAILURE_EMAIL_NAME:REPORT_FAILURE}
 
 
 info:

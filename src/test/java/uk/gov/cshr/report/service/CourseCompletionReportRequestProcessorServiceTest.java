@@ -10,6 +10,8 @@ import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.report.ReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
 import uk.gov.cshr.report.service.notification.MessageDtoFactory;
+import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionCsvRowFactory;
+import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionReportRequestProcessorService;
 import uk.gov.cshr.report.service.util.IUtilService;
 
 import java.io.File;
@@ -24,13 +26,15 @@ import static org.mockito.Mockito.*;
 class CourseCompletionReportRequestProcessorServiceTest {
 
     @Mock
-    private CourseCompletionReportRequestRepository courseCompletionReportRequestRepository;
-    @Mock
     private CourseCompletionService courseCompletionService;
     @Mock
-    private CourseCompletionsZipReportService courseCompletionsZipReportService;
+    private CourseCompletionReportRequestRepository courseCompletionReportRequestRepository;
+    @Mock
+    private CourseCompletionCsvRowFactory csvRowFactory;
     @Mock
     private NotificationService notificationService;
+    @Mock
+    private ReportExportZipReportService reportExportZipReportService;
     @Mock
     private MessageDtoFactory messageDtoFactory;
     @Mock
@@ -52,7 +56,7 @@ class CourseCompletionReportRequestProcessorServiceTest {
         );
         when(utilService.getNow()).thenReturn(now);
         courseCompletionReportRequestProcessorService.processRequest(temp.toPath(), request);
-        verify(messageDtoFactory, never()).getCourseCompletionReportFailureEmail(request);
+        verify(messageDtoFactory, never()).getReportExportFailureEmail(request);
         assertEquals(ReportRequestStatus.SUCCESS, request.getStatus());
         assertNotNull(request.getCompletedTimestamp());
     }
@@ -64,10 +68,10 @@ class CourseCompletionReportRequestProcessorServiceTest {
                 LocalDateTime.now(), LocalDateTime.now(), List.of(), List.of(), List.of(), List.of(), "+1", "Name",
                 "URL", "http://base.com"
         );
-        when(courseCompletionService.getCourseCompletionEvents(request)).thenThrow(new RuntimeException("Ex"));
+        when(courseCompletionService.getReportRequestData(request)).thenThrow(new RuntimeException("Ex"));
         courseCompletionReportRequestProcessorService.processRequest(temp.toPath(), request);
 
-        verify(messageDtoFactory, atMostOnce()).getCourseCompletionReportFailureEmail(request);
+        verify(messageDtoFactory, atMostOnce()).getReportExportFailureEmail(request);
         assertEquals(ReportRequestStatus.FAILED, request.getStatus());
         assertNull(request.getCompletedTimestamp());
     }

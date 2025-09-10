@@ -3,16 +3,19 @@ package uk.gov.cshr.report.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.cshr.report.domain.RegisteredLearner;
+import uk.gov.cshr.report.domain.report.RegisteredLearnerReportRequest;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
+import uk.gov.cshr.report.service.reportRequests.IReportRequestService;
 
 import java.time.Clock;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Service
 @Slf4j
-public class RegisteredLearnersService {
+public class RegisteredLearnersService implements IReportRequestService<RegisteredLearner, RegisteredLearnerReportRequest> {
 
     private final RegisteredLearnerRepository registeredLearnerRepository;
     private final Clock clock;
@@ -23,7 +26,7 @@ public class RegisteredLearnersService {
     }
 
     @Transactional
-    public int updateEmail(String uid, String email, ZonedDateTime updatedTimestamp) {
+    public int updateEmail(String uid, String email, LocalDateTime updatedTimestamp) {
         log.info("updateEmail: Updating learner email with uid: {}, email: {}, updatedTimestamp: {}", uid, email, updatedTimestamp);
         return registeredLearnerRepository.updateEmail(uid, email, updatedTimestamp);
     }
@@ -34,14 +37,19 @@ public class RegisteredLearnersService {
     }
 
     @Transactional
-    public int activateLearners(String uid, ZonedDateTime updatedTimestamp) {
+    public int activateLearners(String uid, LocalDateTime updatedTimestamp) {
         log.info("activateLearners: Activating learner with uid : {}, updatedTimestamp: {}", uid, updatedTimestamp);
         return registeredLearnerRepository.activate(List.of(uid), updatedTimestamp);
     }
 
     public int deactivateLearners(Collection<String> uids) {
         log.debug("Deactivating learners with uids : {}", uids);
-        ZonedDateTime updatedTimestamp = ZonedDateTime.now(clock);
+        LocalDateTime updatedTimestamp = LocalDateTime.now(clock);
         return registeredLearnerRepository.deactivate(uids, updatedTimestamp);
+    }
+
+    @Override
+    public List<RegisteredLearner> getReportRequestData(RegisteredLearnerReportRequest reportRequest) {
+        return registeredLearnerRepository.findAllByOrganisationIdIn(reportRequest.getOrganisationIds());
     }
 }

@@ -30,7 +30,7 @@ import uk.gov.cshr.report.configuration.TestConfig;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.report.ReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
-import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
+import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionReportRequestProcessorService;
 
 import java.io.File;
 import java.io.IOException;
@@ -328,7 +328,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Test
     public void testReportRequestsServiceProcessesJobCorrectlyWhenNoExceptionIsThrown() throws IOException {
         insertCourseCompletionRequest();
-        stubService.stubSendEmail("COURSE_COMPLETIONS_REPORT_SUCCESS", """
+        stubService.stubSendEmail("REPORT_SUCCESS", """
                 {
                     "recipient": "RequesterA@domain.com",
                     "personalisation": {

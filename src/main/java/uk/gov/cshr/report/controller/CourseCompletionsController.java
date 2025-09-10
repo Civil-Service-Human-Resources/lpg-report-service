@@ -16,11 +16,11 @@ import uk.gov.cshr.report.domain.aggregation.Aggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionByOrganisationAggregation;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
-import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 import uk.gov.cshr.report.service.auth.IUserAuthService;
 import uk.gov.cshr.report.service.blob.DownloadableFile;
 import uk.gov.cshr.report.service.reportRequests.CourseCompletionReportRequestService;
+import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionReportRequestProcessorService;
 
 import java.util.List;
 
