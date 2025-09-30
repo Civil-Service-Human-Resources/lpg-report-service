@@ -6,6 +6,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import uk.gov.cshr.report.config.reports.CourseCompletionsReportConfig;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.report.ReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
@@ -39,6 +40,8 @@ class CourseCompletionReportRequestProcessorServiceTest {
     private MessageDtoFactory messageDtoFactory;
     @Mock
     private IUtilService utilService;
+    @Mock
+    private CourseCompletionsReportConfig config;
 
     @TempDir
     File temp;

@@ -1,6 +1,5 @@
 package uk.gov.cshr.report.config.reports;
 
-import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import uk.gov.cshr.report.service.util.TempDirectoryResource;
@@ -9,7 +8,6 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @Getter
-@Valid
 public class ReportExportConfig {
 
     private final String defaultTimezone;
