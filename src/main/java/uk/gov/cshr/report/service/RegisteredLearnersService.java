@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
 @Service
 @Slf4j
 public class RegisteredLearnersService implements IReportRequestService<RegisteredLearner, RegisteredLearnerReportRequest> {
@@ -50,6 +52,7 @@ public class RegisteredLearnersService implements IReportRequestService<Register
 
     @Override
     public List<RegisteredLearner> getReportRequestData(RegisteredLearnerReportRequest reportRequest) {
-        return registeredLearnerRepository.findAllByOrganisationIdIn(reportRequest.getOrganisationIds());
+        List<Integer> organisationIds = reportRequest.getOrganisationIds();
+        return registeredLearnerRepository.findAllByOrganisationIdIn(isEmpty(organisationIds) ? null : organisationIds);
     }
 }

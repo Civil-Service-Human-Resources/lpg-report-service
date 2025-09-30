@@ -37,5 +37,10 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
 
     int deleteAllByUidIn(Collection<String> ids);
 
+    @Query("""
+        select rl
+        from RegisteredLearner rl
+        where :organisationIds is null or rl.organisationId in :organisationIds
+    """)
     List<RegisteredLearner> findAllByOrganisationIdIn(Collection<Integer> organisationIds);
 }

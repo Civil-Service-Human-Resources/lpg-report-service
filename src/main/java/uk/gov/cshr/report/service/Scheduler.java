@@ -38,8 +38,8 @@ public class Scheduler {
     @SchedulerLock(name = "registeredLearnersReportJob", lockAtMostFor = "PT4H")
     public void generateReportsForRegisteredLearnerRequests() throws IOException {
         LockAssert.assertLocked();
-        log.info("Starting job for course registered learner requests");
+        log.info("Starting job for registered learner requests");
         registeredLearnerReportRequestService.processRequests();
-        log.info("Finished job for course registered learner requests");
+        log.info("Finished job for registered learner requests");
     }
 }
