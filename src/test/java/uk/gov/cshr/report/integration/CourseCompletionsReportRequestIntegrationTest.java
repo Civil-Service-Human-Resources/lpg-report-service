@@ -68,7 +68,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Value("${spring.cloud.azure.storage.blob.connection-string}")
     private String azureBlobStorageConnectionString;
 
-    @Value("${spring.cloud.azure.storage.blob.container-name}")
+    @Value("${report-export.courseCompletions.blobContainer}")
     private String blobStorageContainerName;
 
     @TempDir

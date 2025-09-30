@@ -28,20 +28,20 @@ public class ReportExportZipReportService {
         this.zipService = zipService;
     }
 
-    public <T> void createAndUploadReport(CsvData<T> csvData, String fileName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+    public <T> void createAndUploadReport(CsvData<T> csvData, String blobContainer, String fileName) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         String csvFileName = csvService.createCsvFile(csvData, fileName);
         String zipFileName = zipService.createZipFile(fileName, csvFileName);
 
-        blobStorageService.uploadFile(zipFileName);
+        blobStorageService.uploadFile(blobContainer, zipFileName);
         log.info(String.format("Deleting csv file '%s'", csvFileName));
         Files.delete(Path.of(csvFileName));
         log.info(String.format("Deleting zip file '%s'", zipFileName));
         Files.delete(Path.of(zipFileName));
     }
 
-    public DownloadableFile fetchBlobReport(String filename) {
+    public DownloadableFile fetchBlobReport(String blobContainer, String filename) {
         String zipFileName = String.format("%s.zip", filename);
-        ByteArrayOutputStream byteArrayOutputStream = blobStorageService.downloadFile(zipFileName);
+        ByteArrayOutputStream byteArrayOutputStream = blobStorageService.downloadFile(blobContainer, zipFileName);
         return new DownloadableFile(zipFileName, byteArrayOutputStream);
     }
 

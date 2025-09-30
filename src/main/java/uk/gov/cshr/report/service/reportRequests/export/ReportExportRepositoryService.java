@@ -67,7 +67,7 @@ public abstract class ReportExportRepositoryService<T extends ReportableData, C 
             List<T> data = reportRequestService.getReportRequestData(request);
             CsvData<T> csvData = csvRowFactory.getCsvData(data, request.getExportCsvType().getConfig());
             String fileName = String.format("%s/%s", directoryPath, request.getFileName());
-            reportExportZipReportService.createAndUploadReport(csvData, fileName);
+            reportExportZipReportService.createAndUploadReport(csvData, config.getBlobContainer(), fileName);
             log.info(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
             request.setStatus(ReportRequestStatus.SUCCESS);
             request.setCompletedTimestamp(utilService.getNow());
@@ -91,7 +91,7 @@ public abstract class ReportExportRepositoryService<T extends ReportableData, C 
                     downloaderUid, reportRequest.getRequesterId()));
         }
         reportRequest.setTimesDownloaded(reportRequest.getTimesDownloaded()+1);
-        DownloadableFile downloadableFile = reportExportZipReportService.fetchBlobReport(reportRequest.getFileName());
+        DownloadableFile downloadableFile = reportExportZipReportService.fetchBlobReport(config.getBlobContainer(), reportRequest.getFileName());
         reportRequestRepository.save(reportRequest);
         return downloadableFile;
     }

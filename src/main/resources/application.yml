@@ -55,7 +55,6 @@ spring:
       storage:
         blob:
           connection-string: "${BLOB_STORAGE_CONNECTION_STRING:DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;}"
-          container-name: "${BLOB_STORAGE_COURSE_COMPLETION_REQUESTS_CONTAINER_NAME:coursecompletionrequests}"
   data:
     redis:
       host: ${REDIS_HOST:localhost}
@@ -125,10 +124,12 @@ report-export:
     jobCron: ${COURSE_COMPLETION_REPORTS_JOB_CRON:0 0 * * * *}
     defaultTimezone: "${COURSE_COMPLETION_REPORTS_DEFAULT_TIMEZONE:Europe/London}"
     tempDir: "${COURSE_COMPLETION_REPORTS_DEFAULT_TEMP_DIR:temp-courseCompletionsJob}"
+    blobContainer: "${COURSE_COMPLETION_REPORTS_BLOB_CONTAINER:coursecompletionrequests}"
   registeredLearners:
     maxRequestsPerUser: ${REGISTERED_LEARNERS_REPORTS_MAX_REQUESTS_PER_USER:1}
     jobCron: ${REGISTERED_LEARNERS_REPORTS_JOB_CRON:0 0 * * * *}
     tempDir: "${REGISTERED_LEARNERS_REPORTS_DEFAULT_TEMP_DIR:temp-registeredLearnerJob}"
+    blobContainer: "${REGISTERED_LEARNERS_REPORTS_BLOB_CONTAINER:registeredlearnerrequests}"
 
 notification:
   serviceUrl: ${NOTIFICATION_SERVICE_URL:http://localhost:9006}

@@ -7,7 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 public class CourseCompletionsReportConfig extends ReportExportConfig {
 
-    public CourseCompletionsReportConfig(String defaultTimezone, Integer maxRequestsPerUser, String jobCron, String tempDir) {
-        super(defaultTimezone, maxRequestsPerUser, jobCron, tempDir);
+    public CourseCompletionsReportConfig(String defaultTimezone, Integer maxRequestsPerUser, String jobCron, String tempDir,
+                                         String blobContainer) {
+        super(defaultTimezone, maxRequestsPerUser, jobCron, tempDir, blobContainer);
     }
 }

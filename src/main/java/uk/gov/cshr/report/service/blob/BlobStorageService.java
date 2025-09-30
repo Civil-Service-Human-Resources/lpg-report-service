@@ -4,6 +4,7 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.exception.ReportNotFoundException;
@@ -12,15 +13,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 @Service
+@Slf4j
 public class BlobStorageService {
     @Value("${spring.cloud.azure.storage.blob.connection-string}")
     private String azureBlobStorageConnectionString;
 
-    @Value("${spring.cloud.azure.storage.blob.container-name}")
-    private String azureBlobStorageContainerName;
-
-    public ByteArrayOutputStream downloadFile(String filename) {
-        BlobContainerClient blobContainerClient = getClient();
+    public ByteArrayOutputStream downloadFile(String blobStorageContainer, String filename) {
+        log.info("Downloading file {} from blob container {}", filename, blobStorageContainer);
+        BlobContainerClient blobContainerClient = getClient(blobStorageContainer);
         BlobClient blobClient = blobContainerClient.getBlobClient(filename);
         if (!blobClient.exists()){
             throw new ReportNotFoundException(String.format("Blob with filename '%s' was not found", filename));
@@ -30,21 +30,21 @@ public class BlobStorageService {
         return outputStream;
     }
 
-    public void uploadFile(String fileName) {
-        BlobContainerClient blobContainerClient = getClient();
-
+    public void uploadFile(String blobStorageContainer, String filename) {
+        log.info("Uploading file {} to blob container {}", filename, blobStorageContainer);
+        BlobContainerClient blobContainerClient = getClient(blobStorageContainer);
         if (!blobContainerClient.exists()){
             blobContainerClient.create();
         }
-
-        BlobClient blobClient = blobContainerClient.getBlobClient(new File(fileName).getName());
-        blobClient.uploadFromFile(fileName);
+        BlobClient blobClient = blobContainerClient.getBlobClient(new File(filename).getName());
+        blobClient.deleteIfExists();
+        blobClient.uploadFromFile(filename);
     }
 
-    private BlobContainerClient getClient(){
+    private BlobContainerClient getClient(String blobStorageContainer){
         BlobServiceClient blobServiceClient = new BlobServiceClientBuilder()
                 .connectionString(azureBlobStorageConnectionString)
                 .buildClient();
-        return blobServiceClient.getBlobContainerClient(azureBlobStorageContainerName);
+        return blobServiceClient.getBlobContainerClient(blobStorageContainer);
     }
 }
