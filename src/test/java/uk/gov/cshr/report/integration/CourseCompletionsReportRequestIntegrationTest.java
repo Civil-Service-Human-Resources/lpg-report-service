@@ -328,7 +328,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Test
     public void testReportRequestsServiceProcessesJobCorrectlyWhenNoExceptionIsThrown() throws IOException {
         insertCourseCompletionRequest();
-        stubService.stubSendEmail("REPORT_SUCCESS", """
+        stubService.stubSendEmail("REPORT_REQUEST_SUCCESS", """
                 {
                     "recipient": "RequesterA@domain.com",
                     "personalisation": {
