@@ -134,8 +134,8 @@ report-export:
 notification:
   serviceUrl: ${NOTIFICATION_SERVICE_URL:http://localhost:9006}
   sendEmailEndpointTemplate: "${notification.serviceUrl}/notifications/emails/{{TEMPLATE_NAME}}/send"
-  successEmailTemplateName: ${REPORT_SUCCESS_EMAIL_NAME:REPORT_SUCCESS}
-  failureEmailTemplateName: ${REPORT_FAILURE_EMAIL_NAME:REPORT_FAILURE}
+  successEmailTemplateName: ${REPORT_SUCCESS_EMAIL_NAME:REPORT_REQUEST_SUCCESS}
+  failureEmailTemplateName: ${REPORT_FAILURE_EMAIL_NAME:REPORT_REQUEST_FAILURE}
 
 
 info:
