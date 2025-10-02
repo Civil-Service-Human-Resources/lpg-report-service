@@ -25,7 +25,7 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
         SET rl.organisationId = null, rl.organisationName = null, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.organisationId in :organisationIds
     """)
-    int deleteOrganisation(List<Long> organisationIds, ZonedDateTime updatedTimestamp);
+    int deleteOrganisation(List<Long> organisationIds, LocalDateTime updatedTimestamp);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""

@@ -7,6 +7,7 @@ import uk.gov.cshr.report.domain.RegisteredLearner;
 import uk.gov.cshr.report.domain.report.RegisteredLearnerReportRequest;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationDelete;
+import uk.gov.cshr.report.service.reportRequests.IReportRequestService;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -34,7 +35,7 @@ public class RegisteredLearnersService implements IReportRequestService<Register
     }
 
     @Transactional
-    public int deleteOrganisation(RegisteredLearnerOrganisationDelete registeredLearnerOrganisationDelete, ZonedDateTime updatedTimestamp) {
+    public int deleteOrganisation(RegisteredLearnerOrganisationDelete registeredLearnerOrganisationDelete, LocalDateTime updatedTimestamp) {
         log.info("deleteOrganisation: Deleting learner's organisation ids: {}, updatedTimestamp: {}",
                 registeredLearnerOrganisationDelete.getOrganisationIds(), updatedTimestamp);
         return registeredLearnerRepository.deleteOrganisation(registeredLearnerOrganisationDelete.getOrganisationIds(), updatedTimestamp);
