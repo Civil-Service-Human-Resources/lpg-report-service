@@ -10,6 +10,7 @@ import uk.gov.cshr.report.service.messaging.registeredlearners.models.*;
 
 import java.time.Clock;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -32,13 +33,13 @@ public class RegisteredLearnerOrganisationUpdateService extends
     @Override
     public void processConvertedMessage(RegisteredLearnerOrganisationUpdateMessage message) {
         log.debug("processConvertedMessage: message: {}", message);
-        RegisteredLearnerOrganisationUpdate data = message.getMetadata().getData();
+        List<RegisteredLearnerOrganisationUpdate> data = message.getMetadata().getData();
         log.debug("processConvertedMessage: data: {}", data);
-        if(data != null && data.getOrganisationId() != null) {
+        if(data != null && data.size() > 0) {
             ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
-            log.info("processConvertedMessage: Updating learner's organisation for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
+            log.info("processConvertedMessage: Updating learner's organisations for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
                     data, zonedDateTime);
-            registeredLearnersService.updateOrganisation(data.getOrganisationId(), data.getOrganisationName(), zonedDateTime);
+            registeredLearnersService.updateOrganisation(data, zonedDateTime);
             log.info("processConvertedMessage: Update learner's organisation for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
                     data, zonedDateTime);
         } else {

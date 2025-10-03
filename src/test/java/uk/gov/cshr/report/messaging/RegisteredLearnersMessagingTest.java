@@ -133,10 +133,16 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
                     "metadata": {
                         "operation": "UPDATE",
                         "dataType": "ORGANISATION",
-                        "data": {
-                            "organisationId": 1,
-                            "organisationName": "Cabinet Office (CO)"
-                        }
+                        "data": [
+                            {
+                                "organisationId": 1,
+                                "organisationName": "Cabinet Office (CO)"
+                            },
+                            {
+                                "organisationId": 2,
+                                "organisationName": "Cabinet Office (CO) | Child Org (ChOr)"
+                            }
+                        ]
                     }
                 }
                 """);
@@ -215,7 +221,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         registeredLearner.setGradeId(1);
         registeredLearner.setGradeName("Grade 7");
         registeredLearner.setOrganisationId(1);
-        registeredLearner.setOrganisationName("Cabinet Office");
+        registeredLearner.setOrganisationName("Cabinet Office (CO)");
         registeredLearner.setProfessionId(1);
         registeredLearner.setProfessionName("Analysis");
 

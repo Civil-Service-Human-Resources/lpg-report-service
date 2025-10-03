@@ -30,10 +30,16 @@ class RegisteredLearnerOrganisationUpdateServiceTest {
                     "metadata": {
                         "operation": "UPDATE",
                         "dataType": "ORGANISATION",
-                        "data": {
-                            "organisationId": 1,
-                            "organisationName": "Cabinet Office (CO)"
-                        }
+                        "data": [
+                            {
+                                "organisationId": 1,
+                                "organisationName": "Cabinet Office (CO)"
+                            },
+                            {
+                                "organisationId": 2,
+                                "organisationName": "Cabinet Office (CO) | Child Org (ChOr)"
+                            }
+                        ]
                     }
                 }
                 """;

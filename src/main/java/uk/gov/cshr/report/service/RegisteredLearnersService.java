@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationDelete;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationUpdate;
 
 import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Slf4j
@@ -37,10 +39,16 @@ public class RegisteredLearnersService {
     }
 
     @Transactional
-    public int updateOrganisation(Long organisationId, String organisationName, ZonedDateTime updatedTimestamp) {
-        log.info("updateOrganisation: Updating organisation name {}  for organisation id: {}, updatedTimestamp: {}",
-                organisationName, organisationId, updatedTimestamp);
-        return registeredLearnerRepository.updateOrganisation(organisationId, organisationName, updatedTimestamp);
+    public int updateOrganisation(List<RegisteredLearnerOrganisationUpdate> data, ZonedDateTime updatedTimestamp) {
+        log.info("updateOrganisation: Updating organisations for {}, updatedTimestamp: {}", data, updatedTimestamp);
+        AtomicInteger count = new AtomicInteger();
+        data.forEach(ro ->  {
+            int result = registeredLearnerRepository.updateOrganisation(ro.getOrganisationId(), ro.getOrganisationName(), updatedTimestamp);
+            count.set(count.get() + result);
+        });
+        int totalCount = count.get();
+        log.info("updateOrganisation: {} records updated", totalCount);
+        return totalCount;
     }
 
     public int deleteLearners(Collection<String> uids) {
