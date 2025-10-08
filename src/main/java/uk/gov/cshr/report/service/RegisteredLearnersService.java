@@ -8,11 +8,13 @@ import uk.gov.cshr.report.domain.report.RegisteredLearnerReportRequest;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationDelete;
 import uk.gov.cshr.report.service.reportRequests.IReportRequestService;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationUpdate;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -39,6 +41,19 @@ public class RegisteredLearnersService implements IReportRequestService<Register
         log.info("deleteOrganisation: Deleting learner's organisation ids: {}, updatedTimestamp: {}",
                 registeredLearnerOrganisationDelete.getOrganisationIds(), updatedTimestamp);
         return registeredLearnerRepository.deleteOrganisation(registeredLearnerOrganisationDelete.getOrganisationIds(), updatedTimestamp);
+    }
+
+    @Transactional
+    public int updateOrganisation(List<RegisteredLearnerOrganisationUpdate> data, LocalDateTime updatedTimestamp) {
+        log.info("updateOrganisation: Updating organisations for {}, updatedTimestamp: {}", data, updatedTimestamp);
+        AtomicInteger count = new AtomicInteger();
+        data.forEach(ro ->  {
+            int result = registeredLearnerRepository.updateOrganisation(ro.getOrganisationId(), ro.getOrganisationName(), updatedTimestamp);
+            count.set(count.get() + result);
+        });
+        int totalCount = count.get();
+        log.info("updateOrganisation: {} records updated", totalCount);
+        return totalCount;
     }
 
     public int deleteLearners(Collection<String> uids) {

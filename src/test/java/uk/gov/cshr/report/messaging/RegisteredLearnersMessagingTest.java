@@ -123,6 +123,40 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
     }
 
     @Test
+    public void testOrganisationUpdate() {
+        createRegisteredLearner();
+
+        registeredLearnerQueueClient.processMessage("""
+                {
+                    "messageId": "ID-1",
+                    "messageTimestamp": "2025-01-01T11:00:00.0",
+                    "metadata": {
+                        "operation": "UPDATE",
+                        "dataType": "ORGANISATION",
+                        "data": [
+                            {
+                                "organisationId": 1,
+                                "organisationName": "Cabinet Office (CO)"
+                            },
+                            {
+                                "organisationId": 2,
+                                "organisationName": "Cabinet Office (CO) | Child Org (ChOr)"
+                            }
+                        ]
+                    }
+                }
+                """);
+
+        Optional<RegisteredLearner> registeredLearnerOpt = registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000");
+        if(registeredLearnerOpt.isPresent()) {
+            RegisteredLearner registeredLearner = registeredLearnerOpt.get();
+            assertEquals(1, registeredLearner.getOrganisationId());
+            assertEquals("Cabinet Office (CO)", registeredLearner.getOrganisationName());
+            assertEquals("2025-01-01T11:00Z", registeredLearner.getUpdatedTimestamp().toString());
+        }
+    }
+
+    @Test
     public void testEmailUpdate() {
         createRegisteredLearner();
 
@@ -187,7 +221,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         registeredLearner.setGradeId(1);
         registeredLearner.setGradeName("Grade 7");
         registeredLearner.setOrganisationId(1);
-        registeredLearner.setOrganisationName("Cabinet Office");
+        registeredLearner.setOrganisationName("Cabinet Office (CO)");
         registeredLearner.setProfessionId(1);
         registeredLearner.setProfessionName("Analysis");
 

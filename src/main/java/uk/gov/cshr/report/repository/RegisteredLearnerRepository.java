@@ -30,6 +30,14 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
         UPDATE RegisteredLearner rl
+        SET rl.organisationName = :organisationName, rl.updatedTimestamp = :updatedTimestamp
+        WHERE rl.organisationId in :organisationId
+    """)
+    int updateOrganisation(Long organisationId, String organisationName, ZonedDateTime updatedTimestamp);
+
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("""
+        UPDATE RegisteredLearner rl
         SET rl.active = true, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.uid in :uids
     """)
