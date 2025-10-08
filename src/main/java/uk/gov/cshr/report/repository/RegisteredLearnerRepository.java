@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import uk.gov.cshr.report.domain.RegisteredLearner;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
         SET rl.email = :email, rl.organisationId = null, rl.organisationName = null, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.uid = :uid
     """)
-    int updateEmail(String uid, String email, ZonedDateTime updatedTimestamp);
+    int updateEmail(String uid, String email, LocalDateTime updatedTimestamp);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
@@ -25,7 +25,7 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
         SET rl.organisationId = null, rl.organisationName = null, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.organisationId in :organisationIds
     """)
-    int deleteOrganisation(List<Long> organisationIds, ZonedDateTime updatedTimestamp);
+    int deleteOrganisation(List<Long> organisationIds, LocalDateTime updatedTimestamp);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
@@ -33,7 +33,7 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
         SET rl.organisationName = :organisationName, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.organisationId in :organisationId
     """)
-    int updateOrganisation(Long organisationId, String organisationName, ZonedDateTime updatedTimestamp);
+    int updateOrganisation(Long organisationId, String organisationName, LocalDateTime updatedTimestamp);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
@@ -41,7 +41,7 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
         SET rl.active = true, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.uid in :uids
     """)
-    int activate(Collection<String> uids, ZonedDateTime updatedTimestamp);
+    int activate(Collection<String> uids, LocalDateTime updatedTimestamp);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
@@ -49,7 +49,14 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
         SET rl.active = false, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.uid in :uids
     """)
-    int deactivate(Collection<String> uids, ZonedDateTime updatedTimestamp);
+    int deactivate(Collection<String> uids, LocalDateTime updatedTimestamp);
 
     int deleteAllByUidIn(Collection<String> ids);
+
+    @Query("""
+        select rl
+        from RegisteredLearner rl
+        where :organisationIds is null or rl.organisationId in :organisationIds
+    """)
+    List<RegisteredLearner> findAllByOrganisationIdIn(Collection<Integer> organisationIds);
 }

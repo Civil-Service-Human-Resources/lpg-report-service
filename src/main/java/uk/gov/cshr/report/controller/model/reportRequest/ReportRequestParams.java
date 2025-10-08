@@ -22,4 +22,7 @@ public class ReportRequestParams {
 
     @NotNull
     private String fullName;
+
+    @NotNull
+    private String timezone;
 }

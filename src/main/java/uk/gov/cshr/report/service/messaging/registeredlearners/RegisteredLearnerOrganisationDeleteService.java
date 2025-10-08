@@ -6,10 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.exception.MessageProcessingException;
 import uk.gov.cshr.report.service.RegisteredLearnersService;
-import uk.gov.cshr.report.service.messaging.registeredlearners.models.*;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerDataType;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOperation;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationDelete;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationDeleteMessage;
 
 import java.time.Clock;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Component
@@ -35,12 +38,12 @@ public class RegisteredLearnerOrganisationDeleteService extends
         RegisteredLearnerOrganisationDelete data = message.getMetadata().getData();
         log.debug("processConvertedMessage: data: {}", data);
         if(data != null && data.getOrganisationIds() != null && data.getOrganisationIds().size() != 0) {
-            ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
+            LocalDateTime dateTime = message.getMessageTimestamp();
             log.info("processConvertedMessage: Deleting learner's organisation for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
-                    data, zonedDateTime);
-            registeredLearnersService.deleteOrganisation(data, zonedDateTime);
+                    data, dateTime);
+            registeredLearnersService.deleteOrganisation(data, dateTime);
             log.info("processConvertedMessage: Deleted learner's organisation for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
-                    data, zonedDateTime);
+                    data, dateTime);
         } else {
             log.error("processConvertedMessage: Unexpected learner organisation deletion data : {}", data);
             throw new MessageProcessingException("Unexpected registered learner organisation deletion data: " + data);

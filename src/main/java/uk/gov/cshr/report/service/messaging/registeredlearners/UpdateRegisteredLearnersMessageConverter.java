@@ -3,13 +3,11 @@ package uk.gov.cshr.report.service.messaging.registeredlearners;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import uk.gov.cshr.report.config.utils.ClockConfig;
 import uk.gov.cshr.report.domain.RegisteredLearner;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
 import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerProfile;
 import uk.gov.cshr.report.service.messaging.registeredlearners.models.UpdateProfileMessage;
 
-import java.time.Clock;
 import java.util.Optional;
 
 @Slf4j
@@ -17,17 +15,12 @@ import java.util.Optional;
 public class UpdateRegisteredLearnersMessageConverter {
 
     private final RegisteredLearnerRepository repository;
-    private final ClockConfig clockConfig;
 
-    public UpdateRegisteredLearnersMessageConverter(RegisteredLearnerRepository repository,
-                                                    ClockConfig clockConfig) {
+    public UpdateRegisteredLearnersMessageConverter(RegisteredLearnerRepository repository) {
         this.repository = repository;
-        this.clockConfig = clockConfig;
     }
 
     public RegisteredLearner convert(UpdateProfileMessage message) {
-        Clock clock = clockConfig.getClock();
-
         RegisteredLearnerProfile profile = message.getMetadata().getData();
         Optional<RegisteredLearner> byIdOpt = repository.findById(profile.getUid());
         RegisteredLearner registeredLearner = byIdOpt.get();
@@ -73,7 +66,7 @@ public class UpdateRegisteredLearnersMessageConverter {
             registeredLearner.setProfessionName(profile.getProfessionName());
         }
 
-        registeredLearner.setUpdatedTimestamp(message.getMessageTimestamp().atZone(clock.getZone()));
+        registeredLearner.setUpdatedTimestamp(message.getMessageTimestamp());
         log.debug("registeredLearner: {}", registeredLearner);
         return registeredLearner;
     }

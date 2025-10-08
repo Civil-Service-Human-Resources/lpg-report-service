@@ -9,8 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import uk.gov.cshr.report.domain.report.ReportableData;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "registered_learners")
@@ -18,7 +19,7 @@ import java.time.ZonedDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisteredLearner {
+public class RegisteredLearner extends ReportableData {
 
     @Id
     @Column(length = 36, nullable = false)
@@ -53,9 +54,9 @@ public class RegisteredLearner {
     private String professionName;
 
     @Column(nullable = false)
-    private ZonedDateTime createdTimestamp;
+    private LocalDateTime createdTimestamp;
 
     @Column(nullable = false)
-    private ZonedDateTime updatedTimestamp;
+    private LocalDateTime updatedTimestamp;
 
 }

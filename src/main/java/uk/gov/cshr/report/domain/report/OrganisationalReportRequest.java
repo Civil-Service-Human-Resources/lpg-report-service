@@ -21,8 +21,10 @@ public class OrganisationalReportRequest extends ReportRequest {
     @Column(name = "organisation_ids", columnDefinition = "int[]")
     private List<Integer> organisationIds;
 
-    public OrganisationalReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp, ReportRequestStatus status, String fullName, String urlSlug, String downloadBaseUrl, List<Integer> organisationIds) {
-        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, urlSlug, downloadBaseUrl);
+    public OrganisationalReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
+                                       ReportRequestStatus status, String fullName, String requesterTimezone, String urlSlug,
+                                       String downloadBaseUrl, List<Integer> organisationIds) {
+        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, requesterTimezone, urlSlug, downloadBaseUrl);
         this.organisationIds = organisationIds;
     }
 }

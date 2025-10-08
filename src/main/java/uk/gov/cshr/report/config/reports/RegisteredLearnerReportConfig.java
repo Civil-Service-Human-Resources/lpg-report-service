@@ -6,7 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "report-export.registered-learners")
 @Getter
 public class RegisteredLearnerReportConfig extends ReportExportConfig {
-    public RegisteredLearnerReportConfig(Integer maxRequestsPerUser, String jobCron, String tempDir) {
-        super(maxRequestsPerUser, jobCron, tempDir);
+    public RegisteredLearnerReportConfig(String defaultTimezone, Integer maxRequestsPerUser, String jobCron, String tempDir,
+                                         String blobContainer) {
+        super(defaultTimezone, maxRequestsPerUser, jobCron, tempDir, blobContainer);
     }
 }

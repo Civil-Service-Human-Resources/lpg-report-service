@@ -30,7 +30,7 @@ import uk.gov.cshr.report.configuration.TestConfig;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.domain.report.ReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
-import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
+import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionReportRequestProcessorService;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +68,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Value("${spring.cloud.azure.storage.blob.connection-string}")
     private String azureBlobStorageConnectionString;
 
-    @Value("${spring.cloud.azure.storage.blob.container-name}")
+    @Value("${report-export.courseCompletions.blobContainer}")
     private String blobStorageContainerName;
 
     @TempDir
@@ -328,7 +328,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Test
     public void testReportRequestsServiceProcessesJobCorrectlyWhenNoExceptionIsThrown() throws IOException {
         insertCourseCompletionRequest();
-        stubService.stubSendEmail("COURSE_COMPLETIONS_REPORT_SUCCESS", """
+        stubService.stubSendEmail("REPORT_REQUEST_SUCCESS", """
                 {
                     "recipient": "RequesterA@domain.com",
                     "personalisation": {

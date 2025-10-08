@@ -31,7 +31,4 @@ public class PostCourseCompletionsReportRequestParams extends OrganisationalRepo
 
     private List<Integer> gradeIds;
 
-    @NotNull
-    private String timezone;
-
 }
