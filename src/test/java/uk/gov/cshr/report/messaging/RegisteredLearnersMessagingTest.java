@@ -152,7 +152,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
             RegisteredLearner registeredLearner = registeredLearnerOpt.get();
             assertEquals(1, registeredLearner.getOrganisationId());
             assertEquals("Cabinet Office (CO)", registeredLearner.getOrganisationName());
-            assertEquals("2025-01-01T11:00Z", registeredLearner.getUpdatedTimestamp().toString());
+            assertEquals("2025-01-01T11:00", registeredLearner.getUpdatedTimestamp().toString());
         }
     }
 

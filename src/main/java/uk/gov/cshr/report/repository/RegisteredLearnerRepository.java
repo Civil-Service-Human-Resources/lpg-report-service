@@ -33,7 +33,7 @@ public interface RegisteredLearnerRepository extends CrudRepository<RegisteredLe
         SET rl.organisationName = :organisationName, rl.updatedTimestamp = :updatedTimestamp
         WHERE rl.organisationId in :organisationId
     """)
-    int updateOrganisation(Long organisationId, String organisationName, ZonedDateTime updatedTimestamp);
+    int updateOrganisation(Long organisationId, String organisationName, LocalDateTime updatedTimestamp);
 
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""

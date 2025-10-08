@@ -6,10 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.exception.MessageProcessingException;
 import uk.gov.cshr.report.service.RegisteredLearnersService;
-import uk.gov.cshr.report.service.messaging.registeredlearners.models.*;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerDataType;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOperation;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationUpdate;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationUpdateMessage;
 
 import java.time.Clock;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -36,12 +39,12 @@ public class RegisteredLearnerOrganisationUpdateService extends
         List<RegisteredLearnerOrganisationUpdate> data = message.getMetadata().getData();
         log.debug("processConvertedMessage: data: {}", data);
         if(data != null && data.size() > 0) {
-            ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
+            LocalDateTime timestamp = message.getMessageTimestamp();
             log.info("processConvertedMessage: Updating learner's organisations for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
-                    data, zonedDateTime);
-            registeredLearnersService.updateOrganisation(data, zonedDateTime);
+                    data, timestamp);
+            registeredLearnersService.updateOrganisation(data, timestamp);
             log.info("processConvertedMessage: Update learner's organisation for registeredLearnersOrganisation: {}, updatedTimestamp: {}",
-                    data, zonedDateTime);
+                    data, timestamp);
         } else {
             log.error("processConvertedMessage: Unexpected learner organisation update data : {}", data);
             throw new MessageProcessingException("Unexpected registered learner organisation update data: " + data);
