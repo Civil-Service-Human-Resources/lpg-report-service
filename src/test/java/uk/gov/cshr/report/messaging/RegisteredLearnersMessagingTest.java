@@ -12,8 +12,8 @@ import uk.gov.cshr.report.service.messaging.registeredlearners.RegisteredLearner
 
 import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,8 +63,8 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
             assertEquals("Cabinet Office", registeredLearner.getOrganisationName());
             assertEquals(1, registeredLearner.getProfessionId());
             assertEquals("Analysis", registeredLearner.getProfessionName());
-            assertEquals("2025-01-01T10:00Z[UTC]", registeredLearner.getCreatedTimestamp().toString());
-            assertEquals("2025-01-01T10:00Z[UTC]", registeredLearner.getUpdatedTimestamp().toString());
+            assertEquals("2025-01-01T10:00", registeredLearner.getCreatedTimestamp().toString());
+            assertEquals("2025-01-01T10:00", registeredLearner.getUpdatedTimestamp().toString());
         }
     }
 
@@ -75,7 +75,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         registeredLearnerQueueClient.processMessage("""
                 {
                     "messageId": "ID-1",
-                    "messageTimestamp": "2025-01-01T11:00:00.0",
+                    "messageTimestamp": "2025-01-01T11:00:00",
                     "metadata": {
                         "operation": "UPDATE",
                         "dataType": "ACCOUNT_ACTIVATE",
@@ -91,7 +91,68 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         if(registeredLearnerOpt.isPresent()) {
             RegisteredLearner registeredLearner = registeredLearnerOpt.get();
             assertTrue(registeredLearner.isActive());
-            assertEquals("2025-01-01T11:00Z", registeredLearner.getUpdatedTimestamp().toString());
+            assertEquals("2025-01-01T11:00", registeredLearner.getUpdatedTimestamp().toString());
+        }
+    }
+
+    @Test
+    public void testOrganisationDelete() {
+        createRegisteredLearner();
+
+        registeredLearnerQueueClient.processMessage("""
+                {
+                    "messageId": "ID-1",
+                    "messageTimestamp": "2025-01-01T11:00:00.0",
+                    "metadata": {
+                        "operation": "DELETE",
+                        "dataType": "ORGANISATION",
+                        "data": {
+                            "organisationIds": [1,2,3]
+                        }
+                    }
+                }
+                """);
+
+        Optional<RegisteredLearner> registeredLearnerOpt = registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000");
+        if(registeredLearnerOpt.isPresent()) {
+            RegisteredLearner registeredLearner = registeredLearnerOpt.get();
+            assertNull(registeredLearner.getOrganisationId());
+            assertNull(registeredLearner.getOrganisationName());
+            assertEquals("2025-01-01T11:00", registeredLearner.getUpdatedTimestamp().toString());
+        }
+    }
+
+    @Test
+    public void testOrganisationUpdate() {
+        createRegisteredLearner();
+
+        registeredLearnerQueueClient.processMessage("""
+                {
+                    "messageId": "ID-1",
+                    "messageTimestamp": "2025-01-01T11:00:00.0",
+                    "metadata": {
+                        "operation": "UPDATE",
+                        "dataType": "ORGANISATION",
+                        "data": [
+                            {
+                                "organisationId": 1,
+                                "organisationName": "Cabinet Office (CO)"
+                            },
+                            {
+                                "organisationId": 2,
+                                "organisationName": "Cabinet Office (CO) | Child Org (ChOr)"
+                            }
+                        ]
+                    }
+                }
+                """);
+
+        Optional<RegisteredLearner> registeredLearnerOpt = registeredLearnerRepository.findById("uid10000-0000-0000-0000-000000000000");
+        if(registeredLearnerOpt.isPresent()) {
+            RegisteredLearner registeredLearner = registeredLearnerOpt.get();
+            assertEquals(1, registeredLearner.getOrganisationId());
+            assertEquals("Cabinet Office (CO)", registeredLearner.getOrganisationName());
+            assertEquals("2025-01-01T11:00", registeredLearner.getUpdatedTimestamp().toString());
         }
     }
 
@@ -102,7 +163,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         registeredLearnerQueueClient.processMessage("""
                 {
                     "messageId": "ID-1",
-                    "messageTimestamp": "2025-01-01T11:00:00.0",
+                    "messageTimestamp": "2025-01-01T11:00",
                     "metadata": {
                         "operation": "UPDATE",
                         "dataType": "EMAIL_UPDATE",
@@ -120,7 +181,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
             assertNull(registeredLearner.getOrganisationId());
             assertNull(registeredLearner.getOrganisationName());
             assertEquals("updated_email@test.com", registeredLearner.getEmail());
-            assertEquals("2025-01-01T11:00Z", registeredLearner.getUpdatedTimestamp().toString());
+            assertEquals("2025-01-01T11:00", registeredLearner.getUpdatedTimestamp().toString());
         }
     }
 
@@ -131,7 +192,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         registeredLearnerQueueClient.processMessage("""
                 {
                     "messageId":"ID",
-                    "messageTimestamp":"2025-01-01T11:00:00.0",
+                    "messageTimestamp":"2025-01-01T11:00",
                     "metadata": {
                         "operation":"UPDATE",
                         "dataType":"LEARNER_PROFILE",
@@ -147,7 +208,7 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         if(registeredLearnerOpt.isPresent()) {
             RegisteredLearner registeredLearner = registeredLearnerOpt.get();
             assertEquals("updated_fullName", registeredLearner.getFullName());
-            assertEquals("2025-01-01T11:00Z[UTC]", registeredLearner.getUpdatedTimestamp().toString());
+            assertEquals("2025-01-01T11:00", registeredLearner.getUpdatedTimestamp().toString());
         }
     }
 
@@ -160,15 +221,15 @@ public class RegisteredLearnersMessagingTest extends IntegrationTestBase {
         registeredLearner.setGradeId(1);
         registeredLearner.setGradeName("Grade 7");
         registeredLearner.setOrganisationId(1);
-        registeredLearner.setOrganisationName("Cabinet Office");
+        registeredLearner.setOrganisationName("Cabinet Office (CO)");
         registeredLearner.setProfessionId(1);
         registeredLearner.setProfessionName("Analysis");
 
-        Clock clock = Clock.fixed(Instant.parse("2025-01-01T10:00:00.000Z"), ZoneId.of("UTC"));
-        ZonedDateTime zonedDateTime = clock.instant().atZone(clock.getZone());
+        Clock clock = Clock.fixed(Instant.parse("2024-01-01T10:00:00.000Z"), ZoneId.of("UTC"));
+        LocalDateTime dateTime = LocalDateTime.now(clock);
 
-        registeredLearner.setCreatedTimestamp(zonedDateTime);
-        registeredLearner.setUpdatedTimestamp(zonedDateTime);
+        registeredLearner.setCreatedTimestamp(dateTime);
+        registeredLearner.setUpdatedTimestamp(dateTime);
 
         registeredLearnerRepository.save(registeredLearner);
     }

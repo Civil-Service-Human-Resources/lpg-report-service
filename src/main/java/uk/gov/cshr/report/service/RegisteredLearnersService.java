@@ -3,16 +3,24 @@ package uk.gov.cshr.report.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.cshr.report.domain.RegisteredLearner;
+import uk.gov.cshr.report.domain.report.RegisteredLearnerReportRequest;
 import uk.gov.cshr.report.repository.RegisteredLearnerRepository;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationDelete;
+import uk.gov.cshr.report.service.reportRequests.IReportRequestService;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOrganisationUpdate;
 
 import java.time.Clock;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Service
 @Slf4j
-public class RegisteredLearnersService {
+public class RegisteredLearnersService implements IReportRequestService<RegisteredLearner, RegisteredLearnerReportRequest> {
 
     private final RegisteredLearnerRepository registeredLearnerRepository;
     private final Clock clock;
@@ -23,9 +31,29 @@ public class RegisteredLearnersService {
     }
 
     @Transactional
-    public int updateEmail(String uid, String email, ZonedDateTime updatedTimestamp) {
+    public int updateEmail(String uid, String email, LocalDateTime updatedTimestamp) {
         log.info("updateEmail: Updating learner email with uid: {}, email: {}, updatedTimestamp: {}", uid, email, updatedTimestamp);
         return registeredLearnerRepository.updateEmail(uid, email, updatedTimestamp);
+    }
+
+    @Transactional
+    public int deleteOrganisation(RegisteredLearnerOrganisationDelete registeredLearnerOrganisationDelete, LocalDateTime updatedTimestamp) {
+        log.info("deleteOrganisation: Deleting learner's organisation ids: {}, updatedTimestamp: {}",
+                registeredLearnerOrganisationDelete.getOrganisationIds(), updatedTimestamp);
+        return registeredLearnerRepository.deleteOrganisation(registeredLearnerOrganisationDelete.getOrganisationIds(), updatedTimestamp);
+    }
+
+    @Transactional
+    public int updateOrganisation(List<RegisteredLearnerOrganisationUpdate> data, LocalDateTime updatedTimestamp) {
+        log.info("updateOrganisation: Updating organisations for {}, updatedTimestamp: {}", data, updatedTimestamp);
+        AtomicInteger count = new AtomicInteger();
+        data.forEach(ro ->  {
+            int result = registeredLearnerRepository.updateOrganisation(ro.getOrganisationId(), ro.getOrganisationName(), updatedTimestamp);
+            count.set(count.get() + result);
+        });
+        int totalCount = count.get();
+        log.info("updateOrganisation: {} records updated", totalCount);
+        return totalCount;
     }
 
     public int deleteLearners(Collection<String> uids) {
@@ -34,14 +62,20 @@ public class RegisteredLearnersService {
     }
 
     @Transactional
-    public int activateLearners(String uid, ZonedDateTime updatedTimestamp) {
+    public int activateLearners(String uid, LocalDateTime updatedTimestamp) {
         log.info("activateLearners: Activating learner with uid : {}, updatedTimestamp: {}", uid, updatedTimestamp);
         return registeredLearnerRepository.activate(List.of(uid), updatedTimestamp);
     }
 
     public int deactivateLearners(Collection<String> uids) {
         log.debug("Deactivating learners with uids : {}", uids);
-        ZonedDateTime updatedTimestamp = ZonedDateTime.now(clock);
+        LocalDateTime updatedTimestamp = LocalDateTime.now(clock);
         return registeredLearnerRepository.deactivate(uids, updatedTimestamp);
+    }
+
+    @Override
+    public List<RegisteredLearner> getReportRequestData(RegisteredLearnerReportRequest reportRequest) {
+        List<Integer> organisationIds = reportRequest.getOrganisationIds();
+        return registeredLearnerRepository.findAllByOrganisationIdIn(isEmpty(organisationIds) ? null : organisationIds);
     }
 }

@@ -10,12 +10,11 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import uk.gov.cshr.report.controller.mappers.PostCourseCompletionsReportRequestsParamsToReportRequestMapper;
 import uk.gov.cshr.report.controller.model.ErrorDtoFactory;
-import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
-import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.CourseCompletionService;
 import uk.gov.cshr.report.service.auth.IUserAuthService;
+import uk.gov.cshr.report.service.reportRequests.CourseCompletionReportRequestService;
+import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionReportRequestProcessorService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,9 +44,6 @@ public class CourseCompletionsControllerTest {
 
     @MockBean
     private CourseCompletionReportRequestProcessorService courseCompletionReportRequestProcessorService;
-
-    @MockBean
-    private PostCourseCompletionsReportRequestsParamsToReportRequestMapper postCourseCompletionsReportRequestsParamsToReportRequestMapper;
 
     @MockBean
     private IUserAuthService userAuthService;
@@ -124,6 +120,7 @@ public class CourseCompletionsControllerTest {
                     {
                         "userId": "user003",
                         "userEmail": "learner3@domain.com",
+                        "fullName": "A test user",
                         "startDate": "2024-01-01T00:00:00",
                         "endDate": "2024-02-01T00:00:00",
                         "courseIds": ["course1", "course2"],
@@ -189,9 +186,10 @@ public class CourseCompletionsControllerTest {
     @Test
     @WithMockUser(username = "user")
     public void testGetReportRequestsEndpointReturnsBadRequestIfRequiredRequestBodyFieldIsMissing() throws Exception {
-        String requestBody = "{\n" +
-                "    \"userId\": \"user003\",\n" +
-                "}";
+        String requestBody = """
+                {
+                    "userId": "user003",
+                }""";
         mockMvc.perform(
                         get("/course-completions/report-requests")
                                 .contentType(MediaType.APPLICATION_JSON)

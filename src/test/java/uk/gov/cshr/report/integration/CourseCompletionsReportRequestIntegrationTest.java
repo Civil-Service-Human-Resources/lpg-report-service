@@ -28,9 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.GenericContainer;
 import uk.gov.cshr.report.configuration.TestConfig;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
-import uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus;
+import uk.gov.cshr.report.domain.report.ReportRequestStatus;
 import uk.gov.cshr.report.repository.CourseCompletionReportRequestRepository;
-import uk.gov.cshr.report.service.CourseCompletionReportRequestProcessorService;
+import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionReportRequestProcessorService;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +68,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Value("${spring.cloud.azure.storage.blob.connection-string}")
     private String azureBlobStorageConnectionString;
 
-    @Value("${spring.cloud.azure.storage.blob.container-name}")
+    @Value("${report-export.courseCompletions.blobContainer}")
     private String blobStorageContainerName;
 
     @TempDir
@@ -119,6 +119,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                 {
                     "userId": "testUser01",
                     "userEmail": "user01@domain.com",
+                    "fullName": "A test user",
                     "startDate": "2024-01-01T00:00:00",
                     "endDate": "2024-02-01T00:00:00",
                     "courseIds": ["course1", "course2"],
@@ -149,6 +150,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                 {
                     "userId": "testUser02",
                     "userEmail": "user02@domain.com",
+                    "fullName": "A test user",
                     "startDate": "2024-01-01T00:00:00",
                     "endDate": "2024-02-01T00:00:00",
                     "courseIds": ["course1", "course2"],
@@ -187,6 +189,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                 {
                     "userId": "testUser03",
                     "userEmail": "user03@domain.com",
+                    "fullName": "A test user",
                     "startDate": "2024-01-01T00:00:00",
                     "endDate": "2024-02-01T00:00:00",
                     "courseIds": ["course1", "course2"],
@@ -210,8 +213,8 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                 .andExpect(jsonPath("$.requests[0].requesterId").value("testUser03"))
                 .andExpect(jsonPath("$.requests[0].requesterEmail").value("user03@domain.com"))
                 .andExpect(jsonPath("$.requests[0].status").value("REQUESTED"))
-                .andExpect(jsonPath("$.requests[0].fromDate").value("2024-01-01T00:00:00Z"))
-                .andExpect(jsonPath("$.requests[0].toDate").value("2024-02-01T00:00:00Z"))
+                .andExpect(jsonPath("$.requests[0].fromDate").value("2024-01-01T00:00:00"))
+                .andExpect(jsonPath("$.requests[0].toDate").value("2024-02-01T00:00:00"))
                 .andExpect(jsonPath("$.requests[0].courseIds[0]").value("course1"))
                 .andExpect(jsonPath("$.requests[0].courseIds[1]").value("course2"))
                 .andExpect(jsonPath("$.requests[0].organisationIds[0]").value(1))
@@ -241,6 +244,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                 {
                     "userId": "testUser03",
                     "userEmail": "user03@domain.com",
+                    "fullName": "A test user",
                     "startDate": "2024-01-01T00:00:00",
                     "endDate": "2024-02-01T00:00:00",
                     "courseIds": ["course1", "course2"],
@@ -265,8 +269,8 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
                 .andExpect(jsonPath("$.requests[0].requesterId").value("testUser03"))
                 .andExpect(jsonPath("$.requests[0].requesterEmail").value("user03@domain.com"))
                 .andExpect(jsonPath("$.requests[0].status").value("REQUESTED"))
-                .andExpect(jsonPath("$.requests[0].fromDate").value("2024-01-01T00:00:00Z"))
-                .andExpect(jsonPath("$.requests[0].toDate").value("2024-02-01T00:00:00Z"))
+                .andExpect(jsonPath("$.requests[0].fromDate").value("2024-01-01T00:00:00"))
+                .andExpect(jsonPath("$.requests[0].toDate").value("2024-02-01T00:00:00"))
                 .andExpect(jsonPath("$.requests[0].courseIds[0]").value("course1"))
                 .andExpect(jsonPath("$.requests[0].courseIds[1]").value("course2"))
                 .andExpect(jsonPath("$.requests[0].organisationIds[0]").value(1))
@@ -324,7 +328,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     @Test
     public void testReportRequestsServiceProcessesJobCorrectlyWhenNoExceptionIsThrown() throws IOException {
         insertCourseCompletionRequest();
-        stubService.stubSendEmail("COURSE_COMPLETIONS_REPORT_SUCCESS", """
+        stubService.stubSendEmail("REPORT_REQUEST_SUCCESS", """
                 {
                     "recipient": "RequesterA@domain.com",
                     "personalisation": {
@@ -368,7 +372,7 @@ public class CourseCompletionsReportRequestIntegrationTest extends IntegrationTe
     }
 
     private void testSchedulerSetsProcessedCourseCompletionReportRequestStatusToSuccess(){
-        List<CourseCompletionReportRequest> successfulRequests = courseCompletionReportRequestRepository.findByStatus(CourseCompletionReportRequestStatus.SUCCESS);
+        List<CourseCompletionReportRequest> successfulRequests = courseCompletionReportRequestRepository.findByStatus(ReportRequestStatus.SUCCESS);
         assertEquals(1, successfulRequests.size());
     }
 

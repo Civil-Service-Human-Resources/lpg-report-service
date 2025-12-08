@@ -14,10 +14,11 @@ public class CourseCompletionsParamsFactory {
     public GetCourseCompletionsByCourseParams fromReportRequest(CourseCompletionReportRequest request){
         GetCourseCompletionsByCourseParams params = new GetCourseCompletionsByCourseParams();
         List<String> courseIds = request.getCourseIds();
+        List<Integer> organisationIds = request.getOrganisationIds();
         params.setCourseIds(isEmpty(courseIds) ? null : courseIds);
-        params.setOrganisationIds(request.getOrganisationIds());
-        params.setStartDate(request.getFromDate().toLocalDateTime());
-        params.setEndDate(request.getToDate().toLocalDateTime());
+        params.setOrganisationIds(isEmpty(organisationIds) ? null : organisationIds);
+        params.setStartDate(request.getFromDate());
+        params.setEndDate(request.getToDate());
         return params;
     }
 

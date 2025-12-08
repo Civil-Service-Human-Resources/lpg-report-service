@@ -1,41 +1,37 @@
 package uk.gov.cshr.report.controller.mappers;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import uk.gov.cshr.report.controller.model.PostCourseCompletionsReportRequestParams;
+import uk.gov.cshr.report.config.reports.CourseCompletionsReportConfig;
+import uk.gov.cshr.report.controller.model.reportRequest.PostCourseCompletionsReportRequestParams;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
-import uk.gov.cshr.report.service.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.auth.IUserAuthService;
-import uk.gov.cshr.report.service.util.StringUtils;
+import uk.gov.cshr.report.service.util.IUtilService;
 
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-
-import static uk.gov.cshr.report.domain.report.CourseCompletionReportRequestStatus.REQUESTED;
+import static uk.gov.cshr.report.domain.report.ReportRequestStatus.REQUESTED;
 
 @Component
-public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper {
+public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper implements ReportParamsToRequestMapper<CourseCompletionReportRequest, PostCourseCompletionsReportRequestParams> {
 
-    private final StringUtils stringUtils;
-    private final String defaultTimezone;
+    private final IUtilService utilService;
+    private final CourseCompletionsReportConfig config;
     private final IUserAuthService userAuthService;
 
-    public PostCourseCompletionsReportRequestsParamsToReportRequestMapper(StringUtils stringUtils,
-                                                                          @Value("${courseCompletions.reports.defaultTimezone}") String defaultTimezone,
-                                                                          IUserAuthService userAuthService, CourseCompletionReportRequestService courseCompletionReportRequestService) {
-        this.stringUtils = stringUtils;
-        this.defaultTimezone = defaultTimezone;
+    public PostCourseCompletionsReportRequestsParamsToReportRequestMapper(IUtilService utilService,
+                                                                          CourseCompletionsReportConfig config,
+                                                                          IUserAuthService userAuthService) {
+        this.utilService = utilService;
+        this.config = config;
         this.userAuthService = userAuthService;
     }
 
-    public CourseCompletionReportRequest getRequestFromParams(PostCourseCompletionsReportRequestParams params) {
-        String timezone = params.getTimezone() == null ? defaultTimezone : params.getTimezone();
-        String slug = stringUtils.generateRandomString(20);
+    @Override
+    public CourseCompletionReportRequest buildReportRequest(PostCourseCompletionsReportRequestParams params) {
+        String timezone = params.getTimezone() == null ? config.getDefaultTimezone() : params.getTimezone();
+        String slug = utilService.generateRandomString(20);
 
         CourseCompletionReportRequest courseCompletionReportRequest = new CourseCompletionReportRequest(
-                params.getUserId(), params.getUserEmail(), ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")),
-                REQUESTED, params.getStartDate().atZone(ZoneOffset.UTC), params.getEndDate().atZone(ZoneOffset.UTC),
+                params.getUserId(), params.getUserEmail(), utilService.getNow(),
+                REQUESTED, params.getStartDate(), params.getEndDate(),
                 params.getCourseIds(), params.getOrganisationIds(), params.getProfessionIds(), params.getGradeIds(),
                 timezone, params.getFullName(), slug, params.getDownloadBaseUrl()
         );

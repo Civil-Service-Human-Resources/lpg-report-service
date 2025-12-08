@@ -7,10 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.cshr.report.exception.MessageProcessingException;
 import uk.gov.cshr.report.service.RegisteredLearnersService;
-import uk.gov.cshr.report.service.messaging.registeredlearners.models.*;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerDataType;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerEmailUpdate;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerEmailUpdateMessage;
+import uk.gov.cshr.report.service.messaging.registeredlearners.models.RegisteredLearnerOperation;
 
 import java.time.Clock;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Component
@@ -38,10 +41,10 @@ public class RegisteredLearnerEmailUpdateService extends
         String uid = data.getUid();
         String email = data.getEmail();
         if(StringUtils.isNotBlank(email)) {
-            ZonedDateTime zonedDateTime = message.getMessageTimestamp().atZone(clock.getZone());
-            log.info("processConvertedMessage: Updating learner email {} for uid : {}, updatedTimestamp: {}", email, uid, zonedDateTime);
-            registeredLearnersService.updateEmail(uid, email, zonedDateTime);
-            log.info("processConvertedMessage: Updated learner email {} for uid : {}, updatedTimestamp: {}", email, uid, zonedDateTime);
+            LocalDateTime localDateTime = message.getMessageTimestamp();
+            log.info("processConvertedMessage: Updating learner email {} for uid : {}, updatedTimestamp: {}", email, uid, localDateTime);
+            registeredLearnersService.updateEmail(uid, email, localDateTime);
+            log.info("processConvertedMessage: Updated learner email {} for uid : {}, updatedTimestamp: {}", email, uid, localDateTime);
         } else {
             log.error("processConvertedMessage: Unexpected registered learner email update data for uid: {}", uid);
             throw new MessageProcessingException("Unexpected registered learner email update data: " + data);

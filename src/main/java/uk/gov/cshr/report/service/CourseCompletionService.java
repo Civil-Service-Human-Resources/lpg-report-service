@@ -10,28 +10,24 @@ import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionByOrganisationAggregation;
 import uk.gov.cshr.report.domain.report.CourseCompletionReportRequest;
 import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
-import uk.gov.cshr.report.service.util.TimeUtils;
+import uk.gov.cshr.report.service.reportRequests.IReportRequestService;
+import uk.gov.cshr.report.service.util.ITimeUtils;
 
 import java.util.List;
 
 @Service
 @Slf4j
-public class CourseCompletionService {
+public class CourseCompletionService implements IReportRequestService<CourseCompletionEvent, CourseCompletionReportRequest> {
 
     private final CourseCompletionEventRepository repository;
     private final CourseCompletionsParamsFactory paramsFactory;
-    private final TimeUtils timeUtils;
+    private final ITimeUtils timeUtils;
 
     public CourseCompletionService(
-            CourseCompletionEventRepository repository, CourseCompletionsParamsFactory paramsFactory, TimeUtils timeUtils) {
+            CourseCompletionEventRepository repository, CourseCompletionsParamsFactory paramsFactory, ITimeUtils timeUtils) {
         this.repository = repository;
         this.paramsFactory = paramsFactory;
         this.timeUtils = timeUtils;
-    }
-
-    public List<CourseCompletionEvent> getCourseCompletionEvents(CourseCompletionReportRequest request) {
-        GetCourseCompletionsByCourseParams params = paramsFactory.fromReportRequest(request);
-        return getCourseCompletionEventsWithTimezone(params);
     }
 
     public List<CourseCompletionAggregation> getCourseCompletionAggregationsByCourse(GetCourseCompletionsByCourseParams params) {
@@ -71,4 +67,9 @@ public class CourseCompletionService {
         return repository.removeUserDetails(uids);
     }
 
+    @Override
+    public List<CourseCompletionEvent> getReportRequestData(CourseCompletionReportRequest reportRequest) {
+        GetCourseCompletionsByCourseParams params = paramsFactory.fromReportRequest(reportRequest);
+        return getCourseCompletionEventsWithTimezone(params);
+    }
 }
