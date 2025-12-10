@@ -23,8 +23,9 @@ public class RegisteredLearnerReportRequest extends OrganisationalReportRequest 
 
     public RegisteredLearnerReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
                                           ReportRequestStatus status, String fullName, String requesterTimezone, String urlSlug, String downloadBaseUrl,
-                                          List<Integer> organisationIds) {
-        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, requesterTimezone, urlSlug, downloadBaseUrl, organisationIds);
+                                          List<Integer> organisationIds, boolean detailedExport) {
+        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, requesterTimezone, urlSlug, downloadBaseUrl, organisationIds,
+                detailedExport);
     }
 
     @Override
@@ -41,6 +42,6 @@ public class RegisteredLearnerReportRequest extends OrganisationalReportRequest 
 
     @Override
     public ExportCsvType getExportCsvType() {
-        return ExportCsvType.REGISTERED_LEARNERS;
+        return isDetailedExport() ? ExportCsvType.REGISTERED_LEARNERS_DETAILED : ExportCsvType.REGISTERED_LEARNERS;
     }
 }

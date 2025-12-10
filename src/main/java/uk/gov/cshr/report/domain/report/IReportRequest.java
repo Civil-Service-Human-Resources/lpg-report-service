@@ -25,6 +25,8 @@ public interface IReportRequest {
 
     Integer getTimesDownloaded();
 
+    boolean isDetailedExport();
+
     void setStatus(ReportRequestStatus reportRequestStatus);
 
     void setCompletedTimestamp(LocalDateTime completedTimestamp);

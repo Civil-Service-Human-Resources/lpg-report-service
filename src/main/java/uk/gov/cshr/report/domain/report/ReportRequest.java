@@ -49,8 +49,12 @@ public class ReportRequest implements IReportRequest {
     @Column(name = "times_downloaded", nullable = false)
     private Integer timesDownloaded = 0;
 
+    @Column(name = "detailed_export")
+    private boolean detailedExport = false;
+
     public ReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
-                         ReportRequestStatus status, String fullName, String requesterTimezone, String urlSlug, String downloadBaseUrl) {
+                         ReportRequestStatus status, String fullName, String requesterTimezone, String urlSlug,
+                         String downloadBaseUrl, boolean detailedExport) {
         this.requesterId = requesterId;
         this.requesterEmail = requesterEmail;
         this.requestedTimestamp = requestedTimestamp;
@@ -59,5 +63,7 @@ public class ReportRequest implements IReportRequest {
         this.requesterTimezone = requesterTimezone;
         this.urlSlug = urlSlug;
         this.downloadBaseUrl = downloadBaseUrl;
+        this.detailedExport = detailedExport;
     }
+
 }

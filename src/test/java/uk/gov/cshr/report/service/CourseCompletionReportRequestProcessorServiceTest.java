@@ -55,7 +55,7 @@ class CourseCompletionReportRequestProcessorServiceTest {
         CourseCompletionReportRequest request = new CourseCompletionReportRequest(
                 "requesterId", "email", now, ReportRequestStatus.REQUESTED,
                 now, now, List.of(), List.of(), List.of(), List.of(), "+1", "Name",
-                "URL", "http://base.com"
+                "URL", "http://base.com", true
         );
         when(utilService.getNow()).thenReturn(now);
         courseCompletionReportRequestProcessorService.processRequest(temp.toPath(), request);
@@ -69,7 +69,7 @@ class CourseCompletionReportRequestProcessorServiceTest {
         CourseCompletionReportRequest request = new CourseCompletionReportRequest(
                 "requesterId", "email", LocalDateTime.now(), ReportRequestStatus.REQUESTED,
                 LocalDateTime.now(), LocalDateTime.now(), List.of(), List.of(), List.of(), List.of(), "+1", "Name",
-                "URL", "http://base.com"
+                "URL", "http://base.com", true
         );
         when(courseCompletionService.getReportRequestData(request)).thenThrow(new RuntimeException("Ex"));
         courseCompletionReportRequestProcessorService.processRequest(temp.toPath(), request);

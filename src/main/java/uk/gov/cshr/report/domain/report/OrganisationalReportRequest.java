@@ -23,8 +23,8 @@ public class OrganisationalReportRequest extends ReportRequest {
 
     public OrganisationalReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
                                        ReportRequestStatus status, String fullName, String requesterTimezone, String urlSlug,
-                                       String downloadBaseUrl, List<Integer> organisationIds) {
-        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, requesterTimezone, urlSlug, downloadBaseUrl);
+                                       String downloadBaseUrl, List<Integer> organisationIds, boolean detailedExport) {
+        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, requesterTimezone, urlSlug, downloadBaseUrl, detailedExport);
         this.organisationIds = organisationIds;
     }
 }
