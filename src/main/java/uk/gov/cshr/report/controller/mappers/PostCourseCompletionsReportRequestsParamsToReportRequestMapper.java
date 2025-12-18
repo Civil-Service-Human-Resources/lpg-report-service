@@ -37,7 +37,7 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper impl
         );
 
         Boolean hasDetailedExportRole = userAuthService.userHasRole("REPORT_EXPORT_DETAILED");
-        Boolean organisationIdsSelected = courseCompletionReportRequest.getOrganisationIds() != null;
+        Boolean organisationIdsSelected = courseCompletionReportRequest.getOrganisationIds() != null && !courseCompletionReportRequest.getOrganisationIds().isEmpty();
         Boolean userCanHaveDetailedExport = hasDetailedExportRole && organisationIdsSelected;
         courseCompletionReportRequest.setDetailedExport(userCanHaveDetailedExport);
         return courseCompletionReportRequest;
