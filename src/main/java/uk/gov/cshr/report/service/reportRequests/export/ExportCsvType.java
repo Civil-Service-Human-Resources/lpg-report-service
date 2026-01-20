@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ExportCsvType {
     REGISTERED_LEARNERS(new RegisteredLearnerCsvType()),
+    REGISTERED_LEARNERS_DETAILED(new RegisteredLearnerDetailedCsvType()),
     COURSE_COMPLETIONS(new CourseCompletionsStandardCsvType()),
     COURSE_COMPLETIONS_DETAILED(new CourseCompletionsDetailedCsvType()),;
 

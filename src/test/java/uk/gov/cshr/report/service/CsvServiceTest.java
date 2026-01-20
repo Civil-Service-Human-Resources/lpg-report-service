@@ -14,6 +14,7 @@ import uk.gov.cshr.report.domain.report.CustomColumnPositionStrategy;
 import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionsDetailedCsvType;
 import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionsStandardCsvType;
 import uk.gov.cshr.report.service.reportRequests.export.RegisteredLearnerCsvType;
+import uk.gov.cshr.report.service.reportRequests.export.RegisteredLearnerDetailedCsvType;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -50,6 +51,35 @@ class CsvServiceTest {
         CustomColumnPositionStrategy<RegisteredLearner> strategy = new CustomColumnPositionStrategy<>();
         strategy.setType(RegisteredLearner.class);
         strategy.setColumnMapping(new RegisteredLearnerCsvType().getColumns());
+        CsvData<RegisteredLearner> csvData = new CsvData<>(strategy, registeredLearnerCsvData);
+        String csvFileName = csvService.createCsvFile(csvData, filename);
+
+        try (CSVReader csvReader = new CSVReader(new FileReader(csvFileName))) {
+            List<String[]> lines = csvReader.readAll();
+            String[] header = lines.remove(0);
+            assertEquals("active", header[0]);
+            assertEquals("gradeName", header[1]);
+            assertEquals("professionName", header[2]);
+            assertEquals("organisationName", header[3]);
+            String[][] rows = {
+                    {"true", "grade1", "profession1", "org 1"},
+                    {"false", "", "profession1", "org 1",},
+                    {"true", "grade1", "profession1", "org 2"}
+            };
+            for (int i = 0; i < lines.size(); i++) {
+                assertCsvRow(lines.get(i), rows[i]);
+            }
+        } catch (Exception e) {
+            fail(String.format("Exception when reading file: %s", e));
+        }
+    }
+
+    @Test
+    public void testContentsOfDetailedRegisteredLearnerCsvFile() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        String filename = String.format("%s/testFile", temporaryDir);
+        CustomColumnPositionStrategy<RegisteredLearner> strategy = new CustomColumnPositionStrategy<>();
+        strategy.setType(RegisteredLearner.class);
+        strategy.setColumnMapping(new RegisteredLearnerDetailedCsvType().getColumns());
         CsvData<RegisteredLearner> csvData = new CsvData<>(strategy, registeredLearnerCsvData);
         String csvFileName = csvService.createCsvFile(csvData, filename);
 
