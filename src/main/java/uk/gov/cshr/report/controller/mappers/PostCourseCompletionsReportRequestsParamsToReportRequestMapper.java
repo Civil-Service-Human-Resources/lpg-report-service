@@ -30,7 +30,7 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper impl
         String slug = utilService.generateRandomString(20);
 
         boolean hasDetailedExportRole = userAuthService.userHasRole("REPORT_EXPORT_DETAILED");
-        boolean organisationIdsSelected = params.getOrganisationIds() != null;
+        boolean organisationIdsSelected = params.getOrganisationIds() != null && !params.getOrganisationIds().isEmpty();
         boolean detailedExport = hasDetailedExportRole && organisationIdsSelected;
 
         return new CourseCompletionReportRequest(
@@ -39,6 +39,5 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper impl
                 params.getCourseIds(), params.getOrganisationIds(), params.getProfessionIds(), params.getGradeIds(),
                 timezone, params.getFullName(), slug, params.getDownloadBaseUrl(), detailedExport
         );
-
     }
 }
