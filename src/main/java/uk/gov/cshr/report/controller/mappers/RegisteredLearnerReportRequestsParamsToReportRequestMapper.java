@@ -25,8 +25,9 @@ public class RegisteredLearnerReportRequestsParamsToReportRequestMapper implemen
     @Override
     public RegisteredLearnerReportRequest buildReportRequest(OrganisationalReportRequestParams params) {
         String timezone = params.getTimezone() == null ? config.getDefaultTimezone() : params.getTimezone();
+
         boolean hasDetailedExportRole = userAuthService.userHasRole("REGISTERED_LEARNER_REPORT_EXPORT_DETAILED");
-        boolean organisationIdsSelected = params.getOrganisationIds() != null;
+        boolean organisationIdsSelected = params.getOrganisationIds() != null && !params.getOrganisationIds().isEmpty();
         boolean detailedExport = hasDetailedExportRole && organisationIdsSelected;
         return new RegisteredLearnerReportRequest(
                 params.getUserId(), params.getUserEmail(), utilService.getNow(),
