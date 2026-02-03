@@ -36,12 +36,12 @@ public class LearnerRecordServiceTest {
 
         Booking booking1 = new Booking();
         booking1.setLearner("Learner Name");
-        booking1.setEvent("Example event");
+        booking1.setEventUid("Example event");
         booking1.setStatus(BookingStatus.CONFIRMED);
 
         Booking booking2 = new Booking();
         booking2.setLearner("Another Learner");
-        booking2.setEvent("Another event");
+        booking2.setEventUid("Another event");
         booking2.setStatus(BookingStatus.CANCELLED);
         List<Booking> fakeBookingList = new ArrayList<>();
         fakeBookingList.add(booking1);
@@ -53,10 +53,10 @@ public class LearnerRecordServiceTest {
 
         assertEquals(2, bookingListFromLearnerRecordService.size());
         assertEquals("Learner Name", bookingListFromLearnerRecordService.get(0).getLearner());
-        assertEquals("Example event", bookingListFromLearnerRecordService.get(0).getEvent());
+        assertEquals("Example event", bookingListFromLearnerRecordService.get(0).getEventUid());
         assertEquals(BookingStatus.CONFIRMED, bookingListFromLearnerRecordService.get(0).getStatus());
         assertEquals("Another Learner", bookingListFromLearnerRecordService.get(1).getLearner());
-        assertEquals("Another event", bookingListFromLearnerRecordService.get(1).getEvent());
+        assertEquals("Another event", bookingListFromLearnerRecordService.get(1).getEventUid());
         assertEquals(BookingStatus.CANCELLED, bookingListFromLearnerRecordService.get(1).getStatus());
     }
 

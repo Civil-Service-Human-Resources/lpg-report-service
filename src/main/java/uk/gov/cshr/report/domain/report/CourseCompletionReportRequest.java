@@ -42,14 +42,11 @@ public class CourseCompletionReportRequest extends OrganisationalReportRequest i
     @Column(name = "grade_ids", columnDefinition = "int[]")
     private List<Integer> gradeIds;
 
-    @Column(name = "detailed_export")
-    private boolean detailedExport = false;
-
     public CourseCompletionReportRequest(String requesterId, String requesterEmail, LocalDateTime requestedTimestamp,
                                          ReportRequestStatus status, LocalDateTime fromDate, LocalDateTime toDate, List<String> courseIds,
                                          List<Integer> organisationIds, List<Integer> professionIds, List<Integer> gradeIds,
-                                         String requesterTimezone, String fullName, String urlSlug, String downloadBaseUrl) {
-        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, requesterTimezone, urlSlug, downloadBaseUrl, organisationIds);
+                                         String requesterTimezone, String fullName, String urlSlug, String downloadBaseUrl, boolean detailed) {
+        super(requesterId, requesterEmail, requestedTimestamp, status, fullName, requesterTimezone, urlSlug, downloadBaseUrl, organisationIds, detailed);
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.courseIds = courseIds;

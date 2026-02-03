@@ -29,17 +29,15 @@ public class PostCourseCompletionsReportRequestsParamsToReportRequestMapper impl
         String timezone = params.getTimezone() == null ? config.getDefaultTimezone() : params.getTimezone();
         String slug = utilService.generateRandomString(20);
 
-        CourseCompletionReportRequest courseCompletionReportRequest = new CourseCompletionReportRequest(
+        boolean hasDetailedExportRole = userAuthService.userHasRole("REPORT_EXPORT_DETAILED");
+        boolean organisationIdsSelected = params.getOrganisationIds() != null && !params.getOrganisationIds().isEmpty();
+        boolean detailedExport = hasDetailedExportRole && organisationIdsSelected;
+
+        return new CourseCompletionReportRequest(
                 params.getUserId(), params.getUserEmail(), utilService.getNow(),
                 REQUESTED, params.getStartDate(), params.getEndDate(),
                 params.getCourseIds(), params.getOrganisationIds(), params.getProfessionIds(), params.getGradeIds(),
-                timezone, params.getFullName(), slug, params.getDownloadBaseUrl()
+                timezone, params.getFullName(), slug, params.getDownloadBaseUrl(), detailedExport
         );
-
-        Boolean hasDetailedExportRole = userAuthService.userHasRole("REPORT_EXPORT_DETAILED");
-        Boolean organisationIdsSelected = courseCompletionReportRequest.getOrganisationIds() != null && !courseCompletionReportRequest.getOrganisationIds().isEmpty();
-        Boolean userCanHaveDetailedExport = hasDetailedExportRole && organisationIdsSelected;
-        courseCompletionReportRequest.setDetailedExport(userCanHaveDetailedExport);
-        return courseCompletionReportRequest;
     }
 }

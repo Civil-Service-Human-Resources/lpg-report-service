@@ -44,8 +44,7 @@ public class ReportRowFactoryTest {
         Booking booking = new Booking();
         booking.setStatus(status);
         booking.setLearner(learnerUid);
-        booking.setEvent(eventUid);
-        booking.setLearnerEmail(email);
+        booking.setEventUid(eventUid);
 
         CivilServant civilServant = new CivilServant();
         civilServant.setId(learnerUid);
@@ -115,8 +114,7 @@ public class ReportRowFactoryTest {
         Booking booking = new Booking();
         booking.setStatus(status);
         booking.setLearner(learnerUid);
-        booking.setLearnerEmail(email);
-        booking.setEvent(eventUid);
+        booking.setEventUid(eventUid);
 
         CivilServant civilServant = new CivilServant();
         civilServant.setId(learnerUid);
