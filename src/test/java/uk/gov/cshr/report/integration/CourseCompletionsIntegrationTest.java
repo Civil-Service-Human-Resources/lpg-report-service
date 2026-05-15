@@ -9,13 +9,47 @@ import uk.gov.cshr.report.configuration.TestConfig;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureWebTestClient
 @Import(TestConfig.class)
 @Transactional
 public class CourseCompletionsIntegrationTest extends IntegrationTestBase {
+
+    @Test
+    public void testGetCourseAggregations() throws Exception {
+        String input = """
+                {
+                    "from": "2024-01-01T00:00:00",
+                    "to": "2024-03-21T00:00:00",
+                    "excludeIds": ["c1"],
+                    "professionIds": [2, 4],
+                    "size": "5"
+                }
+                """;
+        mockMvc.perform(post("/course-completions/aggregations/courses")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(input))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().json("""
+        {
+          "aggregations": [
+            {
+              "count": 5,
+              "courseId": "c2"
+            },
+            {
+              "count": 2,
+              "courseId": "c5"
+            },
+            {
+              "count": 1,
+              "courseId": "c4"
+            }
+          ]
+        }
+        """));
+    }
 
     @Test
     public void testGetAggregations() throws Exception {
