@@ -1,5 +1,6 @@
 package uk.gov.cshr.report.controller.model;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class GetCourseCompletionAggregationParams {
 
     private Collection<Integer> professionIds;
 
+    @Max(20)
     private Integer size;
 
     private Collection<String> excludeIds;
