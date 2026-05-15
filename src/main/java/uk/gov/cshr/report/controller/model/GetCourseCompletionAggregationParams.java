@@ -26,7 +26,7 @@ public class GetCourseCompletionAggregationParams {
 
     private Collection<Integer> professionIds;
 
-    @Max(20)
+    @Max(50)
     private Integer size;
 
     private Collection<String> excludeIds;
