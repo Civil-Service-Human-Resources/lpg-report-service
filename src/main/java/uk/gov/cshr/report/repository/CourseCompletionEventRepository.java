@@ -4,12 +4,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import uk.gov.cshr.report.controller.model.CourseAggregation;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
 import uk.gov.cshr.report.domain.aggregation.Aggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionAggregation;
 import uk.gov.cshr.report.domain.aggregation.CourseCompletionByOrganisationAggregation;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 public interface CourseCompletionEventRepository extends JpaRepository<CourseCompletionEvent, Long> {
@@ -95,4 +97,17 @@ public interface CourseCompletionEventRepository extends JpaRepository<CourseCom
     WHERE cce.userId in :uids
 """)
     int removeUserDetails(List<String> uids);
+
+    @Query("""
+            select cce.courseId as courseId, count(cce) as count
+            from CourseCompletionEvent cce
+            where cce.eventTimestamp >= :from and cce.eventTimestamp <= :to
+            and (:professionIds is null or cce.professionId in :professionIds)
+            and (:excludeIds is null or cce.courseId not in :excludeIds)
+            group by 1
+            order by 2 desc
+            limit :size""")
+    Collection<CourseAggregation> getCompletionsAggregationsForCourses(LocalDateTime from, LocalDateTime to,
+                                                                       Collection<Integer> professionIds, Integer size,
+                                                                       Collection<String> excludeIds);
 }

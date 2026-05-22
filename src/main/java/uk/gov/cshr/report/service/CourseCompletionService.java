@@ -2,6 +2,8 @@ package uk.gov.cshr.report.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import uk.gov.cshr.report.controller.model.CourseAggregation;
+import uk.gov.cshr.report.controller.model.GetCourseCompletionAggregationParams;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsByCourseParams;
 import uk.gov.cshr.report.controller.model.GetCourseCompletionsParams;
 import uk.gov.cshr.report.domain.CourseCompletionEvent;
@@ -13,6 +15,7 @@ import uk.gov.cshr.report.repository.CourseCompletionEventRepository;
 import uk.gov.cshr.report.service.reportRequests.IReportRequestService;
 import uk.gov.cshr.report.service.util.ITimeUtils;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -28,6 +31,11 @@ public class CourseCompletionService implements IReportRequestService<CourseComp
         this.repository = repository;
         this.paramsFactory = paramsFactory;
         this.timeUtils = timeUtils;
+    }
+
+    public Collection<CourseAggregation> getCourseCompletionAggregationsForCourses(GetCourseCompletionAggregationParams params) {
+        return repository.getCompletionsAggregationsForCourses(params.getFrom(), params.getTo(), params.getProfessionIds(),
+                params.getSize(), params.getExcludeIds());
     }
 
     public List<CourseCompletionAggregation> getCourseCompletionAggregationsByCourse(GetCourseCompletionsByCourseParams params) {
@@ -72,4 +80,5 @@ public class CourseCompletionService implements IReportRequestService<CourseComp
         GetCourseCompletionsByCourseParams params = paramsFactory.fromReportRequest(reportRequest);
         return getCourseCompletionEventsWithTimezone(params);
     }
+
 }
