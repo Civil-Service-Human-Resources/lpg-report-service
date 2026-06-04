@@ -14,8 +14,6 @@ import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -78,7 +76,7 @@ public class ReportRowFactoryTest {
         identity.setUsername(email);
         identity.setUid(learnerUid);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking, identity, false);
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(civilServant, event, booking, identity);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
@@ -143,7 +141,7 @@ public class ReportRowFactoryTest {
         identity.setUsername(email);
         identity.setUid(learnerUid);
 
-        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(Optional.of(civilServant), Optional.of(event), booking, identity, false);
+        BookingReportRow reportRow = reportRowFactory.createBookingReportRow(civilServant, event, booking, identity);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());
@@ -212,7 +210,7 @@ public class ReportRowFactoryTest {
         identity.setUsername(email);
         identity.setUid(learnerUid);
 
-        ModuleReportRow reportRow = reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, false);
+        ModuleReportRow reportRow = reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity);
 
         assertEquals(learnerUid, reportRow.getLearnerId());
         assertEquals(name, reportRow.getName());

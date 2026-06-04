@@ -39,8 +39,11 @@ public class CivilServantRegistryClient implements ICivilServantRegistryClient{
     }
 
     @Override
-    public Map<String, CivilServant> getCivilServantMapForLearnerIds(List<String> learnerUids) {
+    public Map<String, CivilServant> getCivilServantMapForLearnerIds(List<String> learnerUids, Integer organisationId) {
         String url = String.format("%s?uids=%s", civilServantsForUidsUrl, String.join(",", learnerUids));
+        if (organisationId != null) {
+            url += "&organisationId=" + organisationId;
+        }
         RequestEntity<Void> request = RequestEntity.get(url).build();
 
         return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(CivilServant.class));

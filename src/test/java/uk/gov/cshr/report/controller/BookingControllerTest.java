@@ -60,7 +60,7 @@ public class BookingControllerTest {
         LocalDate from = LocalDate.parse("2018-01-01");
         LocalDate to = LocalDate.parse("2018-01-31");
 
-        when(reportService.buildBookingReport(from, to, false)).thenReturn(report);
+        when(reportService.buildBookingReport(from, to, 1)).thenReturn(report);
 
         mockMvc.perform(
                 get("/bookings")

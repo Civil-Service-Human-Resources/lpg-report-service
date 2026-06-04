@@ -20,7 +20,7 @@ public class CivilServantRegistryService {
         return civilServantRegistryClient.getCivilServants();
     }
 
-    public Map<String, CivilServant> getCivilServantMapForLearnerIds(List<String> uids) {
-        return civilServantRegistryClient.getCivilServantMapForLearnerIds(uids);
+    public Map<String, CivilServant> getCivilServantMapForLearnerIds(List<String> uids, Integer organisationId) {
+        return civilServantRegistryClient.getCivilServantMapForLearnerIds(uids, organisationId);
     }
 }

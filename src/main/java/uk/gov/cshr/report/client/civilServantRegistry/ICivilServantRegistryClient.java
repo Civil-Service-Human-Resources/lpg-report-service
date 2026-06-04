@@ -8,5 +8,5 @@ import java.util.Map;
 public interface ICivilServantRegistryClient {
     Map<String, CivilServant> getCivilServants();
 
-    Map<String, CivilServant> getCivilServantMapForLearnerIds(List<String> learnerUids);
+    Map<String, CivilServant> getCivilServantMapForLearnerIds(List<String> learnerUids, Integer organisationId);
 }
