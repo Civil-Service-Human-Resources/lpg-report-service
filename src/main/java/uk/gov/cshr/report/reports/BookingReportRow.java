@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
-@JsonPropertyOrder({"learnerId", "name", "email", "departmentCode", "department", "profession", "otherAreasOfWork", "grade", "courseId",
+@JsonPropertyOrder({"learnerId", "name", "email", "department", "departmentCode", "profession", "otherAreasOfWork", "grade", "courseId",
         "courseTitle", "moduleId", "moduleTitle", "learningProvider", "required", "associatedLearning", "status", "bookingTime", "confirmationTime",
         "cancellationTime", "accessibilityOptions", "bookingCancellationReason", "topicId", "poNumber", "eventId", "bookingReference", "location", "eventDate"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
