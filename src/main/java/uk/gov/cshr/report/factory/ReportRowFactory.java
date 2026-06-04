@@ -20,6 +20,7 @@ public class ReportRowFactory {
         reportRow.setLearnerId(identity.getUid());
         reportRow.setName(civilServant.getName());
         reportRow.setEmail(identity.getUsername());
+        reportRow.setDepartmentCode(civilServant.getOrganisationCode());
         reportRow.setDepartment(civilServant.getOrganisation());
         reportRow.setProfession(civilServant.getProfession());
         reportRow.setGrade(civilServant.getGrade());
