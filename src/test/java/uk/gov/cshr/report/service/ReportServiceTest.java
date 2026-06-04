@@ -85,9 +85,9 @@ public class ReportServiceTest {
         LocalDate to = LocalDate.parse("2018-01-31");
 
         when(learnerRecordService.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
-        when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
+        when(civilServantRegistryService.getCivilServantMapForLearnerIds(List.of("learner1", "learner2"), 1)).thenReturn(ImmutableMap.of(
                 "learner1", civilServant1,
-                "learner3", civilServant3
+                "learner2", civilServant2
         ));
 
         when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
