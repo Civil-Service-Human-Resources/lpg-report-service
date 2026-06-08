@@ -41,7 +41,7 @@ public class ReportService {
         List<Booking> bookings = learnerRecordService.getBookings(from, to);
 
         if (!bookings.isEmpty()) {
-            Map <String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMapForLearnerIds(bookings.stream().map(Booking::getLearner).toList(), organisationId);
+            Map <String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMapForLearnerIds(bookings.stream().map(Booking::getLearner).collect(Collectors.toSet()), organisationId);
             Map<String, Event> eventMap = learningCatalogueService.getEventMap();
             Map<String, Identity> identitiesMap = identitiesService.getIdentitiesFromUids(civilServantMap.keySet().stream().toList());
 

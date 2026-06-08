@@ -9,8 +9,11 @@ import uk.gov.cshr.report.client.IHttpClient;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 import uk.gov.cshr.report.service.ParameterizedTypeReferenceFactory;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
+
+import static uk.gov.cshr.report.service.util.HttpUtils.batchList;
 
 @Slf4j
 @Component
@@ -21,6 +24,9 @@ public class CivilServantRegistryClient implements ICivilServantRegistryClient{
 
     @Value("${registryService.civilServantsForUidsUrl}")
     private String civilServantsForUidsUrl;
+
+    @Value("${registryService.maxUidsSize}")
+    private Integer maxUidsSize;
 
     private IHttpClient httpClient;
     ParameterizedTypeReferenceFactory parameterizedTypeReferenceFactory;
@@ -39,13 +45,19 @@ public class CivilServantRegistryClient implements ICivilServantRegistryClient{
     }
 
     @Override
-    public Map<String, CivilServant> getCivilServantMapForLearnerIds(List<String> learnerUids, Integer organisationId) {
-        String url = String.format("%s?uids=%s", civilServantsForUidsUrl, String.join(",", learnerUids));
-        if (organisationId != null) {
-            url += "&organisationId=" + organisationId;
-        }
-        RequestEntity<Void> request = RequestEntity.get(url).build();
-
-        return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(CivilServant.class));
+    public Map<String, CivilServant> getCivilServantMapForLearnerIds(Collection<String> learnerUids, Integer organisationId) {
+        Map<String, CivilServant> map = new HashMap<>();
+        batchList(maxUidsSize, learnerUids).forEach(batch -> {
+            String url = String.format("%s?uids=%s", civilServantsForUidsUrl, String.join(",", learnerUids));
+            if (organisationId != null) {
+                url += "&organisationId=" + organisationId;
+            }
+            RequestEntity<Void> request = RequestEntity.get(url).build();
+            Map<String, CivilServant> response = httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(CivilServant.class));
+            if (response != null) {
+                map.putAll(response);
+            }
+        });
+        return map;
     }
 }

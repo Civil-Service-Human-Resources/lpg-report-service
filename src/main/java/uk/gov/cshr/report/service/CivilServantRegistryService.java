@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.client.civilServantRegistry.ICivilServantRegistryClient;
 import uk.gov.cshr.report.domain.registry.CivilServant;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 
 @Service
@@ -20,7 +20,7 @@ public class CivilServantRegistryService {
         return civilServantRegistryClient.getCivilServants();
     }
 
-    public Map<String, CivilServant> getCivilServantMapForLearnerIds(List<String> uids, Integer organisationId) {
+    public Map<String, CivilServant> getCivilServantMapForLearnerIds(Collection<String> uids, Integer organisationId) {
         return civilServantRegistryClient.getCivilServantMapForLearnerIds(uids, organisationId);
     }
 }
