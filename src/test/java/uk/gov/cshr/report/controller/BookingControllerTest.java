@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import uk.gov.cshr.report.controller.model.ErrorDtoFactory;
 import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.service.ReportService;
-import uk.gov.cshr.report.service.auth.IUserAuthService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,10 +34,7 @@ public class BookingControllerTest {
 
     @MockBean
     private ReportService reportService;
-
-    @MockBean
-    private IUserAuthService userAuthService;
-
+    
     @Test
     @WithMockUser(username = "user")
     public void shouldReturnBookingReport() throws Exception {
