@@ -19,10 +19,7 @@ import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.any;
@@ -85,7 +82,7 @@ public class ReportServiceTest {
         LocalDate to = LocalDate.parse("2018-01-31");
 
         when(learnerRecordService.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
-        when(civilServantRegistryService.getCivilServantMapForLearnerIds(List.of("learner1", "learner2"), 1)).thenReturn(ImmutableMap.of(
+        when(civilServantRegistryService.getCivilServantMapForLearnerIds(Set.of("learner1", "learner2"), 1)).thenReturn(ImmutableMap.of(
                 "learner1", civilServant1,
                 "learner2", civilServant2
         ));
