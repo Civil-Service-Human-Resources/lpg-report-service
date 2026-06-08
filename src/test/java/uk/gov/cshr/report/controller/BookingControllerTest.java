@@ -73,7 +73,7 @@ public class BookingControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("learnerId,name,email,department,departmentCode,profession,otherAreasOfWork,grade,courseId,courseTitle,moduleId,moduleTitle,learningProvider,required,status,paidFor")))
-                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,TESTCO,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",learning-provider,true,Confirmed,true")));
+                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",TESTCO,\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",learning-provider,true,Confirmed,true")));
     }
 
 }
