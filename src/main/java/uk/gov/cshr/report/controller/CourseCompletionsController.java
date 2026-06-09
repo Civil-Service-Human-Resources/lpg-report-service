@@ -22,6 +22,7 @@ import uk.gov.cshr.report.service.blob.DownloadableFile;
 import uk.gov.cshr.report.service.reportRequests.CourseCompletionReportRequestService;
 import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionReportRequestProcessorService;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -43,6 +44,13 @@ public class CourseCompletionsController {
         this.courseCompletionReportRequestProcessorService = courseCompletionReportRequestProcessorService;
         this.userAuthService = userAuthService;
         this.controllerUtilities = controllerUtilities;
+    }
+
+    @PostMapping("/aggregations/courses")
+    @ResponseBody
+    public CourseAggregationResponse<CourseAggregation> getCompletionAggregationsByOrganisation(@RequestBody @Valid GetCourseCompletionAggregationParams params) {
+        Collection<CourseAggregation> results =  courseCompletionService.getCourseCompletionAggregationsForCourses(params);
+        return new CourseAggregationResponse<>(results);
     }
 
     @PostMapping("/aggregations/by-organisation")
