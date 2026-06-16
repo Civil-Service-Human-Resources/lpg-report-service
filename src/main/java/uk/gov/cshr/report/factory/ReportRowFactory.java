@@ -14,43 +14,33 @@ import java.util.Optional;
 
 @Component
 public class ReportRowFactory {
-    public BookingReportRow createBookingReportRow(Optional<CivilServant> civilServantOptional, Optional<Event> eventOptional, Booking booking, Identity identity, boolean isProfessionReporter) {
+    public BookingReportRow createBookingReportRow(CivilServant civilServant, Event event, Booking booking, Identity identity) {
         BookingReportRow reportRow = new BookingReportRow();
 
-        if (civilServantOptional.isPresent()) {
-            CivilServant civilServant = civilServantOptional.get();
+        reportRow.setLearnerId(identity.getUid());
+        reportRow.setName(civilServant.getName());
+        reportRow.setEmail(identity.getUsername());
+        reportRow.setDepartmentCode(civilServant.getOrganisationCode());
+        reportRow.setDepartment(civilServant.getOrganisation());
+        reportRow.setProfession(civilServant.getProfession());
+        reportRow.setGrade(civilServant.getGrade());
 
-            if (!isProfessionReporter) {
-                reportRow.setLearnerId(identity.getUid());
-                reportRow.setName(civilServant.getName());
-                reportRow.setEmail(identity.getUsername());
-            }
-
-            reportRow.setDepartment(civilServant.getOrganisation());
-            reportRow.setProfession(civilServant.getProfession());
-            reportRow.setGrade(civilServant.getGrade());
-
-            reportRow.setOtherAreasOfWork(civilServant.getOtherAreasOfWork());
+        reportRow.setOtherAreasOfWork(civilServant.getOtherAreasOfWork());
+        reportRow.setCourseId(event.getModule().getCourse().getId());
+        reportRow.setCourseTitle(event.getModule().getCourse().getTitle());
+        reportRow.setTopicId(event.getModule().getCourse().getTopicId());
+        reportRow.setModuleId(event.getModule().getId());
+        reportRow.setModuleTitle(event.getModule().getTitle());
+        reportRow.setRequired(event.getModule().getRequired());
+        reportRow.setEventID(event.getId());
+        reportRow.setLocation(event.getLocation());
+        reportRow.setEventDate(event.getEventDate());
+        if (event.getModule().getAssociatedLearning() != null) {
+            reportRow.setPaidFor(event.getModule().getAssociatedLearning());
         }
-
-        if (eventOptional.isPresent()) {
-            Event event = eventOptional.get();
-            reportRow.setCourseId(event.getModule().getCourse().getId());
-            reportRow.setCourseTitle(event.getModule().getCourse().getTitle());
-            reportRow.setTopicId(event.getModule().getCourse().getTopicId());
-            reportRow.setModuleId(event.getModule().getId());
-            reportRow.setModuleTitle(event.getModule().getTitle());
-            reportRow.setRequired(event.getModule().getRequired());
-            reportRow.setEventID(event.getId());
-            reportRow.setLocation(event.getLocation());
-            reportRow.setEventDate(event.getEventDate());
-            if (event.getModule().getAssociatedLearning() != null) {
-                reportRow.setPaidFor(event.getModule().getAssociatedLearning());
-            }
-            Optional.ofNullable(event.getLearningProvider()).ifPresent(
-                    learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
-            );
-        }
+        Optional.ofNullable(event.getLearningProvider()).ifPresent(
+                learningProvider -> reportRow.setLearningProvider(learningProvider.getName())
+        );
         reportRow.setBookingReference(booking.getBookingReference());
         reportRow.setStatus(booking.getStatus().getValue());
         reportRow.setBookingTime(booking.getBookingTime());
@@ -63,15 +53,11 @@ public class ReportRowFactory {
         return reportRow;
     }
 
-    public ModuleReportRow createModuleReportRow(CivilServant civilServant, Module module, ModuleRecord moduleRecord, Identity identity, boolean isProfessionReporter) {
+    public ModuleReportRow createModuleReportRow(CivilServant civilServant, Module module, ModuleRecord moduleRecord, Identity identity) {
         ModuleReportRow reportRow = new ModuleReportRow();
-
-        if (!isProfessionReporter) {
-            reportRow.setEmail(identity.getUsername());
-            reportRow.setLearnerId(identity.getUid());
-            reportRow.setName(civilServant.getName());
-        }
-
+        reportRow.setEmail(identity.getUsername());
+        reportRow.setLearnerId(identity.getUid());
+        reportRow.setName(civilServant.getName());
         reportRow.setDepartment(civilServant.getOrganisation());
         reportRow.setProfession(civilServant.getProfession());
         reportRow.setOtherAreasOfWork(civilServant.getOtherAreasOfWork());

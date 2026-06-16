@@ -35,32 +35,28 @@ public class ReportService {
         this.identitiesService = identitiesService;
     }
 
-    public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
+    public List<BookingReportRow> buildBookingReport(LocalDate from, LocalDate to, Integer organisationId) {
 
         List<BookingReportRow> report = new ArrayList<>();
-
         List<Booking> bookings = learnerRecordService.getBookings(from, to);
-        Map <String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
-        Map<String, Event> eventMap = learningCatalogueService.getEventMap();
-        Map<String, Identity> identitiesMap = identitiesService.getIdentities();
 
-        for (Booking booking : bookings) {
-            if (civilServantMap.containsKey(booking.getLearner())) {
-                String eventUid = booking.getEventUid();
-                Identity identity = identitiesMap.get(booking.getLearner());
+        if (!bookings.isEmpty()) {
+            Map <String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMapForLearnerIds(bookings.stream().map(Booking::getLearner).collect(Collectors.toSet()), organisationId);
+            Map<String, Event> eventMap = learningCatalogueService.getEventMap();
+            Map<String, Identity> identitiesMap = identitiesService.getIdentitiesFromUids(civilServantMap.keySet().stream().toList());
 
-                if (eventMap.containsKey(eventUid)) {
-                    Optional<CivilServant> civilServant = Optional.ofNullable(civilServantMap.get(booking.getLearner()));
-                    Optional<Event> event = Optional.ofNullable(eventMap.get(eventUid));
-                    report.add(reportRowFactory.createBookingReportRow(civilServant, event, booking, identity, isProfessionReporter));
-                }
+            for (Booking booking : bookings) {
+                Optional.ofNullable(civilServantMap.get(booking.getLearner())).ifPresent(civilServant -> {
+                    String eventUid = booking.getEventUid();
+                    Identity identity = identitiesMap.get(booking.getLearner());
+                    Optional.ofNullable(eventMap.get(eventUid)).ifPresent(event -> report.add(reportRowFactory.createBookingReportRow(civilServant, event, booking, identity)));
+                });
             }
         }
-
         return report;
     }
 
-    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
+    public List<ModuleReportRow> buildModuleReport(LocalDate from, LocalDate to) {
         List<ModuleReportRow> report = new ArrayList<>();
         //1. Get Map of CivilServants.
         Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMap();
@@ -79,14 +75,14 @@ public class ReportService {
                 Identity identity = identitiesMapFetched.get(moduleRecord.getLearner());
                 Module module = moduleMap.get(moduleRecord.getModuleId());
                 if (identity != null && civilServant != null) {
-                    report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
+                    report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity));
                 }
             });
         }
         return report;
     }
 
-    public List<ModuleReportRow> buildSupplierModuleReport(LocalDate from, LocalDate to, boolean isProfessionReporter) {
+    public List<ModuleReportRow> buildSupplierModuleReport(LocalDate from, LocalDate to) {
         List<ModuleReportRow> report = new ArrayList<>();
         //1. Get the Module map for the supplier user from learning catalogue.
         Map<String, Module> moduleMap = learningCatalogueService.getModuleMap();
@@ -103,7 +99,7 @@ public class ReportService {
             List<String> learnerIds = moduleRecords.stream().map(ModuleRecord::getLearner).toList();
 
             if (moduleRecords.size() > 0) {
-                Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMapForLearnerIds(learnerIds);
+                Map<String, CivilServant> civilServantMap = civilServantRegistryService.getCivilServantMapForLearnerIds(learnerIds, null);
                 Map<String, Identity> identitiesMap = identitiesService.getIdentitiesFromUids(learnerIds);
 
                 //7. Prepare the data to create CSV using the data retrieved above.
@@ -112,7 +108,7 @@ public class ReportService {
                     Identity identity = identitiesMap.get(moduleRecord.getLearner());
                     Module module = moduleMap.get(moduleRecord.getModuleId());
                     if (identity != null && civilServant != null) {
-                        report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity, isProfessionReporter));
+                        report.add(reportRowFactory.createModuleReportRow(civilServant, module, moduleRecord, identity));
                     }
                 });
             }
