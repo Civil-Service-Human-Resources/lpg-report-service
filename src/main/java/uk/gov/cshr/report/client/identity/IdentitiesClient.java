@@ -9,8 +9,8 @@ import uk.gov.cshr.report.client.IHttpClient;
 import uk.gov.cshr.report.domain.identity.Identity;
 import uk.gov.cshr.report.service.ParameterizedTypeReferenceFactory;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static uk.gov.cshr.report.service.util.HttpUtils.batchList;
@@ -38,14 +38,9 @@ public class IdentitiesClient implements IIdentitiesClient{
         this.httpClient = httpClient;
         this.parameterizedTypeReferenceFactory = parameterizedTypeReferenceFactory;
     }
-    @Override
-    public Map<String, Identity> getIdentities() {
-        RequestEntity<Void> request = RequestEntity.get(identityIdentitiesListEndpointUrl).build();
-        return httpClient.executeMapRequest(request, parameterizedTypeReferenceFactory.createMapReference(Identity.class));
-    }
 
     @Override
-    public Map<String, Identity> getIdentitiesFromUids(List<String> identityUids){
+    public Map<String, Identity> getIdentitiesFromUids(Collection<String> identityUids){
         Map<String, Identity> identitiesMap = new HashMap<>();
         batchList(identityMapMaxBatchSize, identityUids).forEach(batch -> {
             String url = String.format("%s?uids=%s", identitiesMapForLearnerUidsUrl, String.join(",", batch));

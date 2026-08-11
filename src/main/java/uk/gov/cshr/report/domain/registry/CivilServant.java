@@ -8,6 +8,7 @@ public class CivilServant {
     private String name;
     private String email;
     private String organisation;
+    private String organisationCode;
     private String profession;
     private String otherAreasOfWork;
     private String grade;

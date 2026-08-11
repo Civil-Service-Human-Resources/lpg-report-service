@@ -19,13 +19,11 @@ import uk.gov.cshr.report.reports.BookingReportRow;
 import uk.gov.cshr.report.reports.ModuleReportRow;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ReportServiceTest {
@@ -84,17 +82,17 @@ public class ReportServiceTest {
         LocalDate to = LocalDate.parse("2018-01-31");
 
         when(learnerRecordService.getBookings(from, to)).thenReturn(Arrays.asList(booking1, booking2));
-        when(civilServantRegistryService.getCivilServantMap()).thenReturn(ImmutableMap.of(
+        when(civilServantRegistryService.getCivilServantMapForLearnerIds(Set.of("learner1", "learner2"), 1)).thenReturn(ImmutableMap.of(
                 "learner1", civilServant1,
-                "learner3", civilServant3
+                "learner2", civilServant2
         ));
 
         when(learningCatalogueService.getEventMap()).thenReturn(ImmutableMap.of("event1", event));
 
         BookingReportRow reportRow = new BookingReportRow();
-        when(reportRowFactory.createBookingReportRow(any(), any(), any(), any(), anyBoolean())).thenReturn(reportRow);
+        when(reportRowFactory.createBookingReportRow(any(), any(), any(), any())).thenReturn(reportRow);
 
-        List<BookingReportRow> result = reportService.buildBookingReport(from, to, false);
+        List<BookingReportRow> result = reportService.buildBookingReport(from, to, 1);
 
         assertEquals(Collections.singletonList(reportRow), result);
     }
@@ -177,16 +175,16 @@ public class ReportServiceTest {
 
         ReportRowFactory reportRowFactory1 = new ReportRowFactory();
 
-        ModuleReportRow moduleReportRow1 = reportRowFactory1.createModuleReportRow(civilServant1, module1, moduleRecord1, identity1, false);
-        when(reportRowFactory.createModuleReportRow(civilServant1, module1, moduleRecord1, identity1, false)).thenReturn(moduleReportRow1);
-        ModuleReportRow moduleReportRow2 = reportRowFactory1.createModuleReportRow(civilServant2, module2, moduleRecord2, identity2, false);
-        when(reportRowFactory.createModuleReportRow(civilServant2, module2, moduleRecord2, identity2, false)).thenReturn(moduleReportRow2);
-        ModuleReportRow moduleReportRow3 = reportRowFactory1.createModuleReportRow(civilServant3, module3, moduleRecord3, identity3, false);
-        when(reportRowFactory.createModuleReportRow(civilServant3, module3, moduleRecord3, identity3, false)).thenReturn(moduleReportRow3);
+        ModuleReportRow moduleReportRow1 = reportRowFactory1.createModuleReportRow(civilServant1, module1, moduleRecord1, identity1);
+        when(reportRowFactory.createModuleReportRow(civilServant1, module1, moduleRecord1, identity1)).thenReturn(moduleReportRow1);
+        ModuleReportRow moduleReportRow2 = reportRowFactory1.createModuleReportRow(civilServant2, module2, moduleRecord2, identity2);
+        when(reportRowFactory.createModuleReportRow(civilServant2, module2, moduleRecord2, identity2)).thenReturn(moduleReportRow2);
+        ModuleReportRow moduleReportRow3 = reportRowFactory1.createModuleReportRow(civilServant3, module3, moduleRecord3, identity3);
+        when(reportRowFactory.createModuleReportRow(civilServant3, module3, moduleRecord3, identity3)).thenReturn(moduleReportRow3);
 
         List<ModuleReportRow> moduleReportRows = Arrays.asList(moduleReportRow1, moduleReportRow2, moduleReportRow3);
 
-        List<ModuleReportRow> result = reportService.buildModuleReport(from, to, false);
+        List<ModuleReportRow> result = reportService.buildModuleReport(from, to);
 
         assertEquals(moduleReportRows, result);
     }

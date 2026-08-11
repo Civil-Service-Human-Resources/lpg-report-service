@@ -36,7 +36,7 @@ public class BookingControllerTest {
     private ReportService reportService;
 
     @Test
-    @WithMockUser(username = "user", authorities = {"PROFESSION_AUTHOR"})
+    @WithMockUser(username = "user")
     public void shouldReturnBookingReport() throws Exception {
         BookingReportRow reportRow = new BookingReportRow();
         reportRow.setStatus("Confirmed");
@@ -44,6 +44,7 @@ public class BookingControllerTest {
         reportRow.setName("test name");
         reportRow.setProfession("profession 1");
         reportRow.setOtherAreasOfWork("profession 2, profession3");
+        reportRow.setDepartmentCode("TESTCO");
         reportRow.setDepartment("test department");
         reportRow.setGrade("test grade");
         reportRow.setEmail("user@example.org");
@@ -60,18 +61,19 @@ public class BookingControllerTest {
         LocalDate from = LocalDate.parse("2018-01-01");
         LocalDate to = LocalDate.parse("2018-01-31");
 
-        when(reportService.buildBookingReport(from, to, false)).thenReturn(report);
+        when(reportService.buildBookingReport(from, to, 1)).thenReturn(report);
 
         mockMvc.perform(
                 get("/bookings")
                         .param("from", "2018-01-01")
                         .param("to", "2018-01-31")
+                        .header("organisationId", "1")
                         .with(csrf())
                         .accept("application/csv"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("learnerId,name,email,department,profession,otherAreasOfWork,grade,courseId,courseTitle,moduleId,moduleTitle,learningProvider,required,status,paidFor")))
-                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",learning-provider,true,Confirmed,true")));
+                .andExpect(content().string(containsString("learnerId,name,email,department,departmentCode,profession,otherAreasOfWork,grade,courseId,courseTitle,moduleId,moduleTitle,learningProvider,required,status,paidFor")))
+                .andExpect(content().string(containsString("learner-uid,\"test name\",user@example.org,\"test department\",TESTCO,\"profession 1\",\"profession 2, profession3\",\"test grade\",course-id,\"course title\",module-id,\"module title\",learning-provider,true,Confirmed,true")));
     }
 
 }
