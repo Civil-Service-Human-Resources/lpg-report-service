@@ -40,9 +40,9 @@ class CsvServiceTest {
     );
 
     private final List<RegisteredLearner> registeredLearnerCsvData = List.of(
-            new RegisteredLearner("", "email@email.com", true, "name 1", 1, "org 1", 1, "grade1", 1, "profession1", LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0), LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0)),
-            new RegisteredLearner("", "email2@email.com", false, "name 2", 1, "org 1", null, null, 1, "profession1", LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0), LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0)),
-            new RegisteredLearner("", "email3@email.com", true, "name 3", 2, "org 2", 1, "grade1", 1, "profession1", LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0), LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0))
+            new RegisteredLearner("uid1", "email@email.com", true, "name 1", 1, "org 1", 1, "grade1", 1, "profession1", LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0), LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0)),
+            new RegisteredLearner("uid2", "email2@email.com", false, "name 2", 1, "org 1", null, null, 1, "profession1", LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0), LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0)),
+            new RegisteredLearner("uid3", "email3@email.com", true, "name 3", 2, "org 2", 1, "grade1", 1, "profession1", LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0), LocalDateTime.of(2024, 1, 1, 10, 20, 0, 0))
     );
 
     @Test
@@ -88,14 +88,15 @@ class CsvServiceTest {
             String[] header = lines.remove(0);
             assertEquals("active", header[0]);
             assertEquals("email", header[1]);
-            assertEquals("fullName", header[2]);
-            assertEquals("gradeName", header[3]);
-            assertEquals("professionName", header[4]);
-            assertEquals("organisationName", header[5]);
+            assertEquals("uid", header[2]);
+            assertEquals("fullName", header[3]);
+            assertEquals("gradeName", header[4]);
+            assertEquals("professionName", header[5]);
+            assertEquals("organisationName", header[6]);
             String[][] rows = {
-                    {"true", "email@email.com", "name 1", "grade1", "profession1", "org 1"},
-                    {"false", "email2@email.com", "name 2", "", "profession1", "org 1",},
-                    {"true", "email3@email.com", "name 3", "grade1", "profession1", "org 2"}
+                    {"true", "email@email.com", "uid1", "name 1", "grade1", "profession1", "org 1"},
+                    {"false", "email2@email.com", "uid2", "name 2", "", "profession1", "org 1",},
+                    {"true", "email3@email.com", "uid3", "name 3", "grade1", "profession1", "org 2"}
             };
             for (int i = 0; i < lines.size(); i++) {
                 assertCsvRow(lines.get(i), rows[i]);
