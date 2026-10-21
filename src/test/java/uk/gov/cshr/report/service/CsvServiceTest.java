@@ -34,9 +34,9 @@ class CsvServiceTest {
     CsvService csvService = new CsvService();
 
     private final List<CourseCompletionEvent> courseCompletionCsvData = List.of(
-        new CourseCompletionEvent("", "", "email@email.com", "c1", "course1", LocalDateTime.of(2024, 1, 1, 10, 20, 0), 1, "Org1", 2, "Prof2", 3, "Grade3"),
-        new CourseCompletionEvent("", "", "email2@email.com", "c2", "course2", LocalDateTime.of(2024, 1, 29, 11, 0, 0), 2, "Org2", 2, "Prof2", 3, "Grade3"),
-        new CourseCompletionEvent("", "", "email@domain.com", "c3", "course3", LocalDateTime.of(2024, 1, 17, 23, 10, 0), 3, "Org3", 2, "Prof2", 3, "Grade3")
+        new CourseCompletionEvent("", "user1", "email@email.com", "c1", "course1", LocalDateTime.of(2024, 1, 1, 10, 20, 0), 1, "Org1", 2, "Prof2", 3, "Grade3"),
+        new CourseCompletionEvent("", "user2", "email2@email.com", "c2", "course2", LocalDateTime.of(2024, 1, 29, 11, 0, 0), 2, "Org2", 2, "Prof2", 3, "Grade3"),
+        new CourseCompletionEvent("", "user1", "email@domain.com", "c3", "course3", LocalDateTime.of(2024, 1, 17, 23, 10, 0), 3, "Org3", 2, "Prof2", 3, "Grade3")
     );
 
     private final List<RegisteredLearner> registeredLearnerCsvData = List.of(
@@ -119,19 +119,20 @@ class CsvServiceTest {
             List<String[]> lines = csvReader.readAll();
             String[] header = lines.remove(0);
             assertEquals("userEmail", header[0]);
-            assertEquals("courseId", header[1]);
-            assertEquals("courseTitle", header[2]);
-            assertEquals("eventTimestamp", header[3]);
-            assertEquals("organisationId", header[4]);
-            assertEquals("organisationName", header[5]);
-            assertEquals("professionId", header[6]);
-            assertEquals("professionName", header[7]);
-            assertEquals("gradeId", header[8]);
-            assertEquals("gradeName", header[9]);
+            assertEquals("userId", header[1]);
+            assertEquals("courseId", header[2]);
+            assertEquals("courseTitle", header[3]);
+            assertEquals("eventTimestamp", header[4]);
+            assertEquals("organisationId", header[5]);
+            assertEquals("organisationName", header[6]);
+            assertEquals("professionId", header[7]);
+            assertEquals("professionName", header[8]);
+            assertEquals("gradeId", header[9]);
+            assertEquals("gradeName", header[10]);
             String[][] rows = {
-                    {"email@email.com", "c1", "course1", "2024-01-01T10:20", "1", "Org1", "2", "Prof2", "3", "Grade3"},
-                    {"email2@email.com", "c2", "course2", "2024-01-29T11:00", "2", "Org2", "2", "Prof2", "3", "Grade3"},
-                    {"email@domain.com", "c3", "course3", "2024-01-17T23:10", "3", "Org3", "2", "Prof2", "3", "Grade3"}
+                    {"email@email.com", "user1", "c1", "course1", "2024-01-01T10:20", "1", "Org1", "2", "Prof2", "3", "Grade3"},
+                    {"email2@email.com", "user2", "c2", "course2", "2024-01-29T11:00", "2", "Org2", "2", "Prof2", "3", "Grade3"},
+                    {"email@domain.com", "user1", "c3", "course3", "2024-01-17T23:10", "3", "Org3", "2", "Prof2", "3", "Grade3"}
             };
             for (int i = 0; i < lines.size(); i++) {
                 assertCsvRow(lines.get(i), rows[i]);
