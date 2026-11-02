@@ -261,6 +261,7 @@
                         <DOCKER_API_VERSION>1.44</DOCKER_API_VERSION>
                     </environmentVariables>
                     <systemPropertyVariables>
+                        <api.version>1.44</api.version>
                         <DOCKER_API_VERSION>1.44</DOCKER_API_VERSION>
                     </systemPropertyVariables>
                 </configuration>
