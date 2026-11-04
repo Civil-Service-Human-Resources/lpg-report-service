@@ -38,6 +38,7 @@ public abstract class IntegrationTestBase extends WireMockServer {
     static final CustomPGContainer postgres;
 
     static {
+        System.setProperty("api.version", "1.44");
         postgres = CustomPGContainer.getInstance();
         postgres.start();
     }

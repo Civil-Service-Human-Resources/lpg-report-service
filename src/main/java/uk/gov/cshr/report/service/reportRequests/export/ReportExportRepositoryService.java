@@ -58,17 +58,17 @@ public abstract class ReportExportRepositoryService<T extends ReportableData, C 
     }
 
     public void processRequest(Path directoryPath, R request) {
-        log.info(String.format("Attempting to Process request %s", request.getReportRequestId()));
+        log.info("Attempting to Process request {}", request.getReportRequestId());
         MessageDto message = messageDtoFactory.getReportExportSuccessEmail(request);
         try {
             request.setStatus(ReportRequestStatus.PROCESSING);
             reportRequestRepository.save(request);
-            log.debug(String.format("Processing request: %s", request));
+            log.debug("Processing request: {}", request);
             List<T> data = reportRequestService.getReportRequestData(request);
             CsvData<T> csvData = csvRowFactory.getCsvData(data, request.getExportCsvType().getConfig());
             String fileName = String.format("%s/%s", directoryPath, request.getFileName());
             reportExportZipReportService.createAndUploadReport(csvData, config.getBlobContainer(), fileName);
-            log.info(String.format("Processing of request with ID %s has succeeded", request.getReportRequestId()));
+            log.info("Processing of request with ID {} has succeeded", request.getReportRequestId());
             request.setStatus(ReportRequestStatus.SUCCESS);
             request.setCompletedTimestamp(utilService.getNow());
         }
@@ -79,11 +79,11 @@ public abstract class ReportExportRepositoryService<T extends ReportableData, C 
         }
         reportRequestRepository.save(request);
         notificationService.sendEmail(message);
-        log.info(String.format("%s email sent to %s", request.getStatus(), request.getRequesterEmail()));
+        log.info("{} email sent to {}", request.getStatus(), request.getRequesterEmail());
     }
 
     public DownloadableFile downloadReport(String urlSlug, String downloaderUid) {
-        log.info(String.format("User %s attempting to download report %s", downloaderUid, urlSlug));
+        log.info("User {} attempting to download report {}", downloaderUid, urlSlug);
         R reportRequest = reportRequestRepository.findByUrlSlug(urlSlug)
                 .orElseThrow(() -> new ReportNotFoundException(String.format("Course completion report with slug '%s' was not found", urlSlug)));
         if (!reportRequest.getRequesterId().equals(downloaderUid)) {

@@ -6,6 +6,6 @@ public class CourseCompletionsDetailedCsvType extends CourseCompletionsStandardC
 
     @Override
     public String[] getColumns() {
-        return ArrayUtils.addFirst(super.getColumns(), "userEmail");
+        return ArrayUtils.insert(0, super.getColumns(), "userEmail", "userId");
     }
 }
