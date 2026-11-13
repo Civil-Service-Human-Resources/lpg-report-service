@@ -5,8 +5,7 @@ import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,11 +21,10 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/learner-record")
 public class LearnerRecordController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(LearnerRecordController.class);
 
     private final LearnerRecordService learnerRecordService;
     private final ControllerUtilities controllerUtilities;
@@ -39,7 +37,7 @@ public class LearnerRecordController {
     @GetMapping(path = {"/export", "/download"})
     @ResponseBody
     public ResponseEntity<ByteArrayResource> exportLearnerRecord() throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        LOG.debug("Exporting learner record for user");
+        log.debug("Exporting learner record for user");
         DownloadableFile output = learnerRecordService.exportLearnerRecord();
         return controllerUtilities.getByteStreamResponse(output.getFileName(), output.getBytes());
     }
@@ -49,7 +47,7 @@ public class LearnerRecordController {
     public void getLearnerRecordEventsCSVReport(HttpServletResponse response)
             throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 
-        LOG.debug("Getting learner record events CSV report");
+        log.debug("Getting learner record events CSV report");
 
         List<LearnerRecordEvent> events = learnerRecordService.listEvents();
 

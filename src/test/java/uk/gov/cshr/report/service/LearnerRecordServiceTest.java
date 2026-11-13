@@ -16,6 +16,8 @@ import uk.gov.cshr.report.service.reportRequests.export.CourseCompletionCsvRowFa
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -27,6 +29,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -37,20 +40,20 @@ public class LearnerRecordServiceTest {
 
     private ILearnerRecordClient learnerRecordClient;
     private CourseCompletionEventRepository courseCompletionEventRepository;
-    private CourseCompletionCsvRowFactory courseCompletionCsvRowFactory;
     private IUserAuthService userAuthService;
-    private Clock clock;
 
     @BeforeEach
     public void setUp() {
         learnerRecordClient = mock(ILearnerRecordClient.class);
         courseCompletionEventRepository = mock(CourseCompletionEventRepository.class);
-        courseCompletionCsvRowFactory = new CourseCompletionCsvRowFactory();
         userAuthService = mock(IUserAuthService.class);
-        clock = Clock.fixed(Instant.parse("2024-05-10T14:30:00.000Z"), ZoneId.of("UTC"));
+        CourseCompletionCsvRowFactory courseCompletionCsvRowFactory = new CourseCompletionCsvRowFactory();
+        Clock clock = Clock.fixed(Instant.parse("2024-05-10T14:30:00.000Z"), ZoneId.of("UTC"));
+        CsvService csvService = new CsvService();
+        ZipService zipService = new ZipService();
 
         learnerRecordService = new LearnerRecordService(learnerRecordClient, courseCompletionEventRepository,
-                courseCompletionCsvRowFactory, userAuthService, clock);
+                courseCompletionCsvRowFactory, userAuthService, clock, csvService, zipService);
     }
 
     @Test
@@ -147,5 +150,8 @@ public class LearnerRecordServiceTest {
             assertEquals("3", dataRow[9]);
             assertEquals("Grade 7", dataRow[10]);
         }
+
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.csv")));
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.zip")));
     }
 }

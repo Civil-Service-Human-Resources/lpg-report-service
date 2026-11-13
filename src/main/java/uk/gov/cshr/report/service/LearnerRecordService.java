@@ -2,6 +2,7 @@ package uk.gov.cshr.report.service;
 
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import uk.gov.cshr.report.client.learnerRecord.ILearnerRecordClient;
@@ -18,18 +19,16 @@ import uk.gov.cshr.report.service.reportRequests.export.LearnerRecordCourseCompl
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 @Service
+@Slf4j
 public class LearnerRecordService {
 
     private final ILearnerRecordClient learnerRecordClient;
@@ -37,17 +36,23 @@ public class LearnerRecordService {
     private final CourseCompletionCsvRowFactory courseCompletionCsvRowFactory;
     private final IUserAuthService userAuthService;
     private final Clock clock;
+    private final CsvService csvService;
+    private final ZipService zipService;
 
     public LearnerRecordService(ILearnerRecordClient learnerRecordClient,
                                 CourseCompletionEventRepository courseCompletionEventRepository,
                                 CourseCompletionCsvRowFactory courseCompletionCsvRowFactory,
                                 IUserAuthService userAuthService,
-                                Clock clock) {
+                                Clock clock,
+                                CsvService csvService,
+                                ZipService zipService) {
         this.learnerRecordClient = learnerRecordClient;
         this.courseCompletionEventRepository = courseCompletionEventRepository;
         this.courseCompletionCsvRowFactory = courseCompletionCsvRowFactory;
         this.userAuthService = userAuthService;
         this.clock = clock;
+        this.csvService = csvService;
+        this.zipService = zipService;
     }
 
     public DownloadableFile exportLearnerRecord() throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
@@ -63,25 +68,24 @@ public class LearnerRecordService {
     private DownloadableFile createLearnerRecordZipFile(List<CourseCompletionEvent> events) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         String formattedDateTime = LocalDateTime.now(clock).format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
         String baseFileName = String.format("learner_record_%s", formattedDateTime);
-        String csvFileName = String.format("%s.csv", baseFileName);
-        String zipFileName = String.format("%s.zip", baseFileName);
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (ZipOutputStream zos = new ZipOutputStream(baos)) {
-            ZipEntry zipEntry = new ZipEntry(csvFileName);
-            zos.putNextEntry(zipEntry);
+        CsvData<CourseCompletionEvent> csvData = courseCompletionCsvRowFactory.getCsvData(
+                events, new LearnerRecordCourseCompletionsCsvType()
+        );
 
-            CsvData<CourseCompletionEvent> csvData = courseCompletionCsvRowFactory.getCsvData(
-                    events, new LearnerRecordCourseCompletionsCsvType()
-            );
+        String csvFileName = csvService.createCsvFile(csvData, baseFileName);
+        String zipFileName = zipService.createZipFile(baseFileName, csvFileName);
 
-            Writer writer = new OutputStreamWriter(zos, StandardCharsets.UTF_8);
-            csvData.write(writer);
-            writer.flush();
-            zos.closeEntry();
-        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        Path zipFilePath = Path.of(zipFileName);
+        Files.copy(zipFilePath, byteArrayOutputStream);
 
-        return new DownloadableFile(zipFileName, baos);
+        log.info("Deleting csv file {}", csvFileName);
+        Files.delete(Path.of(csvFileName));
+        log.info("Deleting zip file {}", zipFileName);
+        Files.delete(zipFilePath);
+
+        return new DownloadableFile(zipFileName, byteArrayOutputStream);
     }
 
     @PreAuthorize("hasAnyAuthority('DOWNLOAD_BOOKING_FEED')")

@@ -24,7 +24,7 @@ public class ZipService {
                 zipOutputStream.closeEntry();
             }
         } catch (IOException e) {
-            log.error(String.format("IOException encountered whilst zipping files to %s: %s", zipFileName, e));
+            log.error("IOException encountered whilst zipping files to {}: {}", zipFileName, e.toString());
             throw e;
         }
         return zipFileName;
