@@ -23,9 +23,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Clock;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import static java.time.LocalDateTime.now;
+import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Service
 @Slf4j
@@ -56,23 +57,19 @@ public class LearnerRecordService {
     }
 
     public DownloadableFile exportLearnerRecord() throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        String userId = userAuthService.getUsername();
-        return exportLearnerRecord(userId);
+        return exportLearnerRecord(userAuthService.getUsername());
     }
 
     public DownloadableFile exportLearnerRecord(String userId) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        List<CourseCompletionEvent> events = courseCompletionEventRepository.findByUserId(userId);
-        return createLearnerRecordZipFile(events);
+        return createLearnerRecordZipFile(courseCompletionEventRepository.findByUserId(userId));
     }
 
-    private DownloadableFile createLearnerRecordZipFile(List<CourseCompletionEvent> events) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        String formattedDateTime = LocalDateTime.now(clock).format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-        String baseFileName = String.format("learner_record_%s", formattedDateTime);
-
+    private DownloadableFile createLearnerRecordZipFile(List<CourseCompletionEvent> courseCompletionEvents) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         CsvData<CourseCompletionEvent> csvData = courseCompletionCsvRowFactory.getCsvData(
-                events, new LearnerRecordCourseCompletionsCsvType()
+                courseCompletionEvents, new LearnerRecordCourseCompletionsCsvType()
         );
 
+        String baseFileName = String.format("learner_record_%s", now(clock).format(ofPattern("yyyy-MM-dd_HH-mm-ss")));
         String csvFileName = csvService.createCsvFile(csvData, baseFileName);
         String zipFileName = zipService.createZipFile(baseFileName, csvFileName);
 
