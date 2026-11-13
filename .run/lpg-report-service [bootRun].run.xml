@@ -20,7 +20,8 @@
               <entry key="DATABASE_USESSL" value="false" />
               <entry key="DATASOURCE_PASSWORD" value="ChangeMe" />
               <entry key="DATASOURCE_USERNAME" value="ChangeMe" />
-              <entry key="jwt_key" value="ChangeMe" />
+              <entry key="JMS_USE_SERVICEBUS" value="false" />
+              <entry key="JWT_KEY" value="ChangeMe" />
               <entry key="LEARNER_RECORD_URL" value="http://localhost:9000" />
               <entry key="LEARNING_CATALOGUE_SERVICE_URL" value="http://localhost:9001" />
               <entry key="OAUTH_CHECK_TOKEN_ENDPOINT" value="/oauth2/introspect" />
