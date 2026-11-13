@@ -61,6 +61,7 @@ public class LearnerRecordService {
     }
 
     public DownloadableFile exportLearnerRecord(String userId) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        log.info("Exporting learner record for user {}", userId);
         return createLearnerRecordZipFile(courseCompletionEventRepository.findByUserId(userId));
     }
 

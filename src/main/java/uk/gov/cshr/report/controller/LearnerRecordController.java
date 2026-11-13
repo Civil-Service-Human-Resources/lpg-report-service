@@ -38,17 +38,19 @@ public class LearnerRecordController {
     @GetMapping(path = {"/export", "/download"})
     @ResponseBody
     public ResponseEntity<ByteArrayResource> exportLearnerRecord() throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        log.debug("Exporting learner record for user");
-        DownloadableFile output = learnerRecordService.exportLearnerRecord();
-        return controllerUtilities.getByteStreamResponse(output.getFileName(), output.getBytes());
+        return response(learnerRecordService.exportLearnerRecord());
     }
 
     @GetMapping(path = {"/export/{userId}", "/download/{userId}"})
     @ResponseBody
     public ResponseEntity<ByteArrayResource> exportLearnerRecord(@PathVariable("userId") String userId) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        log.debug("Exporting learner record for user {}", userId);
-        DownloadableFile output = learnerRecordService.exportLearnerRecord(userId);
-        return controllerUtilities.getByteStreamResponse(output.getFileName(), output.getBytes());
+        return response(learnerRecordService.exportLearnerRecord(userId));
+    }
+
+    private ResponseEntity<ByteArrayResource> response(DownloadableFile output) {
+        ResponseEntity<ByteArrayResource> response = controllerUtilities.getByteStreamResponse(output.getFileName(), output.getBytes());
+        log.info("Returning the downloadable zip file containing the csv file");
+        return response;
     }
 
     @GetMapping(produces = "text/csv")
