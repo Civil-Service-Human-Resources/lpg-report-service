@@ -8,7 +8,7 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.Getter;
 
-import java.io.FileWriter;
+import java.io.Writer;
 import java.util.List;
 
 @Getter
@@ -22,8 +22,8 @@ public class CsvData <T> {
         this.data = data;
     }
 
-    public void write(FileWriter fileWriter) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-        StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(fileWriter)
+    public void write(Writer writer) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(writer)
                 .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
                 .withMappingStrategy(mappingStrategy)
                 .build();

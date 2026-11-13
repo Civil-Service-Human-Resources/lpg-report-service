@@ -1,37 +1,70 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="lpg-report-service [bootRun]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
-    <ExternalSystemSettings>
-      <option name="env">
-        <map>
-          <entry key="CLIENT_ID" value="9fbd4ae2-2db3-44c7-9544-88e80255b56e" />
-          <entry key="CLIENT_SECRET" value="test" />
-          <entry key="jwt_key" value="key" />
-          <entry key="LEARNER_RECORD_URL" value="http://localhost:9000" />
-          <entry key="OAUTH_CHECK_TOKEN_ENDPOINT" value="/oauth2/introspect" />
-          <entry key="OAUTH_SERVICE_URL" value="http://localhost:9005" />
-          <entry key="OAUTH_TOKEN_ENDPOINT" value="/oauth2/token" />
-          <entry key="REGISTRY_SERVICE_URL" value="http://localhost:9002" />
-          <entry key="LEARNING_CATALOGUE_SERVICE_URL" value="http://localhost:9001" />
-        </map>
+  <configuration default="false" name="lpg-report-service [bootRun]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+    <MavenSettings>
+      <option name="myGeneralSettings" />
+      <option name="myRunnerSettings">
+        <MavenRunnerSettings>
+          <option name="delegateBuildToMaven" value="false" />
+          <option name="environmentProperties">
+            <map>
+              <entry key="ACTIVEMQ_PASSWORD" value="ChangeMe" />
+              <entry key="ACTIVEMQ_URL" value="tcp://localhost:61616" />
+              <entry key="ACTIVEMQ_USERNAME" value="ChangeMe" />
+              <entry key="BLOB_STORAGE_CONNECTION_STRING" value="ChangeMe" />
+              <entry key="CLIENT_ID" value="ChangeMe" />
+              <entry key="CLIENT_SECRET" value="ChangeMe" />
+              <entry key="COURSE_COMPLETION_REPORTS_BLOB_CONTAINER" value="coursecompletionrequests" />
+              <entry key="COURSE_COMPLETION_REPORTS_DEFAULT_TEMP_DIR" value="temp-courseCompletionsJob" />
+              <entry key="DATABASE_HOST" value="jdbc:postgresql://localhost:5432" />
+              <entry key="DATABASE_NAME" value="reporting" />
+              <entry key="DATABASE_USESSL" value="false" />
+              <entry key="DATASOURCE_PASSWORD" value="ChangeMe" />
+              <entry key="DATASOURCE_USERNAME" value="ChangeMe" />
+              <entry key="jwt_key" value="ChangeMe" />
+              <entry key="LEARNER_RECORD_URL" value="http://localhost:9000" />
+              <entry key="LEARNING_CATALOGUE_SERVICE_URL" value="http://localhost:9001" />
+              <entry key="OAUTH_CHECK_TOKEN_ENDPOINT" value="/oauth2/introspect" />
+              <entry key="OAUTH_SERVICE_URL" value="http://localhost:9005" />
+              <entry key="OAUTH_TOKEN_ENDPOINT" value="/oauth2/token" />
+              <entry key="REDIS_HOST" value="localhost" />
+              <entry key="REDIS_PASSWORD" value="ChangeMe" />
+              <entry key="REDIS_PORT" value="6379" />
+              <entry key="REGISTERED_LEARNERS_REPORTS_BLOB_CONTAINER" value="registeredlearnerrequests" />
+              <entry key="REGISTERED_LEARNERS_REPORTS_DEFAULT_TEMP_DIR" value="temp-registeredLearnerJob" />
+              <entry key="REGISTRY_SERVICE_URL" value="http://localhost:9002" />
+              <entry key="REPORT_SERVICE_BASIC_PASSWORD" value="ChangeMe" />
+              <entry key="REPORT_SERVICE_BASIC_USERNAME" value="ChangeMe" />
+              <entry key="ROOT_LOGGING_LEVEL" value="DEBUG" />
+              <entry key="SERVICEBUS_CONNECTION_STRING" value="ChangeMe" />
+              <entry key="UK_GOV_CSHR_REPORT_LOGGING_LEVEL" value="DEBUG" />
+            </map>
+          </option>
+          <option name="jreName" value="#USE_PROJECT_JDK" />
+          <option name="mavenProperties">
+            <map />
+          </option>
+          <option name="passParentEnv" value="true" />
+          <option name="runMavenInBackground" value="true" />
+          <option name="skipTests" value="false" />
+          <option name="vmOptions" value="" />
+        </MavenRunnerSettings>
       </option>
-      <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$" />
-      <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="" />
-      <option name="taskDescriptions">
-        <list />
+      <option name="myRunnerParameters">
+        <MavenRunnerParameters>
+          <option name="profiles">
+            <set />
+          </option>
+          <option name="goals">
+            <list>
+              <option value="spring-boot:run" />
+            </list>
+          </option>
+          <option name="pomFileName" />
+          <option name="resolvingShowProfiles" value="false" />
+          <option name="workingDirPath" value="$PROJECT_DIR$" />
+        </MavenRunnerParameters>
       </option>
-      <option name="taskNames">
-        <list>
-          <option value="bootRun" />
-        </list>
-      </option>
-      <option name="vmOptions" />
-    </ExternalSystemSettings>
-    <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-    <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-    <DebugAllEnabled>false</DebugAllEnabled>
-    <ForceTestExec>false</ForceTestExec>
+    </MavenSettings>
     <method v="2" />
   </configuration>
 </component>

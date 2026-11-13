@@ -7,11 +7,15 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import uk.gov.cshr.report.domain.LearnerRecordEvent;
 import uk.gov.cshr.report.service.LearnerRecordService;
+import uk.gov.cshr.report.service.blob.DownloadableFile;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,9 +29,19 @@ public class LearnerRecordController {
     private static final Logger LOG = LoggerFactory.getLogger(LearnerRecordController.class);
 
     private final LearnerRecordService learnerRecordService;
+    private final ControllerUtilities controllerUtilities;
 
-    public LearnerRecordController(LearnerRecordService learnerRecordService) {
+    public LearnerRecordController(LearnerRecordService learnerRecordService, ControllerUtilities controllerUtilities) {
         this.learnerRecordService = learnerRecordService;
+        this.controllerUtilities = controllerUtilities;
+    }
+
+    @GetMapping(path = {"/export", "/download"})
+    @ResponseBody
+    public ResponseEntity<ByteArrayResource> exportLearnerRecord() throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        LOG.debug("Exporting learner record for user");
+        DownloadableFile output = learnerRecordService.exportLearnerRecord();
+        return controllerUtilities.getByteStreamResponse(output.getFileName(), output.getBytes());
     }
 
     @GetMapping(produces = "text/csv")

@@ -19,4 +19,4 @@ services:
       - "5672:5672"
       - "61616:61616"
     volumes:
-      - /docker/activemq/config:/var/lib/artemis-instance/etc-override
+      - ./docker/activemq/config:/var/lib/artemis-instance/etc-override
