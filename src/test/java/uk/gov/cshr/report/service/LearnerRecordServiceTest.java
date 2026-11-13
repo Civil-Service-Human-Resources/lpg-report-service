@@ -154,4 +154,57 @@ public class LearnerRecordServiceTest {
         assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.csv")));
         assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.zip")));
     }
+
+    @Test
+    public void testExportLearnerRecordWithUserIdReturnsZipWithCsvData() throws Exception {
+        String userId = "testUserId456";
+
+        CourseCompletionEvent event = new CourseCompletionEvent(
+                "2",
+                userId,
+                "learner2@example.com",
+                "course456",
+                "Sample Course 2",
+                LocalDateTime.of(2024, 5, 10, 14, 30, 0),
+                1,
+                "Cabinet Office",
+                2,
+                "Digital",
+                3,
+                "Grade 7"
+        );
+
+        when(courseCompletionEventRepository.findByUserId(userId)).thenReturn(List.of(event));
+
+        DownloadableFile downloadableFile = learnerRecordService.exportLearnerRecord(userId);
+
+        assertNotNull(downloadableFile);
+        assertEquals("learner_record_2024-05-10_14-30-00.zip", downloadableFile.getFileName());
+
+        try (ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(downloadableFile.getBytes().toByteArray()))) {
+            ZipEntry entry = zis.getNextEntry();
+            assertNotNull(entry);
+            assertEquals("learner_record_2024-05-10_14-30-00.csv", entry.getName());
+
+            CSVReader reader = new CSVReader(new InputStreamReader(zis));
+            List<String[]> rows = reader.readAll();
+
+            assertEquals(2, rows.size());
+
+            String[] header = rows.get(0);
+            assertEquals("userId", header[0]);
+            assertEquals("userEmail", header[1]);
+            assertEquals("courseId", header[2]);
+            assertEquals("courseTitle", header[3]);
+
+            String[] dataRow = rows.get(1);
+            assertEquals("testUserId456", dataRow[0]);
+            assertEquals("learner2@example.com", dataRow[1]);
+            assertEquals("course456", dataRow[2]);
+            assertEquals("Sample Course 2", dataRow[3]);
+        }
+
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.csv")));
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.zip")));
+    }
 }

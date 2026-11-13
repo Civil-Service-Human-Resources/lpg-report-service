@@ -10,6 +10,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.gov.cshr.report.domain.LearnerRecordEvent;
@@ -39,6 +40,14 @@ public class LearnerRecordController {
     public ResponseEntity<ByteArrayResource> exportLearnerRecord() throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         log.debug("Exporting learner record for user");
         DownloadableFile output = learnerRecordService.exportLearnerRecord();
+        return controllerUtilities.getByteStreamResponse(output.getFileName(), output.getBytes());
+    }
+
+    @GetMapping(path = {"/export/{userId}", "/download/{userId}"})
+    @ResponseBody
+    public ResponseEntity<ByteArrayResource> exportLearnerRecord(@PathVariable("userId") String userId) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        log.debug("Exporting learner record for user {}", userId);
+        DownloadableFile output = learnerRecordService.exportLearnerRecord(userId);
         return controllerUtilities.getByteStreamResponse(output.getFileName(), output.getBytes());
     }
 

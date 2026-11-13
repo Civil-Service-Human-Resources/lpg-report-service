@@ -12,6 +12,15 @@ The booking report generates an MI extract of the bookings registered within a g
 
 The module completion report generates an MI extract of the learning modules completed by users within a given time window, and filtered depending on the roles such that organisation reporters see only module completion records for users within their organisation. A full breakdown of roles is available in Confluence. The data dependencies of module records (from learner-record), civil servants (from CSRS), course modules (from learning-catalogue) and identities (from identity-service) are requested asynchronously, synchronising on report generation after all requests are complete, enabling the data to be collected in parallel.
 
+### Learner Record Export
+
+The learner record export generates a zipped CSV export of course completion events.
+
+Endpoints under `/learner-record`:
+- `GET /learner-record/export` or `GET /learner-record/download`: Exports and downloads the learner record zip archive for the currently authenticated user.
+- `GET /learner-record/export/{userId}` or `GET /learner-record/download/{userId}`: Exports and downloads the learner record zip archive for the specified user ID (`userId`).
+- `GET /learner-record/events`: Exports learner record events as a CSV report.
+
 ### Logging
 
 Booking and Module Report generation requests are logged at the controller level by default at the INFO log level, logging the user ID and from/to date parameters for each report request.

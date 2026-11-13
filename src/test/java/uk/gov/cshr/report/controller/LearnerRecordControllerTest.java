@@ -48,6 +48,43 @@ public class LearnerRecordControllerTest {
         runTest("/download");
     }
 
+    @Test
+    @WithMockUser(username = "user")
+    public void testExportLearnerRecordWithUserIdAndExportPath() throws Exception {
+        runTestWithUserId("/export/user123", "user123");
+    }
+
+    @Test
+    @WithMockUser(username = "user")
+    public void testExportLearnerRecordWithUserIdAndDownloadPath() throws Exception {
+        runTestWithUserId("/download/user123", "user123");
+    }
+
+    private void runTestWithUserId(String uriPath, String userId) throws Exception {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write("fake-zip-data".getBytes());
+        DownloadableFile downloadableFile = new DownloadableFile("learner_record.zip", baos);
+
+        when(learnerRecordService.exportLearnerRecord(userId)).thenReturn(downloadableFile);
+
+        ByteArrayResource resource = new ByteArrayResource(baos.toByteArray());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"learner_record.zip\"");
+
+        when(controllerUtilities.getByteStreamResponse("learner_record.zip", baos))
+                .thenReturn(ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                        .headers(headers)
+                        .body(resource));
+
+        mockMvc.perform(get("/learner-record" + uriPath)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"learner_record.zip\""))
+                .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM))
+                .andExpect(content().bytes("fake-zip-data".getBytes()));
+    }
+
     private void runTest(String uriPath) throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         baos.write("fake-zip-data".getBytes());
