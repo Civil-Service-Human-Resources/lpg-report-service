@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -202,6 +203,160 @@ public class LearnerRecordServiceTest {
             assertEquals("learner2@example.com", dataRow[1]);
             assertEquals("course456", dataRow[2]);
             assertEquals("Sample Course 2", dataRow[3]);
+        }
+
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.csv")));
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.zip")));
+    }
+
+    @Test
+    public void testExportLearnerRecordReturnsZipWithCsvHeadersOnlyWhenEventsIsEmpty() throws Exception {
+        String userId = "testUserIdEmpty";
+        when(userAuthService.getUsername()).thenReturn(userId);
+        when(courseCompletionEventRepository.findByUserId(userId)).thenReturn(Collections.emptyList());
+
+        DownloadableFile downloadableFile = learnerRecordService.exportLearnerRecord();
+
+        assertNotNull(downloadableFile);
+        assertEquals("learner_record_2024-05-10_14-30-00.zip", downloadableFile.getFileName());
+
+        try (ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(downloadableFile.getBytes().toByteArray()))) {
+            ZipEntry entry = zis.getNextEntry();
+            assertNotNull(entry);
+            assertEquals("learner_record_2024-05-10_14-30-00.csv", entry.getName());
+
+            CSVReader reader = new CSVReader(new InputStreamReader(zis));
+            List<String[]> rows = reader.readAll();
+
+            assertEquals(1, rows.size());
+
+            String[] header = rows.get(0);
+            assertEquals("userId", header[0]);
+            assertEquals("userEmail", header[1]);
+            assertEquals("courseId", header[2]);
+            assertEquals("courseTitle", header[3]);
+            assertEquals("eventTimestamp", header[4]);
+            assertEquals("organisationId", header[5]);
+            assertEquals("organisationName", header[6]);
+            assertEquals("professionId", header[7]);
+            assertEquals("professionName", header[8]);
+            assertEquals("gradeId", header[9]);
+            assertEquals("gradeName", header[10]);
+        }
+
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.csv")));
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.zip")));
+    }
+
+    @Test
+    public void testExportLearnerRecordReturnsZipWithCsvHeadersOnlyWhenEventsIsNull() throws Exception {
+        String userId = "testUserIdNull";
+        when(userAuthService.getUsername()).thenReturn(userId);
+        when(courseCompletionEventRepository.findByUserId(userId)).thenReturn(null);
+
+        DownloadableFile downloadableFile = learnerRecordService.exportLearnerRecord();
+
+        assertNotNull(downloadableFile);
+        assertEquals("learner_record_2024-05-10_14-30-00.zip", downloadableFile.getFileName());
+
+        try (ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(downloadableFile.getBytes().toByteArray()))) {
+            ZipEntry entry = zis.getNextEntry();
+            assertNotNull(entry);
+            assertEquals("learner_record_2024-05-10_14-30-00.csv", entry.getName());
+
+            CSVReader reader = new CSVReader(new InputStreamReader(zis));
+            List<String[]> rows = reader.readAll();
+
+            assertEquals(1, rows.size());
+
+            String[] header = rows.get(0);
+            assertEquals("userId", header[0]);
+            assertEquals("userEmail", header[1]);
+            assertEquals("courseId", header[2]);
+            assertEquals("courseTitle", header[3]);
+            assertEquals("eventTimestamp", header[4]);
+            assertEquals("organisationId", header[5]);
+            assertEquals("organisationName", header[6]);
+            assertEquals("professionId", header[7]);
+            assertEquals("professionName", header[8]);
+            assertEquals("gradeId", header[9]);
+            assertEquals("gradeName", header[10]);
+        }
+
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.csv")));
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.zip")));
+    }
+
+    @Test
+    public void testExportLearnerRecordWithUserIdReturnsZipWithCsvHeadersOnlyWhenEventsIsEmpty() throws Exception {
+        String userId = "testUserIdEmpty";
+        when(courseCompletionEventRepository.findByUserId(userId)).thenReturn(Collections.emptyList());
+
+        DownloadableFile downloadableFile = learnerRecordService.exportLearnerRecord(userId);
+
+        assertNotNull(downloadableFile);
+        assertEquals("learner_record_2024-05-10_14-30-00.zip", downloadableFile.getFileName());
+
+        try (ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(downloadableFile.getBytes().toByteArray()))) {
+            ZipEntry entry = zis.getNextEntry();
+            assertNotNull(entry);
+            assertEquals("learner_record_2024-05-10_14-30-00.csv", entry.getName());
+
+            CSVReader reader = new CSVReader(new InputStreamReader(zis));
+            List<String[]> rows = reader.readAll();
+
+            assertEquals(1, rows.size());
+
+            String[] header = rows.get(0);
+            assertEquals("userId", header[0]);
+            assertEquals("userEmail", header[1]);
+            assertEquals("courseId", header[2]);
+            assertEquals("courseTitle", header[3]);
+            assertEquals("eventTimestamp", header[4]);
+            assertEquals("organisationId", header[5]);
+            assertEquals("organisationName", header[6]);
+            assertEquals("professionId", header[7]);
+            assertEquals("professionName", header[8]);
+            assertEquals("gradeId", header[9]);
+            assertEquals("gradeName", header[10]);
+        }
+
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.csv")));
+        assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.zip")));
+    }
+
+    @Test
+    public void testExportLearnerRecordWithUserIdReturnsZipWithCsvHeadersOnlyWhenEventsIsNull() throws Exception {
+        String userId = "testUserIdNull";
+        when(courseCompletionEventRepository.findByUserId(userId)).thenReturn(null);
+
+        DownloadableFile downloadableFile = learnerRecordService.exportLearnerRecord(userId);
+
+        assertNotNull(downloadableFile);
+        assertEquals("learner_record_2024-05-10_14-30-00.zip", downloadableFile.getFileName());
+
+        try (ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(downloadableFile.getBytes().toByteArray()))) {
+            ZipEntry entry = zis.getNextEntry();
+            assertNotNull(entry);
+            assertEquals("learner_record_2024-05-10_14-30-00.csv", entry.getName());
+
+            CSVReader reader = new CSVReader(new InputStreamReader(zis));
+            List<String[]> rows = reader.readAll();
+
+            assertEquals(1, rows.size());
+
+            String[] header = rows.get(0);
+            assertEquals("userId", header[0]);
+            assertEquals("userEmail", header[1]);
+            assertEquals("courseId", header[2]);
+            assertEquals("courseTitle", header[3]);
+            assertEquals("eventTimestamp", header[4]);
+            assertEquals("organisationId", header[5]);
+            assertEquals("organisationName", header[6]);
+            assertEquals("professionId", header[7]);
+            assertEquals("professionName", header[8]);
+            assertEquals("gradeId", header[9]);
+            assertEquals("gradeName", header[10]);
         }
 
         assertFalse(Files.exists(Path.of("learner_record_2024-05-10_14-30-00.csv")));

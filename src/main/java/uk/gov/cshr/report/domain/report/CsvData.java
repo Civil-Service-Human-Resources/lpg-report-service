@@ -23,6 +23,11 @@ public class CsvData <T> {
     }
 
     public void write(Writer writer) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+        if (data == null || data.isEmpty()) {
+            CSVWriter csvWriter = new CSVWriter(writer);
+            csvWriter.writeNext(mappingStrategy.generateHeader(null), true);
+            return;
+        }
         StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(writer)
                 .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
                 .withMappingStrategy(mappingStrategy)

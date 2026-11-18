@@ -20,6 +20,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -170,6 +171,58 @@ class CsvServiceTest {
             for (int i = 0; i < lines.size(); i++) {
                 assertCsvRow(lines.get(i), rows[i]);
             }
+        } catch (Exception e) {
+            fail(String.format("Exception when reading file: %s", e));
+        }
+    }
+
+    @Test
+    public void testContentsOfCsvFileWhenDataIsEmpty() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        String filename = String.format("%s/testFileEmpty", temporaryDir);
+        CustomColumnPositionStrategy<CourseCompletionEvent> strategy = new CustomColumnPositionStrategy<>();
+        strategy.setType(CourseCompletionEvent.class);
+        strategy.setColumnMapping(new CourseCompletionsStandardCsvType().getColumns());
+        CsvData<CourseCompletionEvent> csvData = new CsvData<>(strategy, Collections.emptyList());
+        String csvFileName = csvService.createCsvFile(csvData, filename);
+        try (CSVReader csvReader = new CSVReader(new FileReader(csvFileName))) {
+            List<String[]> lines = csvReader.readAll();
+            assertEquals(1, lines.size());
+            String[] header = lines.get(0);
+            assertEquals("courseId", header[0]);
+            assertEquals("courseTitle", header[1]);
+            assertEquals("eventTimestamp", header[2]);
+            assertEquals("organisationId", header[3]);
+            assertEquals("organisationName", header[4]);
+            assertEquals("professionId", header[5]);
+            assertEquals("professionName", header[6]);
+            assertEquals("gradeId", header[7]);
+            assertEquals("gradeName", header[8]);
+        } catch (Exception e) {
+            fail(String.format("Exception when reading file: %s", e));
+        }
+    }
+
+    @Test
+    public void testContentsOfCsvFileWhenDataIsNull() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        String filename = String.format("%s/testFileNull", temporaryDir);
+        CustomColumnPositionStrategy<CourseCompletionEvent> strategy = new CustomColumnPositionStrategy<>();
+        strategy.setType(CourseCompletionEvent.class);
+        strategy.setColumnMapping(new CourseCompletionsStandardCsvType().getColumns());
+        CsvData<CourseCompletionEvent> csvData = new CsvData<>(strategy, null);
+        String csvFileName = csvService.createCsvFile(csvData, filename);
+        try (CSVReader csvReader = new CSVReader(new FileReader(csvFileName))) {
+            List<String[]> lines = csvReader.readAll();
+            assertEquals(1, lines.size());
+            String[] header = lines.get(0);
+            assertEquals("courseId", header[0]);
+            assertEquals("courseTitle", header[1]);
+            assertEquals("eventTimestamp", header[2]);
+            assertEquals("organisationId", header[3]);
+            assertEquals("organisationName", header[4]);
+            assertEquals("professionId", header[5]);
+            assertEquals("professionName", header[6]);
+            assertEquals("gradeId", header[7]);
+            assertEquals("gradeName", header[8]);
         } catch (Exception e) {
             fail(String.format("Exception when reading file: %s", e));
         }
