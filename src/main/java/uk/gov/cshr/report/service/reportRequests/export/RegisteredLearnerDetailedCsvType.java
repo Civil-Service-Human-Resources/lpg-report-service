@@ -10,6 +10,7 @@ public class RegisteredLearnerDetailedCsvType implements ICsvConfig {
         return new String[]{
                 "active",
                 "email",
+                "uid",
                 "fullName",
                 "gradeName",
                 "professionName",
