@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CustomJWTConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
 
-    private static final String[] AUTH_CLAIMS = {"authorities", "scope"};
+    private static final String[] AUTH_CLAIMS = {"authorities", "scope", "scopes"};
 
     @Override
     public Collection<GrantedAuthority> convert(Jwt jwt) {
