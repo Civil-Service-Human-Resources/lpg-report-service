@@ -110,4 +110,6 @@ public interface CourseCompletionEventRepository extends JpaRepository<CourseCom
     Collection<CourseAggregation> getCompletionsAggregationsForCourses(LocalDateTime from, LocalDateTime to,
                                                                        Collection<Integer> professionIds, Integer size,
                                                                        Collection<String> excludeIds);
+
+    List<CourseCompletionEvent> findByUserId(String userId);
 }
